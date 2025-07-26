@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corprex - The Infrastructure Company for the Private AI Era</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-black: #000000;
+            --secondary-black: #0a0a0a;
+            --dark-gray: #1a1a1a;
+            --medium-gray: #2a2a2a;
+            --light-gray: #666666;
+            --text-gray: #999999;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --border-color: #333333;
+        }
+
+        body {
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--primary-black);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--secondary-black);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem 0;
+            margin-top: 1rem;
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:hover .dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            padding: 0.75rem 1.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            display: block;
+            transition: all 0.2s ease;
+        }
+
+        .dropdown-item:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-cta {
+            background: var(--text-primary);
+            color: var(--primary-black);
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            letter-spacing: 0.02em;
+        }
+
+        .nav-cta:hover {
+            background: var(--text-secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding-top: 80px;
+            background: linear-gradient(180deg, var(--primary-black) 0%, var(--secondary-black) 100%);
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 4rem;
+            font-weight: 400;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-text h2 {
+            font-size: 4rem;
+            font-weight: 400;
+            color: var(--text-primary);
+            margin-top: 2rem;
+        }
+
+        .hero-text p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-top: 2rem;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .btn-primary {
+            background: var(--text-primary);
+            color: var(--primary-black);
+            padding: 1rem 2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-block;
+            letter-spacing: 0.02em;
+        }
+
+        .btn-primary:hover {
+            background: var(--text-secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            padding: 1rem 2rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-block;
+            letter-spacing: 0.02em;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* 3D Omega Box */
+        .omega-visual {
+            position: relative;
+            height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1000px;
+        }
+
+        .omega-box {
+            width: 350px;
+            height: 350px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotateY(0deg) rotateX(10deg); }
+            100% { transform: rotateY(360deg) rotateX(10deg); }
+        }
+
+        .omega-face {
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            border: 2px solid #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .omega-face::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .omega-face.front {
+            transform: translateZ(175px);
+        }
+
+        .omega-face.back {
+            transform: translateZ(-175px) rotateY(180deg);
+        }
+
+        .omega-face.right {
+            transform: rotateY(90deg) translateZ(175px);
+        }
+
+        .omega-face.left {
+            transform: rotateY(-90deg) translateZ(175px);
+        }
+
+        .omega-face.top {
+            transform: rotateX(90deg) translateZ(175px);
+        }
+
+        .omega-face.bottom {
+            transform: rotateX(-90deg) translateZ(175px);
+        }
+
+        .omega-logo {
+            font-size: 4rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            margin-bottom: 0.5rem;
+        }
+
+        .omega-text {
+            font-size: 1.2rem;
+            letter-spacing: 0.3em;
+            color: var(--text-primary);
+        }
+
+        .omega-subtext {
+            font-size: 0.9rem;
+            letter-spacing: 0.2em;
+            color: var(--text-gray);
+            margin-top: 0.5rem;
+        }
+
+        /* Sections */
+        .section {
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .section-header p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* What is Corprex */
+        .intro-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .intro-card {
+            background: var(--secondary-black);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .intro-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--text-primary);
+            color: var(--primary-black);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .intro-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .intro-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .intro-card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        .intro-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--text-primary);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.05);
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: var(--secondary-black);
+            padding: 4rem 0;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* Omega Advantage */
+        .advantage-section {
+            background: var(--primary-black);
+        }
+
+        .advantage-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .advantage-content h3 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .advantage-list {
+            list-style: none;
+        }
+
+        .advantage-item {
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: start;
+            gap: 1rem;
+        }
+
+        .advantage-icon {
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            margin-top: 0.25rem;
+        }
+
+        .advantage-text h4 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .advantage-text p {
+            color: var(--text-secondary);
+            font-weight: 300;
+        }
+
+        /* Specs Preview */
+        .specs-preview {
+            background: var(--dark-gray);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .spec-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .spec-row:last-child {
+            border-bottom: none;
+        }
+
+        .spec-label {
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .spec-value {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        /* Industries */
+        .industries-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .industry-card {
+            background: linear-gradient(135deg, var(--secondary-black) 0%, #1a1a1a 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .industry-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--text-primary);
+            background: linear-gradient(135deg, var(--dark-gray) 0%, var(--medium-gray) 100%);
+        }
+
+        .industry-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .industry-card h4 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .industry-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Features Grid */
+        .features-section {
+            background: var(--secondary-black);
+            padding: 6rem 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .feature-card {
+            display: flex;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--dark-gray) 0%, var(--medium-gray) 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .feature-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-content p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Comparison Section */
+        .comparison-section {
+            padding: 6rem 0;
+        }
+
+        .comparison-table {
+            background: var(--secondary-black);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-top: 3rem;
+        }
+
+        .comparison-header {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            background: var(--dark-gray);
+            padding: 1.5rem 2rem;
+            font-weight: 600;
+        }
+
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .comparison-row:last-child {
+            border-bottom: none;
+        }
+
+        .check {
+            color: #4CAF50;
+        }
+
+        .cross {
+            color: #ff4444;
+        }
+
+        /* Testimonials */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .testimonial-card {
+            background: var(--secondary-black);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .quote-icon {
+            font-size: 3rem;
+            color: var(--medium-gray);
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .testimonial-role {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--secondary-black) 0%, #1a1a1a 100%);
+            border-radius: 24px;
+            padding: 4rem;
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+
+        .cta-section p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--secondary-black);
+            border-top: 1px solid var(--border-color);
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-column h4 {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .footer-link {
+            display: block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.5rem 0;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--text-primary);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border-color);
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-tagline {
+            color: var(--text-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-text h1,
+            .hero-text h2 {
+                font-size: 3rem;
+            }
+
+            .omega-box {
+                width: 250px;
+                height: 250px;
+            }
+
+            .omega-face {
+                width: 250px;
+                height: 250px;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .intro-grid,
+            .industries-grid,
+            .stats-grid,
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid,
+            .advantage-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .comparison-header,
+            .comparison-row {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">CORPREX</div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <span class="nav-link">Product</span>
+                    <div class="dropdown">
+                        <a href="#omega" class="dropdown-item">Omega Hardware</a>
+                        <a href="#os" class="dropdown-item">CorprexOS</a>
+                        <a href="#models" class="dropdown-item">AI Model Ecosystem</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="automations.html" class="nav-link">Automations</a>
+                </li>
+                <li class="nav-item">
+                    <span class="nav-link">Industries</span>
+                    <div class="dropdown">
+                        <a href="#legal" class="dropdown-item">Legal</a>
+                        <a href="#healthcare" class="dropdown-item">Healthcare</a>
+                        <a href="#finance" class="dropdown-item">Finance</a>
+                        <a href="#government" class="dropdown-item">Government</a>
+                        <a href="#enterprise" class="dropdown-item">Custom Enterprise</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="why-local-ai.html" class="nav-link">Why Local AI?</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#about" class="nav-link">About Us</a>
+                </li>
+            </ul>
+            <a href="#demo" class="nav-cta">Request Demo</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Don't think outside the box.</h1>
+                <h2>Think with it.</h2>
+                <p>
+                    The Omega is your complete AI infrastructure in one powerful device. No cloud dependencies. No data leaks. No subscription fees. Just pure, private computational excellence at your command.
+                </p>
+                <div class="hero-cta">
+                    <a href="#demo" class="btn-primary">Request Demo</a>
+                    <a href="#omega" class="btn-secondary">Explore the Omega</a>
+                </div>
+            </div>
+            <div class="omega-visual">
+                <div class="omega-box">
+                    <div class="omega-face front">
+                        <div class="omega-logo">CX</div>
+                        <div class="omega-text">CORPREX</div>
+                        <div class="omega-subtext">OMEGA</div>
+                    </div>
+                    <div class="omega-face back">
+                        <div class="omega-logo">Ω</div>
+                    </div>
+                    <div class="omega-face right"></div>
+                    <div class="omega-face left"></div>
+                    <div class="omega-face top"></div>
+                    <div class="omega-face bottom"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>$0</h3>
+                    <p>Monthly AI Costs</p>
+                </div>
+                <div class="stat-item">
+                    <h3>100%</h3>
+                    <p>Data Privacy</p>
+                </div>
+                <div class="stat-item">
+                    <h3><1s</h3>
+                    <p>Response Time</p>
+                </div>
+                <div class="stat-item">
+                    <h3>∞</h3>
+                    <p>Usage Limits</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What is Corprex -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>The Future of AI is Private</h2>
+                <p>Why leading companies are choosing Corprex</p>
+            </div>
+            <div class="intro-grid">
+                <div class="intro-card">
+                    <div class="intro-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 1L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 1Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Complete Privacy</h3>
+                    <p>Your data never leaves your premises. Process sensitive information with military-grade security and zero cloud exposure. Perfect for legal, medical, and financial data.</p>
+                </div>
+                <div class="intro-card">
+                    <div class="intro-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <polygon points="13,2 3,14 12,14 11,22 21,10 12,10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <h3>Instant Response</h3>
+                    <p>Sub-second latency for mission-critical applications. No internet delays, no API rate limits, no downtime. Your AI is always available when you need it.</p>
+                </div>
+                <div class="intro-card">
+                    <div class="intro-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6 3H18L19 12L12 17L5 12L6 3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M9 12L12 15L15 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Premium ROI</h3>
+                    <p>Eliminate monthly AI subscriptions forever. Most clients see complete ROI within 2-8 weeks. One investment, unlimited usage, no surprises.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section features-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Everything You Need, Nothing You Don't</h2>
+                <p>The Omega is engineered for simplicity and power</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                            <line x1="8" y1="21" x2="16" y2="21" stroke="currentColor" stroke-width="2"/>
+                            <line x1="12" y1="17" x2="12" y2="21" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Plug & Play Setup</h3>
+                        <p>Pre-configured and optimized for immediate deployment. Our white-glove service includes installation, configuration, and training. Be operational in hours, not weeks.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9.5 2A2.5 2.5 0 0 0 7 4.5V7A2.5 2.5 0 0 0 9.5 9.5H12V7A2.5 2.5 0 0 0 9.5 2Z" fill="currentColor"/>
+                            <path d="M14.5 2A2.5 2.5 0 0 1 17 4.5V7A2.5 2.5 0 0 1 14.5 9.5H12V7A2.5 2.5 0 0 1 14.5 2Z" fill="currentColor"/>
+                            <path d="M12 9.5V12A2.5 2.5 0 0 1 9.5 14.5A2.5 2.5 0 0 0 7 17V19.5A2.5 2.5 0 0 0 9.5 22A2.5 2.5 0 0 0 12 19.5V17A2.5 2.5 0 0 1 14.5 14.5A2.5 2.5 0 0 0 17 12V9.5H14.5A2.5 2.5 0 0 0 12 12V9.5Z" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Latest AI Models</h3>
+                        <p>Run Llama 3, Mistral, Mixtral, and custom models. Switch between models instantly. Fine-tune on your data for superior performance.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 22S8 18 8 13V7L12 5L16 7V13C16 18 12 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Enterprise Security</h3>
+                        <p>End-to-end encryption, air-gap capability, and compliance certifications built-in. HIPAA, SOX, and FedRAMP ready out of the box.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3 3V21L21 12L3 3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Scales With You</h3>
+                        <p>Start with a single Omega for your team. Add more units as you grow. Our orchestration software manages multiple Omegas seamlessly.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Omega Advantage -->
+    <section class="section advantage-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>The Omega Advantage</h2>
+                <p>See why industry leaders choose Corprex</p>
+            </div>
+            <div class="advantage-grid">
+                <div class="advantage-content">
+                    <h3>A complete AI infrastructure, not just hardware.</h3>
+                    <ul class="advantage-list">
+                        <li class="advantage-item">
+                            <span class="advantage-icon">✓</span>
+                            <div class="advantage-text">
+                                <h4>CorprexOS Platform</h4>
+                                <p>Beautiful, intuitive interface for model management, user access control, and system monitoring. No command line required.</p>
+                            </div>
+                        </li>
+                        <li class="advantage-item">
+                            <span class="advantage-icon">✓</span>
+                            <div class="advantage-text">
+                                <h4>White Glove Service</h4>
+                                <p>From unboxing to optimization, our experts handle everything. Includes installation, training, and ongoing support.</p>
+                            </div>
+                        </li>
+                        <li class="advantage-item">
+                            <span class="advantage-icon">✓</span>
+                            <div class="advantage-text">
+                                <h4>Future-Proof Design</h4>
+                                <p>Modular architecture allows GPU upgrades as new models emerge. Your investment grows with AI advancement.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="specs-preview">
+                    <h4 style="font-size: 1.5rem; margin-bottom: 1.5rem;">Starting Configuration</h4>
+                    <div class="spec-row">
+                        <span class="spec-label">GPU Options</span>
+                        <span class="spec-value">RTX 4060 Ti → H100</span>
+                    </div>
+                    <div class="spec-row">
+                        <span class="spec-label">RAM</span>
+                        <span class="spec-value">32GB → 1TB DDR5</span>
+                    </div>
+                    <div class="spec-row">
+                        <span class="spec-label">Storage</span>
+                        <span class="spec-value">1TB → 32TB NVMe</span>
+                    </div>
+                    <div class="spec-row">
+                        <span class="spec-label">Models</span>
+                        <span class="spec-value">All Open Source + Custom</span>
+                    </div>
+                    <div class="spec-row">
+                        <span class="spec-label">Users</span>
+                        <span class="spec-value">2 → 200+ Concurrent</span>
+                    </div>
+                    <div class="spec-row">
+                        <span class="spec-label">Starting From</span>
+                        <span class="spec-value">Contact for Pricing</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section class="section comparison-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Omega vs. Cloud AI</h2>
+                <p>See the difference ownership makes</p>
+            </div>
+            <div class="comparison-table">
+                <div class="comparison-header">
+                    <div>Feature</div>
+                    <div>Corprex Omega</div>
+                    <div>Cloud AI</div>
+                </div>
+                <div class="comparison-row">
+                    <div>Data Privacy</div>
+                    <div class="check">✓ 100% Private</div>
+                    <div class="cross">✗ Data Leaves Premises</div>
+                </div>
+                <div class="comparison-row">
+                    <div>Monthly Cost</div>
+                    <div class="check">✓ $0 After Purchase</div>
+                    <div class="cross">✗ $500-$10,000+/mo</div>
+                </div>
+                <div class="comparison-row">
+                    <div>Usage Limits</div>
+                    <div class="check">✓ Unlimited</div>
+                    <div class="cross">✗ Token Limits</div>
+                </div>
+                <div class="comparison-row">
+                    <div>Response Time</div>
+                    <div class="check">✓ <1 Second</div>
+                    <div class="cross">✗ Variable Latency</div>
+                </div>
+                <div class="comparison-row">
+                    <div>Customization</div>
+                    <div class="check">✓ Full Control</div>
+                    <div class="cross">✗ Limited Options</div>
+                </div>
+                <div class="comparison-row">
+                    <div>Compliance</div>
+                    <div class="check">✓ HIPAA/SOX/FedRAMP</div>
+                    <div class="cross">✗ Shared Infrastructure</div>
+                </div>
+                <div class="comparison-row">
+                    <div>Availability</div>
+                    <div class="check">✓ 100% Uptime</div>
+                    <div class="cross">✗ Internet Dependent</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Industries -->
+    <section class="section" style="background: var(--secondary-black);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Trusted Across Industries</h2>
+                <p>Specialized solutions for your unique requirements</p>
+            </div>
+            <div class="industries-grid">
+                <div class="industry-card">
+                    <div class="industry-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 3L20 12H16V20H8V12H4L12 3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M9 16H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M10 13H14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h4>Legal</h4>
+                    <p>Attorney-client privilege protection with advanced document analysis</p>
+                </div>
+                <div class="industry-card">
+                    <div class="industry-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M22 12H18L15 21L9 3L6 12H2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h4>Healthcare</h4>
+                    <p>HIPAA-compliant medical AI for patient care and research</p>
+                </div>
+                <div class="industry-card">
+                    <div class="industry-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <line x1="12" y1="1" x2="12" y2="23" stroke="currentColor" stroke-width="2"/>
+                            <path d="M17 5H9.5A3.5 3.5 0 0 0 6 8.5V8.5A3.5 3.5 0 0 0 9.5 12H14.5A3.5 3.5 0 0 1 18 15.5V15.5A3.5 3.5 0 0 1 14.5 19H6" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h4>Finance</h4>
+                    <p>SOX-compliant analysis with real-time risk assessment</p>
+                </div>
+                <div class="industry-card">
+                    <div class="industry-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3 9L12 2L21 9V20A2 2 0 0 1 19 22H5A2 2 0 0 1 3 20V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <polyline points="9,22 9,12 15,12 15,22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h4>Government</h4>
+                    <p>FedRAMP authorized for sensitive government operations</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Leaders Choose Omega</h2>
+                <p>Join the companies transforming their AI capabilities</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="quote-icon">"</div>
+                    <p class="testimonial-text">The Omega transformed our firm overnight. We process contracts 10x faster, and our client data never leaves our office. The ROI was immediate.</p>
+                    <div class="testimonial-author">Sarah Chen</div>
+                    <div class="testimonial-role">Managing Partner, Chen & Associates</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="quote-icon">"</div>
+                    <p class="testimonial-text">HIPAA compliance used to limit our AI options. With Omega, we have cutting-edge AI that meets all regulatory requirements. It's a game-changer.</p>
+                    <div class="testimonial-author">Dr. Michael Torres</div>
+                    <div class="testimonial-role">Chief Medical Officer, Regional Health Network</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="quote-icon">"</div>
+                    <p class="testimonial-text">We eliminated $25,000 in monthly AI costs. The Omega paid for itself in 6 weeks. Now we have unlimited AI usage with zero latency.</p>
+                    <div class="testimonial-author">James Mitchell</div>
+                    <div class="testimonial-role">CTO, Apex Financial Group</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="section" style="background: var(--secondary-black);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Your Journey to AI Independence</h2>
+                <p>From inquiry to implementation in days, not months</p>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; margin-top: 4rem;">
+                <div style="text-align: center;">
+                    <div style="width: 80px; height: 80px; background: var(--text-primary); color: var(--primary-black); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 600; margin: 0 auto 1.5rem;">1</div>
+                    <h3 style="font-size: 1.25rem; margin-bottom: 1rem;">Discovery Call</h3>
+                    <p style="color: var(--text-secondary);">30-minute consultation to understand your needs and demonstrate capabilities</p>
+                </div>
+                <div style="text-align: center;">
+                    <div style="width: 80px; height: 80px; background: var(--text-primary); color: var(--primary-black); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 600; margin: 0 auto 1.5rem;">2</div>
+                    <h3 style="font-size: 1.25rem; margin-bottom: 1rem;">Custom Configuration</h3>
+                    <p style="color: var(--text-secondary);">We design the perfect Omega setup for your specific requirements</p>
+                </div>
+                <div style="text-align: center;">
+                    <div style="width: 80px; height: 80px; background: var(--text-primary); color: var(--primary-black); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 600; margin: 0 auto 1.5rem;">3</div>
+                    <h3 style="font-size: 1.25rem; margin-bottom: 1rem;">White Glove Delivery</h3>
+                    <p style="color: var(--text-secondary);">Professional installation, configuration, and comprehensive training</p>
+                </div>
+                <div style="text-align: center;">
+                    <div style="width: 80px; height: 80px; background: var(--text-primary); color: var(--primary-black); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 600; margin: 0 auto 1.5rem;">4</div>
+                    <h3 style="font-size: 1.25rem; margin-bottom: 1rem;">Ongoing Success</h3>
+                    <p style="color: var(--text-secondary);">24/7 support and regular updates ensure peak performance</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+                <p>Everything you need to know about Omega</p>
+            </div>
+            <div style="max-width: 800px; margin: 0 auto;">
+                <details style="background: var(--secondary-black); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem;">
+                    <summary style="cursor: pointer; font-weight: 500; font-size: 1.1rem;">How quickly can I get started with Omega?</summary>
+                    <p style="margin-top: 1rem; color: var(--text-secondary);">Most clients are operational within 24-48 hours of delivery. Our white glove service includes unboxing, setup, network configuration, and hands-on training for your team.</p>
+                </details>
+                <details style="background: var(--secondary-black); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem;">
+                    <summary style="cursor: pointer; font-weight: 500; font-size: 1.1rem;">What AI models can Omega run?</summary>
+                    <p style="margin-top: 1rem; color: var(--text-secondary);">Omega supports all major open-source models including Llama 3, Mistral, Mixtral, CodeLlama, and more. You can also fine-tune models on your own data or deploy custom models.</p>
+                </details>
+                <details style="background: var(--secondary-black); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem;">
+                    <summary style="cursor: pointer; font-weight: 500; font-size: 1.1rem;">How does Omega ensure data security?</summary>
+                    <p style="margin-top: 1rem; color: var(--text-secondary);">Your data never leaves your premises. Omega features end-to-end encryption, air-gap capability, and meets HIPAA, SOX, and FedRAMP compliance standards out of the box.</p>
+                </details>
+                <details style="background: var(--secondary-black); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem;">
+                    <summary style="cursor: pointer; font-weight: 500; font-size: 1.1rem;">What if I need to scale beyond one Omega?</summary>
+                    <p style="margin-top: 1rem; color: var(--text-secondary);">Omega is designed to scale. Our orchestration software allows multiple units to work together seamlessly. Add capacity as you grow without disrupting operations.</p>
+                </details>
+                <details style="background: var(--secondary-black); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem;">
+                    <summary style="cursor: pointer; font-weight: 500; font-size: 1.1rem;">What kind of support is included?</summary>
+                    <p style="margin-top: 1rem; color: var(--text-secondary);">Every Omega includes comprehensive support ranging from business hours to 24/7 coverage depending on your package. We also provide regular software updates and optimization services.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section">
+        <div class="container">
+            <div class="cta-section">
+                <h2>Ready to Own Your AI Future?</h2>
+                <p>Join the leaders who've eliminated AI subscriptions forever</p>
+                <div class="hero-cta" style="justify-content: center;">
+                    <a href="#demo" class="btn-primary">Schedule Your Demo</a>
+                    <a href="#download" class="btn-secondary">Download Brochure</a>
+                </div>
+                <p style="margin-top: 2rem; font-size: 0.9rem; color: var(--text-gray);">
+                    No commitment required. See Omega in action with your own use cases.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>Product</h4>
+                    <a href="#omega" class="footer-link">Omega Hardware</a>
+                    <a href="#os" class="footer-link">CorprexOS</a>
+                    <a href="#models" class="footer-link">AI Models</a>
+                    <a href="#pricing" class="footer-link">Pricing</a>
+                </div>
+                <div class="footer-column">
+                    <h4>Solutions</h4>
+                    <a href="automations.html" class="footer-link">Automations</a>
+                    <a href="#legal" class="footer-link">Legal</a>
+                    <a href="#healthcare" class="footer-link">Healthcare</a>
+                    <a href="#finance" class="footer-link">Finance</a>
+                    <a href="#government" class="footer-link">Government</a>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <a href="#docs" class="footer-link">Documentation</a>
+                    <a href="#blog" class="footer-link">Blog</a>
+                    <a href="#support" class="footer-link">Support</a>
+                    <a href="#faq" class="footer-link">FAQs</a>
+                </div>
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <a href="#about" class="footer-link">About Us</a>
+                    <a href="#careers" class="footer-link">Careers</a>
+                    <a href="#partners" class="footer-link">Partners</a>
+                    <a href="#contact" class="footer-link">Contact</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-tagline">Built for the Age of Sovereign AI</div>
+                <div style="color: var(--text-secondary);">© 2024 Corprex. All rights reserved.</div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to navigation
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(0, 0, 0, 0.98)';
+                nav.style.boxShadow = '0 2px 20px rgba(0,0,0,0.5)';
+            } else {
+                nav.style.background = 'rgba(0, 0, 0, 0.95)';
+                nav.style.boxShadow = 'none';
+            }
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('.section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'all 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>-item">
+                            <span class="advantage-icon">✓</span>
+                            <div class="advantage-text">
+                                <h4>Premium Hardware</h4>
+                                <p>Enterprise-grade components selected for 24/7 AI workloads. Whisper-quiet operation for office environments.</p>
+                            </div>
+                        </li>
+                        <li class="advantage
