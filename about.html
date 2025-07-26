@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Corprex | The Infrastructure Company for the Private AI Era</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-black: #000000;
+            --secondary-black: #0a0a0a;
+            --dark-gray: #1a1a1a;
+            --medium-gray: #2a2a2a;
+            --light-gray: #666666;
+            --text-gray: #999999;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --border-color: #333333;
+        }
+
+        body {
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--primary-black);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--text-primary);
+        }
+
+        .nav-cta {
+            background: var(--text-primary);
+            color: var(--primary-black);
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            letter-spacing: 0.02em;
+        }
+
+        .nav-cta:hover {
+            background: var(--text-secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding-top: 80px;
+            background: linear-gradient(180deg, var(--primary-black) 0%, var(--secondary-black) 100%);
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            background: var(--dark-gray);
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            padding: 0.5rem 1.5rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            letter-spacing: 0.02em;
+        }
+
+        .hero-text h1 {
+            font-size: 4rem;
+            font-weight: 300;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            letter-spacing: -0.02em;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-text .highlight {
+            font-weight: 600;
+        }
+
+        .hero-text p {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            line-height: 1.8;
+            font-weight: 300;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-bottom: 4rem;
+        }
+
+        .btn-primary {
+            background: var(--text-primary);
+            color: var(--primary-black);
+            padding: 1rem 2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-block;
+            letter-spacing: 0.02em;
+        }
+
+        .btn-primary:hover {
+            background: var(--text-secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            padding: 1rem 2rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-block;
+            letter-spacing: 0.02em;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Sections */
+        .section {
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .section-header p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* What We Do Section */
+        .what-we-do {
+            background: var(--secondary-black);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .what-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+            margin-top: 4rem;
+        }
+
+        .what-content h3 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .what-content p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .what-points {
+            list-style: none;
+        }
+
+        .what-point {
+            display: flex;
+            align-items: start;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .point-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--text-primary);
+            color: var(--primary-black);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 0.25rem;
+        }
+
+        .what-visual {
+            background: var(--dark-gray);
+            border-radius: 16px;
+            padding: 3rem;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .visual-title {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        .visual-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .stat-box {
+            background: var(--medium-gray);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+        }
+
+        /* Why Choose Us */
+        .why-choose {
+            background: var(--primary-black);
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .why-card {
+            background: var(--secondary-black);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .why-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transition: left 0.5s;
+        }
+
+        .why-card:hover::before {
+            left: 100%;
+        }
+
+        .why-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--text-primary);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.05);
+        }
+
+        .why-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--text-primary);
+            color: var(--primary-black);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+
+        .why-icon svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        .why-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .why-card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Team Section */
+        .team-section {
+            background: var(--secondary-black);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .team-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 4rem;
+        }
+
+        .team-intro h3 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+        }
+
+        .team-intro p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--secondary-black) 0%, #1a1a1a 100%);
+            border-radius: 24px;
+            padding: 4rem;
+            text-align: center;
+            margin: 4rem 2rem;
+        }
+
+        .cta-section h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+
+        .cta-section p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--secondary-black);
+            border-top: 1px solid var(--border-color);
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-column h4 {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .footer-link {
+            display: block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.5rem 0;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--text-primary);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border-color);
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-tagline {
+            color: var(--text-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .hero-text h1 {
+                font-size: 3rem;
+            }
+
+            .what-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .why-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .visual-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo"><a href="index.html" style="color: inherit; text-decoration: none;">CORPREX</a></div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html#omega" class="nav-link">Product</a>
+                </li>
+                <li class="nav-item">
+                    <a href="automations.html" class="nav-link">Automations</a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html#industries" class="nav-link">Industries</a>
+                </li>
+                <li class="nav-item">
+                    <a href="why-local-ai.html" class="nav-link">Why Local AI?</a>
+                </li>
+                <li class="nav-item">
+                    <a href="about.html" class="nav-link active">About Us</a>
+                </li>
+            </ul>
+            <a href="#demo" class="nav-cta">Request Demo</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <svg viewBox="0 0 24 24" fill="var(--text-secondary)" style="width: 16px; height: 16px; margin-right: 8px;">
+                    <path d="M3 9L12 2L21 9V20A2 2 0 0 1 19 22H5A2 2 0 0 1 3 20V9Z"/>
+                </svg>
+                Built for the Age of AI Sovereignty
+            </div>
+            <div class="hero-text">
+                <h1>We Build the <span class="highlight">Infrastructure</span> for Private AI</h1>
+                <p>
+                    Corprex exists to solve one critical problem: giving companies complete control over their AI destiny without compromising on performance or capability.
+                </p>
+                <div class="hero-cta">
+                    <a href="#demo" class="btn-primary">See Our Solution</a>
+                    <a href="#what-we-do" class="btn-secondary">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What We Do -->
+    <section class="section what-we-do" id="what-we-do">
+        <div class="container">
+            <div class="section-header">
+                <h2>What We Do</h2>
+                <p>We turn the promise of private AI into reality</p>
+            </div>
+            <div class="what-grid">
+                <div class="what-content">
+                    <h3>Complete AI Independence</h3>
+                    <p>
+                        We design, build, and deploy turnkey AI infrastructure that runs entirely on your premises. No cloud dependencies. No data sharing. No monthly fees.
+                    </p>
+                    <ul class="what-points">
+                        <li class="what-point">
+                            <div class="point-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 12L11 14L15 10"/>
+                                </svg>
+                            </div>
+                            <span><strong>Hardware:</strong> Custom Omega workstations optimized for AI workloads</span>
+                        </li>
+                        <li class="what-point">
+                            <div class="point-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 12L11 14L15 10"/>
+                                </svg>
+                            </div>
+                            <span><strong>Software:</strong> CorprexOS platform for model management and automation</span>
+                        </li>
+                        <li class="what-point">
+                            <div class="point-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 12L11 14L15 10"/>
+                                </svg>
+                            </div>
+                            <span><strong>Service:</strong> White-glove deployment and ongoing support</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="what-visual">
+                    <h4 class="visual-title">By the Numbers</h4>
+                    <div class="visual-stats">
+                        <div class="stat-box">
+                            <div class="stat-number">$2.4M</div>
+                            <div class="stat-label">Avg. Annual Savings</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number">6 Weeks</div>
+                            <div class="stat-label">Typical ROI</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number">100%</div>
+                            <div class="stat-label">Data Privacy</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number">∞</div>
+                            <div class="stat-label">Usage Limits</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="section why-choose">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Choose Corprex?</h2>
+                <p>We're not just a vendor—we're your strategic AI infrastructure partner</p>
+            </div>
+            <div class="why-grid">
+                <div class="why-card">
+                    <div class="why-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 1L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 1Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" fill="none"/>
+                        </svg>
+                    </div>
+                    <h3>Security First</h3>
+                    <p>Every decision we make prioritizes your data sovereignty. We believe your competitive intelligence should stay yours, forever.</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon">
+                        <svg viewBox="0 0 24 24">
+                            <polygon points="13,2 3,14 12,14 11,22 21,10 12,10" stroke="currentColor" stroke-width="2" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <h3>Proven Results</h3>
+                    <p>Our clients achieve 85% faster processing, eliminate monthly AI costs, and maintain 100% uptime. Results speak louder than promises.</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M17 21V19C17 16.79 15.21 15 13 15H5C2.79 15 1 16.79 1 19V21" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <path d="M23 21V19C23 16.79 21.21 15 19 15C18.4 15 17.85 15.13 17.35 15.35" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <path d="M16 3.13C16.85 2.43 17.93 2 19 2C21.21 2 23 3.79 23 6S21.21 10 19 10C17.93 10 16.85 9.57 16 8.87" stroke="currentColor" stroke-width="2" fill="none"/>
+                        </svg>
+                    </div>
+                    <h3>White-Glove Service</h3>
+                    <p>From initial consultation to ongoing optimization, we handle everything. You focus on your business; we handle your AI infrastructure.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="section team-section">
+        <div class="container">
+            <div class="team-intro">
+                <h3>Built by AI Infrastructure Experts</h3>
+                <p>
+                    Our team combines decades of experience in enterprise infrastructure, AI/ML engineering, and cybersecurity. We've seen the limitations of cloud AI firsthand and built Corprex to solve them. When you work with us, you're working with engineers who understand both the promise and the pitfalls of AI deployment at scale.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section">
+        <div class="container">
+            <div class="cta-section">
+                <h2>Ready to Own Your AI Future?</h2>
+                <p>Join the leaders who've eliminated AI subscriptions and taken control of their competitive advantage</p>
+                <div class="hero-cta" style="justify-content: center;">
+                    <a href="#demo" class="btn-primary">Schedule Demo</a>
+                    <a href="index.html" class="btn-secondary">Explore Omega</a>
+                </div>
+                <p style="margin-top: 2rem; font-size: 0.9rem; color: var(--text-gray);">
+                    See what true AI sovereignty looks like. No commitment required.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>Product</h4>
+                    <a href="index.html#omega" class="footer-link">Omega Hardware</a>
+                    <a href="index.html#os" class="footer-link">CorprexOS</a>
+                    <a href="index.html#models" class="footer-link">AI Models</a>
+                    <a href="index.html#pricing" class="footer-link">Pricing</a>
+                </div>
+                <div class="footer-column">
+                    <h4>Solutions</h4>
+                    <a href="automations.html" class="footer-link">Automations</a>
+                    <a href="index.html#legal" class="footer-link">Legal</a>
+                    <a href="index.html#healthcare" class="footer-link">Healthcare</a>
+                    <a href="index.html#finance" class="footer-link">Finance</a>
+                    <a href="index.html#government" class="footer-link">Government</a>
+                </div>
+                <div class="footer-column">
+                    <h4>Support</h4>
+                    <a href="index.html#docs" class="footer-link">Documentation</a>
+                    <a href="index.html#blog" class="footer-link">Blog</a>
+                    <a href="index.html#support" class="footer-link">Support</a>
+                    <a href="index.html#faq" class="footer-link">FAQs</a>
+                </div>
+                <div class="footer-column">
+                    <h4>About Us</h4>
+                    <a href="about.html" class="footer-link">Our Story</a>
+                    <a href="index.html#careers" class="footer-link">Careers</a>
+                    <a href="index.html#partners" class="footer-link">Partners</a>
+                    <a href="index.html#contact" class="footer-link">Contact</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-tagline">Built for the Age of AI Sovereignty</div>
+                <div style="color: var(--text-secondary);">© 2024 Corprex. All rights reserved.</div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to navigation
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(0, 0, 0, 0.98)';
+                nav.style.boxShadow = '0 2px 20px rgba(0,0,0,0.5)';
+            } else {
+                nav.style.background = 'rgba(0, 0, 0, 0.95)';
+                nav.style.boxShadow = 'none';
+            }
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections for animations
+        document.querySelectorAll('.section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'all 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
