@@ -1,0 +1,1431 @@
+                <!-- Legal Firm Example -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <div class="example-icon">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 3L20 12H16V20H8V12H4L12 3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M9 16H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M10 13H14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="example-title">Legal: Contract Review Process</div>
+                    </div>
+                    <ul class="automation-flow">
+                        <li class="flow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-text">Client uploads contract to secure portal</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-text">AI extracts key terms, dates, and obligations</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-text">Risk assessment against firm's database</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">4</div>
+                            <div class="step-text">Auto-route to appropriate attorney by specialty</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">5</div>
+                            <div class="step-text">Generate summary with recommendations</div>
+                        </li>
+                    </ul>
+                    <div class="results-summary">
+                        <h4>Results</h4>
+                        <p>65% faster onboarding, 90% reduction in errors, improved patient satisfaction</p>
+                    </div>
+                </div>
+
+                <!-- Financial Services Example -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <div class="example-icon">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <line x1="12" y1="1" x2="12" y2="23" stroke="currentColor" stroke-width="2"/>
+                                <path d="M17 5H9.5A3.5 3.5 0 0 0 6 8.5V8.5A3.5 3.5 0 0 0 9.5 12H14.5A3.5 3.5 0 0 1 18 15.5V15.5A3.5 3.5 0 0 1 14.5 19H6" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <div class="example-title">Finance: Fraud Detection</div>
+                    </div>
+                    <ul class="automation-flow">
+                        <li class="flow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-text">Real-time transaction monitoring</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-text">AI pattern analysis and anomaly detection</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-text">Cross-reference with known fraud indicators</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">4</div>
+                            <div class="step-text">Instant alerts to security team</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">5</div>
+                            <div class="step-text">Auto-generate compliance reports</div>
+                        </li>
+                    </ul>
+                    <div class="results-summary">
+                        <h4>Results</h4>
+                        <p>99.2% fraud detection rate, 0.3s response time, $12M prevented losses</p>
+                    </div>
+                </div>
+
+                <!-- Manufacturing Example -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <div class="example-icon">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M2 20H22V18H20V11H18V18H14V8H12V18H8V13H6V18H2V20Z" fill="currentColor"/>
+                                <path d="M7 4V2H17V4H19V6H5V4H7Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="example-title">Manufacturing: Quality Control</div>
+                    </div>
+                    <ul class="automation-flow">
+                        <li class="flow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-text">IoT sensors capture production data</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-text">AI monitors quality parameters in real-time</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-text">Predictive maintenance scheduling</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">4</div>
+                            <div class="step-text">Auto-adjust processes for optimization</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">5</div>
+                            <div class="step-text">Generate quality reports and insights</div>
+                        </li>
+                    </ul>
+                    <div class="results-summary">
+                        <h4>Results</h4>
+                        <p>40% reduction in defects, 25% less downtime, $3.2M operational savings</p>
+                    </div>
+                </div>
+
+                <!-- Retail Example -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <div class="example-icon">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 4V2C7 1.45 7.45 1 8 1H16C16.55 1 17 1.45 17 2V4H20C20.55 4 21 4.45 21 5S20.55 6 20 6H19V19C19 20.1 18.1 21 17 21H7C5.9 21 5 20.1 5 19V6H4C3.45 6 3 5.55 3 5S3.45 4 4 4H7ZM9 3V4H15V3H9ZM7 6V19H17V6H7Z" fill="currentColor"/>
+                                <path d="M9 8V17H11V8H9ZM13 8V17H15V8H13Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="example-title">Retail: Inventory Management</div>
+                    </div>
+                    <ul class="automation-flow">
+                        <li class="flow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-text">Sales data integration from all channels</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-text">AI demand forecasting and trend analysis</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-text">Dynamic pricing optimization</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">4</div>
+                            <div class="step-text">Auto-reorder low stock items</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">5</div>
+                            <div class="step-text">Generate supplier performance reports</div>
+                        </li>
+                    </ul>
+                    <div class="results-summary">
+                        <h4>Results</h4>
+                        <p>30% inventory reduction, 95% stockout prevention, $1.8M cost savings</p>
+                    </div>
+                </div>
+
+                <!-- Education Example -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <div class="example-icon">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M22 10V6C22 5.45 21.55 5 21 5H3C2.45 5 2 5.45 2 6V10C2 10.55 2.45 11 3 11H21C21.55 11 22 10.55 22 10Z" fill="currentColor"/>
+                                <path d="M2 12V18C2 18.55 2.45 19 3 19H21C21.55 19 22 18.55 22 18V12H2Z" fill="currentColor"/>
+                                <circle cx="6" cy="15.5" r="1.5" fill="white"/>
+                                <circle cx="12" cy="15.5" r="1.5" fill="white"/>
+                                <circle cx="18" cy="15.5" r="1.5" fill="white"/>
+                            </svg>
+                        </div>
+                        <div class="example-title">Education: Student Assessment</div>
+                    </div>
+                    <ul class="automation-flow">
+                        <li class="flow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-text">Student performance data analyzed</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-text">AI identifies learning gaps</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-text">Generate personalized study plans</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">4</div>
+                            <div class="step-text">Auto-grade assignments and tests</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">5</div>
+                            <div class="step-text">Provide feedback to educators</div>
+                        </li>
+                    </ul>
+                    <div class="results-summary">
+                        <h4>Results</h4>
+                        <p>60% improvement in learning outcomes, 75% time savings on grading</p>
+                    </div>
+                </div>>
+                    <div class="results-summary">
+                        <h4>Results</h4>
+                        <p>78% faster review times, 95% fewer missed clauses, $850K annual savings</p>
+                    </div>
+                </div>
+
+                <!-- Healthcare Example -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <div class="example-icon">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M22 12H18L15 21L9 3L6 12H2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="example-title">Healthcare: Patient Onboarding</div>
+                    </div>
+                    <ul class="automation-flow">
+                        <li class="flow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-text">Patient completes digital intake form</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-text">AI validates insurance and eligibility</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-text">Medical history analysis and risk scoring</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">4</div>
+                            <div class="step-text">Auto-schedule with appropriate specialist</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">5</div>
+                            <div class="step-text">Update EHR and send welcome packet</div>
+                        </li>
+                    </ul<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automations - Corprex Omega | Private AI Workflows</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-black: #000000;
+            --secondary-black: #0a0a0a;
+            --dark-gray: #1a1a1a;
+            --medium-gray: #2a2a2a;
+            --light-gray: #666666;
+            --text-gray: #999999;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --border-color: #333333;
+        }
+
+        body {
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--primary-black);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--text-primary);
+        }
+
+        .nav-cta {
+            background: var(--text-primary);
+            color: var(--primary-black);
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            letter-spacing: 0.02em;
+        }
+
+        .nav-cta:hover {
+            background: var(--text-secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding-top: 80px;
+            background: linear-gradient(180deg, var(--primary-black) 0%, var(--secondary-black) 100%);
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--dark-gray);
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            padding: 0.5rem 1.5rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            letter-spacing: 0.02em;
+        }
+
+        .hero-text h1 {
+            font-size: 4.5rem;
+            font-weight: 300;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            letter-spacing: -0.02em;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-text .highlight {
+            font-weight: 600;
+        }
+
+        .hero-text p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            line-height: 1.8;
+            font-weight: 300;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-bottom: 4rem;
+        }
+
+        .btn-primary {
+            background: var(--text-primary);
+            color: var(--primary-black);
+            padding: 1rem 2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-block;
+            letter-spacing: 0.02em;
+        }
+
+        .btn-primary:hover {
+            background: var(--text-secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            padding: 1rem 2rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-block;
+            letter-spacing: 0.02em;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .social-proof {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            opacity: 0.6;
+            margin-top: 2rem;
+        }
+
+        .social-proof span {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+        }
+
+        /* Key Features Section */
+        .key-features {
+            padding: 6rem 0;
+            background: var(--secondary-black);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--text-primary);
+            color: var(--primary-black);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 1.5rem;
+        }
+
+        .feature-item h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .feature-item p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Value Proposition */
+        .value-prop {
+            padding: 6rem 0;
+            background: var(--primary-black);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .section-header p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .value-card {
+            background: var(--secondary-black);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .value-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transition: left 0.5s;
+        }
+
+        .value-card:hover::before {
+            left: 100%;
+        }
+
+        .value-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--text-primary);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.05);
+        }
+
+        .value-number {
+            font-size: 3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-gray) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .value-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .value-card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Industry Examples */
+        .industry-examples {
+            padding: 6rem 0;
+            background: var(--secondary-black);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .example-card {
+            background: var(--dark-gray);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .example-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--text-primary);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.05);
+        }
+
+        .example-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .example-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--text-primary);
+            color: var(--primary-black);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .example-title {
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+
+        .automation-flow {
+            list-style: none;
+        }
+
+        .flow-step {
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .flow-step:last-child {
+            border-bottom: none;
+        }
+
+        .step-number {
+            width: 30px;
+            height: 30px;
+            background: var(--medium-gray);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .step-text {
+            color: var(--text-secondary);
+        }
+
+        .results-summary {
+            background: var(--medium-gray);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .results-summary h4 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .results-summary p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Integrations Section */
+        .integrations {
+            padding: 6rem 0;
+            background: var(--primary-black);
+        }
+
+        .integrations-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .integration-item {
+            background: var(--secondary-black);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .integration-item:hover {
+            transform: translateY(-3px);
+            border-color: var(--text-primary);
+        }
+
+        .integration-logo {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .integration-name {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--secondary-black) 0%, #1a1a1a 100%);
+            border-radius: 24px;
+            padding: 4rem;
+            text-align: center;
+            margin: 4rem 2rem;
+        }
+
+        .cta-section h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+
+        .cta-section p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .cta-stats {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            margin: 3rem 0;
+        }
+
+        .cta-stat {
+            text-align: center;
+        }
+
+        .cta-stat h3 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .cta-stat p {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            margin: 0;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--secondary-black);
+            border-top: 1px solid var(--border-color);
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-column h4 {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .footer-link {
+            display: block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.5rem 0;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--text-primary);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border-color);
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-tagline {
+            color: var(--text-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .hero-text h1 {
+                font-size: 3rem;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .value-grid,
+            .examples-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .integrations-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .cta-stats {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo"><a href="index.html" style="color: inherit; text-decoration: none;">CORPREX</a></div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html#omega" class="nav-link">Product</a>
+                </li>
+                <li class="nav-item">
+                    <a href="automations.html" class="nav-link active">Automations</a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html#industries" class="nav-link">Industries</a>
+                </li>
+                <li class="nav-item">
+                    <a href="why-local-ai.html" class="nav-link">Why Local AI?</a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html#about" class="nav-link">About Us</a>
+                </li>
+            </ul>
+            <a href="#demo" class="nav-cta">Request Demo</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">✨ Private AI Automation Platform</div>
+            <div class="hero-text">
+                <h1>Automate Everything <br>Without Compromise</h1>
+                <p>
+                    Transform your business with Omega's built-in automation engine. Run 500+ pre-built workflows, create custom processes, and integrate with any system - all while keeping your data 100% private and secure.
+                </p>
+                <div class="hero-cta">
+                    <a href="#demo" class="btn-primary">Start Free Trial</a>
+                    <a href="#examples" class="btn-secondary">See Examples</a>
+                </div>
+                <div class="social-proof">
+                    <span>Trusted by 1,000+ companies</span>
+                    <span>•</span>
+                    <span>40,000+ hours saved monthly</span>
+                    <span>•</span>
+                    <span>Zero data breaches</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Features Section -->
+    <section class="key-features">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 1L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 1Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>100% Private</h3>
+                    <p>Your data never leaves your infrastructure. Full air-gap capability.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <polygon points="13,2 3,14 12,14 11,22 21,10 12,10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <h3>No-Code Builder</h3>
+                    <p>Visual workflow designer. Anyone can create automations in minutes.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 12V20A2 2 0 0 0 6 22H18A2 2 0 0 0 20 20V12" stroke="currentColor" stroke-width="2"/>
+                            <polyline points="16,6 12,2 8,6" stroke="currentColor" stroke-width="2"/>
+                            <line x1="12" y1="2" x2="12" y2="15" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h3>500+ Integrations</h3>
+                    <p>Connect to any system, API, or database. Pre-built connectors included.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9.5 2A2.5 2.5 0 0 0 7 4.5V7A2.5 2.5 0 0 0 9.5 9.5H12V7A2.5 2.5 0 0 0 9.5 2Z" fill="currentColor"/>
+                            <path d="M14.5 2A2.5 2.5 0 0 1 17 4.5V7A2.5 2.5 0 0 1 14.5 9.5H12V7A2.5 2.5 0 0 1 14.5 2Z" fill="currentColor"/>
+                            <path d="M12 9.5V12A2.5 2.5 0 0 1 9.5 14.5A2.5 2.5 0 0 0 7 17V19.5A2.5 2.5 0 0 0 9.5 22A2.5 2.5 0 0 0 12 19.5V17A2.5 2.5 0 0 1 14.5 14.5A2.5 2.5 0 0 0 17 12V9.5H14.5A2.5 2.5 0 0 0 12 12V9.5Z" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <h3>AI-Powered</h3>
+                    <p>Intelligent decision-making, natural language processing, and smart triggers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Value Proposition -->
+    <section class="value-prop">
+        <div class="container">
+            <div class="section-header">
+                <h2>The Automation Advantage</h2>
+                <p>See why leading companies choose Omega for mission-critical automation</p>
+            </div>
+            <div class="value-grid">
+                <div class="value-card">
+                    <div class="value-number">85%</div>
+                    <h3>Time Savings</h3>
+                    <p>Average reduction in manual work across all automated processes. Free your team to focus on high-value strategic initiatives.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-number">$2.4M</div>
+                    <h3>Annual ROI</h3>
+                    <p>Average cost savings per organization through eliminated subscriptions, reduced errors, and improved efficiency.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-number">99.9%</div>
+                    <h3>Reliability</h3>
+                    <p>Uptime guarantee with built-in failover, monitoring, and automatic error recovery systems.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Industry Examples -->
+    <section class="industry-examples" id="examples">
+        <div class="container">
+            <div class="section-header">
+                <h2>Real-World Automation Examples</h2>
+                <p>See how industry leaders automate complex workflows</p>
+            </div>
+            <div class="examples-grid">
+                <!-- Legal Firm Example -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <div class="example-icon">⚖️</div>
+                        <div class="example-title">Legal: Contract Review Process</div>
+                    </div>
+                    <ul class="automation-flow">
+                        <li class="flow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-text">Client uploads contract to secure portal</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-text">AI extracts key terms, dates, and obligations</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-text">Risk assessment against firm's database</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">4</div>
+                            <div class="step-text">Auto-route to appropriate attorney by specialty</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">5</div>
+                            <div class="step-text">Generate summary with recommendations</div>
+                        </li>
+                    </ul>
+                    <div class="results-summary">
+                        <h4>Results</h4>
+                        <p>78% faster review times, 95% fewer missed clauses, $850K annual savings</p>
+                    </div>
+                </div>
+
+                <!-- Healthcare Example -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <div class="example-icon">🏥</div>
+                        <div class="example-title">Healthcare: Patient Onboarding</div>
+                    </div>
+                    <ul class="automation-flow">
+                        <li class="flow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-text">Patient completes digital intake form</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-text">AI validates insurance and eligibility</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-text">Medical history analysis and risk scoring</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">4</div>
+                            <div class="step-text">Auto-schedule with appropriate specialist</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">5</div>
+                            <div class="step-text">Update EHR and send welcome packet</div>
+                        </li>
+                    </ul>
+                    <div class="results-summary">
+                        <h4>Results</h4>
+                        <p>65% faster onboarding, 90% reduction in errors, improved patient satisfaction</p>
+                    </div>
+                </div>
+
+                <!-- Financial Services Example -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <div class="example-icon">💰</div>
+                        <div class="example-title">Finance: Fraud Detection</div>
+                    </div>
+                    <ul class="automation-flow">
+                        <li class="flow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-text">Real-time transaction monitoring</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-text">AI pattern analysis and anomaly detection</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-text">Cross-reference with known fraud indicators</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">4</div>
+                            <div class="step-text">Instant alerts to security team</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">5</div>
+                            <div class="step-text">Auto-generate compliance reports</div>
+                        </li>
+                    </ul>
+                    <div class="results-summary">
+                        <h4>Results</h4>
+                        <p>99.2% fraud detection rate, 0.3s response time, $12M prevented losses</p>
+                    </div>
+                </div>
+
+                <!-- Manufacturing Example -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <div class="example-icon">🏭</div>
+                        <div class="example-title">Manufacturing: Quality Control</div>
+                    </div>
+                    <ul class="automation-flow">
+                        <li class="flow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-text">IoT sensors capture production data</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-text">AI monitors quality parameters in real-time</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-text">Predictive maintenance scheduling</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">4</div>
+                            <div class="step-text">Auto-adjust processes for optimization</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">5</div>
+                            <div class="step-text">Generate quality reports and insights</div>
+                        </li>
+                    </ul>
+                    <div class="results-summary">
+                        <h4>Results</h4>
+                        <p>40% reduction in defects, 25% less downtime, $3.2M operational savings</p>
+                    </div>
+                </div>
+
+                <!-- Retail Example -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <div class="example-icon">🛒</div>
+                        <div class="example-title">Retail: Inventory Management</div>
+                    </div>
+                    <ul class="automation-flow">
+                        <li class="flow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-text">Sales data integration from all channels</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-text">AI demand forecasting and trend analysis</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-text">Dynamic pricing optimization</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">4</div>
+                            <div class="step-text">Auto-reorder low stock items</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">5</div>
+                            <div class="step-text">Generate supplier performance reports</div>
+                        </li>
+                    </ul>
+                    <div class="results-summary">
+                        <h4>Results</h4>
+                        <p>30% inventory reduction, 95% stockout prevention, $1.8M cost savings</p>
+                    </div>
+                </div>
+
+                <!-- Education Example -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <div class="example-icon">🎓</div>
+                        <div class="example-title">Education: Student Assessment</div>
+                    </div>
+                    <ul class="automation-flow">
+                        <li class="flow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-text">Student performance data analyzed</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-text">AI identifies learning gaps</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-text">Generate personalized study plans</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">4</div>
+                            <div class="step-text">Auto-grade assignments and tests</div>
+                        </li>
+                        <li class="flow-step">
+                            <div class="step-number">5</div>
+                            <div class="step-text">Provide feedback to educators</div>
+                        </li>
+                    </ul>
+                    <div class="results-summary">
+                        <h4>Results</h4>
+                        <p>60% improvement in learning outcomes, 75% time savings on grading</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Integrations Section -->
+    <section class="integrations">
+        <div class="container">
+            <div class="section-header">
+                <h2>Connect Everything</h2>
+                <p>500+ pre-built integrations with popular business tools</p>
+            </div>
+            <div class="integrations-grid">
+                <div class="integration-item">
+                    <div class="integration-logo">
+                        <svg viewBox="0 0 24 24" fill="#00A1E0">
+                            <path d="M4.8 7.2H9.6V12H4.8V7.2ZM9.6 12H14.4V16.8H9.6V12ZM14.4 7.2H19.2V12H14.4V7.2Z"/>
+                        </svg>
+                    </div>
+                    <div class="integration-name">Salesforce</div>
+                </div>
+                <div class="integration-item">
+                    <div class="integration-logo">
+                        <svg viewBox="0 0 24 24" fill="#EA4335">
+                            <path d="M22.2 12C22.2 11.2 22.1 10.5 21.9 9.7H12V14.1H17.8C17.5 15.6 16.6 16.9 15.3 17.7V20.6H18.9C21 18.7 22.2 15.6 22.2 12Z"/>
+                            <path d="M12 23C15.2 23 17.9 21.9 19.9 20.1L16.3 17.2C15.2 18 13.7 18.5 12 18.5C8.9 18.5 6.3 16.5 5.4 13.8H1.7V16.8C3.7 20.7 7.5 23 12 23Z"/>
+                        </svg>
+                    </div>
+                    <div class="integration-name">Gmail</div>
+                </div>
+                <div class="integration-item">
+                    <div class="integration-logo">
+                        <svg viewBox="0 0 24 24" fill="#4A154B">
+                            <path d="M5.04 15.1C5.04 16.3 6.01 17.26 7.21 17.26H16.8C18 17.26 18.96 16.3 18.96 15.1V8.9C18.96 7.7 18 6.74 16.8 6.74H7.21C6.01 6.74 5.04 7.7 5.04 8.9V15.1Z"/>
+                        </svg>
+                    </div>
+                    <div class="integration-name">Slack</div>
+                </div>
+                <div class="integration-item">
+                    <div class="integration-logo">
+                        <svg viewBox="0 0 24 24" fill="#000000">
+                            <path d="M4 4V20H20V4H4ZM18 18H6V6H18V18Z"/>
+                            <path d="M8 8H16V10H8V8ZM8 12H16V14H8V12Z"/>
+                        </svg>
+                    </div>
+                    <div class="integration-name">Notion</div>
+                </div>
+                <div class="integration-item">
+                    <div class="integration-logo">
+                        <svg viewBox="0 0 24 24" fill="#FF7A59">
+                            <path d="M12 2C6.48 2 2 6.48 2 12S6.48 22 12 22 22 17.52 22 12 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12S7.59 4 12 4 20 7.59 20 12 16.41 20 12 20Z"/>
+                            <path d="M8 12L11 15L16 10"/>
+                        </svg>
+                    </div>
+                    <div class="integration-name">HubSpot</div>
+                </div>
+                <div class="integration-item">
+                    <div class="integration-logo">
+                        <svg viewBox="0 0 24 24" fill="#FCBF49">
+                            <path d="M4 4H20V20H4V4ZM6 6V18H18V6H6Z"/>
+                            <path d="M8 8H16V10H8V8ZM8 12H16V14H8V12Z"/>
+                        </svg>
+                    </div>
+                    <div class="integration-name">Airtable</div>
+                </div>
+                <div class="integration-item">
+                    <div class="integration-logo">
+                        <svg viewBox="0 0 24 24" fill="#6C6CFF">
+                            <path d="M12 2L2 7L12 12L22 7L12 2Z"/>
+                            <path d="M2 17L12 22L22 17"/>
+                            <path d="M2 12L12 17L22 12"/>
+                        </svg>
+                    </div>
+                    <div class="integration-name">Monday</div>
+                </div>
+                <div class="integration-item">
+                    <div class="integration-logo">
+                        <svg viewBox="0 0 24 24" fill="#635BFF">
+                            <path d="M13.3 11.2C13.3 9.57 11.97 8.24 10.34 8.24S7.38 9.57 7.38 11.2V12.8C7.38 14.43 8.71 15.76 10.34 15.76S13.3 14.43 13.3 12.8V11.2Z"/>
+                            <path d="M16.62 8.24C14.99 8.24 13.66 9.57 13.66 11.2V12.8C13.66 14.43 14.99 15.76 16.62 15.76S19.58 14.43 19.58 12.8V8.24H16.62Z"/>
+                        </svg>
+                    </div>
+                    <div class="integration-name">Stripe</div>
+                </div>
+                <div class="integration-item">
+                    <div class="integration-logo">
+                        <svg viewBox="0 0 24 24" fill="#0079BF">
+                            <path d="M21 3H3C1.9 3 1 3.9 1 5V19C1 20.1 1.9 21 3 21H21C22.1 21 23 20.1 23 19V5C23 3.9 22.1 3 21 3ZM21 19H3V5H21V19Z"/>
+                            <path d="M5 7H19V9H5V7ZM5 11H13V13H5V11ZM5 15H11V17H5V15Z"/>
+                        </svg>
+                    </div>
+                    <div class="integration-name">Trello</div>
+                </div>
+                <div class="integration-item">
+                    <div class="integration-logo">
+                        <svg viewBox="0 0 24 24" fill="#F06A6A">
+                            <circle cx="6" cy="12" r="3" fill="currentColor"/>
+                            <circle cx="18" cy="12" r="3" fill="currentColor"/>
+                            <path d="M8 12H16" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <div class="integration-name">Asana</div>
+                </div>
+                <div class="integration-item">
+                    <div class="integration-logo">
+                        <svg viewBox="0 0 24 24" fill="#0061FF">
+                            <path d="M7 6C7 4.9 7.9 4 9 4H15C16.1 4 17 4.9 17 6V18C17 19.1 16.1 20 15 20H9C7.9 20 7 19.1 7 18V6Z"/>
+                            <path d="M5 8V16C5 17.1 5.9 18 7 18H17C18.1 18 19 17.1 19 16V8"/>
+                        </svg>
+                    </div>
+                    <div class="integration-name">Dropbox</div>
+                </div>
+                <div class="integration-item">
+                    <div class="integration-logo">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12S6.48 22 12 22 22 17.52 22 12 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12S7.59 4 12 4 20 7.59 20 12 16.41 20 12 20Z"/>
+                            <path d="M13 7H11V13L16.2 16.2L17.2 14.8L13 12.4V7Z"/>
+                        </svg>
+                    </div>
+                    <div class="integration-name">+489 More</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section">
+        <div class="container">
+            <div class="cta-section">
+                <h2>Ready to Automate Everything?</h2>
+                <p>Join 1,000+ companies saving 40,000+ hours monthly</p>
+                <div class="cta-stats">
+                    <div class="cta-stat">
+                        <h3>24hrs</h3>
+                        <p>Average setup time</p>
+                    </div>
+                    <div class="cta-stat">
+                        <h3>6wks</h3>
+                        <p>Full ROI achieved</p>
+                    </div>
+                    <div class="cta-stat">
+                        <h3>99.9%</h3>
+                        <p>Customer satisfaction</p>
+                    </div>
+                </div>
+                <div class="hero-cta" style="justify-content: center;">
+                    <a href="#demo" class="btn-primary">Start Free Trial</a>
+                    <a href="index.html" class="btn-secondary">Learn More</a>
+                </div>
+                <p style="margin-top: 2rem; font-size: 0.9rem; color: var(--text-gray);">
+                    No credit card required. 30-day money-back guarantee.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>Product</h4>
+                    <a href="index.html#omega" class="footer-link">Omega Hardware</a>
+                    <a href="index.html#os" class="footer-link">CorprexOS</a>
+                    <a href="index.html#models" class="footer-link">AI Models</a>
+                    <a href="index.html#pricing" class="footer-link">Pricing</a>
+                </div>
+                <div class="footer-column">
+                    <h4>Solutions</h4>
+                    <a href="automations.html" class="footer-link">Automations</a>
+                    <a href="index.html#legal" class="footer-link">Legal</a>
+                    <a href="index.html#healthcare" class="footer-link">Healthcare</a>
+                    <a href="index.html#finance" class="footer-link">Finance</a>
+                    <a href="index.html#government" class="footer-link">Government</a>
+                </div>
+                <div class="footer-column">
+                    <h4>Support</h4>
+                    <a href="index.html#docs" class="footer-link">Documentation</a>
+                    <a href="index.html#blog" class="footer-link">Blog</a>
+                    <a href="index.html#support" class="footer-link">Support</a>
+                    <a href="index.html#faq" class="footer-link">FAQs</a>
+                </div>
+                <div class="footer-column">
+                    <h4>About Us</h4>
+                    <a href="index.html#about" class="footer-link">Our Story</a>
+                    <a href="index.html#careers" class="footer-link">Careers</a>
+                    <a href="index.html#partners" class="footer-link">Partners</a>
+                    <a href="index.html#contact" class="footer-link">Contact</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-tagline">Built for the Age of Private AI</div>
+                <div style="color: var(--text-secondary);">© 2024 Corprex. All rights reserved.</div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to navigation
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(0, 0, 0, 0.98)';
+                nav.style.boxShadow = '0 2px 20px rgba(0,0,0,0.5)';
+            } else {
+                nav.style.background = 'rgba(0, 0, 0, 0.95)';
+                nav.style.boxShadow = 'none';
+            }
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections for animations
+        document.querySelectorAll('.key-features, .value-prop, .industry-examples, .integrations').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'all 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
