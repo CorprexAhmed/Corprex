@@ -631,6 +631,9 @@
         const auth = firebase.auth();
         const db = firebase.firestore();
 
+        // Enable persistence for auth
+        auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+
         // Check authentication
         let authChecked = false;
         auth.onAuthStateChanged((user) => {
