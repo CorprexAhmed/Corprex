@@ -618,35 +618,71 @@
     <script>
         // Firebase configuration - REPLACE WITH YOUR CONFIG
         const firebaseConfig = {
-            apiKey: "AIzaSyBiUDyNj1R4-QBRDZY-mxN0fPg_4TdSDCY",
-            authDomain: "corprexnewspage.firebaseapp.com",
-            projectId: "corprexnewspage",
-            storageBucket: "corprexnewspage.firebasestorage.app",
-            messagingSenderId: "957002833855",
-            appId: "1:957002833855:web:61e87ca3cbfcc91ca52eb8",
-            measurementId: "G-HHHM9Q5PG1"
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
         };
 
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
+        
+        // Hide loading overlay
+        document.getElementById('loadingOverlay').style.display = 'none';
 
-        // Check authentication - FIXED VERSION
+        // Enable persistence for auth
+        auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+
+        // Check authentication
         auth.onAuthStateChanged((user) => {
             if (user) {
                 // User is logged in
                 document.getElementById('userInfo').textContent = user.email;
+                document.getElementById('loadingOverlay').style.display = 'none';
                 loadArticles();
             } else {
-                // Not logged in - redirect to login
+                // Not logged in
                 window.location.href = 'adminlogin.html';
             }
         });
+            // Add loading overlay initially
+            document.getElementById('loadingOverlay').style.display = 'flex';
+
+            // Wait for auth to be ready
+            let authInitialized = false;
+
+            auth.onAuthStateChanged((user) => {
+                if (authInitialized) return;
+                authInitialized = true;
+                
+                setTimeout(() => {
+                    if (user) {
+                        // User is signed in
+                        document.getElementById('userInfo').textContent = user.email;
+                        document.getElementById('loadingOverlay').style.display = 'none';
+                        loadArticles();
+                    } else {
+                        // No user, redirect to login
+                        window.location.replace('adminlogin.html');
+                    }
+                }, 500); // Give Firebase time to initialize
+            });
+
+            // Fallback - if auth doesn't respond in 3 seconds, redirect to login
+            setTimeout(() => {
+                if (!authInitialized) {
+                    window.location.replace('adminlogin.html');
+                }
+            }, 3000);
 
         // Load articles from Firestore
         async function loadArticles() {
             try {
+                showLoading(true);
                 const snapshot = await db.collection('articles')
                     .orderBy('date', 'desc')
                     .get();
@@ -658,27 +694,19 @@
                 
                 renderArticles(articles);
             } catch (error) {
-                console.error('Error loading articles:', error);
-                // If orderBy fails, try without it
-                try {
-                    const snapshot = await db.collection('articles').get();
-                    const articles = [];
-                    snapshot.forEach(doc => {
-                        articles.push({ id: doc.id, ...doc.data() });
-                    });
-                    renderArticles(articles);
-                } catch (fallbackError) {
-                    showMessage('Error loading articles: ' + fallbackError.message, 'error');
-                }
+                showMessage('Error loading articles: ' + error.message, 'error');
+            } finally {
+                showLoading(false);
             }
         }
 
         // Form submission
         const articleForm = document.getElementById('articleForm');
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
 
         articleForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            console.log('Form submitted!');
             
             const submitBtn = document.getElementById('submitBtn');
             const submitText = document.getElementById('submitText');
@@ -696,17 +724,13 @@
                     category: document.getElementById('articleCategory').value,
                     summary: document.getElementById('articleSummary').value,
                     image: document.getElementById('articleImage').value || 'https://via.placeholder.com/400x300?text=Corprex+News',
-                    date: new Date().toISOString(),
+                    date: firebase.firestore.FieldValue.serverTimestamp(),
                     published: true,
                     createdBy: auth.currentUser.email
                 };
                 
-                console.log('Adding article:', article);
-                
                 // Add to Firestore
                 await db.collection('articles').add(article);
-                
-                console.log('Article added successfully!');
                 
                 // Show success message
                 showMessage('Article published successfully!', 'success');
@@ -718,7 +742,6 @@
                 // Reload articles
                 loadArticles();
             } catch (error) {
-                console.error('Error:', error);
                 showMessage('Error publishing article: ' + error.message, 'error');
             } finally {
                 submitBtn.disabled = false;
@@ -727,7 +750,7 @@
         });
 
         // Extract article data from URL
-        function extractArticleData() {
+        async function extractArticleData() {
             const url = document.getElementById('articleUrl').value;
             
             if (!url) {
@@ -738,8 +761,10 @@
             // Show loading state
             showMessage('Extracting article data...', 'success');
             
-            // Simulated extraction
+            // In a real implementation, you would use a backend API to scrape the article
+            // For demo purposes, we'll simulate extraction
             setTimeout(() => {
+                // Simulated extraction
                 const mockData = {
                     title: 'Revolutionary AI Hardware Transforms Enterprise Computing',
                     summary: 'Corprex\'s latest innovation in private AI infrastructure sets new standards for enterprise data sovereignty and performance. The breakthrough technology enables companies to run advanced AI models entirely on-premises.',
@@ -793,7 +818,7 @@
             emptyState.style.display = 'none';
             
             grid.innerHTML = articles.map(article => {
-                const date = article.date ? new Date(article.date).toLocaleDateString() : 'Just now';
+                const date = article.date ? new Date(article.date.seconds * 1000).toLocaleDateString() : 'Just now';
                 return `
                     <div class="article-card" data-id="${article.id}">
                         <img src="${article.image}" alt="${article.title}" class="article-image" 
@@ -833,26 +858,32 @@
         async function deleteArticle(id) {
             if (confirm('Are you sure you want to delete this article?')) {
                 try {
+                    showLoading(true);
                     await db.collection('articles').doc(id).delete();
                     showMessage('Article deleted successfully', 'success');
                     loadArticles();
                 } catch (error) {
                     showMessage('Error deleting article: ' + error.message, 'error');
+                } finally {
+                    showLoading(false);
                 }
             }
         }
 
         // Show message
         function showMessage(message, type) {
-            const elem = type === 'success' ? 
-                document.getElementById('successMessage') : 
-                document.getElementById('errorMessage');
+            const elem = type === 'success' ? successMessage : errorMessage;
             elem.textContent = message;
             elem.style.display = 'block';
             
             setTimeout(() => {
                 elem.style.display = 'none';
             }, 3000);
+        }
+
+        // Show/hide loading overlay
+        function showLoading(show) {
+            document.getElementById('loadingOverlay').style.display = show ? 'flex' : 'none';
         }
 
         // Logout
