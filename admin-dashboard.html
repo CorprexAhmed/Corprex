@@ -637,19 +637,35 @@
         // Check authentication
         let authChecked = false;
         auth.onAuthStateChanged((user) => {
-            if (authChecked) return; // Prevent multiple redirects
-            authChecked = true;
-    
-            if (!user) {
-                // Small delay to ensure Firebase is ready
+            // Add loading overlay initially
+            document.getElementById('loadingOverlay').style.display = 'flex';
+
+            // Wait for auth to be ready
+            let authInitialized = false;
+
+            auth.onAuthStateChanged((user) => {
+                if (authInitialized) return;
+                authInitialized = true;
+                
                 setTimeout(() => {
-                 window.location.href = 'adminlogin.html';
-              }, 100);
-            } else {
-                document.getElementById('userInfo').textContent = user.email;
-                loadArticles();
-            }
-        });
+                    if (user) {
+                        // User is signed in
+                        document.getElementById('userInfo').textContent = user.email;
+                        document.getElementById('loadingOverlay').style.display = 'none';
+                        loadArticles();
+                    } else {
+                        // No user, redirect to login
+                        window.location.replace('adminlogin.html');
+                    }
+                }, 500); // Give Firebase time to initialize
+            });
+
+            // Fallback - if auth doesn't respond in 3 seconds, redirect to login
+            setTimeout(() => {
+                if (!authInitialized) {
+                    window.location.replace('adminlogin.html');
+                }
+        }, 3000);
 
         // Load articles from Firestore
         async function loadArticles() {
