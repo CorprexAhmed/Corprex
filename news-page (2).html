@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News & Updates - Corprex | Latest in Private AI Infrastructure</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-black: #000000;
+            --secondary-black: #0a0a0a;
+            --dark-gray: #1a1a1a;
+            --medium-gray: #2a2a2a;
+            --light-gray: #666666;
+            --text-gray: #999999;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --border-color: #333333;
+        }
+
+        body {
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--primary-black);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--text-primary);
+        }
+
+        .nav-cta {
+            background: var(--text-primary);
+            color: var(--primary-black);
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            letter-spacing: 0.02em;
+        }
+
+        .nav-cta:hover {
+            background: var(--text-secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 10rem 0 6rem;
+            background: linear-gradient(180deg, var(--primary-black) 0%, var(--secondary-black) 100%);
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            background: var(--dark-gray);
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            padding: 0.5rem 1.5rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            letter-spacing: 0.02em;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 300;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-title .highlight {
+            font-weight: 600;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Filter Tabs */
+        .filter-section {
+            background: var(--secondary-black);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 2rem 0;
+            position: sticky;
+            top: 80px;
+            z-index: 100;
+        }
+
+        .filter-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .filter-tab:hover {
+            color: var(--text-primary);
+            border-color: var(--text-primary);
+        }
+
+        .filter-tab.active {
+            background: var(--text-primary);
+            color: var(--primary-black);
+            border-color: var(--text-primary);
+        }
+
+        /* News Grid */
+        .news-section {
+            padding: 4rem 0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        /* Featured Article */
+        .featured-article {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            background: var(--secondary-black);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            overflow: hidden;
+            margin-bottom: 3rem;
+            transition: all 0.3s ease;
+        }
+
+        .featured-article:hover {
+            transform: translateY(-5px);
+            border-color: var(--text-primary);
+            box-shadow: 0 20px 40px rgba(255, 255, 255, 0.05);
+        }
+
+        .featured-image {
+            height: 400px;
+            overflow: hidden;
+        }
+
+        .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .featured-article:hover .featured-image img {
+            transform: scale(1.05);
+        }
+
+        .featured-content {
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .featured-badge {
+            background: var(--text-primary);
+            color: var(--primary-black);
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 1rem;
+            width: fit-content;
+        }
+
+        .featured-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .featured-excerpt {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .featured-meta {
+            display: flex;
+            gap: 2rem;
+            font-size: 0.875rem;
+            color: var(--text-gray);
+        }
+
+        /* Article Card */
+        .article-card {
+            background: var(--secondary-black);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--text-primary);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.05);
+        }
+
+        .article-image {
+            height: 220px;
+            overflow: hidden;
+            background: var(--dark-gray);
+        }
+
+        .article-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .article-card:hover .article-image img {
+            transform: scale(1.05);
+        }
+
+        .article-content {
+            padding: 2rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .article-category {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+        }
+
+        .article-title {
+            font-size: 1.5rem;
+            font-weight: 500;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .article-excerpt {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            flex: 1;
+        }
+
+        .article-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.875rem;
+            color: var(--text-gray);
+        }
+
+        .read-more {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.3s ease;
+        }
+
+        .read-more:hover {
+            gap: 0.75rem;
+        }
+
+        .read-more svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Load More */
+        .load-more-container {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .btn-load-more {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.02em;
+        }
+
+        .btn-load-more:hover {
+            border-color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 6rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        /* Newsletter CTA */
+        .newsletter-section {
+            background: var(--secondary-black);
+            border-top: 1px solid var(--border-color);
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .newsletter-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .newsletter-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+
+        .newsletter-subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            background: var(--dark-gray);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.875rem 1rem;
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        .newsletter-input:focus {
+            outline: none;
+            border-color: var(--text-primary);
+        }
+
+        .newsletter-button {
+            background: var(--text-primary);
+            color: var(--primary-black);
+            border: none;
+            padding: 0.875rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .newsletter-button:hover {
+            background: var(--text-secondary);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--secondary-black);
+            border-top: 1px solid var(--border-color);
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-column h4 {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .footer-link {
+            display: block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.5rem 0;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--text-primary);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border-color);
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-tagline {
+            color: var(--text-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .featured-article {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-image {
+                height: 300px;
+            }
+
+            .featured-title {
+                font-size: 2rem;
+            }
+
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .filter-container {
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo"><a href="index.html" style="color: inherit; text-decoration: none;">CORPREX</a></div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html#omega" class="nav-link">Product</a>
+                </li>
+                <li class="nav-item">
+                    <a href="automations.html" class="nav-link">Automations</a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html#industries" class="nav-link">Industries</a>
+                </li>
+                <li class="nav-item">
+                    <a href="why-local-ai.html" class="nav-link">Why Local AI?</a>
+                </li>
+                <li class="nav-item">
+                    <a href="news.html" class="nav-link active">News</a>
+                </li>
+                <li class="nav-item">
+                    <a href="about.html" class="nav-link">About Us</a>
+                </li>
+            </ul>
+            <a href="#demo" class="nav-cta">Request Demo</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <svg viewBox="0 0 24 24" fill="var(--text-secondary)" style="width: 16px; height: 16px; margin-right: 8px;">
+                    <path d="M2 3h20v3H2zm0 4h20v10H2zm0 11h20v3H2z"/>
+                </svg>
+                News & Updates
+            </div>
+            <h1 class="hero-title">
+                The Latest in <span class="highlight">Private AI</span>
+            </h1>
+            <p class="hero-subtitle">
+                Stay informed about the cutting edge of AI sovereignty, infrastructure innovations, and industry insights from the Corprex team.
+            </p>
+        </div>
+    </section>
+
+    <!-- Filter Tabs -->
+    <section class="filter-section">
+        <div class="filter-container">
+            <button class="filter-tab active" onclick="filterArticles('all')">All Articles</button>
+            <button class="filter-tab" onclick="filterArticles('announcements')">Announcements</button>
+            <button class="filter-tab" onclick="filterArticles('insights')">Industry Insights</button>
+            <button class="filter-tab" onclick="filterArticles('technical')">Technical</button>
+            <button class="filter-tab" onclick="filterArticles('case-studies')">Case Studies</button>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section class="news-section">
+        <div class="container">
+            <div id="newsContent">
+                <!-- Dynamic content will be loaded here -->
+            </div>
+            
+            <!-- Empty State -->
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <div class="empty-state-icon">📰</div>
+                <h3>No articles yet</h3>
+                <p>Check back soon for the latest updates from Corprex</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter CTA -->
+    <section class="newsletter-section">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2 class="newsletter-title">Stay Ahead of the Curve</h2>
+                <p class="newsletter-subtitle">Get the latest insights on private AI infrastructure delivered to your inbox</p>
+                <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+                    <input 
+                        type="email" 
+                        class="newsletter-input" 
+                        placeholder="Enter your email"
+                        required
+                    >
+                    <button type="submit" class="newsletter-button">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>Product</h4>
+                    <a href="index.html#omega" class="footer-link">Omega Hardware</a>
+                    <a href="index.html#os" class="footer-link">CorprexOS</a>
+                    <a href="index.html#models" class="footer-link">AI Models</a>
+                    <a href="index.html#pricing" class="footer-link">Pricing</a>
+                </div>
+                <div class="footer-column">
+                    <h4>Solutions</h4>
+                    <a href="automations.html" class="footer-link">Automations</a>
+                    <a href="index.html#legal" class="footer-link">Legal</a>
+                    <a href="index.html#healthcare" class="footer-link">Healthcare</a>
+                    <a href="index.html#finance" class="footer-link">Finance</a>
+                    <a href="index.html#government" class="footer-link">Government</a>
+                </div>
+                <div class="footer-column">
+                    <h4>Support</h4>
+                    <a href="index.html#docs" class="footer-link">Documentation</a>
+                    <a href="index.html#blog" class="footer-link">Blog</a>
+                    <a href="index.html#support" class="footer-link">Support</a>
+                    <a href="index.html#faq" class="footer-link">FAQs</a>
+                </div>
+                <div class="footer-column">
+                    <h4>About Us</h4>
+                    <a href="about.html" class="footer-link">Our Story</a>
+                    <a href="index.html#careers" class="footer-link">Careers</a>
+                    <a href="index.html#partners" class="footer-link">Partners</a>
+                    <a href="index.html#contact" class="footer-link">Contact</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-tagline">Built for the Age of AI Sovereignty</div>
+                <div style="color: var(--text-secondary);">© 2024 Corprex. All rights reserved.</div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Load articles from localStorage
+        let articles = JSON.parse(localStorage.getItem('corprexArticles')) || [];
+        let currentFilter = 'all';
+        let articlesPerPage = 6;
+        let currentPage = 1;
+
+        // Initialize
+        renderArticles();
+
+        function renderArticles() {
+            const newsContent = document.getElementById('newsContent');
+            const emptyState = document.getElementById('emptyState');
+            
+            // Filter articles based on current filter
+            let filteredArticles = currentFilter === 'all' 
+                ? articles 
+                : articles.filter(a => a.category === currentFilter);
+            
+            if (filteredArticles.length === 0) {
+                newsContent.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+            
+            newsContent.style.display = 'block';
+            emptyState.style.display = 'none';
+            
+            // Paginate articles
+            const totalArticles = filteredArticles.length;
+            const startIndex = 0;
+            const endIndex = currentPage * articlesPerPage;
+            const displayArticles = filteredArticles.slice(startIndex, endIndex);
+            
+            let html = '';
+            
+            // Featured article (first article)
+            if (displayArticles.length > 0 && currentPage === 1) {
+                const featured = displayArticles[0];
+                html += `
+                    <article class="featured-article" onclick="openArticle('${featured.url}')">
+                        <div class="featured-image">
+                            <img src="${featured.image}" alt="${featured.title}" 
+                                 onerror="this.src='https://via.placeholder.com/800x400?text=Corprex+News'">
+                        </div>
+                        <div class="featured-content">
+                            <span class="featured-badge">Featured</span>
+                            <h2 class="featured-title">${featured.title}</h2>
+                            <p class="featured-excerpt">${featured.summary}</p>
+                            <div class="featured-meta">
+                                <span>${featured.author || 'Corprex Team'}</span>
+                                <span>${formatDate(featured.date)}</span>
+                            </div>
+                        </div>
+                    </article>
+                `;
+            }
+            
+            // Regular articles grid
+            html += '<div class="news-grid">';
+            
+            const startIdx = currentPage === 1 ? 1 : 0;
+            for (let i = startIdx; i < displayArticles.length; i++) {
+                const article = displayArticles[i];
+                html += `
+                    <article class="article-card" onclick="openArticle('${article.url}')">
+                        <div class="article-image">
+                            <img src="${article.image}" alt="${article.title}" 
+                                 onerror="this.src='https://via.placeholder.com/400x300?text=Corprex+News'">
+                        </div>
+                        <div class="article-content">
+                            <div class="article-category">${article.category || 'Industry News'}</div>
+                            <h3 class="article-title">${article.title}</h3>
+                            <p class="article-excerpt">${article.summary.substring(0, 150)}...</p>
+                            <div class="article-footer">
+                                <div class="article-meta">
+                                    <span>${article.author || 'Corprex Team'}</span>
+                                    <span>${formatDate(article.date)}</span>
+                                </div>
+                                <a href="${article.url}" class="read-more" onclick="event.stopPropagation()">
+                                    Read more
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                `;
+            }
+            
+            html += '</div>';
+            
+            // Load more button
+            if (endIndex < totalArticles) {
+                html += `
+                    <div class="load-more-container">
+                        <button class="btn-load-more" onclick="loadMore()">
+                            Load More Articles (${totalArticles - endIndex} remaining)
+                        </button>
+                    </div>
+                `;
+            }
+            
+            newsContent.innerHTML = html;
+        }
+
+        function filterArticles(filter) {
+            currentFilter = filter;
+            currentPage = 1;
+            
+            // Update active tab
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            renderArticles();
+        }
+
+        function loadMore() {
+            currentPage++;
+            renderArticles();
+        }
+
+        function openArticle(url) {
+            window.open(url, '_blank');
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return date.toLocaleDateString('en-US', options);
+        }
+
+        function subscribeNewsletter(event) {
+            event.preventDefault();
+            alert('Thank you for subscribing! You\'ll receive our latest updates.');
+            event.target.reset();
+        }
+
+        // Add sample articles if none exist
+        if (articles.length === 0) {
+            const sampleArticles = [
+                {
+                    id: 1,
+                    title: "Corprex Announces Revolutionary Omega 2.0: The Future of Private AI",
+                    summary: "Today, we're excited to unveil Omega 2.0, our next-generation AI infrastructure platform that delivers 10x performance improvements while maintaining complete data sovereignty. This breakthrough represents a fundamental shift in how enterprises can leverage AI without compromising security or control.",
+                    author: "Corprex Team",
+                    date: new Date().toISOString(),
+                    url: "https://example.com/omega-2-announcement",
+                    image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80",
+                    category: "announcements"
+                },
+                {
+                    id: 2,
+                    title: "Why Fortune 500 Companies Are Abandoning Cloud AI for Local Infrastructure",
+                    summary: "A comprehensive analysis of the growing trend among enterprise leaders to bring AI capabilities in-house. Learn why companies are investing millions in private AI infrastructure and how it's transforming their competitive advantage in the marketplace.",
+                    author: "Sarah Chen",
+                    date: new Date(Date.now() - 86400000).toISOString(),
+                    url: "https://example.com/fortune-500-local-ai",
+                    image: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=800&q=80",
+                    category: "insights"
+                },
+                {
+                    id: 3,
+                    title: "Technical Deep Dive: Optimizing LLM Performance on Local Hardware",
+                    summary: "Our engineering team shares best practices for maximizing the performance of large language models on private infrastructure. From GPU optimization to memory management, discover the techniques that make local AI deployment not just viable, but superior.",
+                    author: "Dr. Michael Torres",
+                    date: new Date(Date.now() - 172800000).toISOString(),
+                    url: "https://example.com/llm-optimization-guide",
+                    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80",
+                    category: "technical"
+                }
+            ];
+            
+            localStorage.setItem('corprexArticles', JSON.stringify(sampleArticles));
+            articles = sampleArticles;
+            renderArticles();
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to navigation
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(0, 0, 0, 0.98)';
+                nav.style.boxShadow = '0 2px 20px rgba(0,0,0,0.5)';
+            } else {
+                nav.style.background = 'rgba(0, 0, 0, 0.95)';
+                nav.style.boxShadow = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
