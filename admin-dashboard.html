@@ -27,12 +27,6 @@
             --success-color: #4CAF50;
         }
 
-        /* CRITICAL: Hide everything by default */
-        html {
-            visibility: hidden;
-            opacity: 0;
-        }
-
         body {
             font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             background: var(--primary-black);
@@ -465,9 +459,9 @@
             <span class="admin-badge">ADMIN</span>
         </div>
         <div class="admin-actions">
-            <span class="user-info" id="userInfo"></span>
+            <span class="user-info" id="userInfo">Loading...</span>
             <a href="news.html" class="btn-view-site">View News Page</a>
-            <button class="btn-logout" onclick="logout()">Logout</button>
+            <button class="btn-logout" id="logoutBtn">Logout</button>
         </div>
     </nav>
 
@@ -558,7 +552,7 @@
                     <button type="submit" class="btn-primary" id="submitBtn">
                         <span id="submitText">Publish Article</span>
                     </button>
-                    <button type="button" class="btn-secondary" onclick="extractArticleData()">
+                    <button type="button" class="btn-secondary" id="extractBtn">
                         Auto-Extract from URL
                     </button>
                     <button type="reset" class="btn-secondary">Clear Form</button>
@@ -589,258 +583,218 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
     <script>
-        // CRITICAL: Block all execution until auth is checked
-        (function() {
-            // Store the original location
-            const currentLocation = window.location.pathname;
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBiUDyNj1R4-QBRDZY-mxN0fPg_4TdSDCY",
+            authDomain: "corprexnewspage.firebaseapp.com",
+            projectId: "corprexnewspage",
+            storageBucket: "corprexnewspage.firebasestorage.app",
+            messagingSenderId: "957002833855",
+            appId: "1:957002833855:web:61e87ca3cbfcc91ca52eb8",
+            measurementId: "G-HHHM9Q5PG1"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // Check if user is logged in
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                document.getElementById('userInfo').textContent = user.email;
+                loadArticles();
+            } else {
+                window.location.href = 'adminlogin.html';
+            }
+        });
+
+        // Load articles
+        async function loadArticles() {
+            try {
+                const snapshot = await db.collection('articles').get();
+                const articles = [];
+                
+                snapshot.forEach(doc => {
+                    articles.push({ id: doc.id, ...doc.data() });
+                });
+                
+                // Sort by date
+                articles.sort((a, b) => {
+                    const dateA = new Date(a.date || 0);
+                    const dateB = new Date(b.date || 0);
+                    return dateB - dateA;
+                });
+                
+                renderArticles(articles);
+            } catch (error) {
+                console.error('Error loading articles:', error);
+                showMessage('Error loading articles', 'error');
+            }
+        }
+
+        // Render articles
+        function renderArticles(articles) {
+            const grid = document.getElementById('articlesGrid');
+            const emptyState = document.getElementById('emptyState');
+            const count = document.getElementById('articleCount');
             
-            // Only proceed if we're actually on the admin dashboard
-            if (!currentLocation.includes('admin-dashboard')) {
+            count.textContent = `${articles.length} article${articles.length !== 1 ? 's' : ''}`;
+            
+            if (articles.length === 0) {
+                grid.style.display = 'none';
+                emptyState.style.display = 'block';
                 return;
             }
-
-            // Firebase configuration
-            const firebaseConfig = {
-                apiKey: "AIzaSyBiUDyNj1R4-QBRDZY-mxN0fPg_4TdSDCY",
-                authDomain: "corprexnewspage.firebaseapp.com",
-                projectId: "corprexnewspage",
-                storageBucket: "corprexnewspage.firebasestorage.app",
-                messagingSenderId: "957002833855",
-                appId: "1:957002833855:web:61e87ca3cbfcc91ca52eb8",
-                measurementId: "G-HHHM9Q5PG1"
-            };
-
-            // Initialize Firebase
-            firebase.initializeApp(firebaseConfig);
-            const auth = firebase.auth();
-            const db = firebase.firestore();
-
-            // Create a promise that resolves when auth state is determined
-            const authPromise = new Promise((resolve) => {
-                const unsubscribe = auth.onAuthStateChanged((user) => {
-                    unsubscribe(); // Immediately unsubscribe to prevent multiple calls
-                    resolve(user);
-                });
-            });
-
-            // Check auth and proceed
-            authPromise.then((user) => {
-                if (!user) {
-                    // Not logged in - redirect immediately
-                    window.location.replace('adminlogin.html');
-                } else {
-                    // User is logged in - show the page
-                    document.documentElement.style.visibility = 'visible';
-                    document.documentElement.style.opacity = '1';
-                    
-                    // Set user info
-                    document.getElementById('userInfo').textContent = user.email;
-                    
-                    // Initialize the dashboard
-                    initializeDashboard();
-                }
-            });
-
-            // Global functions
-            window.auth = auth;
-            window.db = db;
-
-            function initializeDashboard() {
-                // Load articles
-                loadArticles();
-
-                // Set up form submission
-                document.getElementById('articleForm').addEventListener('submit', handleFormSubmit);
-
-                // Set up image preview
-                document.getElementById('articleImage').addEventListener('input', (e) => {
-                    updateImagePreview(e.target.value);
-                });
-            }
-
-            async function loadArticles() {
-                try {
-                    const snapshot = await db.collection('articles')
-                        .orderBy('date', 'desc')
-                        .limit(50)
-                        .get();
-                    
-                    const articles = [];
-                    snapshot.forEach(doc => {
-                        articles.push({ id: doc.id, ...doc.data() });
-                    });
-                    
-                    renderArticles(articles);
-                } catch (error) {
-                    console.error('Error loading articles:', error);
-                    try {
-                        const snapshot = await db.collection('articles').get();
-                        const articles = [];
-                        snapshot.forEach(doc => {
-                            articles.push({ id: doc.id, ...doc.data() });
-                        });
-                        renderArticles(articles);
-                    } catch (fallbackError) {
-                        showMessage('Error loading articles', 'error');
-                    }
-                }
-            }
-
-            async function handleFormSubmit(e) {
-                e.preventDefault();
-                
-                const submitBtn = document.getElementById('submitBtn');
-                const submitText = document.getElementById('submitText');
-                
-                submitBtn.disabled = true;
-                submitText.innerHTML = 'Publishing<span class="loading-spinner"></span>';
-                
-                try {
-                    const article = {
-                        url: document.getElementById('articleUrl').value,
-                        title: document.getElementById('articleTitle').value,
-                        author: document.getElementById('articleAuthor').value || 'Corprex Team',
-                        category: document.getElementById('articleCategory').value,
-                        summary: document.getElementById('articleSummary').value,
-                        image: document.getElementById('articleImage').value || 'https://via.placeholder.com/400x300?text=Corprex+News',
-                        date: new Date().toISOString(),
-                        published: true,
-                        createdBy: auth.currentUser.email
-                    };
-                    
-                    await db.collection('articles').add(article);
-                    
-                    showMessage('Article published successfully!', 'success');
-                    document.getElementById('articleForm').reset();
-                    document.getElementById('imagePreview').style.display = 'none';
-                    
-                    await loadArticles();
-                    
-                } catch (error) {
-                    console.error('Error:', error);
-                    showMessage('Error: ' + error.message, 'error');
-                } finally {
-                    submitBtn.disabled = false;
-                    submitText.textContent = 'Publish Article';
-                }
-            }
-
-            function renderArticles(articles) {
-                const grid = document.getElementById('articlesGrid');
-                const emptyState = document.getElementById('emptyState');
-                const count = document.getElementById('articleCount');
-                
-                count.textContent = `${articles.length} article${articles.length !== 1 ? 's' : ''}`;
-                
-                if (articles.length === 0) {
-                    grid.style.display = 'none';
-                    emptyState.style.display = 'block';
-                    return;
-                }
-                
-                grid.style.display = 'grid';
-                emptyState.style.display = 'none';
-                
-                grid.innerHTML = articles.map(article => {
-                    const date = article.date ? new Date(article.date).toLocaleDateString() : 'Just now';
-                    return `
-                        <div class="article-card" data-id="${article.id}">
-                            <img src="${article.image}" alt="${article.title}" class="article-image" 
-                                 onerror="this.src='https://via.placeholder.com/400x300?text=Corprex+News'">
-                            <div class="article-content">
-                                <h3 class="article-title">${article.title}</h3>
-                                <p class="article-excerpt">${article.summary.substring(0, 150)}...</p>
-                                <div class="article-meta">
-                                    <span>${date}</span>
-                                    <div class="article-actions">
-                                        <button class="btn-icon" onclick="viewArticle('${article.url}')" title="View">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                                                <circle cx="12" cy="12" r="3"/>
-                                            </svg>
-                                        </button>
-                                        <button class="btn-icon delete" onclick="deleteArticle('${article.id}')" title="Delete">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <polyline points="3 6 5 6 21 6"/>
-                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </div>
+            
+            grid.style.display = 'grid';
+            emptyState.style.display = 'none';
+            
+            grid.innerHTML = articles.map(article => `
+                <div class="article-card">
+                    <img src="${article.image || 'https://via.placeholder.com/400x300?text=Corprex+News'}" 
+                         alt="${article.title}" 
+                         class="article-image" 
+                         onerror="this.src='https://via.placeholder.com/400x300?text=Corprex+News'">
+                    <div class="article-content">
+                        <h3 class="article-title">${article.title}</h3>
+                        <p class="article-excerpt">${article.summary.substring(0, 150)}...</p>
+                        <div class="article-meta">
+                            <span>${formatDate(article.date)}</span>
+                            <div class="article-actions">
+                                <button class="btn-icon" onclick="window.open('${article.url}', '_blank')" title="View">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                        <circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                </button>
+                                <button class="btn-icon delete" onclick="deleteArticle('${article.id}')" title="Delete">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="3 6 5 6 21 6"/>
+                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                                    </svg>
+                                </button>
                             </div>
                         </div>
-                    `;
-                }).join('');
-            }
+                    </div>
+                </div>
+            `).join('');
+        }
 
-            function updateImagePreview(url) {
-                const preview = document.getElementById('imagePreview');
-                const img = document.getElementById('previewImg');
-                
-                if (url) {
-                    img.src = url;
-                    preview.style.display = 'block';
-                } else {
-                    preview.style.display = 'none';
-                }
-            }
+        // Format date
+        function formatDate(dateString) {
+            if (!dateString) return 'Just now';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric' 
+            });
+        }
 
-            function showMessage(message, type) {
-                const elem = document.getElementById(type === 'success' ? 'successMessage' : 'errorMessage');
-                elem.textContent = message;
-                elem.style.display = 'block';
-                
-                setTimeout(() => {
-                    elem.style.display = 'none';
-                }, 4000);
+        // Delete article
+        async function deleteArticle(id) {
+            if (!confirm('Are you sure you want to delete this article?')) return;
+            
+            try {
+                await db.collection('articles').doc(id).delete();
+                showMessage('Article deleted successfully', 'success');
+                loadArticles();
+            } catch (error) {
+                console.error('Error deleting article:', error);
+                showMessage('Error deleting article', 'error');
             }
+        }
 
-            // Global functions
-            window.viewArticle = function(url) {
-                window.open(url, '_blank');
-            }
+        // Show message
+        function showMessage(text, type) {
+            const elem = document.getElementById(type === 'success' ? 'successMessage' : 'errorMessage');
+            elem.textContent = text;
+            elem.style.display = 'block';
+            setTimeout(() => elem.style.display = 'none', 3000);
+        }
 
-            window.deleteArticle = async function(id) {
-                if (!confirm('Are you sure you want to delete this article?')) return;
+        // Form submission
+        document.getElementById('articleForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const submitText = document.getElementById('submitText');
+            
+            submitBtn.disabled = true;
+            submitText.innerHTML = 'Publishing<span class="loading-spinner"></span>';
+            
+            try {
+                const article = {
+                    url: document.getElementById('articleUrl').value,
+                    title: document.getElementById('articleTitle').value,
+                    author: document.getElementById('articleAuthor').value || 'Corprex Team',
+                    category: document.getElementById('articleCategory').value,
+                    summary: document.getElementById('articleSummary').value,
+                    image: document.getElementById('articleImage').value || 'https://via.placeholder.com/400x300?text=Corprex+News',
+                    date: new Date().toISOString(),
+                    published: true
+                };
                 
-                try {
-                    await db.collection('articles').doc(id).delete();
-                    showMessage('Article deleted successfully', 'success');
-                    await loadArticles();
-                } catch (error) {
-                    showMessage('Error: ' + error.message, 'error');
-                }
+                await db.collection('articles').add(article);
+                
+                showMessage('Article published successfully!', 'success');
+                e.target.reset();
+                document.getElementById('imagePreview').style.display = 'none';
+                loadArticles();
+                
+            } catch (error) {
+                console.error('Error publishing article:', error);
+                showMessage('Error publishing article', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitText.textContent = 'Publish Article';
             }
+        });
 
-            window.extractArticleData = function() {
-                const url = document.getElementById('articleUrl').value;
-                
-                if (!url) {
-                    showMessage('Please enter a URL first', 'error');
-                    return;
-                }
-                
-                showMessage('Extracting article data...', 'success');
-                
-                setTimeout(() => {
-                    document.getElementById('articleTitle').value = 'Revolutionary AI Hardware Transforms Enterprise Computing';
-                    document.getElementById('articleSummary').value = 'Corprex\'s latest innovation in private AI infrastructure sets new standards.';
-                    document.getElementById('articleImage').value = 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80';
-                    
-                    updateImagePreview('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80');
-                    showMessage('Article data extracted!', 'success');
-                }, 1500);
+        // Image preview
+        document.getElementById('articleImage').addEventListener('input', (e) => {
+            const preview = document.getElementById('imagePreview');
+            const img = document.getElementById('previewImg');
+            
+            if (e.target.value) {
+                img.src = e.target.value;
+                preview.style.display = 'block';
+            } else {
+                preview.style.display = 'none';
             }
+        });
 
-            window.logout = async function() {
-                try {
-                    await auth.signOut();
-                    window.location.replace('adminlogin.html');
-                } catch (error) {
-                    window.location.replace('adminlogin.html');
-                }
+        // Extract button
+        document.getElementById('extractBtn').addEventListener('click', () => {
+            const url = document.getElementById('articleUrl').value;
+            
+            if (!url) {
+                showMessage('Please enter a URL first', 'error');
+                return;
             }
-        })();
+            
+            // Mock data
+            document.getElementById('articleTitle').value = 'Sample Article Title';
+            document.getElementById('articleSummary').value = 'This is a sample summary for your article.';
+            document.getElementById('articleImage').value = 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80';
+            
+            // Trigger image preview
+            document.getElementById('articleImage').dispatchEvent(new Event('input'));
+            
+            showMessage('Sample data added!', 'success');
+        });
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            try {
+                await auth.signOut();
+                window.location.href = 'adminlogin.html';
+            } catch (error) {
+                console.error('Logout error:', error);
+                window.location.href = 'adminlogin.html';
+            }
+        });
     </script>
 </body>
 </html>
