@@ -118,37 +118,47 @@
             box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
         }
 
-        /* News Alert Banner */
-        .news-alert {
-            background: linear-gradient(135deg, var(--dark-gray) 0%, var(--medium-gray) 100%);
-            border-bottom: 1px solid var(--border-color);
-            padding: 1rem 1.5rem;
+        /* News Alert Popup */
+        .news-popup {
             position: fixed;
-            top: 60px;
-            width: 100%;
+            bottom: 2rem;
+            right: 2rem;
+            max-width: 400px;
+            background: var(--secondary-black);
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
             z-index: 999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            animation: slideIn 0.5s ease-out;
+            transition: all 0.3s ease;
         }
 
-        .news-alert-content {
-            max-width: 1400px;
-            width: 100%;
+        @keyframes slideIn {
+            from {
+                transform: translateX(calc(100% + 2rem));
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .news-popup.hidden {
+            transform: translateX(calc(100% + 2rem));
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .news-popup-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 1rem;
+            margin-bottom: 1rem;
         }
 
-        .news-alert-text {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            flex: 1;
-        }
-
-        .news-alert-badge {
+        .news-popup-badge {
             background: var(--text-primary);
             color: var(--primary-black);
             padding: 0.25rem 0.75rem;
@@ -157,45 +167,85 @@
             font-weight: 600;
             letter-spacing: 0.05em;
             text-transform: uppercase;
-            white-space: nowrap;
+            animation: pulse 2s ease-in-out infinite;
         }
 
-        .news-alert-message {
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .news-popup-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1.25rem;
+            line-height: 1;
+            padding: 0.25rem;
+            transition: color 0.3s ease;
+        }
+
+        .news-popup-close:hover {
+            color: var(--text-primary);
+        }
+
+        .news-popup-content {
+            margin-bottom: 1rem;
+        }
+
+        .news-popup-message {
             color: var(--text-secondary);
             font-size: 0.9rem;
-            line-height: 1.4;
+            line-height: 1.5;
         }
 
-        .news-alert-message strong {
+        .news-popup-message strong {
             color: var(--text-primary);
             font-weight: 500;
+            display: block;
+            margin-bottom: 0.5rem;
         }
 
-        .news-alert-link {
-            color: var(--text-primary);
+        .news-popup-link {
+            background: var(--text-primary);
+            color: var(--primary-black);
             text-decoration: none;
             font-weight: 500;
             font-size: 0.9rem;
-            padding: 0.5rem 1rem;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            display: inline-block;
             transition: all 0.3s ease;
-            white-space: nowrap;
+            width: 100%;
+            text-align: center;
         }
 
-        .news-alert-link:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: var(--text-primary);
+        .news-popup-link:hover {
+            background: var(--text-secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
         }
 
-        /* Adjust hero section for news alert */
+        /* Mobile News Popup */
+        @media (max-width: 768px) {
+            .news-popup {
+                bottom: 1rem;
+                left: 1rem;
+                right: 1rem;
+                max-width: none;
+                padding: 1.25rem;
+            }
+        }
+
+        /* Hero section normal positioning */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
-            padding: 10rem 1.5rem 4rem;
+            padding: 6rem 1.5rem 4rem;
             background: linear-gradient(180deg, var(--primary-black) 0%, var(--secondary-black) 100%);
             margin-top: 0;
         }
@@ -807,30 +857,6 @@
 
         /* Mobile Responsive */
         @media (max-width: 768px) {
-            /* News Alert */
-            .news-alert {
-                padding: 0.75rem 1rem;
-            }
-
-            .news-alert-content {
-                flex-direction: column;
-                text-align: center;
-                gap: 0.75rem;
-            }
-
-            .news-alert-text {
-                flex-direction: column;
-            }
-
-            .news-alert-message {
-                font-size: 0.85rem;
-            }
-
-            .news-alert-link {
-                width: 100%;
-                text-align: center;
-            }
-
             /* Mobile Menu */
             .mobile-menu-btn {
                 display: block;
@@ -864,7 +890,7 @@
 
             /* Hero */
             .hero {
-                padding: 7rem 1rem 3rem;
+                padding: 6rem 1rem 3rem;
                 min-height: 100vh;
             }
 
@@ -1113,18 +1139,19 @@
         </div>
     </nav>
 
-    <!-- News Alert Banner -->
-    <div class="news-alert">
-        <div class="news-alert-content">
-            <div class="news-alert-text">
-                <span class="news-alert-badge">Breaking</span>
-                <span class="news-alert-message">
-                    <strong>Major enterprises facing data breaches and soaring AI costs.</strong> 
-                    See why Fortune 500 companies are switching to private AI infrastructure.
-                </span>
-            </div>
-            <a href="news.html" class="news-alert-link">Read Latest →</a>
+    <!-- News Alert Popup -->
+    <div class="news-popup" id="newsPopup">
+        <div class="news-popup-header">
+            <span class="news-popup-badge">BREAKING</span>
+            <button class="news-popup-close" onclick="closeNewsPopup()">✕</button>
         </div>
+        <div class="news-popup-content">
+            <p class="news-popup-message">
+                <strong>Major enterprises facing data breaches and soaring AI costs.</strong>
+                See why Fortune 500 companies are switching to private AI infrastructure.
+            </p>
+        </div>
+        <a href="news.html" class="news-popup-link">Read Latest News →</a>
     </div>
 
     <!-- Hero Section -->
@@ -1412,10 +1439,39 @@
     </footer>
 
     <script>
-        // Mobile menu toggle
-        function toggleMenu() {
-            const navMenu = document.getElementById('navMenu');
-            navMenu.classList.toggle('active');
+        // Close news popup
+        function closeNewsPopup() {
+            document.getElementById('newsPopup').classList.add('hidden');
+            // Save to localStorage that user closed it
+            localStorage.setItem('newsPopupClosed', 'true');
+        }
+
+        // Check if user already closed the popup
+        window.addEventListener('load', function() {
+            if (localStorage.getItem('newsPopupClosed') === 'true') {
+                document.getElementById('newsPopup').classList.add('hidden');
+            }
+        });
+
+        // Show popup again after 24 hours
+        setInterval(function() {
+            const lastClosed = localStorage.getItem('newsPopupClosedTime');
+            if (lastClosed) {
+                const now = new Date().getTime();
+                const timeDiff = now - parseInt(lastClosed);
+                if (timeDiff > 24 * 60 * 60 * 1000) { // 24 hours
+                    localStorage.removeItem('newsPopupClosed');
+                    localStorage.removeItem('newsPopupClosedTime');
+                    document.getElementById('newsPopup').classList.remove('hidden');
+                }
+            }
+        }, 60000); // Check every minute
+
+        // Save timestamp when closing
+        function closeNewsPopup() {
+            document.getElementById('newsPopup').classList.add('hidden');
+            localStorage.setItem('newsPopupClosed', 'true');
+            localStorage.setItem('newsPopupClosedTime', new Date().getTime().toString());
         }
 
         // Close menu when clicking outside
@@ -1478,6 +1534,12 @@
             section.style.transition = 'all 0.6s ease';
             observer.observe(section);
         });
+
+        // Mobile menu toggle
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
     </script>
 </body>
 </html>
