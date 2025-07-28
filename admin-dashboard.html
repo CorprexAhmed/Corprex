@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,6 +34,13 @@
             color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
+            /* Hide content initially to prevent flash */
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        body.loaded {
+            opacity: 1;
         }
 
         /* Admin Navigation */
@@ -119,6 +127,7 @@
             max-width: 1400px;
             margin: 0 auto;
             padding: 6rem 2rem 2rem;
+            display: none; /* Hide initially */
         }
 
         /* Dashboard Header */
@@ -427,25 +436,17 @@
             opacity: 0.5;
         }
 
-        /* Loading Overlay */
-        .loading-overlay {
+        /* Auth Check Message */
+        .auth-check {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-        }
-
-        .loading-content {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             text-align: center;
+            color: var(--text-secondary);
         }
 
-        .loading-content .loading-spinner {
+        .auth-check .loading-spinner {
             width: 50px;
             height: 50px;
             border-width: 4px;
@@ -477,16 +478,14 @@
     </style>
 </head>
 <body>
-    <!-- Loading Overlay -->
-    <div class="loading-overlay" id="loadingOverlay" style="display: none;">
-        <div class="loading-content">
-            <div class="loading-spinner"></div>
-            <p>Loading...</p>
-        </div>
+    <!-- Auth Check Message -->
+    <div class="auth-check" id="authCheck">
+        <div class="loading-spinner"></div>
+        <p>Checking authentication...</p>
     </div>
 
     <!-- Admin Navigation -->
-    <nav class="admin-nav">
+    <nav class="admin-nav" style="display: none;" id="adminNav">
         <div class="admin-logo">
             CORPREX
             <span class="admin-badge">ADMIN</span>
@@ -499,7 +498,7 @@
     </nav>
 
     <!-- Main Container -->
-    <div class="admin-container">
+    <div class="admin-container" id="adminContainer">
         <!-- Dashboard Header -->
         <div class="dashboard-header">
             <h1 class="dashboard-title">News Management</h1>
@@ -563,7 +562,7 @@
                     <textarea 
                         id="articleSummary" 
                         class="form-textarea" 
-                        placeholder="Brief summary of the article (will be auto-generated from URL)"
+                        placeholder="Brief summary of the article"
                         required
                     ></textarea>
                 </div>
@@ -574,7 +573,7 @@
                         type="url" 
                         id="articleImage" 
                         class="form-input" 
-                        placeholder="https://example.com/image.jpg (will be auto-detected)"
+                        placeholder="https://example.com/image.jpg"
                     >
                     <div class="image-preview" id="imagePreview">
                         <img src="" alt="Preview" id="previewImg">
@@ -616,75 +615,70 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
     <script>
-        // Firebase configuration - REPLACE WITH YOUR CONFIG
+        // Firebase configuration
         const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_AUTH_DOMAIN",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_STORAGE_BUCKET",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
+            apiKey: "AIzaSyBiUDyNj1R4-QBRDZY-mxN0fPg_4TdSDCY",
+            authDomain: "corprexnewspage.firebaseapp.com",
+            projectId: "corprexnewspage",
+            storageBucket: "corprexnewspage.firebasestorage.app",
+            messagingSenderId: "957002833855",
+            appId: "1:957002833855:web:61e87ca3cbfcc91ca52eb8",
+            measurementId: "G-HHHM9Q5PG1"
         };
 
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
-        
-        // Hide loading overlay
-        document.getElementById('loadingOverlay').style.display = 'none';
 
-        // Enable persistence for auth
-        auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+        // Global variables
+        let isAuthenticated = false;
 
-        // Check authentication
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                // User is logged in
-                document.getElementById('userInfo').textContent = user.email;
-                document.getElementById('loadingOverlay').style.display = 'none';
-                loadArticles();
-            } else {
-                // Not logged in
-                window.location.href = 'adminlogin.html';
-            }
-        });
-            // Add loading overlay initially
-            document.getElementById('loadingOverlay').style.display = 'flex';
-
-            // Wait for auth to be ready
-            let authInitialized = false;
-
+        // Wait for DOM to load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set up auth state listener
+            let authResolved = false;
+            
             auth.onAuthStateChanged((user) => {
-                if (authInitialized) return;
-                authInitialized = true;
+                if (authResolved) return; // Prevent multiple calls
+                authResolved = true;
                 
                 setTimeout(() => {
+                    document.getElementById('authCheck').style.display = 'none';
+                    
                     if (user) {
-                        // User is signed in
+                        // User is logged in
+                        isAuthenticated = true;
                         document.getElementById('userInfo').textContent = user.email;
-                        document.getElementById('loadingOverlay').style.display = 'none';
+                        document.getElementById('adminNav').style.display = 'flex';
+                        document.getElementById('adminContainer').style.display = 'block';
+                        document.body.classList.add('loaded');
+                        
+                        // Load articles
                         loadArticles();
                     } else {
-                        // No user, redirect to login
+                        // Not logged in - redirect after a short delay
                         window.location.replace('adminlogin.html');
                     }
-                }, 500); // Give Firebase time to initialize
+                }, 1000); // Give Firebase time to fully initialize
             });
 
-            // Fallback - if auth doesn't respond in 3 seconds, redirect to login
+            // Timeout fallback - if auth doesn't resolve in 5 seconds, redirect
             setTimeout(() => {
-                if (!authInitialized) {
+                if (!authResolved) {
                     window.location.replace('adminlogin.html');
                 }
-            }, 3000);
+            }, 5000);
+        });
 
         // Load articles from Firestore
         async function loadArticles() {
+            if (!isAuthenticated) return;
+            
             try {
-                showLoading(true);
                 const snapshot = await db.collection('articles')
                     .orderBy('date', 'desc')
+                    .limit(50)
                     .get();
                 
                 const articles = [];
@@ -694,19 +688,29 @@
                 
                 renderArticles(articles);
             } catch (error) {
-                showMessage('Error loading articles: ' + error.message, 'error');
-            } finally {
-                showLoading(false);
+                console.error('Error loading articles:', error);
+                // Try without orderBy if it fails
+                try {
+                    const snapshot = await db.collection('articles').limit(50).get();
+                    const articles = [];
+                    snapshot.forEach(doc => {
+                        articles.push({ id: doc.id, ...doc.data() });
+                    });
+                    renderArticles(articles);
+                } catch (fallbackError) {
+                    showMessage('Error loading articles. Please refresh the page.', 'error');
+                }
             }
         }
 
         // Form submission
-        const articleForm = document.getElementById('articleForm');
-        const successMessage = document.getElementById('successMessage');
-        const errorMessage = document.getElementById('errorMessage');
-
-        articleForm.addEventListener('submit', async (e) => {
+        document.getElementById('articleForm').addEventListener('submit', async (e) => {
             e.preventDefault();
+            
+            if (!isAuthenticated || !auth.currentUser) {
+                showMessage('Please log in again', 'error');
+                return;
+            }
             
             const submitBtn = document.getElementById('submitBtn');
             const submitText = document.getElementById('submitText');
@@ -724,33 +728,36 @@
                     category: document.getElementById('articleCategory').value,
                     summary: document.getElementById('articleSummary').value,
                     image: document.getElementById('articleImage').value || 'https://via.placeholder.com/400x300?text=Corprex+News',
-                    date: firebase.firestore.FieldValue.serverTimestamp(),
+                    date: new Date().toISOString(),
                     published: true,
                     createdBy: auth.currentUser.email
                 };
                 
                 // Add to Firestore
-                await db.collection('articles').add(article);
+                const docRef = await db.collection('articles').add(article);
+                console.log('Article added with ID:', docRef.id);
                 
                 // Show success message
                 showMessage('Article published successfully!', 'success');
                 
                 // Reset form
-                articleForm.reset();
+                document.getElementById('articleForm').reset();
                 document.getElementById('imagePreview').style.display = 'none';
                 
                 // Reload articles
-                loadArticles();
+                await loadArticles();
+                
             } catch (error) {
-                showMessage('Error publishing article: ' + error.message, 'error');
+                console.error('Error:', error);
+                showMessage('Error: ' + error.message, 'error');
             } finally {
                 submitBtn.disabled = false;
                 submitText.textContent = 'Publish Article';
             }
         });
 
-        // Extract article data from URL
-        async function extractArticleData() {
+        // Extract article data (mock function)
+        function extractArticleData() {
             const url = document.getElementById('articleUrl').value;
             
             if (!url) {
@@ -758,16 +765,12 @@
                 return;
             }
             
-            // Show loading state
             showMessage('Extracting article data...', 'success');
             
-            // In a real implementation, you would use a backend API to scrape the article
-            // For demo purposes, we'll simulate extraction
             setTimeout(() => {
-                // Simulated extraction
                 const mockData = {
                     title: 'Revolutionary AI Hardware Transforms Enterprise Computing',
-                    summary: 'Corprex\'s latest innovation in private AI infrastructure sets new standards for enterprise data sovereignty and performance. The breakthrough technology enables companies to run advanced AI models entirely on-premises.',
+                    summary: 'Corprex\'s latest innovation in private AI infrastructure sets new standards for enterprise data sovereignty and performance.',
                     image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80'
                 };
                 
@@ -775,10 +778,8 @@
                 document.getElementById('articleSummary').value = mockData.summary;
                 document.getElementById('articleImage').value = mockData.image;
                 
-                // Show image preview
                 updateImagePreview(mockData.image);
-                
-                showMessage('Article data extracted successfully!', 'success');
+                showMessage('Article data extracted!', 'success');
             }, 1500);
         }
 
@@ -818,7 +819,7 @@
             emptyState.style.display = 'none';
             
             grid.innerHTML = articles.map(article => {
-                const date = article.date ? new Date(article.date.seconds * 1000).toLocaleDateString() : 'Just now';
+                const date = article.date ? new Date(article.date).toLocaleDateString() : 'Just now';
                 return `
                     <div class="article-card" data-id="${article.id}">
                         <img src="${article.image}" alt="${article.title}" class="article-image" 
@@ -850,49 +851,42 @@
         }
 
         // View article
-        function viewArticle(url) {
+        window.viewArticle = function(url) {
             window.open(url, '_blank');
         }
 
         // Delete article
-        async function deleteArticle(id) {
-            if (confirm('Are you sure you want to delete this article?')) {
-                try {
-                    showLoading(true);
-                    await db.collection('articles').doc(id).delete();
-                    showMessage('Article deleted successfully', 'success');
-                    loadArticles();
-                } catch (error) {
-                    showMessage('Error deleting article: ' + error.message, 'error');
-                } finally {
-                    showLoading(false);
-                }
+        window.deleteArticle = async function(id) {
+            if (!confirm('Are you sure you want to delete this article?')) return;
+            
+            try {
+                await db.collection('articles').doc(id).delete();
+                showMessage('Article deleted successfully', 'success');
+                await loadArticles();
+            } catch (error) {
+                showMessage('Error deleting article: ' + error.message, 'error');
             }
         }
 
         // Show message
         function showMessage(message, type) {
-            const elem = type === 'success' ? successMessage : errorMessage;
+            const elem = document.getElementById(type === 'success' ? 'successMessage' : 'errorMessage');
             elem.textContent = message;
             elem.style.display = 'block';
             
             setTimeout(() => {
                 elem.style.display = 'none';
-            }, 3000);
-        }
-
-        // Show/hide loading overlay
-        function showLoading(show) {
-            document.getElementById('loadingOverlay').style.display = show ? 'flex' : 'none';
+            }, 4000);
         }
 
         // Logout
-        async function logout() {
+        window.logout = async function() {
             try {
                 await auth.signOut();
                 window.location.href = 'adminlogin.html';
             } catch (error) {
-                showMessage('Error logging out: ' + error.message, 'error');
+                console.error('Logout error:', error);
+                window.location.href = 'adminlogin.html';
             }
         }
     </script>
