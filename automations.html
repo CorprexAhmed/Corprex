@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Why Local AI - Corprex | The Case for Private AI Infrastructure</title>
+    <title>AI Automations - Corprex | Custom Enterprise AI Solutions</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
         
@@ -110,7 +110,7 @@
         }
 
         .hero-content {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 2rem;
             text-align: center;
@@ -229,260 +229,10 @@
             margin: 0 auto;
         }
 
-        /* Cloud vs Local Comparison */
-        .comparison-hero {
-            padding: 6rem 0;
+        /* Use Cases Grid */
+        .use-cases-section {
             background: var(--secondary-black);
             border-top: 1px solid var(--border-color);
-        }
-
-        .comparison-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            margin-top: 4rem;
-        }
-
-        .comparison-side {
-            text-align: center;
-            padding: 3rem 2rem;
-            border-radius: 16px;
-            position: relative;
-        }
-
-        .cloud-side {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-            border: 1px solid #444;
-        }
-
-        .local-side {
-            background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
-            color: var(--primary-black);
-            border: 2px solid var(--text-primary);
-        }
-
-        .comparison-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 2rem;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .cloud-icon {
-            background: var(--medium-gray);
-        }
-
-        .local-icon {
-            background: var(--primary-black);
-        }
-
-        .comparison-icon svg {
-            width: 40px;
-            height: 40px;
-        }
-
-        .comparison-title {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            font-weight: 500;
-        }
-
-        .comparison-list {
-            list-style: none;
-            text-align: left;
-            margin-top: 2rem;
-        }
-
-        .comparison-item {
-            padding: 0.75rem 0;
-            display: flex;
-            align-items: start;
-            gap: 1rem;
-        }
-
-        .item-icon {
-            width: 20px;
-            height: 20px;
-            flex-shrink: 0;
-            margin-top: 0.1rem;
-        }
-
-        /* Problems Section */
-        .problems-section {
-            background: var(--primary-black);
-        }
-
-        .problems-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-top: 4rem;
-        }
-
-        .problem-card {
-            background: var(--secondary-black);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 2.5rem;
-            text-align: center;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .problem-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
-            transition: left 0.5s;
-        }
-
-        .problem-card:hover::before {
-            left: 100%;
-        }
-
-        .problem-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--text-primary);
-            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.05);
-        }
-
-        .problem-icon {
-            width: 80px;
-            height: 80px;
-            background: var(--medium-gray);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-        }
-
-        .problem-icon svg {
-            width: 32px;
-            height: 32px;
-            fill: var(--text-primary);
-        }
-
-        .problem-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            font-weight: 500;
-        }
-
-        .problem-card p {
-            color: var(--text-secondary);
-            line-height: 1.8;
-        }
-
-        /* Benefits Section */
-        .benefits-section {
-            background: var(--secondary-black);
-            border-top: 1px solid var(--border-color);
-        }
-
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 3rem;
-            margin-top: 4rem;
-        }
-
-        .benefit-card {
-            background: var(--dark-gray);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 3rem;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .benefit-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
-            transition: left 0.5s;
-        }
-
-        .benefit-card:hover::before {
-            left: 100%;
-        }
-
-        .benefit-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--text-primary);
-            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.05);
-        }
-
-        .benefit-header {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .benefit-icon {
-            width: 60px;
-            height: 60px;
-            background: var(--text-primary);
-            color: var(--primary-black);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .benefit-icon svg {
-            width: 24px;
-            height: 24px;
-        }
-
-        .benefit-title {
-            font-size: 1.75rem;
-            font-weight: 500;
-        }
-
-        .benefit-description {
-            color: var(--text-secondary);
-            line-height: 1.8;
-            margin-bottom: 2rem;
-        }
-
-        .benefit-stats {
-            display: flex;
-            gap: 2rem;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            font-size: 0.9rem;
-            color: var(--text-gray);
-        }
-
-        /* Use Cases Section */
-        .use-cases {
-            background: var(--primary-black);
         }
 
         .use-cases-grid {
@@ -493,11 +243,28 @@
         }
 
         .use-case-card {
-            background: var(--secondary-black);
+            background: var(--dark-gray);
             border: 1px solid var(--border-color);
             border-radius: 16px;
-            padding: 2rem;
+            padding: 2.5rem;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .use-case-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transition: left 0.5s;
+        }
+
+        .use-case-card:hover::before {
+            left: 100%;
         }
 
         .use-case-card:hover {
@@ -507,11 +274,11 @@
         }
 
         .use-case-icon {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             background: var(--text-primary);
             color: var(--primary-black);
-            border-radius: 10px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -519,29 +286,161 @@
         }
 
         .use-case-icon svg {
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
         }
 
         .use-case-card h3 {
-            font-size: 1.25rem;
+            font-size: 1.5rem;
             margin-bottom: 1rem;
             font-weight: 500;
         }
 
         .use-case-card p {
             color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.7;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
         }
 
-        /* Security Deep Dive */
-        .security-section {
+        .use-case-features {
+            list-style: none;
+            font-size: 0.9rem;
+        }
+
+        .use-case-features li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .use-case-features li:before {
+            content: "→";
+            color: var(--text-primary);
+        }
+
+        /* Tech Tree Section */
+        .tech-tree-section {
+            background: var(--primary-black);
+        }
+
+        .tech-tree-container {
+            margin-top: 4rem;
+        }
+
+        .industry-tech-tree {
+            background: var(--secondary-black);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .industry-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .industry-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--text-primary);
+            color: var(--primary-black);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .industry-icon svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        .industry-info h3 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 400;
+        }
+
+        .industry-info p {
+            color: var(--text-secondary);
+        }
+
+        .tech-tree {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .tech-stage {
+            background: var(--dark-gray);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .tech-stage::after {
+            content: "→";
+            position: absolute;
+            right: -3rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            color: var(--text-gray);
+        }
+
+        .tech-stage:last-child::after {
+            display: none;
+        }
+
+        .stage-title {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stage-number {
+            background: var(--text-primary);
+            color: var(--primary-black);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .tech-items {
+            list-style: none;
+        }
+
+        .tech-items li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .tech-items li:last-child {
+            border-bottom: none;
+        }
+
+        /* Custom Solutions */
+        .custom-section {
             background: var(--secondary-black);
             border-top: 1px solid var(--border-color);
         }
 
-        .security-visual {
+        .custom-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 4rem;
@@ -549,17 +448,17 @@
             margin-top: 4rem;
         }
 
-        .security-content h3 {
+        .custom-content h3 {
             font-size: 2.5rem;
             margin-bottom: 2rem;
             font-weight: 300;
         }
 
-        .security-list {
+        .custom-list {
             list-style: none;
         }
 
-        .security-item {
+        .custom-item {
             padding: 1.5rem 0;
             border-bottom: 1px solid var(--border-color);
             display: flex;
@@ -567,11 +466,11 @@
             gap: 1rem;
         }
 
-        .security-item:last-child {
+        .custom-item:last-child {
             border-bottom: none;
         }
 
-        .security-check {
+        .custom-check {
             width: 24px;
             height: 24px;
             background: var(--text-primary);
@@ -584,53 +483,23 @@
             margin-top: 0.25rem;
         }
 
-        .security-text h4 {
+        .custom-text h4 {
             font-size: 1.25rem;
             margin-bottom: 0.5rem;
             font-weight: 500;
         }
 
-        .security-text p {
+        .custom-text p {
             color: var(--text-secondary);
             font-weight: 300;
         }
 
-        .security-diagram {
+        .custom-visual {
             background: var(--dark-gray);
             border-radius: 16px;
             padding: 3rem;
             border: 1px solid var(--border-color);
             text-align: center;
-        }
-
-        .diagram-title {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            font-weight: 500;
-        }
-
-        .diagram-layers {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .layer {
-            background: var(--medium-gray);
-            padding: 1rem;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            position: relative;
-        }
-
-        .layer-title {
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-        }
-
-        .layer-desc {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
         }
 
         /* CTA Section */
@@ -704,18 +573,19 @@
                 font-size: 3rem;
             }
 
-            .comparison-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .problems-grid,
-            .benefits-grid,
             .use-cases-grid {
                 grid-template-columns: 1fr;
             }
 
-            .security-visual {
+            .tech-tree {
+                grid-template-columns: 1fr;
+            }
+
+            .tech-stage::after {
+                display: none;
+            }
+
+            .custom-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -725,10 +595,6 @@
 
             .footer-grid {
                 grid-template-columns: repeat(2, 1fr);
-            }
-
-            .benefit-stats {
-                justify-content: center;
             }
         }
     </style>
@@ -740,25 +606,22 @@
             <div class="logo"><a href="index.html" style="color: inherit; text-decoration: none;">CORPREX</a></div>
             <ul class="nav-menu">
                 <li class="nav-item">
-                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="product.html" class="nav-link">Product</a>
                 </li>
                 <li class="nav-item">
-                    <a href="index.html#omega" class="nav-link">Product</a>
+                    <a href="automations.html" class="nav-link active">Automations</a>
                 </li>
                 <li class="nav-item">
-                    <a href="automations.html" class="nav-link">Automations</a>
+                    <a href="industries.html" class="nav-link">Industries</a>
                 </li>
                 <li class="nav-item">
-                    <a href="index.html#industries" class="nav-link">Industries</a>
-                </li>
-                <li class="nav-item">
-                    <a href="why-local-ai.html" class="nav-link active">Why Local AI?</a>
+                    <a href="why-local-ai.html" class="nav-link">Why Local AI?</a>
                 </li>
                 <li class="nav-item">
                     <a href="news.html" class="nav-link">News</a>
                 </li>
                 <li class="nav-item">
-                    <a href="index.html#about" class="nav-link">About Us</a>
+                    <a href="about.html" class="nav-link">About Us</a>
                 </li>
             </ul>
             <a href="#demo" class="nav-cta">Request Demo</a>
@@ -770,374 +633,66 @@
         <div class="hero-content">
             <div class="hero-badge">
                 <svg viewBox="0 0 24 24" fill="var(--text-secondary)" style="width: 16px; height: 16px; margin-right: 8px;">
-                    <path d="M12 1L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 1Z"/>
+                    <path d="M3.5 3.5A1.5 1.5 0 0 1 5 2h14a1.5 1.5 0 0 1 1.5 1.5v17a1.5 1.5 0 0 1-1.5 1.5H5a1.5 1.5 0 0 1-1.5-1.5v-17zM5 4v16h14V4H5z"/>
+                    <path d="M7.5 7h9v2h-9zm0 4h9v2h-9zm0 4h9v2h-9z"/>
                 </svg>
-                The Case for AI Sovereignty
+                AI-Powered Automation Solutions
             </div>
             <div class="hero-text">
-                <h1>Why <span class="highlight">Local AI</span> is the Only AI That Matters</h1>
+                <h1>Transform Your Workflows with <span class="highlight">Intelligent Automation</span></h1>
                 <p>
-                    In an era where your most sensitive data powers your biggest competitive advantages, sending it to third-party clouds isn't just risky—it's business suicide. Here's why smart leaders are bringing AI home.
+                    Leverage the power of local AI to automate complex processes, eliminate repetitive tasks, and accelerate your business operations. Custom solutions designed for your specific industry needs.
                 </p>
                 <div class="hero-cta">
-                    <a href="#demo" class="btn-primary">See the Difference</a>
-                    <a href="#problems" class="btn-secondary">Learn Why</a>
+                    <a href="#demo" class="btn-primary">Explore Solutions</a>
+                    <a href="#tech-trees" class="btn-secondary">View Tech Trees</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Cloud vs Local Comparison -->
-    <section class="comparison-hero">
+    <!-- Use Cases Section -->
+    <section class="section use-cases-section">
         <div class="container">
             <div class="section-header">
-                <h2>Two Paths. One Clear Winner.</h2>
-                <p>The fundamental choice every business faces in the AI era</p>
-            </div>
-            <div class="comparison-grid">
-                <div class="comparison-side cloud-side">
-                    <div class="comparison-icon cloud-icon">
-                        <svg viewBox="0 0 24 24" fill="white">
-                            <path d="M18 10H20A4 4 0 0 1 20 18H6A6 6 0 0 1 6 6C6 4 8 2 10 2A8 8 0 0 1 18 10Z"/>
-                            <path d="M12 14L16 10L12 6L8 10L12 14Z" fill="#ff4444" stroke="white" stroke-width="2"/>
-                        </svg>
-                    </div>
-                    <h3 class="comparison-title">Cloud AI</h3>
-                    <p style="color: var(--text-gray); margin-bottom: 2rem;">The path of convenience... and compromise</p>
-                    <ul class="comparison-list">
-                        <li class="comparison-item">
-                            <div class="item-icon">
-                                <svg viewBox="0 0 24 24" fill="var(--medium-gray)">
-                                    <circle cx="12" cy="12" r="10"/>
-                                    <line x1="15" y1="9" x2="9" y2="15" stroke="white" stroke-width="2"/>
-                                    <line x1="9" y1="9" x2="15" y2="15" stroke="white" stroke-width="2"/>
-                                </svg>
-                            </div>
-                            <span style="color: var(--text-secondary);">Your data trains competitors' models</span>
-                        </li>
-                        <li class="comparison-item">
-                            <div class="item-icon">
-                                <svg viewBox="0 0 24 24" fill="var(--medium-gray)">
-                                    <circle cx="12" cy="12" r="10"/>
-                                    <line x1="15" y1="9" x2="9" y2="15" stroke="white" stroke-width="2"/>
-                                    <line x1="9" y1="9" x2="15" y2="15" stroke="white" stroke-width="2"/>
-                                </svg>
-                            </div>
-                            <span style="color: var(--text-secondary);">$5,000-$50,000+ monthly costs</span>
-                        </li>
-                        <li class="comparison-item">
-                            <div class="item-icon">
-                                <svg viewBox="0 0 24 24" fill="var(--medium-gray)">
-                                    <circle cx="12" cy="12" r="10"/>
-                                    <line x1="15" y1="9" x2="9" y2="15" stroke="white" stroke-width="2"/>
-                                    <line x1="9" y1="9" x2="15" y2="15" stroke="white" stroke-width="2"/>
-                                </svg>
-                            </div>
-                            <span style="color: var(--text-secondary);">Rate limits throttle your growth</span>
-                        </li>
-                        <li class="comparison-item">
-                            <div class="item-icon">
-                                <svg viewBox="0 0 24 24" fill="var(--medium-gray)">
-                                    <circle cx="12" cy="12" r="10"/>
-                                    <line x1="15" y1="9" x2="9" y2="15" stroke="white" stroke-width="2"/>
-                                    <line x1="9" y1="9" x2="15" y2="15" stroke="white" stroke-width="2"/>
-                                </svg>
-                            </div>
-                            <span style="color: var(--text-secondary);">Internet outages = business stops</span>
-                        </li>
-                        <li class="comparison-item">
-                            <div class="item-icon">
-                                <svg viewBox="0 0 24 24" fill="var(--medium-gray)">
-                                    <circle cx="12" cy="12" r="10"/>
-                                    <line x1="15" y1="9" x2="9" y2="15" stroke="white" stroke-width="2"/>
-                                    <line x1="9" y1="9" x2="15" y2="15" stroke="white" stroke-width="2"/>
-                                </svg>
-                            </div>
-                            <span style="color: var(--text-secondary);">Zero control over your AI destiny</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="comparison-side local-side">
-                    <div class="comparison-icon local-icon">
-                        <svg viewBox="0 0 24 24" fill="white">
-                            <path d="M12 1L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 1Z"/>
-                            <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" fill="none"/>
-                        </svg>
-                    </div>
-                    <h3 class="comparison-title">Local AI</h3>
-                    <p style="margin-bottom: 2rem;">The path of sovereignty and success</p>
-                    <ul class="comparison-list">
-                        <li class="comparison-item">
-                            <div class="item-icon">
-                                <svg viewBox="0 0 24 24" fill="var(--text-primary)">
-                                    <circle cx="12" cy="12" r="10"/>
-                                    <path d="M9 12L11 14L15 10" stroke="var(--primary-black)" stroke-width="2" fill="none"/>
-                                </svg>
-                            </div>
-                            <span>Unlimited usage, unlimited scale</span>
-                        </li>
-                        <li class="comparison-item">
-                            <div class="item-icon">
-                                <svg viewBox="0 0 24 24" fill="var(--text-primary)">
-                                    <circle cx="12" cy="12" r="10"/>
-                                    <path d="M9 12L11 14L15 10" stroke="var(--primary-black)" stroke-width="2" fill="none"/>
-                                </svg>
-                            </div>
-                            <span>Works offline, works always</span>
-                        </li>
-                        <li class="comparison-item">
-                            <div class="item-icon">
-                                <svg viewBox="0 0 24 24" fill="var(--text-primary)">
-                                    <circle cx="12" cy="12" r="10"/>
-                                    <path d="M9 12L11 14L15 10" stroke="var(--primary-black)" stroke-width="2" fill="none"/>
-                                </svg>
-                            </div>
-                            <span>Complete control over your AI future</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Problems with Cloud AI -->
-    <section class="section problems-section" id="problems">
-        <div class="container">
-            <div class="section-header">
-                <h2>The Hidden Costs of Cloud AI</h2>
-                <p>What every executive discovers too late about cloud dependency</p>
-            </div>
-            <div class="problems-grid">
-                <div class="problem-card">
-                    <div class="problem-icon">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M12 2C6.48 2 2 6.48 2 12S6.48 22 12 22 22 17.52 22 12 17.52 2 12 2ZM13 17H11V11H13V17ZM13 9H11V7H13V9Z"/>
-                        </svg>
-                    </div>
-                    <h3>Data Ownership Crisis</h3>
-                    <p>Every query you send trains your competitors' AI. Your proprietary insights become their competitive advantage. Major cloud providers explicitly reserve rights to use your data for model improvement.</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-icon">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M11.8 10.9C10.4 10.9 9.2 12.1 9.2 13.5S10.4 16.1 11.8 16.1 14.4 14.9 14.4 13.5 13.2 10.9 11.8 10.9ZM20 12C20 11.4 19.6 11.1 19.1 11.1H17.2C17.1 10.4 16.9 9.7 16.6 9.1L17.9 7.8C18.2 7.5 18.2 7 17.9 6.7L16.3 5.1C16 4.8 15.5 4.8 15.2 5.1L13.9 6.4C13.3 6.1 12.6 5.9 11.9 5.8V3.9C11.9 3.4 11.5 3 11 3H9C8.5 3 8.1 3.4 8.1 3.9V5.8C7.4 5.9 6.7 6.1 6.1 6.4L4.8 5.1C4.5 4.8 4 4.8 3.7 5.1L2.1 6.7C1.8 7 1.8 7.5 2.1 7.8L3.4 9.1C3.1 9.7 2.9 10.4 2.8 11.1H0.9C0.4 11.1 0 11.5 0 12V14C0 14.5 0.4 14.9 0.9 14.9H2.8C2.9 15.6 3.1 16.3 3.4 16.9L2.1 18.2C1.8 18.5 1.8 19 2.1 19.3L3.7 20.9C4 21.2 4.5 21.2 4.8 20.9L6.1 19.6C6.7 19.9 7.4 20.1 8.1 20.2V22.1C8.1 22.6 8.5 23 9 23H11C11.5 23 11.9 22.6 11.9 22.1V20.2C12.6 20.1 13.3 19.9 13.9 19.6L15.2 20.9C15.5 21.2 16 21.2 16.3 20.9L17.9 19.3C18.2 19 18.2 18.5 17.9 18.2L16.6 16.9C16.9 16.3 17.1 15.6 17.2 14.9H19.1C19.6 14.9 20 14.5 20 14V12Z"/>
-                        </svg>
-                    </div>
-                    <h3>Runaway Costs</h3>
-                    <p>API costs scale exponentially with success. Companies report $100K+ monthly bills that appeared overnight. Token limits force rationing of your own AI capabilities during peak business periods.</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-icon">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M13 3C9.23 3 6.19 5.95 6 9.66L4.17 12.1C3.58 13 4.24 14.19 5.34 14.19H7.54C8.67 16.07 10.6 17.3 12.83 17.3C15.06 17.3 16.99 16.07 18.12 14.19H20.32C21.42 14.19 22.08 13 21.49 12.1L19.66 9.66C19.47 5.95 16.43 3 13 3ZM13 7C14.1 7 15 7.9 15 9S14.1 11 13 11 11 10.1 11 9 11.9 7 13 7Z"/>
-                        </svg>
-                    </div>
-                    <h3>Security Vulnerabilities</h3>
-                    <p>Your sensitive data travels through multiple networks, servers, and jurisdictions. Data breaches at cloud providers expose millions of customers simultaneously. You have zero control over security incidents.</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-icon">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M12 2L1 21H23L12 2ZM12 18H12V16H12V18ZM12 14H12V10H12V14Z"/>
-                        </svg>
-                    </div>
-                    <h3>Performance Bottlenecks</h3>
-                    <p>Network latency adds 200-500ms to every request. Rate limits throttle performance during high-demand periods. Regional outages can completely halt operations for hours or days.</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-icon">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M18.6 6.62C17.16 6.62 15.8 7.18 14.83 8.15L7.15 15.83C6.18 16.8 4.82 17.36 3.38 17.36C1.54 17.36 0.02 15.84 0.02 14C0.02 12.16 1.54 10.64 3.38 10.64C4.82 10.64 6.18 11.2 7.15 12.17L8.83 10.49C7.36 9.02 5.43 8.16 3.38 8.16C0.26 8.16 -2.46 10.88 -2.46 14C-2.46 17.12 0.26 19.84 3.38 19.84C5.43 19.84 7.36 18.98 8.83 17.51L16.51 9.83C17.48 8.86 18.84 8.3 20.28 8.3C22.12 8.3 23.64 9.82 23.64 11.66C23.64 13.5 22.12 15.02 20.28 15.02C18.84 15.02 17.48 14.46 16.51 13.49L14.83 15.17C16.3 16.64 18.23 17.5 20.28 17.5C23.4 17.5 26.12 14.78 26.12 11.66C26.12 8.54 23.4 5.82 20.28 5.82C19.07 5.82 17.9 6.14 16.87 6.7"/>
-                        </svg>
-                    </div>
-                    <h3>Vendor Lock-In</h3>
-                    <p>Switching costs become prohibitive as dependence deepens. Proprietary APIs and formats trap you in ecosystems. Pricing power shifts entirely to providers who know you can't leave.</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-icon">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M12 1L21.5 6.5V17.5L12 23L2.5 17.5V6.5L12 1ZM12 7C9.24 7 7 9.24 7 12S9.24 17 12 17 17 14.76 17 12 14.76 7 12 7ZM12 15C10.34 15 9 13.66 9 12S10.34 9 12 9 15 10.34 15 12 13.66 15 12 15Z"/>
-                        </svg>
-                    </div>
-                    <h3>Compliance Nightmares</h3>
-                    <p>GDPR, HIPAA, SOX, and other regulations become impossible to satisfy when data crosses borders. Audit trails disappear into cloud provider black boxes. Regulatory fines can exceed AI savings by 100x.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Benefits of Local AI -->
-    <section class="section benefits-section">
-        <div class="container">
-            <div class="section-header">
-                <h2>The Local AI Advantage</h2>
-                <p>Why smart companies are bringing AI home</p>
-            </div>
-            <div class="benefits-grid">
-                <div class="benefit-card">
-                    <div class="benefit-header">
-                        <div class="benefit-icon">
-                            <svg viewBox="0 0 24 24">
-                                <path d="M12 1L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 1Z" stroke="currentColor" stroke-width="2" fill="none"/>
-                                <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" fill="none"/>
-                            </svg>
-                        </div>
-                        <div class="benefit-title">Complete Data Sovereignty</div>
-                    </div>
-                    <p class="benefit-description">
-                        Your data never leaves your infrastructure. Process the most sensitive information with zero external exposure. Meet the strictest compliance requirements while maintaining full operational control.
-                    </p>
-                    <div class="benefit-stats">
-                        <div class="stat-item">
-                            <div class="stat-number">100%</div>
-                            <div class="stat-label">Data Retention</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">Zero</div>
-                            <div class="stat-label">Breach Risk</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">Full</div>
-                            <div class="stat-label">Compliance</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="benefit-card">
-                    <div class="benefit-header">
-                        <div class="benefit-icon">
-                            <svg viewBox="0 0 24 24">
-                                <line x1="12" y1="1" x2="12" y2="23" stroke="currentColor" stroke-width="2"/>
-                                <path d="M17 5H9.5A3.5 3.5 0 0 0 6 8.5V8.5A3.5 3.5 0 0 0 9.5 12H14.5A3.5 3.5 0 0 1 18 15.5V15.5A3.5 3.5 0 0 1 14.5 19H6" stroke="currentColor" stroke-width="2"/>
-                            </svg>
-                        </div>
-                        <div class="benefit-title">Predictable Economics</div>
-                    </div>
-                    <p class="benefit-description">
-                        Transform unpredictable monthly AI bills into a one-time capital investment. Scale usage without scaling costs. Most organizations achieve full ROI within 2-8 weeks of deployment.
-                    </p>
-                    <div class="benefit-stats">
-                        <div class="stat-item">
-                            <div class="stat-number">$0</div>
-                            <div class="stat-label">Monthly Fees</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">6 Weeks</div>
-                            <div class="stat-label">Avg. ROI</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">∞</div>
-                            <div class="stat-label">Usage Limits</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="benefit-card">
-                    <div class="benefit-header">
-                        <div class="benefit-icon">
-                            <svg viewBox="0 0 24 24">
-                                <polygon points="13,2 3,14 12,14 11,22 21,10 12,10" stroke="currentColor" stroke-width="2" fill="currentColor"/>
-                            </svg>
-                        </div>
-                        <div class="benefit-title">Superior Performance</div>
-                    </div>
-                    <p class="benefit-description">
-                        Eliminate network latency with local processing. Achieve sub-second response times for real-time applications. Scale performance by adding hardware, not paying for more API calls.
-                    </p>
-                    <div class="benefit-stats">
-                        <div class="stat-item">
-                            <div class="stat-number">&lt;100ms</div>
-                            <div class="stat-label">Response Time</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">10x</div>
-                            <div class="stat-label">Faster Processing</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">100%</div>
-                            <div class="stat-label">Uptime</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="benefit-card">
-                    <div class="benefit-header">
-                        <div class="benefit-icon">
-                            <svg viewBox="0 0 24 24">
-                                <path d="M9.5 2A2.5 2.5 0 0 0 7 4.5V7A2.5 2.5 0 0 0 9.5 9.5H12V7A2.5 2.5 0 0 0 9.5 2Z" fill="currentColor"/>
-                                <path d="M14.5 2A2.5 2.5 0 0 1 17 4.5V7A2.5 2.5 0 0 1 14.5 9.5H12V7A2.5 2.5 0 0 1 14.5 2Z" fill="currentColor"/>
-                                <path d="M12 9.5V12A2.5 2.5 0 0 1 9.5 14.5A2.5 2.5 0 0 0 7 17V19.5A2.5 2.5 0 0 0 9.5 22A2.5 2.5 0 0 0 12 19.5V17A2.5 2.5 0 0 1 14.5 14.5A2.5 2.5 0 0 0 17 12V9.5H14.5A2.5 2.5 0 0 0 12 12V9.5Z" fill="currentColor"/>
-                            </svg>
-                        </div>
-                        <div class="benefit-title">Complete Customization</div>
-                    </div>
-                    <p class="benefit-description">
-                        Fine-tune models on your specific data and use cases. Deploy custom architectures optimized for your workflows. Maintain competitive advantages that can't be replicated by cloud users.
-                    </p>
-                    <div class="benefit-stats">
-                        <div class="stat-item">
-                            <div class="stat-number">100%</div>
-                            <div class="stat-label">Custom Models</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">Full</div>
-                            <div class="stat-label">Control</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">Unique</div>
-                            <div class="stat-label">Advantages</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Use Cases -->
-    <section class="section use-cases">
-        <div class="container">
-            <div class="section-header">
-                <h2>When Local AI is Essential</h2>
-                <p>Critical scenarios where cloud AI simply isn't an option</p>
+                <h2>Automation Use Cases</h2>
+                <p>Discover how AI automation can transform your operations</p>
             </div>
             <div class="use-cases-grid">
                 <div class="use-case-card">
                     <div class="use-case-icon">
                         <svg viewBox="0 0 24 24">
-                            <path d="M12 3L20 12H16V20H8V12H4L12 3Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <path d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <path d="M14 2V8H20" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <path d="M16 13H8M16 17H8M10 9H8" stroke="currentColor" stroke-width="2"/>
                         </svg>
                     </div>
-                    <h3>Legal Document Review</h3>
-                    <p>Attorney-client privilege requires absolute confidentiality. Cloud AI violates this fundamental principle by design. Local AI maintains privilege while accelerating case preparation.</p>
+                    <h3>Document Processing</h3>
+                    <p>Automatically extract, classify, and analyze information from thousands of documents in minutes.</p>
+                    <ul class="use-case-features">
+                        <li>Contract analysis and review</li>
+                        <li>Invoice processing</li>
+                        <li>Compliance checking</li>
+                        <li>Data extraction and validation</li>
+                    </ul>
                 </div>
                 <div class="use-case-card">
                     <div class="use-case-icon">
                         <svg viewBox="0 0 24 24">
-                            <path d="M22 12H18L15 21L9 3L6 12H2" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <path d="M17 21V19C17 16.79 15.21 15 13 15H5C2.79 15 1 16.79 1 19V21" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <path d="M23 21V19C23 16.79 21.21 15 19 15" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <path d="M16 3.13C16.8 2.42 17.84 2 19 2C21.21 2 23 3.79 23 6S21.21 10 19 10" stroke="currentColor" stroke-width="2" fill="none"/>
                         </svg>
                     </div>
-                    <h3>Medical Diagnosis</h3>
-                    <p>HIPAA compliance demands patient data never leave healthcare networks. Local AI enables advanced diagnostics while maintaining regulatory compliance and patient trust.</p>
-                </div>
-                <div class="use-case-card">
-                    <div class="use-case-icon">
-                        <svg viewBox="0 0 24 24">
-                            <line x1="12" y1="1" x2="12" y2="23" stroke="currentColor" stroke-width="2"/>
-                            <path d="M17 5H9.5A3.5 3.5 0 0 0 6 8.5V8.5A3.5 3.5 0 0 0 9.5 12H14.5A3.5 3.5 0 0 1 18 15.5V15.5A3.5 3.5 0 0 1 14.5 19H6" stroke="currentColor" stroke-width="2"/>
-                        </svg>
-                    </div>
-                    <h3>Financial Trading</h3>
-                    <p>Milliseconds matter in high-frequency trading. Network latency to cloud providers can cost millions. Local AI delivers the speed advantage that defines market winners.</p>
-                </div>
-                <div class="use-case-card">
-                    <div class="use-case-icon">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M3 9L12 2L21 9V20A2 2 0 0 1 19 22H5A2 2 0 0 1 3 20V9Z" stroke="currentColor" stroke-width="2" fill="none"/>
-                        </svg>
-                    </div>
-                    <h3>Government Intelligence</h3>
-                    <p>National security data cannot risk foreign cloud infrastructure. Local AI enables intelligence analysis while maintaining operational security and classified data protection.</p>
+                    <h3>Customer Service</h3>
+                    <p>Deliver exceptional customer experiences with AI-powered support and communication tools.</p>
+                    <ul class="use-case-features">
+                        <li>Intelligent ticket routing</li>
+                        <li>Automated response generation</li>
+                        <li>Sentiment analysis</li>
+                        <li>Multi-language support</li>
+                    </ul>
                 </div>
                 <div class="use-case-card">
                     <div class="use-case-icon">
@@ -1145,102 +700,316 @@
                             <path d="M2 20H22V18H20V11H18V18H14V8H12V18H8V13H6V18H2V20Z" fill="currentColor"/>
                         </svg>
                     </div>
-                    <h3>Manufacturing IP</h3>
-                    <p>Production processes and quality control algorithms represent core competitive advantages. Cloud AI risks intellectual property theft by competitors and foreign actors.</p>
+                    <h3>Data Analytics</h3>
+                    <p>Transform raw data into actionable insights with automated analysis and reporting.</p>
+                    <ul class="use-case-features">
+                        <li>Predictive analytics</li>
+                        <li>Automated reporting</li>
+                        <li>Anomaly detection</li>
+                        <li>Trend identification</li>
+                    </ul>
                 </div>
                 <div class="use-case-card">
                     <div class="use-case-icon">
                         <svg viewBox="0 0 24 24">
-                            <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" fill="none"/>
-                            <path d="M12 1V3M12 21V23M4.22 4.22L5.64 5.64M18.36 18.36L19.78 19.78M1 12H3M21 12H23M4.22 19.78L5.64 18.36M18.36 5.64L19.78 4.22" stroke="currentColor" stroke-width="2"/>
+                            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" fill="none"/>
                         </svg>
                     </div>
-                    <h3>R&D Innovation</h3>
-                    <p>Research breakthroughs drive company valuations. Cloud AI means competitors gain access to your innovation pipeline. Local AI protects tomorrow's competitive advantages today.</p>
+                    <h3>Workflow Optimization</h3>
+                    <p>Streamline complex business processes with intelligent workflow automation.</p>
+                    <ul class="use-case-features">
+                        <li>Process mining and optimization</li>
+                        <li>Task prioritization</li>
+                        <li>Resource allocation</li>
+                        <li>Bottleneck identification</li>
+                    </ul>
+                </div>
+                <div class="use-case-card">
+                    <div class="use-case-icon">
+                        <svg viewBox="0 0 24 24">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <path d="M7 7H17M7 12H17M7 17H10" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h3>Content Generation</h3>
+                    <p>Create high-quality content at scale while maintaining your brand voice and standards.</p>
+                    <ul class="use-case-features">
+                        <li>Marketing copy creation</li>
+                        <li>Report generation</li>
+                        <li>Email drafting</li>
+                        <li>Documentation writing</li>
+                    </ul>
+                </div>
+                <div class="use-case-card">
+                    <div class="use-case-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 1L21.5 6.5V17.5L12 23L2.5 17.5V6.5L12 1Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <path d="M12 12C13.66 12 15 10.66 15 9S13.66 6 12 6 9 7.34 9 9 10.34 12 12 12Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                        </svg>
+                    </div>
+                    <h3>Quality Assurance</h3>
+                    <p>Ensure consistent quality and compliance with automated testing and verification.</p>
+                    <ul class="use-case-features">
+                        <li>Automated testing</li>
+                        <li>Code review assistance</li>
+                        <li>Compliance verification</li>
+                        <li>Error detection</li>
+                    </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Security Deep Dive -->
-    <section class="section security-section">
+    <!-- Tech Tree Section -->
+    <section class="section tech-tree-section" id="tech-trees">
         <div class="container">
             <div class="section-header">
-                <h2>Security Architecture</h2>
-                <p>Military-grade protection for your most valuable asset: your data</p>
+                <h2>Industry Automation Roadmaps</h2>
+                <p>Progressive automation strategies tailored for your industry</p>
             </div>
-            <div class="security-visual">
-                <div class="security-content">
-                    <h3>Defense in Depth</h3>
-                    <ul class="security-list">
-                        <li class="security-item">
-                            <div class="security-check">
+            <div class="tech-tree-container">
+                <!-- Legal Industry Tech Tree -->
+                <div class="industry-tech-tree">
+                    <div class="industry-header">
+                        <div class="industry-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 3L20 12H16V20H8V12H4L12 3Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                                <path d="M9 16H15M10 13H14" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <div class="industry-info">
+                            <h3>Legal Industry</h3>
+                            <p>Transform your practice with progressive AI automation</p>
+                        </div>
+                    </div>
+                    <div class="tech-tree">
+                        <div class="tech-stage">
+                            <div class="stage-title">
+                                <span class="stage-number">1</span>
+                                Foundation
+                            </div>
+                            <ul class="tech-items">
+                                <li>Document digitization & OCR</li>
+                                <li>Basic contract classification</li>
+                                <li>Client intake automation</li>
+                                <li>Calendar management</li>
+                            </ul>
+                        </div>
+                        <div class="tech-stage">
+                            <div class="stage-title">
+                                <span class="stage-number">2</span>
+                                Enhancement
+                            </div>
+                            <ul class="tech-items">
+                                <li>Contract analysis & review</li>
+                                <li>Legal research assistance</li>
+                                <li>Due diligence automation</li>
+                                <li>Billing optimization</li>
+                            </ul>
+                        </div>
+                        <div class="tech-stage">
+                            <div class="stage-title">
+                                <span class="stage-number">3</span>
+                                Transformation
+                            </div>
+                            <ul class="tech-items">
+                                <li>Predictive case analytics</li>
+                                <li>AI-powered brief writing</li>
+                                <li>Risk assessment modeling</li>
+                                <li>Strategic recommendation engine</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Healthcare Industry Tech Tree -->
+                <div class="industry-tech-tree">
+                    <div class="industry-header">
+                        <div class="industry-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M22 12H18L15 21L9 3L6 12H2" stroke="currentColor" stroke-width="2" fill="none"/>
+                            </svg>
+                        </div>
+                        <div class="industry-info">
+                            <h3>Healthcare</h3>
+                            <p>Enhance patient care with intelligent automation</p>
+                        </div>
+                    </div>
+                    <div class="tech-tree">
+                        <div class="tech-stage">
+                            <div class="stage-title">
+                                <span class="stage-number">1</span>
+                                Foundation
+                            </div>
+                            <ul class="tech-items">
+                                <li>Patient record digitization</li>
+                                <li>Appointment scheduling</li>
+                                <li>Basic triage assistance</li>
+                                <li>Insurance verification</li>
+                            </ul>
+                        </div>
+                        <div class="tech-stage">
+                            <div class="stage-title">
+                                <span class="stage-number">2</span>
+                                Enhancement
+                            </div>
+                            <ul class="tech-items">
+                                <li>Clinical decision support</li>
+                                <li>Automated lab result analysis</li>
+                                <li>Treatment plan optimization</li>
+                                <li>Medication interaction checking</li>
+                            </ul>
+                        </div>
+                        <div class="tech-stage">
+                            <div class="stage-title">
+                                <span class="stage-number">3</span>
+                                Transformation
+                            </div>
+                            <ul class="tech-items">
+                                <li>Predictive health analytics</li>
+                                <li>Personalized treatment AI</li>
+                                <li>Population health management</li>
+                                <li>AI-assisted diagnostics</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Finance Industry Tech Tree -->
+                <div class="industry-tech-tree">
+                    <div class="industry-header">
+                        <div class="industry-icon">
+                            <svg viewBox="0 0 24 24">
+                                <line x1="12" y1="1" x2="12" y2="23" stroke="currentColor" stroke-width="2"/>
+                                <path d="M17 5H9.5A3.5 3.5 0 0 0 6 8.5V8.5A3.5 3.5 0 0 0 9.5 12H14.5A3.5 3.5 0 0 1 18 15.5V15.5A3.5 3.5 0 0 1 14.5 19H6" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <div class="industry-info">
+                            <h3>Financial Services</h3>
+                            <p>Revolutionize financial operations with AI</p>
+                        </div>
+                    </div>
+                    <div class="tech-tree">
+                        <div class="tech-stage">
+                            <div class="stage-title">
+                                <span class="stage-number">1</span>
+                                Foundation
+                            </div>
+                            <ul class="tech-items">
+                                <li>Transaction categorization</li>
+                                <li>Basic fraud detection</li>
+                                <li>Automated reconciliation</li>
+                                <li>Report generation</li>
+                            </ul>
+                        </div>
+                        <div class="tech-stage">
+                            <div class="stage-title">
+                                <span class="stage-number">2</span>
+                                Enhancement
+                            </div>
+                            <ul class="tech-items">
+                                <li>Risk assessment modeling</li>
+                                <li>Investment analysis AI</li>
+                                <li>Compliance automation</li>
+                                <li>Customer behavior analytics</li>
+                            </ul>
+                        </div>
+                        <div class="tech-stage">
+                            <div class="stage-title">
+                                <span class="stage-number">3</span>
+                                Transformation
+                            </div>
+                            <ul class="tech-items">
+                                <li>Predictive market analysis</li>
+                                <li>Algorithmic trading optimization</li>
+                                <li>Personalized financial advisory</li>
+                                <li>Real-time risk management</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Custom Solutions Section -->
+    <section class="section custom-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Custom Automation Solutions</h2>
+                <p>Tailored AI automations designed for your unique challenges</p>
+            </div>
+            <div class="custom-grid">
+                <div class="custom-content">
+                    <h3>Beyond Pre-Built Solutions</h3>
+                    <ul class="custom-list">
+                        <li class="custom-item">
+                            <div class="custom-check">
                                 <svg viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M9 12L11 14L15 10"/>
                                 </svg>
                             </div>
-                            <div class="security-text">
-                                <h4>Air-Gap Capability</h4>
-                                <p>Completely isolate AI processing from external networks when maximum security is required</p>
+                            <div class="custom-text">
+                                <h4>Industry-Specific Workflows</h4>
+                                <p>We analyze your unique processes and build custom AI automations that fit seamlessly into your existing operations.</p>
                             </div>
                         </li>
-                        <li class="security-item">
-                            <div class="security-check">
+                        <li class="custom-item">
+                            <div class="custom-check">
                                 <svg viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M9 12L11 14L15 10"/>
                                 </svg>
                             </div>
-                            <div class="security-text">
-                                <h4>End-to-End Encryption</h4>
-                                <p>AES-256 encryption for data at rest and in transit, with hardware security modules</p>
+                            <div class="custom-text">
+                                <h4>Integration Engineering</h4>
+                                <p>Connect your Omega to existing systems, databases, and tools with custom integrations built by our expert team.</p>
                             </div>
                         </li>
-                        <li class="security-item">
-                            <div class="security-check">
+                        <li class="custom-item">
+                            <div class="custom-check">
                                 <svg viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M9 12L11 14L15 10"/>
                                 </svg>
                             </div>
-                            <div class="security-text">
-                                <h4>Zero Trust Architecture</h4>
-                                <p>Every request authenticated and authorized, with continuous security monitoring</p>
-                            </div>
-                        </li>
-                        <li class="security-item">
-                            <div class="security-check">
-                                <svg viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M9 12L11 14L15 10"/>
-                                </svg>
-                            </div>
-                            <div class="security-text">
-                                <h4>Compliance Ready</h4>
-                                <p>Pre-configured for HIPAA, SOX, FedRAMP, and other regulatory requirements</p>
+                            <div class="custom-text">
+                                <h4>Continuous Optimization</h4>
+                                <p>Your automations evolve with your business. We provide ongoing support to refine and expand your AI capabilities.</p>
                             </div>
                         </li>
                     </ul>
                 </div>
-                <div class="security-diagram">
-                    <h4 class="diagram-title">Local AI Security Stack</h4>
-                    <div class="diagram-layers">
-                        <div class="layer">
-                            <div class="layer-title">Application Layer</div>
-                            <div class="layer-desc">Role-based access control, audit logging</div>
+                <div class="custom-visual">
+                    <h4 style="font-size: 1.5rem; margin-bottom: 2rem;">Custom Development Process</h4>
+                    <div style="text-align: left; background: var(--secondary-black); padding: 2rem; border-radius: 12px;">
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                            <div style="background: var(--text-primary); color: var(--primary-black); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600;">1</div>
+                            <div>
+                                <h5 style="font-weight: 500; margin-bottom: 0.25rem;">Discovery & Analysis</h5>
+                                <p style="font-size: 0.9rem; color: var(--text-secondary);">Deep dive into your workflows and pain points</p>
+                            </div>
                         </div>
-                        <div class="layer">
-                            <div class="layer-title">AI Processing Layer</div>
-                            <div class="layer-desc">Secure enclaves, model isolation</div>
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                            <div style="background: var(--text-primary); color: var(--primary-black); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600;">2</div>
+                            <div>
+                                <h5 style="font-weight: 500; margin-bottom: 0.25rem;">Solution Design</h5>
+                                <p style="font-size: 0.9rem; color: var(--text-secondary);">Custom automation architecture tailored to your needs</p>
+                            </div>
                         </div>
-                        <div class="layer">
-                            <div class="layer-title">Data Layer</div>
-                            <div class="layer-desc">Encrypted storage, secure deletion</div>
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                            <div style="background: var(--text-primary); color: var(--primary-black); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600;">3</div>
+                            <div>
+                                <h5 style="font-weight: 500; margin-bottom: 0.25rem;">Development & Testing</h5>
+                                <p style="font-size: 0.9rem; color: var(--text-secondary);">Build and validate your custom automations</p>
+                            </div>
                         </div>
-                        <div class="layer">
-                            <div class="layer-title">Network Layer</div>
-                            <div class="layer-desc">VPN, firewall, intrusion detection</div>
-                        </div>
-                        <div class="layer">
-                            <div class="layer-title">Hardware Layer</div>
-                            <div class="layer-desc">TPM chips, secure boot, tamper detection</div>
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <div style="background: var(--text-primary); color: var(--primary-black); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600;">4</div>
+                            <div>
+                                <h5 style="font-weight: 500; margin-bottom: 0.25rem;">Deployment & Optimization</h5>
+                                <p style="font-size: 0.9rem; color: var(--text-secondary);">Launch and continuously improve your AI operations</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1252,14 +1021,14 @@
     <section class="section">
         <div class="container">
             <div class="cta-section">
-                <h2>Ready to Take Control?</h2>
-                <p>Join the companies who've made AI sovereignty their competitive advantage</p>
+                <h2>Ready to Automate Your Future?</h2>
+                <p>Let's discuss how custom AI automations can transform your business operations</p>
                 <div class="hero-cta" style="justify-content: center;">
-                    <a href="#demo" class="btn-primary">See Omega in Action</a>
-                    <a href="index.html" class="btn-secondary">Explore Solutions</a>
+                    <a href="#demo" class="btn-primary">Schedule Consultation</a>
+                    <a href="index.html" class="btn-secondary">Explore Omega</a>
                 </div>
                 <p style="margin-top: 2rem; font-size: 0.9rem; color: var(--text-gray);">
-                    Schedule a private demonstration and see what true AI sovereignty looks like.
+                    See real automation examples designed for your industry
                 </p>
             </div>
         </div>
@@ -1271,32 +1040,32 @@
             <div class="footer-grid">
                 <div class="footer-column">
                     <h4>Product</h4>
-                    <a href="index.html#omega" class="footer-link">Omega Hardware</a>
-                    <a href="index.html#os" class="footer-link">CorprexOS</a>
-                    <a href="index.html#models" class="footer-link">AI Models</a>
-                    <a href="index.html#pricing" class="footer-link">Pricing</a>
+                    <a href="product.html" class="footer-link">Omega Hardware</a>
+                    <a href="#os" class="footer-link">CorprexOS</a>
+                    <a href="#models" class="footer-link">AI Models</a>
+                    <a href="#pricing" class="footer-link">Pricing</a>
                 </div>
                 <div class="footer-column">
                     <h4>Solutions</h4>
                     <a href="automations.html" class="footer-link">Automations</a>
-                    <a href="index.html#legal" class="footer-link">Legal</a>
-                    <a href="index.html#healthcare" class="footer-link">Healthcare</a>
-                    <a href="index.html#finance" class="footer-link">Finance</a>
-                    <a href="index.html#government" class="footer-link">Government</a>
+                    <a href="#legal" class="footer-link">Legal</a>
+                    <a href="#healthcare" class="footer-link">Healthcare</a>
+                    <a href="#finance" class="footer-link">Finance</a>
+                    <a href="#government" class="footer-link">Government</a>
                 </div>
                 <div class="footer-column">
                     <h4>Support</h4>
-                    <a href="index.html#docs" class="footer-link">Documentation</a>
-                    <a href="index.html#blog" class="footer-link">Blog</a>
-                    <a href="index.html#support" class="footer-link">Support</a>
-                    <a href="index.html#faq" class="footer-link">FAQs</a>
+                    <a href="#docs" class="footer-link">Documentation</a>
+                    <a href="#blog" class="footer-link">Blog</a>
+                    <a href="#support" class="footer-link">Support</a>
+                    <a href="#faq" class="footer-link">FAQs</a>
                 </div>
                 <div class="footer-column">
                     <h4>About Us</h4>
-                    <a href="index.html#about" class="footer-link">Our Story</a>
-                    <a href="index.html#careers" class="footer-link">Careers</a>
-                    <a href="index.html#partners" class="footer-link">Partners</a>
-                    <a href="index.html#contact" class="footer-link">Contact</a>
+                    <a href="about.html" class="footer-link">Our Story</a>
+                    <a href="#careers" class="footer-link">Careers</a>
+                    <a href="#partners" class="footer-link">Partners</a>
+                    <a href="#contact" class="footer-link">Contact</a>
                 </div>
             </div>
             <div class="footer-bottom">
@@ -1349,7 +1118,7 @@
         }, observerOptions);
 
         // Observe all sections for animations
-        document.querySelectorAll('.section, .comparison-hero').forEach(section => {
+        document.querySelectorAll('.section').forEach(section => {
             section.style.opacity = '0';
             section.style.transform = 'translateY(20px)';
             section.style.transition = 'all 0.6s ease';
@@ -1358,23 +1127,3 @@
     </script>
 </body>
 </html>
-                
-                            <span>Your data stays yours, always</span>
-                        </li>
-                        <li class="comparison-item">
-                            <div class="item-icon">
-                                <svg viewBox="0 0 24 24" fill="var(--text-primary)">
-                                    <circle cx="12" cy="12" r="10"/>
-                                    <path d="M9 12L11 14L15 10" stroke="var(--primary-black)" stroke-width="2" fill="none"/>
-                                </svg>
-                            </div>
-                            <span>$0 monthly fees after purchase</span>
-                        </li>
-                        <li class="comparison-item">
-                            <div class="item-icon">
-                                <svg viewBox="0 0 24 24" fill="var(--text-primary)">
-                                    <circle cx="12" cy="12" r="10"/>
-                                    <path d="M9 12L11 14L15 10" stroke="var(--primary-black)" stroke-width="2" fill="none"/>
-                                </svg>
-                            </div>
-                            
