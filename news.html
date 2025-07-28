@@ -588,13 +588,13 @@
                     <a href="index.html" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a href="index.html#omega" class="nav-link">Product</a>
+                    <a href="product.html" class="nav-link">Product</a>
                 </li>
                 <li class="nav-item">
                     <a href="automations.html" class="nav-link">Automations</a>
                 </li>
                 <li class="nav-item">
-                    <a href="index.html#industries" class="nav-link">Industries</a>
+                    <a href="industries.html" class="nav-link">Industries</a>
                 </li>
                 <li class="nav-item">
                     <a href="why-local-ai.html" class="nav-link">Why Local AI?</a>
@@ -680,32 +680,32 @@
             <div class="footer-grid">
                 <div class="footer-column">
                     <h4>Product</h4>
-                    <a href="index.html#omega" class="footer-link">Omega Hardware</a>
-                    <a href="index.html#os" class="footer-link">CorprexOS</a>
-                    <a href="index.html#models" class="footer-link">AI Models</a>
-                    <a href="index.html#pricing" class="footer-link">Pricing</a>
+                    <a href="product.html" class="footer-link">Omega Hardware</a>
+                    <a href="#os" class="footer-link">CorprexOS</a>
+                    <a href="#models" class="footer-link">AI Models</a>
+                    <a href="#pricing" class="footer-link">Pricing</a>
                 </div>
                 <div class="footer-column">
                     <h4>Solutions</h4>
                     <a href="automations.html" class="footer-link">Automations</a>
-                    <a href="index.html#legal" class="footer-link">Legal</a>
-                    <a href="index.html#healthcare" class="footer-link">Healthcare</a>
-                    <a href="index.html#finance" class="footer-link">Finance</a>
-                    <a href="index.html#government" class="footer-link">Government</a>
+                    <a href="#legal" class="footer-link">Legal</a>
+                    <a href="#healthcare" class="footer-link">Healthcare</a>
+                    <a href="#finance" class="footer-link">Finance</a>
+                    <a href="#government" class="footer-link">Government</a>
                 </div>
                 <div class="footer-column">
                     <h4>Support</h4>
-                    <a href="index.html#docs" class="footer-link">Documentation</a>
-                    <a href="index.html#blog" class="footer-link">Blog</a>
-                    <a href="index.html#support" class="footer-link">Support</a>
-                    <a href="index.html#faq" class="footer-link">FAQs</a>
+                    <a href="#docs" class="footer-link">Documentation</a>
+                    <a href="#blog" class="footer-link">Blog</a>
+                    <a href="#support" class="footer-link">Support</a>
+                    <a href="#faq" class="footer-link">FAQs</a>
                 </div>
                 <div class="footer-column">
                     <h4>About Us</h4>
                     <a href="about.html" class="footer-link">Our Story</a>
-                    <a href="index.html#careers" class="footer-link">Careers</a>
-                    <a href="index.html#partners" class="footer-link">Partners</a>
-                    <a href="index.html#contact" class="footer-link">Contact</a>
+                    <a href="#careers" class="footer-link">Careers</a>
+                    <a href="#partners" class="footer-link">Partners</a>
+                    <a href="#contact" class="footer-link">Contact</a>
                 </div>
             </div>
             <div class="footer-bottom">
@@ -716,8 +716,62 @@
     </footer>
 
     <script>
-        // Load articles from localStorage
-        let articles = JSON.parse(localStorage.getItem('corprexArticles')) || [];
+        // Articles data - this is where we define all the news articles
+        const articlesData = [
+            {
+                id: 1,
+                title: "Even OpenAI's CEO Says Be Careful What You Share With ChatGPT",
+                summary: "OpenAI CEO Sam Altman has warned users about sharing sensitive information with ChatGPT, acknowledging privacy concerns that have long worried security experts. The admission highlights growing concerns about data privacy in AI systems as companies collect vast amounts of user data to train their models.",
+                author: "CNET",
+                date: new Date().toISOString(),
+                url: "https://www.cnet.com/tech/services-and-software/even-openais-ceo-says-be-careful-what-you-share-with-chatgpt/",
+                image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80",
+                category: "insights",
+                featured: true
+            },
+            {
+                id: 2,
+                title: "Wiretap Suits Pit Old Privacy Laws Against New AI Technology",
+                summary: "Legal challenges are emerging as decades-old wiretapping laws collide with modern AI chatbots. Courts are grappling with whether AI conversations fall under traditional privacy protections, potentially reshaping how companies can use and store user interactions.",
+                author: "Bloomberg Law",
+                date: new Date(Date.now() - 86400000).toISOString(),
+                url: "https://news.bloomberglaw.com/litigation/wiretap-suits-pit-old-privacy-laws-against-new-ai-technology",
+                image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&q=80",
+                category: "insights"
+            },
+            {
+                id: 3,
+                title: "From Google Gemini's Meltdown to ChatGPT's Privacy Risks: Why Students Need to Rethink Relying on AI",
+                summary: "Educational institutions are sounding alarms about students' over-reliance on AI tools. From privacy concerns to accuracy issues, experts warn that blind trust in AI chatbots could compromise both academic integrity and personal data security.",
+                author: "Times of India",
+                date: new Date(Date.now() - 172800000).toISOString(),
+                url: "https://timesofindia.indiatimes.com/education/news/from-google-geminis-meltdown-to-chatgpts-privacy-risks-why-students-need-to-rethink-relying-on-ai-for-their-lives/articleshow/122945225.cms",
+                image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80",
+                category: "insights"
+            },
+            {
+                id: 4,
+                title: "Sam Altman Warns There's No Legal Confidentiality When Using ChatGPT as a Therapist",
+                summary: "OpenAI's CEO cautions users against treating ChatGPT as a confidential therapist, emphasizing that conversations lack legal privacy protections. This warning comes as more people turn to AI for mental health support, raising serious privacy and ethical concerns.",
+                author: "TechCrunch",
+                date: new Date(Date.now() - 259200000).toISOString(),
+                url: "https://techcrunch.com/2025/07/25/sam-altman-warns-theres-no-legal-confidentiality-when-using-chatgpt-as-a-therapist/",
+                image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&q=80",
+                category: "announcements"
+            },
+            {
+                id: 5,
+                title: "Meta AI's New Chatbot Raises Privacy Alarms",
+                summary: "Meta's latest AI chatbot launch has privacy advocates concerned about data collection practices. Critics worry about how user conversations will be used across Meta's ecosystem, particularly given the company's history with user privacy.",
+                author: "Fox News",
+                date: new Date(Date.now() - 345600000).toISOString(),
+                url: "https://www.foxnews.com/tech/meta-ais-new-chatbot-raises-privacy-alarms",
+                image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&q=80",
+                category: "technical"
+            }
+        ];
+
+        let articles = articlesData;
         let currentFilter = 'all';
         let articlesPerPage = 6;
         let currentPage = 1;
@@ -751,34 +805,33 @@
             
             let html = '';
             
-            // Featured article (first article)
-            if (displayArticles.length > 0 && currentPage === 1) {
-                const featured = displayArticles[0];
+            // Featured article (first article with featured flag or first article)
+            const featuredArticle = displayArticles.find(a => a.featured) || displayArticles[0];
+            if (featuredArticle && currentPage === 1) {
                 html += `
-                    <article class="featured-article" onclick="openArticle('${featured.url}')">
+                    <article class="featured-article" onclick="openArticle('${featuredArticle.url}')">
                         <div class="featured-image">
-                            <img src="${featured.image}" alt="${featured.title}" 
+                            <img src="${featuredArticle.image}" alt="${featuredArticle.title}" 
                                  onerror="this.src='https://via.placeholder.com/800x400?text=Corprex+News'">
                         </div>
                         <div class="featured-content">
                             <span class="featured-badge">Featured</span>
-                            <h2 class="featured-title">${featured.title}</h2>
-                            <p class="featured-excerpt">${featured.summary}</p>
+                            <h2 class="featured-title">${featuredArticle.title}</h2>
+                            <p class="featured-excerpt">${featuredArticle.summary}</p>
                             <div class="featured-meta">
-                                <span>${featured.author || 'Corprex Team'}</span>
-                                <span>${formatDate(featured.date)}</span>
+                                <span>${featuredArticle.author || 'Corprex Team'}</span>
+                                <span>${formatDate(featuredArticle.date)}</span>
                             </div>
                         </div>
                     </article>
                 `;
             }
             
-            // Regular articles grid
+            // Regular articles grid (exclude featured article)
             html += '<div class="news-grid">';
             
-            const startIdx = currentPage === 1 ? 1 : 0;
-            for (let i = startIdx; i < displayArticles.length; i++) {
-                const article = displayArticles[i];
+            const regularArticles = displayArticles.filter(a => a.id !== featuredArticle?.id);
+            for (let article of regularArticles) {
                 html += `
                     <article class="article-card" onclick="openArticle('${article.url}')">
                         <div class="article-image">
@@ -854,46 +907,6 @@
             event.preventDefault();
             alert('Thank you for subscribing! You\'ll receive our latest updates.');
             event.target.reset();
-        }
-
-        // Add sample articles if none exist
-        if (articles.length === 0) {
-            const sampleArticles = [
-                {
-                    id: 1,
-                    title: "Corprex Announces Revolutionary Omega 2.0: The Future of Private AI",
-                    summary: "Today, we're excited to unveil Omega 2.0, our next-generation AI infrastructure platform that delivers 10x performance improvements while maintaining complete data sovereignty. This breakthrough represents a fundamental shift in how enterprises can leverage AI without compromising security or control.",
-                    author: "Corprex Team",
-                    date: new Date().toISOString(),
-                    url: "https://example.com/omega-2-announcement",
-                    image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80",
-                    category: "announcements"
-                },
-                {
-                    id: 2,
-                    title: "Why Fortune 500 Companies Are Abandoning Cloud AI for Local Infrastructure",
-                    summary: "A comprehensive analysis of the growing trend among enterprise leaders to bring AI capabilities in-house. Learn why companies are investing millions in private AI infrastructure and how it's transforming their competitive advantage in the marketplace.",
-                    author: "Sarah Chen",
-                    date: new Date(Date.now() - 86400000).toISOString(),
-                    url: "https://example.com/fortune-500-local-ai",
-                    image: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=800&q=80",
-                    category: "insights"
-                },
-                {
-                    id: 3,
-                    title: "Technical Deep Dive: Optimizing LLM Performance on Local Hardware",
-                    summary: "Our engineering team shares best practices for maximizing the performance of large language models on private infrastructure. From GPU optimization to memory management, discover the techniques that make local AI deployment not just viable, but superior.",
-                    author: "Dr. Michael Torres",
-                    date: new Date(Date.now() - 172800000).toISOString(),
-                    url: "https://example.com/llm-optimization-guide",
-                    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80",
-                    category: "technical"
-                }
-            ];
-            
-            localStorage.setItem('corprexArticles', JSON.stringify(sampleArticles));
-            articles = sampleArticles;
-            renderArticles();
         }
 
         // Smooth scrolling for anchor links
