@@ -13,6 +13,10 @@
             box-sizing: border-box;
         }
 
+        html {
+            overflow-x: hidden;
+        }
+
         :root {
             --primary-black: #000000;
             --secondary-black: #0a0a0a;
@@ -31,6 +35,8 @@
             color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
+            position: relative;
+            width: 100%;
         }
 
         /* Navigation */
@@ -47,22 +53,35 @@
         .nav-container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 1.5rem 2rem;
+            padding: 1rem 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            min-height: 60px;
         }
 
         .logo {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 600;
             letter-spacing: -0.02em;
         }
 
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
         .nav-menu {
             display: flex;
-            gap: 3rem;
+            gap: 2rem;
             list-style: none;
+            align-items: center;
         }
 
         .nav-item {
@@ -77,19 +96,178 @@
             cursor: pointer;
         }
 
-        .nav-link:hover {
+        .nav-link:hover, .nav-link.active {
             color: var(--text-primary);
         }
 
         .nav-cta {
             background: var(--text-primary);
             color: var(--primary-black);
-            padding: 0.75rem 1.5rem;
+            padding: 0.6rem 1.2rem;
             border-radius: 6px;
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
             letter-spacing: 0.02em;
+            font-size: 0.9rem;
+        }
+
+        .nav-cta:hover {
+            background: var(--text-secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+        }
+
+        /* News Alert Banner */
+        .news-alert {
+            background: linear-gradient(135deg, var(--dark-gray) 0%, var(--medium-gray) 100%);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 1.5rem;
+            position: fixed;
+            top: 60px;
+            width: 100%;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .news-alert-content {
+            max-width: 1400px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .news-alert-text {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+        }
+
+        .news-alert-badge {
+            background: var(--text-primary);
+            color: var(--primary-black);
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .news-alert-message {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .news-alert-message strong {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .news-alert-link {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .news-alert-link:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--text-primary);
+        }
+
+        /* Adjust hero section for news alert */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 10rem 1.5rem 4rem;
+            background: linear-gradient(180deg, var(--primary-black) 0%, var(--secondary-black) 100%);
+            margin-top: 0;
+        }
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--text-primary);
+        }
+
+        .nav-cta {
+            background: var(--text-primary);
+            color: var(--primary-black);
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            letter-spacing: 0.02em;
+            font-size: 0.9rem;
         }
 
         .nav-cta:hover {
@@ -105,14 +283,13 @@
             align-items: center;
             justify-content: center;
             position: relative;
-            padding-top: 80px;
+            padding: 6rem 1.5rem 4rem;
             background: linear-gradient(180deg, var(--primary-black) 0%, var(--secondary-black) 100%);
         }
 
         .hero-content {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 0 2rem;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 4rem;
@@ -120,7 +297,7 @@
         }
 
         .hero-text h1 {
-            font-size: 4rem;
+            font-size: 3.5rem;
             font-weight: 400;
             line-height: 1.1;
             margin-bottom: 1rem;
@@ -128,7 +305,7 @@
         }
 
         .hero-text h2 {
-            font-size: 4rem;
+            font-size: 3.5rem;
             font-weight: 400;
             color: var(--text-primary);
             margin-top: 2rem;
@@ -144,20 +321,22 @@
 
         .hero-cta {
             display: flex;
-            gap: 1.5rem;
-            margin-top: 3rem;
+            gap: 1rem;
+            margin-top: 2.5rem;
+            flex-wrap: wrap;
         }
 
         .btn-primary {
             background: var(--text-primary);
             color: var(--primary-black);
-            padding: 1rem 2rem;
+            padding: 0.875rem 1.75rem;
             border-radius: 6px;
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
             display: inline-block;
             letter-spacing: 0.02em;
+            font-size: 0.95rem;
         }
 
         .btn-primary:hover {
@@ -169,7 +348,7 @@
         .btn-secondary {
             background: transparent;
             color: var(--text-primary);
-            padding: 1rem 2rem;
+            padding: 0.875rem 1.75rem;
             border: 1px solid var(--border-color);
             border-radius: 6px;
             text-decoration: none;
@@ -177,6 +356,7 @@
             transition: all 0.3s ease;
             display: inline-block;
             letter-spacing: 0.02em;
+            font-size: 0.95rem;
         }
 
         .btn-secondary:hover {
@@ -187,7 +367,7 @@
         /* 3D Omega Box */
         .omega-visual {
             position: relative;
-            height: 600px;
+            height: 500px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -195,8 +375,8 @@
         }
 
         .omega-box {
-            width: 350px;
-            height: 350px;
+            width: 300px;
+            height: 300px;
             position: relative;
             transform-style: preserve-3d;
             animation: rotate 20s linear infinite;
@@ -209,8 +389,8 @@
 
         .omega-face {
             position: absolute;
-            width: 350px;
-            height: 350px;
+            width: 300px;
+            height: 300px;
             background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
             border: 2px solid #333;
             display: flex;
@@ -233,38 +413,38 @@
         }
 
         .omega-face.front {
-            transform: translateZ(175px);
+            transform: translateZ(150px);
         }
 
         .omega-face.back {
-            transform: translateZ(-175px) rotateY(180deg);
+            transform: translateZ(-150px) rotateY(180deg);
         }
 
         .omega-face.right {
-            transform: rotateY(90deg) translateZ(175px);
+            transform: rotateY(90deg) translateZ(150px);
         }
 
         .omega-face.left {
-            transform: rotateY(-90deg) translateZ(175px);
+            transform: rotateY(-90deg) translateZ(150px);
         }
 
         .omega-face.top {
-            transform: rotateX(90deg) translateZ(175px);
+            transform: rotateX(90deg) translateZ(150px);
         }
 
         .omega-face.bottom {
-            transform: rotateX(-90deg) translateZ(175px);
+            transform: rotateX(-90deg) translateZ(150px);
         }
 
         .omega-logo {
-            width: 200px;
+            width: 150px;
             height: auto;
             margin-bottom: 1rem;
-            filter: invert(1); /* Makes the black logo white */
+            filter: invert(1);
         }
 
         .omega-logo-large {
-            font-size: 4rem;
+            font-size: 3.5rem;
             font-weight: 600;
             color: var(--text-primary);
             text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
@@ -272,13 +452,13 @@
         }
 
         .omega-text {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             letter-spacing: 0.3em;
             color: var(--text-primary);
         }
 
         .omega-subtext {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             letter-spacing: 0.2em;
             color: var(--text-gray);
             margin-top: 0.5rem;
@@ -286,30 +466,29 @@
 
         /* Sections */
         .section {
-            padding: 6rem 0;
+            padding: 4rem 1.5rem;
             position: relative;
         }
 
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 0 2rem;
         }
 
         .section-header {
             text-align: center;
-            margin-bottom: 4rem;
+            margin-bottom: 3rem;
         }
 
         .section-header h2 {
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 300;
             margin-bottom: 1rem;
             letter-spacing: -0.02em;
         }
 
         .section-header p {
-            font-size: 1.25rem;
+            font-size: 1.125rem;
             color: var(--text-secondary);
             max-width: 600px;
             margin: 0 auto;
@@ -320,7 +499,7 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
-            margin-top: 4rem;
+            margin-top: 3rem;
         }
 
         .intro-card {
@@ -332,7 +511,7 @@
         }
 
         .intro-card h3 {
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             margin-bottom: 1rem;
             font-weight: 500;
         }
@@ -341,6 +520,7 @@
             color: var(--text-secondary);
             line-height: 1.8;
             font-weight: 300;
+            font-size: 0.95rem;
         }
 
         .intro-card:hover {
@@ -352,7 +532,7 @@
         /* Stats Section */
         .stats-section {
             background: var(--secondary-black);
-            padding: 4rem 0;
+            padding: 3rem 1.5rem;
             border-top: 1px solid var(--border-color);
             border-bottom: 1px solid var(--border-color);
         }
@@ -365,14 +545,14 @@
         }
 
         .stat-item h3 {
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
         }
 
         .stat-item p {
             color: var(--text-secondary);
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
 
         /* Omega Advantage */
@@ -383,12 +563,12 @@
         .advantage-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 4rem;
+            gap: 3rem;
             align-items: center;
         }
 
         .advantage-content h3 {
-            font-size: 2.5rem;
+            font-size: 2rem;
             margin-bottom: 2rem;
             font-weight: 300;
         }
@@ -398,7 +578,7 @@
         }
 
         .advantage-item {
-            padding: 1.5rem 0;
+            padding: 1.25rem 0;
             border-bottom: 1px solid var(--border-color);
             display: flex;
             align-items: start;
@@ -407,12 +587,12 @@
 
         .advantage-icon {
             color: var(--text-primary);
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             margin-top: 0.25rem;
         }
 
         .advantage-text h4 {
-            font-size: 1.25rem;
+            font-size: 1.125rem;
             margin-bottom: 0.5rem;
             font-weight: 500;
         }
@@ -420,6 +600,7 @@
         .advantage-text p {
             color: var(--text-secondary);
             font-weight: 300;
+            font-size: 0.95rem;
         }
 
         /* Specs Preview */
@@ -435,6 +616,7 @@
             justify-content: space-between;
             padding: 1rem 0;
             border-bottom: 1px solid var(--border-color);
+            font-size: 0.95rem;
         }
 
         .spec-row:last-child {
@@ -454,57 +636,61 @@
         /* Features Grid */
         .features-section {
             background: var(--secondary-black);
-            padding: 6rem 0;
+            padding: 4rem 1.5rem;
         }
 
         .features-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 3rem;
-            margin-top: 4rem;
+            gap: 2.5rem;
+            margin-top: 3rem;
         }
 
         .feature-card {
             display: flex;
-            gap: 2rem;
+            gap: 1.5rem;
             align-items: start;
         }
 
         .feature-content h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
         }
 
         .feature-content p {
             color: var(--text-secondary);
             line-height: 1.8;
+            font-size: 0.95rem;
         }
 
         /* Comparison Section */
         .comparison-section {
-            padding: 6rem 0;
+            padding: 4rem 1.5rem;
         }
 
         .comparison-table {
             background: var(--secondary-black);
             border-radius: 16px;
             overflow: hidden;
-            margin-top: 3rem;
+            margin-top: 2.5rem;
+            overflow-x: auto;
         }
 
         .comparison-header {
             display: grid;
             grid-template-columns: 2fr 1fr 1fr;
             background: var(--dark-gray);
-            padding: 1.5rem 2rem;
+            padding: 1.25rem 1.5rem;
             font-weight: 600;
+            font-size: 0.95rem;
         }
 
         .comparison-row {
             display: grid;
             grid-template-columns: 2fr 1fr 1fr;
-            padding: 1.5rem 2rem;
+            padding: 1.25rem 1.5rem;
             border-bottom: 1px solid var(--border-color);
+            font-size: 0.9rem;
         }
 
         .comparison-row:last-child {
@@ -522,25 +708,74 @@
         /* FAQ Section */
         .faq-section {
             background: var(--secondary-black);
+            padding: 4rem 1.5rem;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--dark-gray);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .faq-item summary {
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 1rem;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-item summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .faq-item summary::after {
+            content: '+';
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item[open] summary::after {
+            transform: rotate(45deg);
+        }
+
+        .faq-item p {
+            margin-top: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 0.95rem;
         }
 
         /* Footer */
         footer {
             background: var(--secondary-black);
             border-top: 1px solid var(--border-color);
-            padding: 4rem 0 2rem;
+            padding: 3rem 1.5rem 2rem;
         }
 
         .footer-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 3rem;
-            margin-bottom: 3rem;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-bottom: 2rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .footer-column h4 {
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            margin-bottom: 1rem;
             color: var(--text-primary);
         }
 
@@ -548,8 +783,9 @@
             display: block;
             color: var(--text-secondary);
             text-decoration: none;
-            padding: 0.5rem 0;
+            padding: 0.4rem 0;
             transition: color 0.3s ease;
+            font-size: 0.9rem;
         }
 
         .footer-link:hover {
@@ -558,100 +794,292 @@
 
         .footer-bottom {
             border-top: 1px solid var(--border-color);
-            padding-top: 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding-top: 1.5rem;
+            text-align: center;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
-        .footer-tagline {
+        .footer-copyright {
             color: var(--text-secondary);
+            font-size: 0.9rem;
         }
 
-        /* Responsive */
-        @media (max-width: 968px) {
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            /* News Alert */
+            .news-alert {
+                padding: 0.75rem 1rem;
+            }
+
+            .news-alert-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.75rem;
+            }
+
+            .news-alert-text {
+                flex-direction: column;
+            }
+
+            .news-alert-message {
+                font-size: 0.85rem;
+            }
+
+            .news-alert-link {
+                width: 100%;
+                text-align: center;
+            }
+
+            /* Mobile Menu */
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 60px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 60px);
+                background: var(--secondary-black);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.5rem;
+                transition: left 0.3s ease;
+                border-top: 1px solid var(--border-color);
+                overflow-y: auto;
+                align-items: stretch;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-cta {
+                width: 100%;
+                text-align: center;
+                padding: 0.875rem;
+            }
+
+            /* Hero */
+            .hero {
+                padding: 7rem 1rem 3rem;
+                min-height: 100vh;
+            }
+
             .hero-content {
                 grid-template-columns: 1fr;
                 text-align: center;
+                gap: 3rem;
             }
 
             .hero-text h1,
             .hero-text h2 {
-                font-size: 3rem;
+                font-size: 2.5rem;
             }
 
-            .omega-visual {
-                height: 400px;
-            }
-
-            .omega-box {
-                width: 250px;
-                height: 250px;
-            }
-
-            .omega-face {
-                width: 250px;
-                height: 250px;
-            }
-
-            .omega-face.front {
-                transform: translateZ(125px);
-            }
-
-            .omega-face.back {
-                transform: translateZ(-125px) rotateY(180deg);
-            }
-
-            .omega-face.right {
-                transform: rotateY(90deg) translateZ(125px);
-            }
-
-            .omega-face.left {
-                transform: rotateY(-90deg) translateZ(125px);
-            }
-
-            .omega-face.top {
-                transform: rotateX(90deg) translateZ(125px);
-            }
-
-            .omega-face.bottom {
-                transform: rotateX(-90deg) translateZ(125px);
-            }
-
-            .omega-logo {
-                width: 80px;
-            }
-
-            .omega-text {
+            .hero-text p {
                 font-size: 1rem;
             }
 
+            .hero-cta {
+                justify-content: center;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                padding: 0.75rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            /* Omega Visual */
+            .omega-visual {
+                height: 350px;
+            }
+
+            .omega-box {
+                width: 200px;
+                height: 200px;
+            }
+
+            .omega-face {
+                width: 200px;
+                height: 200px;
+            }
+
+            .omega-face.front {
+                transform: translateZ(100px);
+            }
+
+            .omega-face.back {
+                transform: translateZ(-100px) rotateY(180deg);
+            }
+
+            .omega-face.right {
+                transform: rotateY(90deg) translateZ(100px);
+            }
+
+            .omega-face.left {
+                transform: rotateY(-90deg) translateZ(100px);
+            }
+
+            .omega-face.top {
+                transform: rotateX(90deg) translateZ(100px);
+            }
+
+            .omega-face.bottom {
+                transform: rotateX(-90deg) translateZ(100px);
+            }
+
+            .omega-logo {
+                width: 100px;
+            }
+
+            .omega-logo-large {
+                font-size: 2.5rem;
+            }
+
+            .omega-text {
+                font-size: 0.9rem;
+            }
+
             .omega-subtext {
-                font-size: 0.8rem;
+                font-size: 0.75rem;
             }
 
-            .nav-menu {
-                display: none;
+            /* Sections */
+            .section {
+                padding: 3rem 1rem;
             }
 
+            .section-header h2 {
+                font-size: 2rem;
+            }
+
+            .section-header p {
+                font-size: 1rem;
+            }
+
+            /* Grids */
             .intro-grid,
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-
+            .stats-grid,
             .features-grid,
             .advantage-grid {
                 grid-template-columns: 1fr;
+                gap: 1.5rem;
             }
 
-            .footer-grid {
+            .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
+            }
+
+            /* Comparison Table */
+            .comparison-table {
+                font-size: 0.85rem;
             }
 
             .comparison-header,
             .comparison-row {
+                grid-template-columns: 2fr 1fr 1fr;
+                padding: 1rem;
+            }
+
+            /* Footer */
+            .footer-grid {
                 grid-template-columns: 1fr;
-                gap: 1rem;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-text h1,
+            .hero-text h2 {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-header,
+            .comparison-row {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: left;
+            }
+
+            /* Ensure nothing is cut off on very small screens */
+            .nav-container {
+                padding: 0.75rem 1rem;
+            }
+
+            .logo {
+                font-size: 1.25rem;
+            }
+
+            .mobile-menu-btn {
+                font-size: 1.25rem;
+                padding: 0.25rem;
+            }
+
+            .news-alert {
+                top: 50px;
+                padding: 0.5rem;
+            }
+
+            .news-alert-badge {
+                font-size: 0.7rem;
+                padding: 0.2rem 0.5rem;
+            }
+
+            .news-alert-message {
+                font-size: 0.8rem;
+            }
+
+            .hero {
+                padding-top: 8rem;
+            }
+
+            /* Ensure sections have proper spacing */
+            .section {
+                padding: 2.5rem 0.75rem;
+            }
+
+            /* Prevent horizontal scroll */
+            .omega-box {
+                width: 180px;
+                height: 180px;
+            }
+
+            .omega-face {
+                width: 180px;
+                height: 180px;
+            }
+
+            .omega-face.front {
+                transform: translateZ(90px);
+            }
+
+            .omega-face.back {
+                transform: translateZ(-90px) rotateY(180deg);
+            }
+
+            .omega-face.right {
+                transform: rotateY(90deg) translateZ(90px);
+            }
+
+            .omega-face.left {
+                transform: rotateY(-90deg) translateZ(90px);
+            }
+
+            .omega-face.top {
+                transform: rotateX(90deg) translateZ(90px);
+            }
+
+            .omega-face.bottom {
+                transform: rotateX(-90deg) translateZ(90px);
             }
         }
     </style>
@@ -661,15 +1089,13 @@
     <nav>
         <div class="nav-container">
             <div class="logo">CORPREX</div>
-            <ul class="nav-menu">
+            <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+            <ul class="nav-menu" id="navMenu">
                 <li class="nav-item">
-                    <a href="product.html" class="nav-link">Product</a>
+                    <a href="index.html" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item">
                     <a href="automations.html" class="nav-link">Automations</a>
-                </li>
-                <li class="nav-item">
-                    <a href="industries.html" class="nav-link">Industries</a>
                 </li>
                 <li class="nav-item">
                     <a href="why-local-ai.html" class="nav-link">Why Local AI?</a>
@@ -680,10 +1106,26 @@
                 <li class="nav-item">
                     <a href="about.html" class="nav-link">About Us</a>
                 </li>
+                <li class="nav-item">
+                    <a href="#demo" class="nav-cta">Request Demo</a>
+                </li>
             </ul>
-            <a href="#demo" class="nav-cta">Request Demo</a>
         </div>
     </nav>
+
+    <!-- News Alert Banner -->
+    <div class="news-alert">
+        <div class="news-alert-content">
+            <div class="news-alert-text">
+                <span class="news-alert-badge">Breaking</span>
+                <span class="news-alert-message">
+                    <strong>Major enterprises facing data breaches and soaring AI costs.</strong> 
+                    See why Fortune 500 companies are switching to private AI infrastructure.
+                </span>
+            </div>
+            <a href="news.html" class="news-alert-link">Read Latest →</a>
+        </div>
+    </div>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -836,7 +1278,7 @@
                     </ul>
                 </div>
                 <div class="specs-preview">
-                    <h4 style="font-size: 1.5rem; margin-bottom: 1.5rem;">Starting Configuration</h4>
+                    <h4 style="font-size: 1.25rem; margin-bottom: 1.5rem;">Starting Configuration</h4>
                     <div class="spec-row">
                         <span class="spec-label">GPU Options</span>
                         <span class="spec-value">RTX 4060 Ti → H100</span>
@@ -925,26 +1367,26 @@
                 <h2>Frequently Asked Questions</h2>
                 <p>Everything you need to know about Omega</p>
             </div>
-            <div style="max-width: 800px; margin: 0 auto;">
-                <details style="background: var(--dark-gray); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem;">
-                    <summary style="cursor: pointer; font-weight: 500; font-size: 1.1rem;">How quickly can I get started with Omega?</summary>
-                    <p style="margin-top: 1rem; color: var(--text-secondary);">Most clients are operational within 24-48 hours of delivery. Our white glove service includes unboxing, setup, network configuration, and hands-on training for your team.</p>
+            <div class="faq-container">
+                <details class="faq-item">
+                    <summary>How quickly can I get started with Omega?</summary>
+                    <p>Most clients are operational within 24-48 hours of delivery. Our white glove service includes unboxing, setup, network configuration, and hands-on training for your team.</p>
                 </details>
-                <details style="background: var(--dark-gray); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem;">
-                    <summary style="cursor: pointer; font-weight: 500; font-size: 1.1rem;">What AI models can Omega run?</summary>
-                    <p style="margin-top: 1rem; color: var(--text-secondary);">Omega supports all major open-source models including Llama 3, Mistral, Mixtral, CodeLlama, and more. You can also fine-tune models on your own data or deploy custom models.</p>
+                <details class="faq-item">
+                    <summary>What AI models can Omega run?</summary>
+                    <p>Omega supports all major open-source models including Llama 3, Mistral, Mixtral, CodeLlama, and more. You can also fine-tune models on your own data or deploy custom models.</p>
                 </details>
-                <details style="background: var(--dark-gray); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem;">
-                    <summary style="cursor: pointer; font-weight: 500; font-size: 1.1rem;">How does Omega ensure data security?</summary>
-                    <p style="margin-top: 1rem; color: var(--text-secondary);">Your data never leaves your premises. Omega features end-to-end encryption, air-gap capability, and meets HIPAA, SOX, and FedRAMP compliance standards out of the box.</p>
+                <details class="faq-item">
+                    <summary>How does Omega ensure data security?</summary>
+                    <p>Your data never leaves your premises. Omega features end-to-end encryption, air-gap capability, and meets HIPAA, SOX, and FedRAMP compliance standards out of the box.</p>
                 </details>
-                <details style="background: var(--dark-gray); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem;">
-                    <summary style="cursor: pointer; font-weight: 500; font-size: 1.1rem;">What if I need to scale beyond one Omega?</summary>
-                    <p style="margin-top: 1rem; color: var(--text-secondary);">Omega is designed to scale. Our orchestration software allows multiple units to work together seamlessly. Add capacity as you grow without disrupting operations.</p>
+                <details class="faq-item">
+                    <summary>What if I need to scale beyond one Omega?</summary>
+                    <p>Omega is designed to scale. Our orchestration software allows multiple units to work together seamlessly. Add capacity as you grow without disrupting operations.</p>
                 </details>
-                <details style="background: var(--dark-gray); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem;">
-                    <summary style="cursor: pointer; font-weight: 500; font-size: 1.1rem;">What kind of support is included?</summary>
-                    <p style="margin-top: 1rem; color: var(--text-secondary);">Every Omega includes comprehensive support ranging from business hours to 24/7 coverage depending on your package. We also provide regular software updates and optimization services.</p>
+                <details class="faq-item">
+                    <summary>What kind of support is included?</summary>
+                    <p>Every Omega includes comprehensive support ranging from business hours to 24/7 coverage depending on your package. We also provide regular software updates and optimization services.</p>
                 </details>
             </div>
         </div>
@@ -952,46 +1394,40 @@
 
     <!-- Footer -->
     <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-column">
-                    <h4>Product</h4>
-                    <a href="product.html" class="footer-link">Omega Hardware</a>
-                    <a href="#os" class="footer-link">CorprexOS</a>
-                    <a href="#models" class="footer-link">AI Models</a>
-                    <a href="#pricing" class="footer-link">Pricing</a>
-                </div>
-                <div class="footer-column">
-                    <h4>Solutions</h4>
-                    <a href="automations.html" class="footer-link">Automations</a>
-                    <a href="#legal" class="footer-link">Legal</a>
-                    <a href="#healthcare" class="footer-link">Healthcare</a>
-                    <a href="#finance" class="footer-link">Finance</a>
-                    <a href="#government" class="footer-link">Government</a>
-                </div>
-                <div class="footer-column">
-                    <h4>Resources</h4>
-                    <a href="#docs" class="footer-link">Documentation</a>
-                    <a href="#blog" class="footer-link">Blog</a>
-                    <a href="#support" class="footer-link">Support</a>
-                    <a href="#faq" class="footer-link">FAQs</a>
-                </div>
-                <div class="footer-column">
-                    <h4>Company</h4>
-                    <a href="about.html" class="footer-link">About Us</a>
-                    <a href="#careers" class="footer-link">Careers</a>
-                    <a href="#partners" class="footer-link">Partners</a>
-                    <a href="#contact" class="footer-link">Contact</a>
-                </div>
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h4>Solutions</h4>
+                <a href="automations.html" class="footer-link">Automations</a>
+                <a href="why-local-ai.html" class="footer-link">Why Local AI?</a>
             </div>
-            <div class="footer-bottom">
-                <div class="footer-tagline">Built for the Age of Sovereign AI</div>
-                <div style="color: var(--text-secondary);">© 2024 Corprex. All rights reserved.</div>
+            <div class="footer-column">
+                <h4>Company</h4>
+                <a href="about.html" class="footer-link">About Us</a>
+                <a href="news.html" class="footer-link">News</a>
             </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-copyright">© 2024 Corprex. All rights reserved.</div>
         </div>
     </footer>
 
     <script>
+        // Mobile menu toggle
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const navMenu = document.getElementById('navMenu');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            
+            if (!navMenu.contains(event.target) && !menuBtn.contains(event.target)) {
+                navMenu.classList.remove('active');
+            }
+        });
+
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -1002,6 +1438,8 @@
                         behavior: 'smooth',
                         block: 'start'
                     });
+                    // Close mobile menu if open
+                    document.getElementById('navMenu').classList.remove('active');
                 }
             });
         });
