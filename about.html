@@ -23,6 +23,7 @@
             --text-primary: #ffffff;
             --text-secondary: #cccccc;
             --border-color: #333333;
+            --accent-green: #4CAF50;
         }
 
         body {
@@ -119,33 +120,19 @@
 
         /* Hero Section */
         .hero {
-            min-height: 100vh;
+            min-height: 60vh;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
             padding: 8rem 1.5rem 4rem;
             background: linear-gradient(180deg, var(--primary-black) 0%, var(--secondary-black) 100%);
-            margin-top: 0;
         }
 
         .hero-content {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
             text-align: center;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            background: var(--dark-gray);
-            border: 1px solid var(--border-color);
-            border-radius: 50px;
-            padding: 0.5rem 1.5rem;
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            letter-spacing: 0.02em;
         }
 
         .hero-text h1 {
@@ -154,31 +141,162 @@
             line-height: 1.1;
             margin-bottom: 2rem;
             letter-spacing: -0.02em;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
         }
 
         .hero-text .highlight {
             font-weight: 600;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-green) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .hero-text p {
             font-size: 1.25rem;
             color: var(--text-secondary);
-            margin-bottom: 3rem;
             line-height: 1.8;
             font-weight: 300;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
+            max-width: 700px;
+            margin: 0 auto;
         }
 
-        .hero-cta {
+        /* Main Content Section */
+        .content-section {
+            padding: 4rem 1.5rem;
+            background: var(--primary-black);
+        }
+
+        .content-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Two Column Layout */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        /* What We Do */
+        .what-we-do {
+            background: var(--secondary-black);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2.5rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+        }
+
+        .section-content p {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .efficiency-stat {
+            background: var(--dark-gray);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* How We Work */
+        .how-we-work {
+            background: var(--secondary-black);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2.5rem;
+        }
+
+        .process-list {
+            list-style: none;
+        }
+
+        .process-item {
             display: flex;
+            align-items: start;
             gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .process-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .process-number {
+            background: var(--text-primary);
+            color: var(--primary-black);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
             justify-content: center;
-            flex-wrap: wrap;
+            font-weight: 600;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .process-content h3 {
+            font-size: 1.125rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .process-content p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 3rem 1.5rem;
+            text-align: center;
+        }
+
+        .cta-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .cta-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+
+        .cta-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
         }
 
         .btn-primary {
@@ -198,262 +316,6 @@
             background: var(--text-secondary);
             transform: translateY(-2px);
             box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--text-primary);
-            padding: 0.875rem 1.75rem;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            display: inline-block;
-            letter-spacing: 0.02em;
-            font-size: 0.95rem;
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--text-primary);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        /* Sections */
-        .section {
-            padding: 4rem 1.5rem;
-            position: relative;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .section-header h2 {
-            font-size: 2.5rem;
-            font-weight: 300;
-            margin-bottom: 1rem;
-            letter-spacing: -0.02em;
-        }
-
-        .section-header p {
-            font-size: 1.125rem;
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* What We Do Section */
-        .what-we-do {
-            background: var(--secondary-black);
-            border-top: 1px solid var(--border-color);
-        }
-
-        .what-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-            margin-top: 3rem;
-        }
-
-        .what-content h3 {
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            font-weight: 300;
-        }
-
-        .what-content p {
-            font-size: 1rem;
-            color: var(--text-secondary);
-            line-height: 1.8;
-            margin-bottom: 2rem;
-        }
-
-        .what-points {
-            list-style: none;
-        }
-
-        .what-point {
-            display: flex;
-            align-items: start;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .point-icon {
-            width: 24px;
-            height: 24px;
-            background: var(--text-primary);
-            color: var(--primary-black);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            margin-top: 0.25rem;
-        }
-
-        .what-visual {
-            background: var(--dark-gray);
-            border-radius: 16px;
-            padding: 2.5rem;
-            border: 1px solid var(--border-color);
-            text-align: center;
-        }
-
-        .visual-title {
-            font-size: 1.25rem;
-            margin-bottom: 2rem;
-            font-weight: 500;
-        }
-
-        .visual-stats {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-        }
-
-        .stat-box {
-            background: var(--medium-gray);
-            padding: 1.25rem;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-        }
-
-        .stat-number {
-            font-size: 1.75rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            font-size: 0.85rem;
-            color: var(--text-gray);
-        }
-
-        /* Why Choose Us */
-        .why-choose {
-            background: var(--primary-black);
-        }
-
-        .why-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2.5rem;
-            margin-top: 3rem;
-        }
-
-        .why-card {
-            background: var(--secondary-black);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 2.5rem 2rem;
-            text-align: center;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .why-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
-            transition: left 0.5s;
-        }
-
-        .why-card:hover::before {
-            left: 100%;
-        }
-
-        .why-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--text-primary);
-            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.05);
-        }
-
-        .why-icon {
-            width: 60px;
-            height: 60px;
-            background: var(--text-primary);
-            color: var(--primary-black);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-        }
-
-        .why-icon svg {
-            width: 28px;
-            height: 28px;
-        }
-
-        .why-card h3 {
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
-            font-weight: 500;
-        }
-
-        .why-card p {
-            color: var(--text-secondary);
-            line-height: 1.8;
-            font-size: 0.95rem;
-        }
-
-        /* Team Section */
-        .team-section {
-            background: var(--secondary-black);
-            border-top: 1px solid var(--border-color);
-        }
-
-        .team-intro {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto 3rem;
-        }
-
-        .team-intro h3 {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            font-weight: 300;
-        }
-
-        .team-intro p {
-            font-size: 1rem;
-            color: var(--text-secondary);
-            line-height: 1.8;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, var(--secondary-black) 0%, #1a1a1a 100%);
-            border-radius: 24px;
-            padding: 3rem 2rem;
-            text-align: center;
-            margin: 3rem 0;
-        }
-
-        .cta-section h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            font-weight: 300;
-        }
-
-        .cta-section p {
-            font-size: 1.125rem;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
         }
 
         /* Footer */
@@ -541,7 +403,7 @@
             /* Hero */
             .hero {
                 padding: 7rem 1rem 3rem;
-                min-height: 100vh;
+                min-height: 50vh;
             }
 
             .hero-text h1 {
@@ -552,63 +414,34 @@
                 font-size: 1rem;
             }
 
-            /* Sections */
-            .section {
+            /* Content */
+            .content-section {
                 padding: 3rem 1rem;
             }
 
-            .section-header h2 {
-                font-size: 2rem;
-            }
-
-            .section-header p {
-                font-size: 1rem;
-            }
-
-            /* What We Do */
-            .what-grid {
+            .content-grid {
                 grid-template-columns: 1fr;
-                gap: 2.5rem;
+                gap: 2rem;
             }
 
-            .what-content h3 {
+            .section-title {
                 font-size: 1.75rem;
-            }
-
-            .visual-stats {
-                gap: 1rem;
-            }
-
-            .stat-box {
-                padding: 1rem;
             }
 
             .stat-number {
-                font-size: 1.5rem;
-            }
-
-            /* Why Choose */
-            .why-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            /* Team */
-            .team-intro h3 {
-                font-size: 1.75rem;
+                font-size: 2.5rem;
             }
 
             /* CTA */
             .cta-section {
-                padding: 2.5rem 1.5rem;
-                margin: 2rem 0;
+                padding: 2rem 1rem;
             }
 
-            .cta-section h2 {
-                font-size: 2rem;
+            .cta-title {
+                font-size: 1.75rem;
             }
 
-            .cta-section p {
+            .cta-subtitle {
                 font-size: 1rem;
             }
 
@@ -624,19 +457,18 @@
                 font-size: 2rem;
             }
 
-            .visual-stats {
-                grid-template-columns: 1fr;
+            .section-title {
+                font-size: 1.5rem;
             }
 
-            .hero-cta {
-                flex-direction: column;
-                width: 100%;
+            .stat-number {
+                font-size: 2rem;
             }
 
-            .btn-primary,
-            .btn-secondary {
-                width: 100%;
-                text-align: center;
+            .process-number {
+                width: 28px;
+                height: 28px;
+                font-size: 0.8rem;
             }
         }
     </style>
@@ -674,34 +506,170 @@
     <section class="hero">
         <div class="hero-content">
             <div class="hero-text">
-                <h1>We Build the <span class="highlight">Infrastructure</span> for Private AI</h1>
+                <h1>We Build <span class="highlight">Hyper-Efficient</span> AI Systems</h1>
                 <p>
-                    Corprex exists to solve one critical problem: giving companies complete control over their AI destiny without compromising on performance or capability.
+                    While others chase raw power, we obsess over efficiency. Every watt matters. Every millisecond counts. Every dollar saved is yours to keep.
                 </p>
-                <div class="hero-cta">
-                    <a href="#demo" class="btn-primary">See Our Solution</a>
-                    <a href="#what-we-do" class="btn-secondary">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="content-section">
+        <div class="content-container">
+            <div class="content-grid">
+                <!-- What We Do -->
+                <div class="what-we-do">
+                    <h2 class="section-title">What We Do</h2>
+                    <div class="section-content">
+                        <p>
+                            We engineer the most power-efficient AI infrastructure on the planet. Our Omega systems deliver enterprise-grade performance while consuming 73% less power than traditional server setups.
+                        </p>
+                        <p>
+                            How? We optimize every component, from silicon to software. Custom cooling. Precision power delivery. Purpose-built architectures. 
+                        </p>
+                        <div class="efficiency-stat">
+                            <div class="stat-number">73%</div>
+                            <div class="stat-label">Less Power Consumption</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- How We Work -->
+                <div class="how-we-work">
+                    <h2 class="section-title">How We Work</h2>
+                    <ul class="process-list">
+                        <li class="process-item">
+                            <div class="process-number">1</div>
+                            <div class="process-content">
+                                <h3>Efficiency Audit</h3>
+                                <p>We analyze your current AI costs and identify optimization opportunities</p>
+                            </div>
+                        </li>
+                        <li class="process-item">
+                            <div class="process-number">2</div>
+                            <div class="process-content">
+                                <h3>Custom Engineering</h3>
+                                <p>Build your Omega system optimized for your specific workloads</p>
+                            </div>
+                        </li>
+                        <li class="process-item">
+                            <div class="process-number">3</div>
+                            <div class="process-content">
+                                <h3>Automation Design</h3>
+                                <p>Create custom AI workflows that multiply your team's productivity</p>
+                            </div>
+                        </li>
+                        <li class="process-item">
+                            <div class="process-number">4</div>
+                            <div class="process-content">
+                                <h3>Continuous Optimization</h3>
+                                <p>Monitor, refine, and enhance your system for peak efficiency</p>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- What We Do -->
-    <section class="section what-we-do" id="what-we-do">
-        <div class="container">
-            <div class="section-header">
-                <h2>What We Do</h2>
-                <p>We turn the promise of private AI into reality</p>
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-container">
+            <h2 class="cta-title">Ready to Cut Your AI Costs?</h2>
+            <p class="cta-subtitle">
+                See how much you can save with hyper-efficient infrastructure.
+            </p>
+            <a href="#demo" class="btn-primary">Request Your Efficiency Audit</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h4>Solutions</h4>
+                <a href="automations.html" class="footer-link">Automations</a>
+                <a href="why-local-ai.html" class="footer-link">Why Local AI?</a>
             </div>
-            <div class="what-grid">
-                <div class="what-content">
-                    <h3>Complete AI Independence</h3>
-                    <p>
-                        We design, build, and deploy turnkey AI infrastructure that runs entirely on your premises. No cloud dependencies. No data sharing. No monthly fees.
-                    </p>
-                    <ul class="what-points">
-                        <li class="what-point">
-                            <div class="point-icon">
-                                <svg viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M9 12L11 14L15 10"/>
-                                
+            <div class="footer-column">
+                <h4>Company</h4>
+                <a href="about.html" class="footer-link">About Us</a>
+                <a href="news.html" class="footer-link">News</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-copyright">© 2024 Corprex. All rights reserved.</div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const navMenu = document.getElementById('navMenu');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            
+            if (!navMenu.contains(event.target) && !menuBtn.contains(event.target)) {
+                navMenu.classList.remove('active');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close mobile menu if open
+                    document.getElementById('navMenu').classList.remove('active');
+                }
+            });
+        });
+
+        // Add scroll effect to navigation
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(0, 0, 0, 0.98)';
+                nav.style.boxShadow = '0 2px 20px rgba(0,0,0,0.5)';
+            } else {
+                nav.style.background = 'rgba(0, 0, 0, 0.95)';
+                nav.style.boxShadow = 'none';
+            }
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe content sections
+        document.querySelectorAll('.what-we-do, .how-we-work').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'all 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
