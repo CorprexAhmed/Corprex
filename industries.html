@@ -50,22 +50,39 @@
         .nav-container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 1.5rem 2rem;
+            padding: 1rem 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .logo {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 600;
             letter-spacing: -0.02em;
         }
 
+        .logo a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
         .nav-menu {
             display: flex;
-            gap: 3rem;
+            gap: 2rem;
             list-style: none;
+            align-items: center;
         }
 
         .nav-item {
@@ -87,12 +104,13 @@
         .nav-cta {
             background: var(--text-primary);
             color: var(--primary-black);
-            padding: 0.75rem 1.5rem;
+            padding: 0.6rem 1.2rem;
             border-radius: 6px;
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
             letter-spacing: 0.02em;
+            font-size: 0.9rem;
         }
 
         .nav-cta:hover {
@@ -116,28 +134,15 @@
             max-width: 800px;
         }
 
-        .coming-soon-badge {
-            display: inline-flex;
-            align-items: center;
-            background: var(--dark-gray);
-            border: 1px solid var(--border-color);
-            border-radius: 50px;
-            padding: 0.5rem 1.5rem;
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            letter-spacing: 0.02em;
-        }
-
         .coming-soon h1 {
-            font-size: 4rem;
+            font-size: 3.5rem;
             font-weight: 300;
             margin-bottom: 1.5rem;
             letter-spacing: -0.02em;
         }
 
         .coming-soon p {
-            font-size: 1.25rem;
+            font-size: 1.125rem;
             color: var(--text-secondary);
             margin-bottom: 3rem;
             line-height: 1.8;
@@ -146,13 +151,14 @@
         .back-home {
             background: var(--text-primary);
             color: var(--primary-black);
-            padding: 1rem 2rem;
+            padding: 0.875rem 1.75rem;
             border-radius: 6px;
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
             display: inline-block;
             letter-spacing: 0.02em;
+            font-size: 0.95rem;
         }
 
         .back-home:hover {
@@ -165,26 +171,64 @@
         footer {
             background: var(--secondary-black);
             border-top: 1px solid var(--border-color);
-            padding: 2rem 0;
+            padding: 2rem 1.5rem;
             text-align: center;
         }
 
-        .footer-tagline {
+        .footer-copyright {
             color: var(--text-secondary);
+            font-size: 0.9rem;
         }
 
-        /* Responsive */
-        @media (max-width: 968px) {
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            /* Mobile Menu */
+            .mobile-menu-btn {
+                display: block;
+            }
+
             .nav-menu {
-                display: none;
+                position: fixed;
+                top: 60px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 60px);
+                background: var(--secondary-black);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.5rem;
+                transition: left 0.3s ease;
+                border-top: 1px solid var(--border-color);
+                overflow-y: auto;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-cta {
+                width: 100%;
+                text-align: center;
+                padding: 0.875rem;
             }
 
             .coming-soon h1 {
-                font-size: 3rem;
+                font-size: 2.5rem;
             }
 
             .coming-soon p {
-                font-size: 1.125rem;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .coming-soon h1 {
+                font-size: 2rem;
+            }
+
+            .back-home {
+                width: 100%;
+                text-align: center;
             }
         }
     </style>
@@ -193,16 +237,14 @@
     <!-- Navigation -->
     <nav>
         <div class="nav-container">
-            <div class="logo"><a href="index.html" style="color: inherit; text-decoration: none;">CORPREX</a></div>
-            <ul class="nav-menu">
+            <div class="logo"><a href="index.html">CORPREX</a></div>
+            <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+            <ul class="nav-menu" id="navMenu">
                 <li class="nav-item">
-                    <a href="product.html" class="nav-link">Product</a>
+                    <a href="index.html" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item">
                     <a href="automations.html" class="nav-link">Automations</a>
-                </li>
-                <li class="nav-item">
-                    <a href="industries.html" class="nav-link active">Industries</a>
                 </li>
                 <li class="nav-item">
                     <a href="why-local-ai.html" class="nav-link">Why Local AI?</a>
@@ -213,21 +255,16 @@
                 <li class="nav-item">
                     <a href="about.html" class="nav-link">About Us</a>
                 </li>
+                <li class="nav-item">
+                    <a href="index.html#demo" class="nav-cta">Request Demo</a>
+                </li>
             </ul>
-            <a href="index.html#demo" class="nav-cta">Request Demo</a>
         </div>
     </nav>
 
     <!-- Coming Soon Section -->
     <section class="coming-soon">
         <div class="coming-soon-content">
-            <div class="coming-soon-badge">
-                <svg viewBox="0 0 24 24" fill="var(--text-secondary)" style="width: 16px; height: 16px; margin-right: 8px;">
-                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
-                    <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-                Coming Soon
-            </div>
             <h1>Industry Solutions in Development</h1>
             <p>
                 We're crafting specialized AI infrastructure solutions for your industry. 
@@ -239,8 +276,25 @@
 
     <!-- Footer -->
     <footer>
-        <div class="footer-tagline">Built for the Age of AI Sovereignty</div>
-        <div style="color: var(--text-secondary); margin-top: 0.5rem;">© 2024 Corprex. All rights reserved.</div>
+        <div class="footer-copyright">© 2024 Corprex. All rights reserved.</div>
     </footer>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const navMenu = document.getElementById('navMenu');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            
+            if (!navMenu.contains(event.target) && !menuBtn.contains(event.target)) {
+                navMenu.classList.remove('active');
+            }
+        });
+    </script>
 </body>
 </html>
