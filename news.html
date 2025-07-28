@@ -111,19 +111,6 @@
             padding: 0 2rem;
         }
 
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            background: var(--dark-gray);
-            border: 1px solid var(--border-color);
-            border-radius: 50px;
-            padding: 0.5rem 1.5rem;
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            letter-spacing: 0.02em;
-        }
-
         .hero-title {
             font-size: 4rem;
             font-weight: 300;
@@ -142,52 +129,6 @@
             line-height: 1.8;
             max-width: 700px;
             margin: 0 auto;
-        }
-
-        /* Filter Tabs */
-        .filter-section {
-            background: var(--secondary-black);
-            border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
-            padding: 2rem 0;
-            position: sticky;
-            top: 80px;
-            z-index: 100;
-        }
-
-        .filter-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .filter-tab {
-            background: transparent;
-            color: var(--text-secondary);
-            border: 1px solid var(--border-color);
-            padding: 0.75rem 1.5rem;
-            border-radius: 50px;
-            font-size: 0.875rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .filter-tab:hover {
-            color: var(--text-primary);
-            border-color: var(--text-primary);
-        }
-
-        .filter-tab.active {
-            background: var(--text-primary);
-            color: var(--primary-black);
-            border-color: var(--text-primary);
         }
 
         /* News Grid */
@@ -327,14 +268,6 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-        }
-
-        .article-category {
-            font-size: 0.75rem;
-            color: var(--text-gray);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 0.75rem;
         }
 
         .article-title {
@@ -613,29 +546,12 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <div class="hero-badge">
-                <svg viewBox="0 0 24 24" fill="var(--text-secondary)" style="width: 16px; height: 16px; margin-right: 8px;">
-                    <path d="M2 3h20v3H2zm0 4h20v10H2zm0 11h20v3H2z"/>
-                </svg>
-                News & Updates
-            </div>
             <h1 class="hero-title">
                 The Latest in <span class="highlight">Private AI</span>
             </h1>
             <p class="hero-subtitle">
                 Stay informed about the cutting edge of AI sovereignty, infrastructure innovations, and industry insights from the Corprex team.
             </p>
-        </div>
-    </section>
-
-    <!-- Filter Tabs -->
-    <section class="filter-section">
-        <div class="filter-container">
-            <button class="filter-tab active" onclick="filterArticles('all')">All Articles</button>
-            <button class="filter-tab" onclick="filterArticles('announcements')">Announcements</button>
-            <button class="filter-tab" onclick="filterArticles('insights')">Industry Insights</button>
-            <button class="filter-tab" onclick="filterArticles('technical')">Technical</button>
-            <button class="filter-tab" onclick="filterArticles('case-studies')">Case Studies</button>
         </div>
     </section>
 
@@ -648,7 +564,6 @@
             
             <!-- Empty State -->
             <div class="empty-state" id="emptyState" style="display: none;">
-                <div class="empty-state-icon">📰</div>
                 <h3>No articles yet</h3>
                 <p>Check back soon for the latest updates from Corprex</p>
             </div>
@@ -725,8 +640,7 @@
                 author: "CNET",
                 date: new Date().toISOString(),
                 url: "https://www.cnet.com/tech/services-and-software/even-openais-ceo-says-be-careful-what-you-share-with-chatgpt/",
-                image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80",
-                category: "insights",
+                image: "https://www.cnet.com/a/img/resize/69afb1dfdc53af17e8d1448ad04965d987a80a2f/hub/2024/01/17/4fe90350-beea-4b06-849f-245e9e4c8500/gettyimages-1949443098.jpg?auto=webp&width=1200",
                 featured: true
             },
             {
@@ -736,8 +650,7 @@
                 author: "Bloomberg Law",
                 date: new Date(Date.now() - 86400000).toISOString(),
                 url: "https://news.bloomberglaw.com/litigation/wiretap-suits-pit-old-privacy-laws-against-new-ai-technology",
-                image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&q=80",
-                category: "insights"
+                image: "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/i_DJkOfJYB.w/v0/-1x-1.jpg"
             },
             {
                 id: 3,
@@ -746,8 +659,7 @@
                 author: "Times of India",
                 date: new Date(Date.now() - 172800000).toISOString(),
                 url: "https://timesofindia.indiatimes.com/education/news/from-google-geminis-meltdown-to-chatgpts-privacy-risks-why-students-need-to-rethink-relying-on-ai-for-their-lives/articleshow/122945225.cms",
-                image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80",
-                category: "insights"
+                image: "https://static.toiimg.com/thumb/msid-108256451,width-1280,height-720,resizemode-4/108256451.jpg"
             },
             {
                 id: 4,
@@ -756,8 +668,7 @@
                 author: "TechCrunch",
                 date: new Date(Date.now() - 259200000).toISOString(),
                 url: "https://techcrunch.com/2025/07/25/sam-altman-warns-theres-no-legal-confidentiality-when-using-chatgpt-as-a-therapist/",
-                image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&q=80",
-                category: "announcements"
+                image: "https://techcrunch.com/wp-content/uploads/2023/11/sam-altman-openai-dev-day.jpg?w=1200"
             },
             {
                 id: 5,
@@ -766,13 +677,11 @@
                 author: "Fox News",
                 date: new Date(Date.now() - 345600000).toISOString(),
                 url: "https://www.foxnews.com/tech/meta-ais-new-chatbot-raises-privacy-alarms",
-                image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&q=80",
-                category: "technical"
+                image: "https://a57.foxnews.com/static.foxnews.com/foxnews.com/content/uploads/2024/04/1200/675/Meta-AI.jpg?ve=1&tl=1"
             }
         ];
 
         let articles = articlesData;
-        let currentFilter = 'all';
         let articlesPerPage = 6;
         let currentPage = 1;
 
@@ -783,12 +692,7 @@
             const newsContent = document.getElementById('newsContent');
             const emptyState = document.getElementById('emptyState');
             
-            // Filter articles based on current filter
-            let filteredArticles = currentFilter === 'all' 
-                ? articles 
-                : articles.filter(a => a.category === currentFilter);
-            
-            if (filteredArticles.length === 0) {
+            if (articles.length === 0) {
                 newsContent.style.display = 'none';
                 emptyState.style.display = 'block';
                 return;
@@ -798,10 +702,10 @@
             emptyState.style.display = 'none';
             
             // Paginate articles
-            const totalArticles = filteredArticles.length;
+            const totalArticles = articles.length;
             const startIndex = 0;
             const endIndex = currentPage * articlesPerPage;
-            const displayArticles = filteredArticles.slice(startIndex, endIndex);
+            const displayArticles = articles.slice(startIndex, endIndex);
             
             let html = '';
             
@@ -839,7 +743,6 @@
                                  onerror="this.src='https://via.placeholder.com/400x300?text=Corprex+News'">
                         </div>
                         <div class="article-content">
-                            <div class="article-category">${article.category || 'Industry News'}</div>
                             <h3 class="article-title">${article.title}</h3>
                             <p class="article-excerpt">${article.summary.substring(0, 150)}...</p>
                             <div class="article-footer">
@@ -873,19 +776,6 @@
             }
             
             newsContent.innerHTML = html;
-        }
-
-        function filterArticles(filter) {
-            currentFilter = filter;
-            currentPage = 1;
-            
-            // Update active tab
-            document.querySelectorAll('.filter-tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            renderArticles();
         }
 
         function loadMore() {
