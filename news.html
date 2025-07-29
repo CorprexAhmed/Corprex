@@ -339,6 +339,33 @@
             height: 16px;
         }
 
+        /* Category Filter */
+        .category-filter {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .category-btn {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            background: var(--text-primary);
+            color: var(--primary-black);
+            border-color: var(--text-primary);
+        }
+
         /* Load More */
         .load-more-container {
             text-align: center;
@@ -361,6 +388,28 @@
         .btn-load-more:hover {
             border-color: var(--text-primary);
             background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border-color);
+            border-radius: 50%;
+            border-top-color: var(--text-primary);
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         /* Empty State */
@@ -642,7 +691,23 @@
     <!-- News Section -->
     <section class="news-section">
         <div class="container">
-            <div id="newsContent">
+            <!-- Category Filter -->
+            <div class="category-filter">
+                <button class="category-btn active" onclick="filterCategory('all')">All Articles</button>
+                <button class="category-btn" onclick="filterCategory('announcements')">Announcements</button>
+                <button class="category-btn" onclick="filterCategory('insights')">Industry Insights</button>
+                <button class="category-btn" onclick="filterCategory('technical')">Technical</button>
+                <button class="category-btn" onclick="filterCategory('case-studies')">Case Studies</button>
+            </div>
+
+            <!-- Loading State -->
+            <div class="loading" id="loadingState">
+                <div class="loading-spinner"></div>
+                <p>Loading latest articles...</p>
+            </div>
+
+            <!-- News Content -->
+            <div id="newsContent" style="display: none;">
                 <!-- Dynamic content will be loaded here -->
             </div>
             
@@ -692,141 +757,127 @@
         </div>
     </footer>
 
-    <script>
-        // Articles data with real, relevant news that drives business to private AI
-        const articlesData = [
-            {
-                id: 1,
-                title: "OpenAI Confirms Using Business Data to Train ChatGPT Models",
-                summary: "In a recent disclosure, OpenAI acknowledged that business conversations and data shared through ChatGPT are used to improve their models. This revelation has sparked concerns among enterprises about intellectual property and competitive advantage being inadvertently shared with competitors who use the same AI services.",
-                author: "Reuters",
-                date: new Date().toISOString(),
-                url: "https://www.reuters.com/technology/openai-training-data-business-concerns-2024/",
-                image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80",
-                featured: true
-            },
-            {
-                id: 2,
-                title: "Major Law Firm Faces Data Breach After Cloud AI Provider Hack",
-                summary: "A top-tier law firm discovered that confidential client data was exposed when their cloud AI provider suffered a security breach. The incident affected over 10,000 sensitive legal documents, raising serious questions about the security of cloud-based AI services for handling privileged information.",
-                author: "Financial Times",
-                date: new Date(Date.now() - 86400000).toISOString(),
-                url: "https://www.ft.com/content/law-firm-ai-data-breach",
-                image: "https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?w=800&q=80"
-            },
-            {
-                id: 3,
-                title: "Healthcare Providers Face $2.3M in HIPAA Fines for Cloud AI Usage",
-                summary: "Multiple healthcare organizations were fined by the Department of Health and Human Services for HIPAA violations related to processing patient data through cloud-based AI systems. Regulators cited the inability to ensure data remained within compliant infrastructure as the primary violation.",
-                author: "Healthcare IT News",
-                date: new Date(Date.now() - 172800000).toISOString(),
-                url: "https://www.healthcareitnews.com/news/hipaa-fines-cloud-ai",
-                image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80"
-            },
-            {
-                id: 4,
-                title: "Fortune 500 Companies Report Average $127K Monthly AI API Bills",
-                summary: "A new survey reveals that large enterprises are spending an average of $127,000 per month on cloud AI API costs, with some reporting bills exceeding $500,000. CFOs are increasingly questioning the sustainability of these expenses as AI usage scales across their organizations.",
-                author: "Wall Street Journal",
-                date: new Date(Date.now() - 259200000).toISOString(),
-                url: "https://www.wsj.com/articles/enterprise-ai-costs-soaring",
-                image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&q=80"
-            },
-            {
-                id: 5,
-                title: "Samsung Bans Employee Use of ChatGPT After Code Leak Incident",
-                summary: "Samsung has prohibited employees from using ChatGPT and similar cloud AI services after discovering proprietary source code was inadvertently shared with the system. The incident highlights growing concerns about intellectual property protection when using third-party AI services.",
-                author: "TechCrunch",
-                date: new Date(Date.now() - 345600000).toISOString(),
-                url: "https://techcrunch.com/2024/samsung-chatgpt-ban/",
-                image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&q=80"
-            },
-            {
-                id: 6,
-                title: "Government Contractors Required to Use On-Premise AI for Classified Work",
-                summary: "The Department of Defense issued new guidelines requiring all contractors working with classified or sensitive information to use on-premise AI solutions. Cloud-based AI services are explicitly prohibited for any government contract work involving national security data.",
-                author: "Defense News",
-                date: new Date(Date.now() - 432000000).toISOString(),
-                url: "https://www.defensenews.com/pentagon/2024/on-premise-ai-requirement/",
-                image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&q=80"
-            },
-            {
-                id: 7,
-                title: "JP Morgan Saves $14M Annually by Switching to Private AI Infrastructure",
-                summary: "JP Morgan Chase reported saving over $14 million annually after transitioning from cloud AI services to private, on-premise AI infrastructure. The bank cited improved performance, complete data control, and elimination of usage-based pricing as key benefits.",
-                author: "Bloomberg",
-                date: new Date(Date.now() - 518400000).toISOString(),
-                url: "https://www.bloomberg.com/news/jpmorgan-private-ai-savings",
-                image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80"
-            },
-            {
-                id: 8,
-                title: "EU Fines Tech Giant €50M for Unauthorized AI Training on User Data",
-                summary: "The European Union imposed a €50 million fine on a major tech company for using customer data to train AI models without explicit consent. The ruling sets a precedent for how businesses must handle data when using cloud AI services.",
-                author: "The Guardian",
-                date: new Date(Date.now() - 604800000).toISOString(),
-                url: "https://www.theguardian.com/technology/eu-ai-data-fine",
-                image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800&q=80"
-            },
-            {
-                id: 9,
-                title: "Pharmaceutical Company's Drug Formula Exposed in AI Provider Breach",
-                summary: "A major pharmaceutical company's proprietary drug formulas were exposed when their cloud AI provider experienced a data breach. The incident has led to calls for stricter regulations on how sensitive R&D data can be processed by third-party AI services.",
-                author: "Nature",
-                date: new Date(Date.now() - 691200000).toISOString(),
-                url: "https://www.nature.com/articles/pharma-ai-breach",
-                image: "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=800&q=80"
-            },
-            {
-                id: 10,
-                title: "Trading Firms Lose Competitive Edge as AI Providers Share Market Insights",
-                summary: "Several trading firms discovered their proprietary trading strategies were being inadvertently shared across AI platforms, as cloud providers aggregate learnings from all users. This has led to a mass exodus to private AI infrastructure in the financial sector.",
-                author: "Financial Times",
-                date: new Date(Date.now() - 777600000).toISOString(),
-                url: "https://www.ft.com/content/trading-ai-competitive-loss",
-                image: "https://images.unsplash.com/photo-1642790106117-e829e14a795f?w=800&q=80"
-            }
-        ];
+    <!-- Admin Link (hidden) -->
+    <a href="adminlogin.html" class="admin-link">Admin</a>
 
-        let articles = articlesData;
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBiUDyNj1R4-QBRDZY-mxN0fPg_4TdSDCY",
+            authDomain: "corprexnewspage.firebaseapp.com",
+            projectId: "corprexnewspage",
+            storageBucket: "corprexnewspage.firebasestorage.app",
+            messagingSenderId: "957002833855",
+            appId: "1:957002833855:web:61e87ca3cbfcc91ca52eb8",
+            measurementId: "G-HHHM9Q5PG1"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // State management
+        let articles = [];
+        let filteredArticles = [];
+        let currentCategory = 'all';
         let articlesPerPage = 6;
         let currentPage = 1;
 
-        // Initialize
-        renderArticles();
+        // Load articles from Firebase
+        async function loadArticles() {
+            const loadingState = document.getElementById('loadingState');
+            const newsContent = document.getElementById('newsContent');
+            const emptyState = document.getElementById('emptyState');
+            
+            try {
+                const snapshot = await db.collection('articles')
+                    .where('published', '==', true)
+                    .get();
+                
+                articles = [];
+                snapshot.forEach(doc => {
+                    articles.push({ id: doc.id, ...doc.data() });
+                });
+                
+                // Sort by date (newest first)
+                articles.sort((a, b) => {
+                    const dateA = new Date(a.date || 0);
+                    const dateB = new Date(b.date || 0);
+                    return dateB - dateA;
+                });
+                
+                // Hide loading, show content
+                loadingState.style.display = 'none';
+                
+                if (articles.length === 0) {
+                    newsContent.style.display = 'none';
+                    emptyState.style.display = 'block';
+                } else {
+                    newsContent.style.display = 'block';
+                    emptyState.style.display = 'none';
+                    filterCategory(currentCategory);
+                }
+                
+            } catch (error) {
+                console.error('Error loading articles:', error);
+                loadingState.innerHTML = '<p style="color: var(--text-secondary);">Error loading articles. Please try again later.</p>';
+            }
+        }
 
+        // Filter articles by category
+        function filterCategory(category) {
+            currentCategory = category;
+            currentPage = 1;
+            
+            // Update active button
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Filter articles
+            if (category === 'all') {
+                filteredArticles = [...articles];
+            } else {
+                filteredArticles = articles.filter(article => article.category === category);
+            }
+            
+            renderArticles();
+        }
+
+        // Render articles
         function renderArticles() {
             const newsContent = document.getElementById('newsContent');
             const emptyState = document.getElementById('emptyState');
             
-            if (articles.length === 0) {
-                newsContent.style.display = 'none';
-                emptyState.style.display = 'block';
+            if (filteredArticles.length === 0) {
+                newsContent.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 3rem;">No articles found in this category.</p>';
                 return;
             }
             
-            newsContent.style.display = 'block';
-            emptyState.style.display = 'none';
-            
             // Paginate articles
-            const totalArticles = articles.length;
             const startIndex = 0;
             const endIndex = currentPage * articlesPerPage;
-            const displayArticles = articles.slice(startIndex, endIndex);
+            const displayArticles = filteredArticles.slice(startIndex, endIndex);
             
             let html = '';
             
-            // Featured article (first article with featured flag or first article)
+            // Featured article (first article or one marked as featured)
             const featuredArticle = displayArticles.find(a => a.featured) || displayArticles[0];
-            if (featuredArticle && currentPage === 1) {
+            if (featuredArticle && currentPage === 1 && currentCategory === 'all') {
                 html += `
                     <article class="featured-article" onclick="openArticle('${featuredArticle.url}')">
                         <div class="featured-image">
-                            <img src="${featuredArticle.image}" alt="${featuredArticle.title}" 
-                                 onerror="this.src='https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80'">
+                            <img src="${featuredArticle.image || 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80'}" 
+                                 alt="${featuredArticle.title}" 
+                                 onerror="this.src='https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80'">
                         </div>
                         <div class="featured-content">
-                            <span class="featured-badge">Featured</span>
+                            <span class="featured-badge">${getCategoryLabel(featuredArticle.category)}</span>
                             <h2 class="featured-title">${featuredArticle.title}</h2>
                             <p class="featured-excerpt">${featuredArticle.summary}</p>
                             <div class="featured-meta">
@@ -838,16 +889,20 @@
                 `;
             }
             
-            // Regular articles grid (exclude featured article)
+            // Regular articles grid
             html += '<div class="news-grid">';
             
-            const regularArticles = displayArticles.filter(a => a.id !== featuredArticle?.id);
+            const regularArticles = displayArticles.filter(a => 
+                !(featuredArticle && a.id === featuredArticle.id && currentPage === 1 && currentCategory === 'all')
+            );
+            
             for (let article of regularArticles) {
                 html += `
                     <article class="article-card" onclick="openArticle('${article.url}')">
                         <div class="article-image">
-                            <img src="${article.image}" alt="${article.title}" 
-                                 onerror="this.src='https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80'">
+                            <img src="${article.image || 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80'}" 
+                                 alt="${article.title}" 
+                                 onerror="this.src='https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80'">
                         </div>
                         <div class="article-content">
                             <h3 class="article-title">${article.title}</h3>
@@ -857,7 +912,7 @@
                                     <span>${article.author || 'Corprex Team'}</span>
                                     <span>${formatDate(article.date)}</span>
                                 </div>
-                                <a href="${article.url}" class="read-more" onclick="event.stopPropagation()">
+                                <a href="${article.url}" class="read-more" onclick="event.stopPropagation(); openArticle('${article.url}', event)">
                                     Read more
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -872,11 +927,11 @@
             html += '</div>';
             
             // Load more button
-            if (endIndex < totalArticles) {
+            if (endIndex < filteredArticles.length) {
                 html += `
                     <div class="load-more-container">
                         <button class="btn-load-more" onclick="loadMore()">
-                            Load More Articles (${totalArticles - endIndex} remaining)
+                            Load More Articles (${filteredArticles.length - endIndex} remaining)
                         </button>
                     </div>
                 `;
@@ -885,27 +940,65 @@
             newsContent.innerHTML = html;
         }
 
+        // Get category label
+        function getCategoryLabel(category) {
+            const labels = {
+                'announcements': 'Announcement',
+                'insights': 'Industry Insight',
+                'technical': 'Technical',
+                'case-studies': 'Case Study'
+            };
+            return labels[category] || 'News';
+        }
+
+        // Load more articles
         function loadMore() {
             currentPage++;
             renderArticles();
         }
 
-        function openArticle(url) {
-            // In a real implementation, this would open the article
-            // For now, we'll show an alert
-            alert('Article link: ' + url);
+        // Open article in new tab
+        function openArticle(url, event) {
+            if (event) {
+                event.preventDefault();
+            }
+            window.open(url, '_blank');
         }
 
+        // Format date
         function formatDate(dateString) {
+            if (!dateString) return 'Just now';
             const date = new Date(dateString);
-            const options = { year: 'numeric', month: 'long', day: 'numeric' };
-            return date.toLocaleDateString('en-US', options);
+            const now = new Date();
+            const diffInDays = Math.floor((now - date) / (1000 * 60 * 60 * 24));
+            
+            if (diffInDays === 0) return 'Today';
+            if (diffInDays === 1) return 'Yesterday';
+            if (diffInDays < 7) return `${diffInDays} days ago`;
+            
+            return date.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric' 
+            });
         }
 
+        // Subscribe to newsletter
         function subscribeNewsletter(event) {
             event.preventDefault();
-            alert('Thank you for subscribing! You\'ll receive our latest updates.');
-            event.target.reset();
+            const email = event.target.querySelector('input[type="email"]').value;
+            
+            // In a real implementation, you would save this to Firebase
+            db.collection('newsletter-subscribers').add({
+                email: email,
+                subscribedAt: new Date().toISOString()
+            }).then(() => {
+                alert('Thank you for subscribing! You\'ll receive our latest updates.');
+                event.target.reset();
+            }).catch((error) => {
+                console.error('Error subscribing:', error);
+                alert('There was an error. Please try again.');
+            });
         }
 
         // Mobile menu toggle
@@ -934,7 +1027,6 @@
                         behavior: 'smooth',
                         block: 'start'
                     });
-                    // Close mobile menu if open
                     document.getElementById('navMenu').classList.remove('active');
                 }
             });
@@ -950,6 +1042,11 @@
                 nav.style.background = 'rgba(0, 0, 0, 0.95)';
                 nav.style.boxShadow = 'none';
             }
+        });
+
+        // Initialize - Load articles when page loads
+        window.addEventListener('load', () => {
+            loadArticles();
         });
     </script>
 </body>
