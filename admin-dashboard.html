@@ -35,6 +35,38 @@
             overflow-x: hidden;
         }
 
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border-color);
+            border-radius: 50%;
+            border-top-color: var(--text-primary);
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Main Content - Hidden by default */
+        .main-content {
+            display: none;
+        }
+
         /* Admin Navigation */
         .admin-nav {
             background: var(--secondary-black);
@@ -398,22 +430,6 @@
             height: 16px;
         }
 
-        /* Loading Spinner */
-        .loading-spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--text-primary);
-            border-radius: 50%;
-            border-top-color: transparent;
-            animation: spin 0.8s linear infinite;
-            margin-left: 0.5rem;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
         /* Empty State */
         .empty-state {
             text-align: center;
@@ -452,127 +468,132 @@
     </style>
 </head>
 <body>
-    <!-- Admin Navigation -->
-    <nav class="admin-nav">
-        <div class="admin-logo">
-            CORPREX
-            <span class="admin-badge">ADMIN</span>
-        </div>
-        <div class="admin-actions">
-            <span class="user-info" id="userInfo">Loading...</span>
-            <a href="news.html" class="btn-view-site">View News Page</a>
-            <button class="btn-logout" id="logoutBtn">Logout</button>
-        </div>
-    </nav>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+    </div>
 
-    <!-- Main Container -->
-    <div class="admin-container">
-        <!-- Dashboard Header -->
-        <div class="dashboard-header">
-            <h1 class="dashboard-title">News Management</h1>
-            <p class="dashboard-subtitle">Add and manage news articles for your website</p>
-        </div>
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Admin Navigation -->
+        <nav class="admin-nav">
+            <div class="admin-logo">
+                CORPREX
+                <span class="admin-badge">ADMIN</span>
+            </div>
+            <div class="admin-actions">
+                <span class="user-info" id="userInfo">Loading...</span>
+                <a href="news.html" class="btn-view-site">View News Page</a>
+                <button class="btn-logout" id="logoutBtn">Logout</button>
+            </div>
+        </nav>
 
-        <!-- Status Messages -->
-        <div class="status-message status-success" id="successMessage"></div>
-        <div class="status-message status-error" id="errorMessage"></div>
+        <!-- Main Container -->
+        <div class="admin-container">
+            <!-- Dashboard Header -->
+            <div class="dashboard-header">
+                <h1 class="dashboard-title">News Management</h1>
+                <p class="dashboard-subtitle">Add and manage news articles for your website</p>
+            </div>
 
-        <!-- Article Form -->
-        <div class="article-form-container">
-            <h2 class="form-header">Add New Article</h2>
-            <form id="articleForm" class="form-grid">
-                <div class="form-group">
-                    <label for="articleUrl" class="form-label">Article URL</label>
-                    <input 
-                        type="url" 
-                        id="articleUrl" 
-                        class="form-input" 
-                        placeholder="https://example.com/article"
-                        required
-                    >
-                </div>
+            <!-- Status Messages -->
+            <div class="status-message status-success" id="successMessage"></div>
+            <div class="status-message status-error" id="errorMessage"></div>
 
-                <div class="form-row">
+            <!-- Article Form -->
+            <div class="article-form-container">
+                <h2 class="form-header">Add New Article</h2>
+                <form id="articleForm" class="form-grid">
                     <div class="form-group">
-                        <label for="articleTitle" class="form-label">Article Title</label>
+                        <label for="articleUrl" class="form-label">Article URL</label>
                         <input 
-                            type="text" 
-                            id="articleTitle" 
+                            type="url" 
+                            id="articleUrl" 
                             class="form-input" 
-                            placeholder="Enter article title"
+                            placeholder="https://example.com/article"
                             required
                         >
                     </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="articleTitle" class="form-label">Article Title</label>
+                            <input 
+                                type="text" 
+                                id="articleTitle" 
+                                class="form-input" 
+                                placeholder="Enter article title"
+                                required
+                            >
+                        </div>
+                        <div class="form-group">
+                            <label for="articleAuthor" class="form-label">Author</label>
+                            <input 
+                                type="text" 
+                                id="articleAuthor" 
+                                class="form-input" 
+                                placeholder="Author name"
+                            >
+                        </div>
+                    </div>
+
                     <div class="form-group">
-                        <label for="articleAuthor" class="form-label">Author</label>
+                        <label for="articleCategory" class="form-label">Category</label>
+                        <select id="articleCategory" class="form-select" required>
+                            <option value="">Select a category</option>
+                            <option value="announcements">Announcements</option>
+                            <option value="insights">Industry Insights</option>
+                            <option value="technical">Technical</option>
+                            <option value="case-studies">Case Studies</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="articleSummary" class="form-label">Article Summary</label>
+                        <textarea 
+                            id="articleSummary" 
+                            class="form-textarea" 
+                            placeholder="Brief summary of the article"
+                            required
+                        ></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="articleImage" class="form-label">Featured Image URL</label>
                         <input 
-                            type="text" 
-                            id="articleAuthor" 
+                            type="url" 
+                            id="articleImage" 
                             class="form-input" 
-                            placeholder="Author name"
+                            placeholder="https://example.com/image.jpg"
                         >
+                        <div class="image-preview" id="imagePreview">
+                            <img src="" alt="Preview" id="previewImg">
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label for="articleCategory" class="form-label">Category</label>
-                    <select id="articleCategory" class="form-select" required>
-                        <option value="">Select a category</option>
-                        <option value="announcements">Announcements</option>
-                        <option value="insights">Industry Insights</option>
-                        <option value="technical">Technical</option>
-                        <option value="case-studies">Case Studies</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="articleSummary" class="form-label">Article Summary</label>
-                    <textarea 
-                        id="articleSummary" 
-                        class="form-textarea" 
-                        placeholder="Brief summary of the article"
-                        required
-                    ></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="articleImage" class="form-label">Featured Image URL</label>
-                    <input 
-                        type="url" 
-                        id="articleImage" 
-                        class="form-input" 
-                        placeholder="https://example.com/image.jpg"
-                    >
-                    <div class="image-preview" id="imagePreview">
-                        <img src="" alt="Preview" id="previewImg">
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary" id="submitBtn">
+                            <span id="submitText">Publish Article</span>
+                        </button>
+                        <button type="reset" class="btn-secondary">Clear Form</button>
                     </div>
-                </div>
-
-                <div class="form-actions">
-                    <button type="submit" class="btn-primary" id="submitBtn">
-                        <span id="submitText">Publish Article</span>
-                    </button>
-                    <button type="button" class="btn-secondary" id="extractBtn">
-                        Auto-Extract from URL
-                    </button>
-                    <button type="reset" class="btn-secondary">Clear Form</button>
-                </div>
-            </form>
-        </div>
-
-        <!-- Articles List -->
-        <div class="articles-section">
-            <div class="section-header">
-                <h2 class="section-title">Published Articles</h2>
-                <span id="articleCount" class="article-count">0 articles</span>
+                </form>
             </div>
-            <div class="articles-grid" id="articlesGrid">
-                <!-- Articles will be dynamically loaded here -->
-            </div>
-            <div class="empty-state" id="emptyState" style="display: none;">
-                <div class="empty-state-icon">📰</div>
-                <h3>No articles yet</h3>
-                <p>Add your first news article using the form above</p>
+
+            <!-- Articles List -->
+            <div class="articles-section">
+                <div class="section-header">
+                    <h2 class="section-title">Published Articles</h2>
+                    <span id="articleCount" class="article-count">0 articles</span>
+                </div>
+                <div class="articles-grid" id="articlesGrid">
+                    <!-- Articles will be dynamically loaded here -->
+                </div>
+                <div class="empty-state" id="emptyState" style="display: none;">
+                    <div class="empty-state-icon">📰</div>
+                    <h3>No articles yet</h3>
+                    <p>Add your first news article using the form above</p>
+                </div>
             </div>
         </div>
     </div>
@@ -599,13 +620,26 @@
         const auth = firebase.auth();
         const db = firebase.firestore();
 
-        // Check if user is logged in
+        // Check authentication state
+        let isAuthChecking = true;
+        
         auth.onAuthStateChanged((user) => {
-            if (user) {
-                document.getElementById('userInfo').textContent = user.email;
-                loadArticles();
-            } else {
-                window.location.href = 'adminlogin.html';
+            const loadingScreen = document.getElementById('loadingScreen');
+            const mainContent = document.getElementById('mainContent');
+            
+            if (isAuthChecking) {
+                // First auth check
+                if (user) {
+                    // User is signed in
+                    document.getElementById('userInfo').textContent = user.email;
+                    loadingScreen.style.display = 'none';
+                    mainContent.style.display = 'block';
+                    loadArticles();
+                } else {
+                    // User is not signed in - redirect to login
+                    window.location.href = 'adminlogin.html';
+                }
+                isAuthChecking = false;
             }
         });
 
@@ -722,7 +756,7 @@
             const submitText = document.getElementById('submitText');
             
             submitBtn.disabled = true;
-            submitText.innerHTML = 'Publishing<span class="loading-spinner"></span>';
+            submitText.textContent = 'Publishing...';
             
             try {
                 const article = {
@@ -731,7 +765,7 @@
                     author: document.getElementById('articleAuthor').value || 'Corprex Team',
                     category: document.getElementById('articleCategory').value,
                     summary: document.getElementById('articleSummary').value,
-                    image: document.getElementById('articleImage').value || 'https://via.placeholder.com/400x300?text=Corprex+News',
+                    image: document.getElementById('articleImage').value || 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80',
                     date: new Date().toISOString(),
                     published: true
                 };
@@ -765,26 +799,6 @@
             }
         });
 
-        // Extract button
-        document.getElementById('extractBtn').addEventListener('click', () => {
-            const url = document.getElementById('articleUrl').value;
-            
-            if (!url) {
-                showMessage('Please enter a URL first', 'error');
-                return;
-            }
-            
-            // Mock data
-            document.getElementById('articleTitle').value = 'Sample Article Title';
-            document.getElementById('articleSummary').value = 'This is a sample summary for your article.';
-            document.getElementById('articleImage').value = 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80';
-            
-            // Trigger image preview
-            document.getElementById('articleImage').dispatchEvent(new Event('input'));
-            
-            showMessage('Sample data added!', 'success');
-        });
-
         // Logout
         document.getElementById('logoutBtn').addEventListener('click', async () => {
             try {
@@ -792,7 +806,7 @@
                 window.location.href = 'adminlogin.html';
             } catch (error) {
                 console.error('Logout error:', error);
-                window.location.href = 'adminlogin.html';
+                showMessage('Error logging out', 'error');
             }
         });
     </script>
