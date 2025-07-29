@@ -98,6 +98,44 @@
             color: var(--text-primary);
         }
 
+        /* Dropdown Menu */
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--secondary-black);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.5rem 0;
+            margin-top: 0.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            min-width: 200px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-item:hover .dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-link {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-link:hover {
+            color: var(--text-primary);
+            background: var(--dark-gray);
+        }
+
         .nav-cta {
             background: var(--text-primary);
             color: var(--primary-black);
@@ -625,10 +663,22 @@
                 transition: left 0.3s ease;
                 border-top: 1px solid var(--border-color);
                 overflow-y: auto;
+                align-items: stretch;
             }
 
             .nav-menu.active {
                 left: 0;
+            }
+
+            .dropdown {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                background: var(--dark-gray);
+                margin-top: 0.5rem;
+                border-radius: 8px;
             }
 
             .nav-cta {
@@ -753,6 +803,10 @@
                 </li>
                 <li class="nav-item">
                     <a href="automations.html" class="nav-link active">Automations</a>
+                    <div class="dropdown">
+                        <a href="n8n-guide.html" class="dropdown-link">n8n Automation Guide</a>
+                        <a href="make-guide.html" class="dropdown-link">Make.com Guide</a>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="why-local-ai.html" class="nav-link">Why Local AI?</a>
@@ -762,6 +816,9 @@
                 </li>
                 <li class="nav-item">
                     <a href="about.html" class="nav-link">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a href="contact.html" class="nav-link">Contact</a>
                 </li>
                 <li class="nav-item">
                     <a href="#demo" class="nav-cta">Request Demo</a>
@@ -1125,6 +1182,7 @@
                 <h4>Company</h4>
                 <a href="about.html" class="footer-link">About Us</a>
                 <a href="news.html" class="footer-link">News</a>
+                <a href="contact.html" class="footer-link">Contact</a>
             </div>
         </div>
         <div class="footer-bottom">
