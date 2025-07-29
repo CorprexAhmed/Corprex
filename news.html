@@ -339,92 +339,6 @@
             height: 16px;
         }
 
-        /* Category Filter */
-        .category-filter {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .category-btn {
-            background: transparent;
-            color: var(--text-secondary);
-            border: 1px solid var(--border-color);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.875rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .category-btn:hover,
-        .category-btn.active {
-            background: var(--text-primary);
-            color: var(--primary-black);
-            border-color: var(--text-primary);
-        }
-
-        /* Load More */
-        .load-more-container {
-            text-align: center;
-            margin-top: 3rem;
-        }
-
-        .btn-load-more {
-            background: transparent;
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-            padding: 0.875rem 1.75rem;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            letter-spacing: 0.02em;
-        }
-
-        .btn-load-more:hover {
-            border-color: var(--text-primary);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        /* Loading State */
-        .loading {
-            text-align: center;
-            padding: 4rem 2rem;
-            color: var(--text-secondary);
-        }
-
-        .loading-spinner {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            border: 3px solid var(--border-color);
-            border-radius: 50%;
-            border-top-color: var(--text-primary);
-            animation: spin 0.8s linear infinite;
-            margin-bottom: 1rem;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 6rem 2rem;
-            color: var(--text-secondary);
-        }
-
-        .empty-state h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-
         /* Newsletter CTA */
         .newsletter-section {
             background: var(--secondary-black);
@@ -691,30 +605,160 @@
     <!-- News Section -->
     <section class="news-section">
         <div class="container">
-            <!-- Category Filter -->
-            <div class="category-filter">
-                <button class="category-btn active" onclick="filterCategory('all')">All Articles</button>
-                <button class="category-btn" onclick="filterCategory('announcements')">Announcements</button>
-                <button class="category-btn" onclick="filterCategory('insights')">Industry Insights</button>
-                <button class="category-btn" onclick="filterCategory('technical')">Technical</button>
-                <button class="category-btn" onclick="filterCategory('case-studies')">Case Studies</button>
-            </div>
-
-            <!-- Loading State -->
-            <div class="loading" id="loadingState">
-                <div class="loading-spinner"></div>
-                <p>Loading latest articles...</p>
-            </div>
-
-            <!-- News Content -->
-            <div id="newsContent" style="display: none;">
-                <!-- Dynamic content will be loaded here -->
-            </div>
+            <!-- Featured Article -->
+            <article class="featured-article" onclick="window.open('https://newsroom.cisco.com/c/r/newsroom/en/us/a/y2024/m01/organizations-ban-use-of-generative-ai-over-data-privacy-security-cisco-study.html', '_blank')">
+                <div class="featured-image">
+                    <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&q=80" alt="Organizations Ban GenAI">
+                </div>
+                <div class="featured-content">
+                    <span class="featured-badge">Industry Report</span>
+                    <h2 class="featured-title">More than 1 in 4 Organizations Banned Use of GenAI Over Privacy and Data Security Risks</h2>
+                    <p class="featured-excerpt">The Cisco 2024 Data Privacy Benchmark Study reveals that most organizations are limiting the use of Generative AI (GenAI) over data privacy and security issues. 27% had banned its use, at least temporarily. 48% admit entering non-public company information into GenAI tools.</p>
+                    <div class="featured-meta">
+                        <span>Cisco</span>
+                        <span>January 25, 2024</span>
+                    </div>
+                </div>
+            </article>
             
-            <!-- Empty State -->
-            <div class="empty-state" id="emptyState" style="display: none;">
-                <h3>No articles yet</h3>
-                <p>Check back soon for the latest updates from Corprex</p>
+            <!-- News Grid -->
+            <div class="news-grid">
+                <!-- Thales Cloud Security Study -->
+                <article class="article-card" onclick="window.open('https://www.businesswire.com/news/home/20250630070161/en/Thales-2025-Global-Cloud-Security-Study-Reveals-Organizations-Struggle-to-Secure-Expanding-AI-Driven-Cloud-Environments', '_blank')">
+                    <div class="article-image">
+                        <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=800&q=80" alt="Thales Cloud Security Study">
+                    </div>
+                    <div class="article-content">
+                        <h3 class="article-title">Thales 2025 Global Cloud Security Study Reveals Organizations Struggle to Secure Expanding, AI-Driven Cloud Environments</h3>
+                        <p class="article-excerpt">52% report AI security spending is displacing traditional security budgets. 55% report cloud environments are more complex to secure than on-premises infrastructure. Four of the top five most targeted assets in reported attacks are cloud-based.</p>
+                        <div class="article-footer">
+                            <div class="article-meta">
+                                <span>Thales</span>
+                                <span>June 30, 2025</span>
+                            </div>
+                            <a href="#" class="read-more" onclick="event.stopPropagation(); window.open('https://www.businesswire.com/news/home/20250630070161/en/Thales-2025-Global-Cloud-Security-Study-Reveals-Organizations-Struggle-to-Secure-Expanding-AI-Driven-Cloud-Environments', '_blank')">
+                                Read more
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Superagency in the Workplace -->
+                <article class="article-card" onclick="window.open('https://www.mckinsey.com/capabilities/mckinsey-digital/our-insights/superagency-in-the-workplace-empowering-people-to-unlock-ais-full-potential-at-work', '_blank')">
+                    <div class="article-image">
+                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80" alt="Superagency in the Workplace">
+                    </div>
+                    <div class="article-content">
+                        <h3 class="article-title">Superagency in the Workplace: Empowering People to Unlock AI's Full Potential</h3>
+                        <p class="article-excerpt">Almost all companies invest in AI, but just 1% believe they are at maturity. McKinsey's research finds the biggest barrier to scaling is not employees—who are ready—but leaders, who are not steering fast enough.</p>
+                        <div class="article-footer">
+                            <div class="article-meta">
+                                <span>McKinsey</span>
+                                <span>January 28, 2025</span>
+                            </div>
+                            <a href="#" class="read-more" onclick="event.stopPropagation(); window.open('https://www.mckinsey.com/capabilities/mckinsey-digital/our-insights/superagency-in-the-workplace-empowering-people-to-unlock-ais-full-potential-at-work', '_blank')">
+                                Read more
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Copilot AI Bug -->
+                <article class="article-card" onclick="window.open('https://www.bankinfosecurity.com/copilot-ai-bug-could-leak-sensitive-data-via-email-prompts-a-28713', '_blank')">
+                    <div class="article-image">
+                        <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&q=80" alt="Copilot AI Security">
+                    </div>
+                    <div class="article-content">
+                        <h3 class="article-title">Copilot AI Bug Could Leak Sensitive Data via Email Prompts</h3>
+                        <p class="article-excerpt">The vulnerability in Microsoft 365 Copilot allowed attackers to extract sensitive data through a zero-click prompt injection attack. Dubbed "EchoLeak" and tracked as CVE-2025-32711, the vulnerability received a CVSS severity score of 9.3.</p>
+                        <div class="article-footer">
+                            <div class="article-meta">
+                                <span>Aim Security</span>
+                                <span>June 11, 2025</span>
+                            </div>
+                            <a href="#" class="read-more" onclick="event.stopPropagation(); window.open('https://www.bankinfosecurity.com/copilot-ai-bug-could-leak-sensitive-data-via-email-prompts-a-28713', '_blank')">
+                                Read more
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Czech Republic Bans DeepSeek -->
+                <article class="article-card" onclick="window.open('https://therecord.media/deepseek-security-czech-cyber-agency-warning', '_blank')">
+                    <div class="article-image">
+                        <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&q=80" alt="Czech Republic Bans DeepSeek">
+                    </div>
+                    <div class="article-content">
+                        <h3 class="article-title">The Czech Republic Bans DeepSeek in State Administration Over Cyber Security Concerns</h3>
+                        <p class="article-excerpt">Czech Republic announced it was banning the company's software on official devices due to security risks. NÚKIB warned it was "highly likely" that Beijing would attempt to utilize domestic legislation in China to exploit DeepSeek's products for intelligence purposes.</p>
+                        <div class="article-footer">
+                            <div class="article-meta">
+                                <span>The Record</span>
+                                <span>July 10, 2025</span>
+                            </div>
+                            <a href="#" class="read-more" onclick="event.stopPropagation(); window.open('https://therecord.media/deepseek-security-czech-cyber-agency-warning', '_blank')">
+                                Read more
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Additional Security Articles -->
+                <article class="article-card" onclick="window.open('https://www.corprex.com/news', '_blank')">
+                    <div class="article-image">
+                        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80" alt="Enterprise AI Security">
+                    </div>
+                    <div class="article-content">
+                        <h3 class="article-title">Enterprise AI Adoption Stalls as Security Concerns Mount</h3>
+                        <p class="article-excerpt">New research shows that while 92% of companies plan to increase AI spending in the next three years, only 1% report reaching AI maturity. Security and privacy concerns remain the primary barriers to widespread adoption.</p>
+                        <div class="article-footer">
+                            <div class="article-meta">
+                                <span>Industry Analysis</span>
+                                <span>July 15, 2025</span>
+                            </div>
+                            <a href="#" class="read-more" onclick="event.stopPropagation();">
+                                Read more
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="article-card" onclick="window.open('https://www.corprex.com/news', '_blank')">
+                    <div class="article-image">
+                        <img src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=800&q=80" alt="Data Sovereignty">
+                    </div>
+                    <div class="article-content">
+                        <h3 class="article-title">The Rise of AI Sovereignty: Why Nations Are Building Local Infrastructure</h3>
+                        <p class="article-excerpt">As geopolitical tensions rise and data regulations tighten, countries worldwide are investing in sovereign AI infrastructure. Learn why local AI is becoming a national security imperative.</p>
+                        <div class="article-footer">
+                            <div class="article-meta">
+                                <span>Strategic Insights</span>
+                                <span>July 8, 2025</span>
+                            </div>
+                            <a href="#" class="read-more" onclick="event.stopPropagation();">
+                                Read more
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </article>
             </div>
         </div>
     </section>
@@ -758,247 +802,15 @@
     </footer>
 
     <!-- Admin Link (hidden) -->
-    <a href="adminlogin.html" class="admin-link">Admin</a>
-
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <a href="adminlogin.html" class="admin-link" style="position: fixed; bottom: 0; right: 0; opacity: 0;">Admin</a>
 
     <script>
-        // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyBiUDyNj1R4-QBRDZY-mxN0fPg_4TdSDCY",
-            authDomain: "corprexnewspage.firebaseapp.com",
-            projectId: "corprexnewspage",
-            storageBucket: "corprexnewspage.firebasestorage.app",
-            messagingSenderId: "957002833855",
-            appId: "1:957002833855:web:61e87ca3cbfcc91ca52eb8",
-            measurementId: "G-HHHM9Q5PG1"
-        };
-
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-
-        // State management
-        let articles = [];
-        let filteredArticles = [];
-        let currentCategory = 'all';
-        let articlesPerPage = 6;
-        let currentPage = 1;
-
-        // Load articles from Firebase
-        async function loadArticles() {
-            const loadingState = document.getElementById('loadingState');
-            const newsContent = document.getElementById('newsContent');
-            const emptyState = document.getElementById('emptyState');
-            
-            try {
-                const snapshot = await db.collection('articles')
-                    .where('published', '==', true)
-                    .get();
-                
-                articles = [];
-                snapshot.forEach(doc => {
-                    articles.push({ id: doc.id, ...doc.data() });
-                });
-                
-                // Sort by date (newest first)
-                articles.sort((a, b) => {
-                    const dateA = new Date(a.date || 0);
-                    const dateB = new Date(b.date || 0);
-                    return dateB - dateA;
-                });
-                
-                // Hide loading, show content
-                loadingState.style.display = 'none';
-                
-                if (articles.length === 0) {
-                    newsContent.style.display = 'none';
-                    emptyState.style.display = 'block';
-                } else {
-                    newsContent.style.display = 'block';
-                    emptyState.style.display = 'none';
-                    filterCategory(currentCategory);
-                }
-                
-            } catch (error) {
-                console.error('Error loading articles:', error);
-                loadingState.innerHTML = '<p style="color: var(--text-secondary);">Error loading articles. Please try again later.</p>';
-            }
-        }
-
-        // Filter articles by category
-        function filterCategory(category) {
-            currentCategory = category;
-            currentPage = 1;
-            
-            // Update active button
-            document.querySelectorAll('.category-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            // Filter articles
-            if (category === 'all') {
-                filteredArticles = [...articles];
-            } else {
-                filteredArticles = articles.filter(article => article.category === category);
-            }
-            
-            renderArticles();
-        }
-
-        // Render articles
-        function renderArticles() {
-            const newsContent = document.getElementById('newsContent');
-            const emptyState = document.getElementById('emptyState');
-            
-            if (filteredArticles.length === 0) {
-                newsContent.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 3rem;">No articles found in this category.</p>';
-                return;
-            }
-            
-            // Paginate articles
-            const startIndex = 0;
-            const endIndex = currentPage * articlesPerPage;
-            const displayArticles = filteredArticles.slice(startIndex, endIndex);
-            
-            let html = '';
-            
-            // Featured article (first article or one marked as featured)
-            const featuredArticle = displayArticles.find(a => a.featured) || displayArticles[0];
-            if (featuredArticle && currentPage === 1 && currentCategory === 'all') {
-                html += `
-                    <article class="featured-article" onclick="openArticle('${featuredArticle.url}')">
-                        <div class="featured-image">
-                            <img src="${featuredArticle.image || 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80'}" 
-                                 alt="${featuredArticle.title}" 
-                                 onerror="this.src='https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80'">
-                        </div>
-                        <div class="featured-content">
-                            <span class="featured-badge">${getCategoryLabel(featuredArticle.category)}</span>
-                            <h2 class="featured-title">${featuredArticle.title}</h2>
-                            <p class="featured-excerpt">${featuredArticle.summary}</p>
-                            <div class="featured-meta">
-                                <span>${featuredArticle.author || 'Corprex Team'}</span>
-                                <span>${formatDate(featuredArticle.date)}</span>
-                            </div>
-                        </div>
-                    </article>
-                `;
-            }
-            
-            // Regular articles grid
-            html += '<div class="news-grid">';
-            
-            const regularArticles = displayArticles.filter(a => 
-                !(featuredArticle && a.id === featuredArticle.id && currentPage === 1 && currentCategory === 'all')
-            );
-            
-            for (let article of regularArticles) {
-                html += `
-                    <article class="article-card" onclick="openArticle('${article.url}')">
-                        <div class="article-image">
-                            <img src="${article.image || 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80'}" 
-                                 alt="${article.title}" 
-                                 onerror="this.src='https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80'">
-                        </div>
-                        <div class="article-content">
-                            <h3 class="article-title">${article.title}</h3>
-                            <p class="article-excerpt">${article.summary.substring(0, 150)}...</p>
-                            <div class="article-footer">
-                                <div class="article-meta">
-                                    <span>${article.author || 'Corprex Team'}</span>
-                                    <span>${formatDate(article.date)}</span>
-                                </div>
-                                <a href="${article.url}" class="read-more" onclick="event.stopPropagation(); openArticle('${article.url}', event)">
-                                    Read more
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M5 12h14M12 5l7 7-7 7"/>
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-                `;
-            }
-            
-            html += '</div>';
-            
-            // Load more button
-            if (endIndex < filteredArticles.length) {
-                html += `
-                    <div class="load-more-container">
-                        <button class="btn-load-more" onclick="loadMore()">
-                            Load More Articles (${filteredArticles.length - endIndex} remaining)
-                        </button>
-                    </div>
-                `;
-            }
-            
-            newsContent.innerHTML = html;
-        }
-
-        // Get category label
-        function getCategoryLabel(category) {
-            const labels = {
-                'announcements': 'Announcement',
-                'insights': 'Industry Insight',
-                'technical': 'Technical',
-                'case-studies': 'Case Study'
-            };
-            return labels[category] || 'News';
-        }
-
-        // Load more articles
-        function loadMore() {
-            currentPage++;
-            renderArticles();
-        }
-
-        // Open article in new tab
-        function openArticle(url, event) {
-            if (event) {
-                event.preventDefault();
-            }
-            window.open(url, '_blank');
-        }
-
-        // Format date
-        function formatDate(dateString) {
-            if (!dateString) return 'Just now';
-            const date = new Date(dateString);
-            const now = new Date();
-            const diffInDays = Math.floor((now - date) / (1000 * 60 * 60 * 24));
-            
-            if (diffInDays === 0) return 'Today';
-            if (diffInDays === 1) return 'Yesterday';
-            if (diffInDays < 7) return `${diffInDays} days ago`;
-            
-            return date.toLocaleDateString('en-US', { 
-                year: 'numeric', 
-                month: 'short', 
-                day: 'numeric' 
-            });
-        }
-
         // Subscribe to newsletter
         function subscribeNewsletter(event) {
             event.preventDefault();
             const email = event.target.querySelector('input[type="email"]').value;
-            
-            // In a real implementation, you would save this to Firebase
-            db.collection('newsletter-subscribers').add({
-                email: email,
-                subscribedAt: new Date().toISOString()
-            }).then(() => {
-                alert('Thank you for subscribing! You\'ll receive our latest updates.');
-                event.target.reset();
-            }).catch((error) => {
-                console.error('Error subscribing:', error);
-                alert('There was an error. Please try again.');
-            });
+            alert('Thank you for subscribing! You\'ll receive our latest updates.');
+            event.target.reset();
         }
 
         // Mobile menu toggle
@@ -1042,11 +854,6 @@
                 nav.style.background = 'rgba(0, 0, 0, 0.95)';
                 nav.style.boxShadow = 'none';
             }
-        });
-
-        // Initialize - Load articles when page loads
-        window.addEventListener('load', () => {
-            loadArticles();
         });
     </script>
 </body>
