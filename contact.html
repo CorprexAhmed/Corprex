@@ -981,7 +981,7 @@
 
         /* Booking Form - Fixed Display */
         .booking-form {
-            display: none !important;
+            display: none;
             padding: 2rem;
             background: #0a0a0a;
             height: 100%;
@@ -996,7 +996,7 @@
         }
 
         .booking-form.active {
-            display: block !important;
+            display: block;
         }
 
         .form-header {
@@ -1080,7 +1080,7 @@
 
         /* Success State - Fixed Display */
         .booking-success {
-            display: none !important;
+            display: none;
             text-align: center;
             padding: 3rem 2rem;
             height: 100%;
@@ -1097,7 +1097,7 @@
         }
 
         .booking-success.active {
-            display: flex !important;
+            display: flex;
         }
 
         .success-icon {
@@ -1959,9 +1959,6 @@
             
             // Clear form
             document.getElementById('schedulerForm').reset();
-            
-            // Ensure success state is hidden
-            document.getElementById('bookingSuccess').style.display = 'none';
         }
 
         // Scheduler State
@@ -2110,16 +2107,17 @@
 
         // Show booking form
         function showBookingForm() {
-            // Hide calendar view completely
+            // Hide calendar view
             document.getElementById('calendarView').style.display = 'none';
             
-            // Show booking form
+            // Remove any lingering display styles
+            document.getElementById('bookingForm').style.display = '';
+            
+            // Add active class to show booking form
             document.getElementById('bookingForm').classList.add('active');
-            document.getElementById('bookingForm').style.display = 'block';
             
             // Make sure success is hidden
             document.getElementById('bookingSuccess').classList.remove('active');
-            document.getElementById('bookingSuccess').style.display = 'none';
             
             // Update booking summary
             const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -2127,13 +2125,22 @@
             const timezone = document.getElementById('timezoneSelect').selectedOptions[0].text;
             document.getElementById('bookingSummary').textContent = `${dateStr} at ${selectedTime} ${timezone}`;
             
-            // Scroll to top
-            document.querySelector('.scheduler-views').scrollTop = 0;
+            // Scroll to top of the scheduler views
+            const schedulerViews = document.querySelector('.scheduler-views');
+            if (schedulerViews) {
+                schedulerViews.scrollTop = 0;
+            }
         }
 
         // Back to calendar
         function backToCalendar() {
+            // Hide booking form
             document.getElementById('bookingForm').classList.remove('active');
+            
+            // Remove any inline styles that might interfere
+            document.getElementById('bookingForm').style.display = '';
+            
+            // Show calendar view
             document.getElementById('calendarView').style.display = 'flex';
         }
 
@@ -2157,11 +2164,9 @@
                 
                 // Hide form first
                 document.getElementById('bookingForm').classList.remove('active');
-                document.getElementById('bookingForm').style.display = 'none';
                 
                 // Show success
                 document.getElementById('bookingSuccess').classList.add('active');
-                document.getElementById('bookingSuccess').style.display = 'flex';
                 
                 // Reset form
                 document.getElementById('schedulerForm').reset();
