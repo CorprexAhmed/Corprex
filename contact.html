@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Corprex | Get in Touch</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-black: #000000;
+            --secondary-black: #0a0a0a;
+            --dark-gray: #1a1a1a;
+            --medium-gray: #2a2a2a;
+            --light-gray: #666666;
+            --text-gray: #999999;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --border-color: #333333;
+            --accent-green: #4CAF50;
+        }
+
+        body {
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--primary-black);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 60px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .logo a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--text-primary);
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--secondary-black);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.5rem 0;
+            margin-top: 0.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            min-width: 200px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-item:hover .dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-link {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-link:hover {
+            color: var(--text-primary);
+            background: var(--dark-gray);
+        }
+
+        .nav-cta {
+            background: var(--text-primary);
+            color: var(--primary-black);
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            letter-spacing: 0.02em;
+            font-size: 0.9rem;
+        }
+
+        .nav-cta:hover {
+            background: var(--text-secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 8rem 1.5rem 4rem;
+            background: linear-gradient(180deg, var(--primary-black) 0%, var(--secondary-black) 100%);
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 300;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 4rem 1.5rem;
+            background: var(--primary-black);
+        }
+
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        /* Contact Form */
+        .contact-form-container {
+            background: var(--secondary-black);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2.5rem;
+        }
+
+        .form-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+
+        .form-subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .form-input,
+        .form-textarea,
+        .form-select {
+            background: var(--dark-gray);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.875rem 1rem;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: var(--text-primary);
+            background: var(--primary-black);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .form-button {
+            background: var(--text-primary);
+            color: var(--primary-black);
+            border: none;
+            padding: 0.875rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.02em;
+            margin-top: 1rem;
+        }
+
+        .form-button:hover {
+            background: var(--text-secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+        }
+
+        .form-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Contact Info */
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .info-card {
+            background: var(--secondary-black);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--text-primary);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.05);
+        }
+
+        .info-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--dark-gray);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-icon svg {
+            width: 24px;
+            height: 24px;
+            color: var(--text-primary);
+        }
+
+        .info-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+        }
+
+        .info-text {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .info-link {
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .info-link:hover {
+            color: var(--accent-green);
+        }
+
+        /* Success Message */
+        .success-message {
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid var(--accent-green);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-10px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Footer */
+        footer {
+            background: var(--secondary-black);
+            border-top: 1px solid var(--border-color);
+            padding: 3rem 1.5rem 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-bottom: 2rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-column h4 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .footer-link {
+            display: block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.4rem 0;
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .footer-link:hover {
+            color: var(--text-primary);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border-color);
+            padding-top: 1.5rem;
+            text-align: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-copyright {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            /* Mobile Menu */
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 60px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 60px);
+                background: var(--secondary-black);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.5rem;
+                transition: left 0.3s ease;
+                border-top: 1px solid var(--border-color);
+                overflow-y: auto;
+                align-items: stretch;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .dropdown {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                background: var(--dark-gray);
+                margin-top: 0.5rem;
+                border-radius: 8px;
+            }
+
+            .nav-cta {
+                width: 100%;
+                text-align: center;
+                padding: 0.875rem;
+            }
+
+            /* Hero */
+            .hero {
+                padding: 6rem 1rem 3rem;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            /* Contact */
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            /* Footer */
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .form-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo"><a href="index.html">CORPREX</a></div>
+            <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="automations.html" class="nav-link">Automations</a>
+                    <div class="dropdown">
+                        <a href="n8n-guide.html" class="dropdown-link">n8n Automation Guide</a>
+                        <a href="make-guide.html" class="dropdown-link">Make.com Guide</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="why-local-ai.html" class="nav-link">Why Local AI?</a>
+                </li>
+                <li class="nav-item">
+                    <a href="news.html" class="nav-link">News</a>
+                </li>
+                <li class="nav-item">
+                    <a href="about.html" class="nav-link">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a href="contact.html" class="nav-link active">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#demo" class="nav-cta">Request Demo</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Let's Build Your AI Future</h1>
+            <p class="hero-subtitle">
+                Whether you're ready to transform your infrastructure or just exploring possibilities, we're here to help. Reach out to discuss how private AI can revolutionize your operations.
+            </p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="contact-container">
+            <!-- Contact Form -->
+            <div class="contact-form-container">
+                <h2 class="form-title">Get in Touch</h2>
+                <p class="form-subtitle">Fill out the form below and our team will respond within 24 hours</p>
+                
+                <div class="success-message" id="successMessage">
+                    Your message has been sent successfully! We'll be in touch soon.
+                </div>
+
+                <!-- Note: This form uses Formspree for email handling. Replace YOUR_FORM_ID with your actual Formspree form ID -->
+                <form class="contact-form" id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName" class="form-label">First Name</label>
+                            <input type="text" id="firstName" name="firstName" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName" class="form-label">Last Name</label>
+                            <input type="text" id="lastName" name="lastName" class="form-input" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" id="email" name="_replyto" class="form-input" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="company" class="form-label">Company</label>
+                        <input type="text" id="company" name="company" class="form-input">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="interest" class="form-label">Area of Interest</label>
+                        <select id="interest" name="interest" class="form-select" required>
+                            <option value="">Select an option</option>
+                            <option value="omega-hardware">Omega Hardware</option>
+                            <option value="ai-automations">AI Automations</option>
+                            <option value="consulting">Consulting Services</option>
+                            <option value="partnership">Partnership Opportunities</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message" class="form-label">Message</label>
+                        <textarea id="message" name="message" class="form-textarea" rows="5" required></textarea>
+                    </div>
+
+                    <!-- Honeypot field for spam protection -->
+                    <input type="text" name="_gotcha" style="display:none">
+
+                    <button type="submit" class="form-button" id="submitButton">Send Message</button>
+                </form>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="contact-info">
+                <div class="info-card">
+                    <div class="info-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="info-title">Email Us</h3>
+                    <p class="info-text">
+                        For general inquiries and support:<br>
+                        <a href="mailto:hello@corprex.com" class="info-link">hello@corprex.com</a>
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 11H3v10h6V11zm6-7H9v18h6V4zm6 11h-6v6h6v-6z"/>
+                        </svg>
+                    </div>
+                    <h3 class="info-title">Sales Inquiries</h3>
+                    <p class="info-text">
+                        Ready to transform your AI infrastructure?<br>
+                        <a href="mailto:sales@corprex.com" class="info-link">sales@corprex.com</a>
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                        </svg>
+                    </div>
+                    <h3 class="info-title">Support</h3>
+                    <p class="info-text">
+                        Need technical assistance?<br>
+                        <a href="mailto:support@corprex.com" class="info-link">support@corprex.com</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h4>Solutions</h4>
+                <a href="automations.html" class="footer-link">Automations</a>
+                <a href="why-local-ai.html" class="footer-link">Why Local AI?</a>
+            </div>
+            <div class="footer-column">
+                <h4>Company</h4>
+                <a href="about.html" class="footer-link">About Us</a>
+                <a href="news.html" class="footer-link">News</a>
+                <a href="contact.html" class="footer-link">Contact</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-copyright">© 2024 Corprex. All rights reserved.</div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const navMenu = document.getElementById('navMenu');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            
+            if (!navMenu.contains(event.target) && !menuBtn.contains(event.target)) {
+                navMenu.classList.remove('active');
+            }
+        });
+
+        // Form submission handling
+        const contactForm = document.getElementById('contactForm');
+        const submitButton = document.getElementById('submitButton');
+        const successMessage = document.getElementById('successMessage');
+
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Disable submit button
+            submitButton.disabled = true;
+            submitButton.textContent = 'Sending...';
+            
+            // Get form data
+            const formData = new FormData(contactForm);
+            
+            try {
+                // Submit to Formspree
+                const response = await fetch(contactForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    // Show success message
+                    successMessage.classList.add('show');
+                    contactForm.reset();
+                    
+                    // Hide success message after 5 seconds
+                    setTimeout(() => {
+                        successMessage.classList.remove('show');
+                    }, 5000);
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            } catch (error) {
+                alert('There was an error sending your message. Please try again later.');
+            } finally {
+                // Re-enable submit button
+                submitButton.disabled = false;
+                submitButton.textContent = 'Send Message';
+            }
+        });
+
+        // Add scroll effect to navigation
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(0, 0, 0, 0.98)';
+                nav.style.boxShadow = '0 2px 20px rgba(0,0,0,0.5)';
+            } else {
+                nav.style.background = 'rgba(0, 0, 0, 0.95)';
+                nav.style.boxShadow = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
