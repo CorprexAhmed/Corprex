@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make.com Automation Guide - Corprex | Visual Automation Platform</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-black: #000000;
+            --secondary-black: #0a0a0a;
+            --dark-gray: #1a1a1a;
+            --medium-gray: #2a2a2a;
+            --light-gray: #666666;
+            --text-gray: #999999;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --border-color: #333333;
+            --accent-green: #4CAF50;
+            --make-purple: #6b5cff;
+        }
+
+        body {
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--primary-black);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 60px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .logo a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--text-primary);
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--secondary-black);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.5rem 0;
+            margin-top: 0.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            min-width: 200px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-item:hover .dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-link {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-link:hover {
+            color: var(--text-primary);
+            background: var(--dark-gray);
+        }
+
+        .nav-cta {
+            background: var(--text-primary);
+            color: var(--primary-black);
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            letter-spacing: 0.02em;
+            font-size: 0.9rem;
+        }
+
+        .nav-cta:hover {
+            background: var(--text-secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 8rem 1.5rem 4rem;
+            background: linear-gradient(180deg, var(--primary-black) 0%, var(--secondary-black) 100%);
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .hero-badge {
+            background: var(--make-purple);
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            font-weight: 300;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-text .highlight {
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--make-purple) 0%, #8b7fff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-text p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 4rem 1.5rem;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .section-header p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* What is Make Section */
+        .intro-section {
+            background: var(--secondary-black);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .intro-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .intro-content h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+        }
+
+        .intro-content p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .intro-features {
+            list-style: none;
+            margin-top: 2rem;
+        }
+
+        .intro-feature {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem 0;
+        }
+
+        .feature-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--make-purple);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .feature-icon svg {
+            width: 14px;
+            height: 14px;
+            color: var(--text-primary);
+        }
+
+        /* Visual Canvas */
+        .visual-container {
+            background: var(--dark-gray);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scenario-canvas {
+            position: relative;
+            min-height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .module {
+            background: var(--secondary-black);
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .module:hover {
+            transform: scale(1.1);
+            border-color: var(--make-purple);
+            box-shadow: 0 10px 30px rgba(107, 92, 255, 0.3);
+        }
+
+        .module-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--make-purple);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .module-icon svg {
+            width: 24px;
+            height: 24px;
+            color: var(--text-primary);
+        }
+
+        .module-trigger {
+            left: 10%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .module-action1 {
+            left: 40%;
+            top: 20%;
+        }
+
+        .module-action2 {
+            left: 40%;
+            bottom: 20%;
+        }
+
+        .module-filter {
+            left: 70%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .connection-line {
+            position: absolute;
+            height: 2px;
+            background: var(--make-purple);
+            opacity: 0.3;
+            transform-origin: left center;
+        }
+
+        /* How It Works */
+        .how-section {
+            background: var(--primary-black);
+        }
+
+        .process-timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 3rem auto;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .timeline-number {
+            width: 60px;
+            height: 60px;
+            background: var(--make-purple);
+            color: var(--text-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .timeline-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 60px;
+            width: 2px;
+            height: calc(100% + 1rem);
+            background: var(--border-color);
+            z-index: 1;
+        }
+
+        .timeline-content {
+            flex: 1;
+            padding-top: 0.5rem;
+        }
+
+        .timeline-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+        }
+
+        .timeline-desc {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Visual Builder Section */
+        .builder-section {
+            background: var(--secondary-black);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .builder-showcase {
+            background: var(--dark-gray);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .builder-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .builder-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .control-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--border-color);
+        }
+
+        .control-dot:first-child {
+            background: #ff5f56;
+        }
+
+        .control-dot:nth-child(2) {
+            background: #ffbd2e;
+        }
+
+        .control-dot:nth-child(3) {
+            background: #27c93f;
+        }
+
+        .builder-canvas {
+            min-height: 400px;
+            background: var(--secondary-black);
+            border-radius: 12px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .canvas-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+            pointer-events: none;
+        }
+
+        /* Visual Features Grid */
+        .visual-features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .visual-feature {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--dark-gray);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .visual-feature:hover {
+            transform: translateY(-5px);
+            border-color: var(--make-purple);
+            box-shadow: 0 10px 30px rgba(107, 92, 255, 0.2);
+        }
+
+        .visual-feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--make-purple);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+        }
+
+        .visual-feature-icon svg {
+            width: 28px;
+            height: 28px;
+            color: var(--text-primary);
+        }
+
+        .visual-feature h4 {
+            margin-bottom: 0.5rem;
+            font-size: 1.125rem;
+            font-weight: 500;
+        }
+
+        .visual-feature p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        /* Templates Section */
+        .templates-section {
+            background: var(--primary-black);
+        }
+
+        .templates-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .template-card {
+            background: var(--secondary-black);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .template-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--make-purple);
+            box-shadow: 0 10px 30px rgba(107, 92, 255, 0.2);
+        }
+
+        .template-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--dark-gray);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .template-icon svg {
+            width: 32px;
+            height: 32px;
+            color: var(--make-purple);
+        }
+
+        .template-title {
+            font-size: 1.125rem;
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+        }
+
+        .template-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .template-apps {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .app-tag {
+            background: var(--dark-gray);
+            color: var(--text-secondary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Key Concepts Section */
+        .concepts-section {
+            background: var(--secondary-black);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .concepts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .concept-card {
+            background: var(--dark-gray);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+
+        .concept-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .concept-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--secondary-black);
+            border: 2px solid var(--make-purple);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .concept-icon svg {
+            width: 24px;
+            height: 24px;
+            color: var(--make-purple);
+        }
+
+        .concept-title {
+            font-size: 1.25rem;
+            font-weight: 500;
+        }
+
+        .concept-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .concept-example {
+            background: var(--secondary-black);
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        /* Features Comparison */
+        .comparison-section {
+            background: var(--primary-black);
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .comparison-column h3 {
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-weight: 400;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-item {
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .feature-item:last-child {
+            border-bottom: none;
+        }
+
+        .check-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--make-purple);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .check-icon svg {
+            width: 14px;
+            height: 14px;
+            color: var(--text-primary);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--secondary-black) 0%, #1a1a1a 100%);
+            border-radius: 24px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+
+        .cta-section p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .btn-primary {
+            background: var(--make-purple);
+            color: var(--text-primary);
+            padding: 0.875rem 1.75rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-block;
+            letter-spacing: 0.02em;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary:hover {
+            background: #8b7fff;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(107, 92, 255, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--secondary-black);
+            border-top: 1px solid var(--border-color);
+            padding: 3rem 1.5rem 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-bottom: 2rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-column h4 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .footer-link {
+            display: block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.4rem 0;
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .footer-link:hover {
+            color: var(--text-primary);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border-color);
+            padding-top: 1.5rem;
+            text-align: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-copyright {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            /* Mobile Menu */
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 60px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 60px);
+                background: var(--secondary-black);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.5rem;
+                transition: left 0.3s ease;
+                border-top: 1px solid var(--border-color);
+                overflow-y: auto;
+                align-items: stretch;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .dropdown {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                background: var(--dark-gray);
+                margin-top: 0.5rem;
+                border-radius: 8px;
+            }
+
+            .nav-cta {
+                width: 100%;
+                text-align: center;
+                padding: 0.875rem;
+            }
+
+            /* Hero */
+            .hero {
+                padding: 7rem 1rem 3rem;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            /* Sections */
+            .section {
+                padding: 3rem 1rem;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+            }
+
+            /* Grid Layouts */
+            .intro-grid,
+            .comparison-grid,
+            .concepts-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .templates-grid,
+            .visual-features-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .timeline-item {
+                gap: 1.5rem;
+            }
+
+            .timeline-number {
+                width: 48px;
+                height: 48px;
+                font-size: 1.25rem;
+            }
+
+            .scenario-canvas {
+                min-height: 250px;
+            }
+
+            .module {
+                width: 80px;
+                height: 80px;
+            }
+
+            /* Footer */
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+
+            .module {
+                position: static !important;
+                margin: 0.5rem;
+                display: inline-flex;
+            }
+
+            .connection-line {
+                display: none;
+            }
+
+            .scenario-canvas {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo"><a href="index.html">CORPREX</a></div>
+            <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="automations.html" class="nav-link active">Automations</a>
+                    <div class="dropdown">
+                        <a href="n8n-guide.html" class="dropdown-link">n8n Automation Guide</a>
+                        <a href="make-guide.html" class="dropdown-link">Make.com Guide</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="why-local-ai.html" class="nav-link">Why Local AI?</a>
+                </li>
+                <li class="nav-item">
+                    <a href="news.html" class="nav-link">News</a>
+                </li>
+                <li class="nav-item">
+                    <a href="about.html" class="nav-link">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a href="contact.html" class="nav-link">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#demo" class="nav-cta">Request Demo</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <span class="hero-badge">Make.com Visual Automation</span>
+                <h1>Master <span class="highlight">Make.com</span> Visual Automation</h1>
+                <p>
+                    Create powerful, visual automation workflows without code. Connect thousands of apps and services with Make's intuitive drag-and-drop interface. Build scenarios that transform your business processes.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- What is Make Section -->
+    <section class="section intro-section">
+        <div class="container">
+            <div class="intro-grid">
+                <div class="intro-content">
+                    <h3>What is Make.com?</h3>
+                    <p>
+                        Make (formerly Integromat) is a powerful visual automation platform that lets you design, build, and automate workflows by connecting apps and services with a unique visual interface.
+                    </p>
+                    <p>
+                        Unlike traditional automation tools, Make provides a visual canvas where you can see your entire workflow, making it easy to understand data flow and build complex scenarios without writing code.
+                    </p>
+                    <ul class="intro-features">
+                        <li class="intro-feature">
+                            <div class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 12L11 14L15 10"/>
+                                </svg>
+                            </div>
+                            <span>1500+ pre-built app integrations</span>
+                        </li>
+                        <li class="intro-feature">
+                            <div class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 12L11 14L15 10"/>
+                                </svg>
+                            </div>
+                            <span>Visual scenario builder with real-time execution</span>
+                        </li>
+                        <li class="intro-feature">
+                            <div class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 12L11 14L15 10"/>
+                                </svg>
+                            </div>
+                            <span>Advanced data transformation tools</span>
+                        </li>
+                        <li class="intro-feature">
+                            <div class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 12L11 14L15 10"/>
+                                </svg>
+                            </div>
+                            <span>Error handling and scenario monitoring</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="visual-container">
+                    <div class="scenario-canvas">
+                        <div class="module module-trigger">
+                            <div class="module-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2L2 7L12 12L22 7L12 2Z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="module module-action1">
+                            <div class="module-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4Z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="module module-action2">
+                            <div class="module-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2L2 7V17C2 19.21 3.79 21 6 21H18C20.21 21 22 19.21 22 17V7L12 2Z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="module module-filter">
+                            <div class="module-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M3 4V10H9V4H3ZM15 4V10H21V4H15ZM3 16V22H9V16H3ZM15 16V22H21V16H15Z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="connection-line" style="left: 110px; top: 50%; width: 180px;"></div>
+                        <div class="connection-line" style="left: 290px; top: 50%; width: 180px; transform: rotate(-30deg);"></div>
+                        <div class="connection-line" style="left: 290px; top: 50%; width: 180px; transform: rotate(30deg);"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How Make Works -->
+    <section class="section how-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>How Make.com Works</h2>
+                <p>Build automations visually with Make's unique approach</p>
+            </div>
+            <div class="process-timeline">
+                <div class="timeline-item">
+                    <div class="timeline-number">1</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Create a Scenario</h3>
+                        <p class="timeline-desc">
+                            Start with a blank canvas where you'll build your automation workflow. Each scenario represents a complete automation process that runs independently.
+                        </p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">2</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Add Modules</h3>
+                        <p class="timeline-desc">
+                            Drag and drop modules onto your canvas. Each module represents an app, service, or function. Connect triggers (events that start your scenario) with actions (tasks to perform).
+                        </p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">3</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Configure Connections</h3>
+                        <p class="timeline-desc">
+                            Set up secure connections to your apps and services. Make handles authentication and maintains these connections, so you only need to authorize once.
+                        </p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">4</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Map Your Data</h3>
+                        <p class="timeline-desc">
+                            Use Make's powerful mapping features to transform and route data between modules. See exactly how information flows through your scenario with visual data mapping.
+                        </p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">5</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Test and Deploy</h3>
+                        <p class="timeline-desc">
+                            Run your scenario in test mode to verify everything works correctly. Once satisfied, activate it to run automatically based on your triggers or schedule.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visual Builder Section -->
+    <section class="section builder-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>The Visual Builder Advantage</h2>
+                <p>See your entire workflow at a glance and understand complex logic instantly</p>
+            </div>
+            <div class="builder-showcase">
+                <div class="builder-header">
+                    <div class="builder-controls">
+                        <div class="control-dot"></div>
+                        <div class="control-dot"></div>
+                        <div class="control-dot"></div>
+                    </div>
+                    <span style="margin-left: auto; color: var(--text-secondary); font-size: 0.875rem;">Make.com Scenario Builder</span>
+                </div>
+                <div class="builder-canvas">
+                    <div class="canvas-grid"></div>
+                    <div style="position: relative; z-index: 1; padding: 2rem;">
+                        <h3 style="font-size: 1.5rem; margin-bottom: 2rem; text-align: center;">Visual Workflow Design</h3>
+                        <div class="visual-features-grid">
+                            <div class="visual-feature">
+                                <div class="visual-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M3 13H5V11H3V13ZM3 17H5V15H3V17ZM3 9H5V7H3V9ZM7 13H21V11H7V13ZM7 17H21V15H7V17ZM7 7V9H21V7H7Z"/>
+                                    </svg>
+                                </div>
+                                <h4>Visual Logic</h4>
+                                <p>See branches, filters, and routers in your workflow</p>
+                            </div>
+                            <div class="visual-feature">
+                                <div class="visual-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12S6.48 22 12 22 22 17.52 22 12 17.52 2 12 2ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"/>
+                                    </svg>
+                                </div>
+                                <h4>Real-time Testing</h4>
+                                <p>Watch data flow through your scenario live</p>
+                            </div>
+                            <div class="visual-feature">
+                                <div class="visual-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 2L2 7V17C2 19.21 3.79 21 6 21H18C20.21 21 22 19.21 22 17V7L12 2ZM12 11.5L20.5 7L12 2.5L3.5 7L12 11.5ZM4 8.31V17C4 18.1 4.9 19 6 19H18C19.1 19 20 18.1 20 17V8.31L12 13L4 8.31Z"/>
+                                    </svg>
+                                </div>
+                                <h4>Precise Control</h4>
+                                <p>Configure every detail of your automation</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Concepts Section -->
+    <section class="section concepts-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Key Make.com Concepts</h2>
+                <p>Understanding these fundamentals will accelerate your automation journey</p>
+            </div>
+            <div class="concepts-grid">
+                <div class="concept-card">
+                    <div class="concept-header">
+                        <div class="concept-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.48 2 2 6.48 2 12S6.48 22 12 22 22 17.52 22 12 17.52 2 12 2Z"/>
+                            </svg>
+                        </div>
+                        <h3 class="concept-title">Modules</h3>
+                    </div>
+                    <p class="concept-description">
+                        Modules are the building blocks of your scenarios. Each module performs a specific action like retrieving data, processing information, or triggering events. They connect visually to show data flow.
+                    </p>
+                    <div class="concept-example">
+                        Example: Gmail module → Filter module → Slack module
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <div class="concept-header">
+                        <div class="concept-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M9 3V18H12V3H9ZM12 5L16 9L12 13V5ZM8 9L4 5V13L8 9Z"/>
+                            </svg>
+                        </div>
+                        <h3 class="concept-title">Bundles</h3>
+                    </div>
+                    <p class="concept-description">
+                        Bundles are packets of data that flow between modules. Each bundle contains the information processed by your scenario. Understanding bundles helps you optimize operations and costs.
+                    </p>
+                    <div class="concept-example">
+                        Example: 1 email = 1 bundle, 100 emails = 100 bundles
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <div class="concept-header">
+                        <div class="concept-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V8L14 2ZM16 18H8V16H16V18ZM16 14H8V12H16V14ZM13 9V3.5L18.5 9H13Z"/>
+                            </svg>
+                        </div>
+                        <h3 class="concept-title">Data Mapping</h3>
+                    </div>
+                    <p class="concept-description">
+                        Data mapping allows you to connect outputs from one module to inputs of another. Make's visual mapping interface shows available data fields and lets you transform data between modules.
+                    </p>
+                    <div class="concept-example">
+                        Example: Map {{email.subject}} to Slack message title
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <div class="concept-header">
+                        <div class="concept-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2L2 7L12 12L22 7L12 2ZM2 17L12 22L22 17L22 7L12 12L2 7V17Z"/>
+                            </svg>
+                        </div>
+                        <h3 class="concept-title">Routers & Filters</h3>
+                    </div>
+                    <p class="concept-description">
+                        Routers split your workflow into multiple paths, while filters control which data passes through. Together, they create conditional logic that makes your automations intelligent and efficient.
+                    </p>
+                    <div class="concept-example">
+                        Example: If priority = "high" → Send SMS, else → Send Email
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Templates Section -->
+    <section class="section templates-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Popular Automation Templates</h2>
+                <p>Get started quickly with pre-built scenarios you can customize</p>
+            </div>
+            <div class="templates-grid">
+                <div class="template-card">
+                    <div class="template-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20 6H12L10 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V8C22 6.9 21.1 6 20 6Z"/>
+                        </svg>
+                    </div>
+                    <h3 class="template-title">Social Media Publisher</h3>
+                    <p class="template-desc">
+                        Automatically publish content across multiple social platforms from a single source. Schedule posts, resize images, and track engagement.
+                    </p>
+                    <div class="template-apps">
+                        <span class="app-tag">Facebook</span>
+                        <span class="app-tag">Instagram</span>
+                        <span class="app-tag">Twitter</span>
+                        <span class="app-tag">LinkedIn</span>
+                    </div>
+                </div>
+                <div class="template-card">
+                    <div class="template-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19 3H5C3.89 3 3 3.89 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.89 20.1 3 19 3ZM19 5V19H5V5H19ZM12 12C10.35 12 9 13.35 9 15S10.35 18 12 18 15 16.65 15 15 13.65 12 12 12Z"/>
+                        </svg>
+                    </div>
+                    <h3 class="template-title">CRM Lead Manager</h3>
+                    <p class="template-desc">
+                        Capture leads from multiple sources, enrich with data, score automatically, and sync with your CRM. Never miss a potential customer.
+                    </p>
+                    <div class="template-apps">
+                        <span class="app-tag">HubSpot</span>
+                        <span class="app-tag">Salesforce</span>
+                        <span class="app-tag">Mailchimp</span>
+                    </div>
+                </div>
+                <div class="template-card">
+                    <div class="template-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M9 11H7V13H9V11ZM13 11H11V13H13V11ZM17 11H15V13H17V11ZM19 4H18V2H16V4H8V2H6V4H5C3.89 4 3.01 4.9 3.01 5L3 19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 4 19 4ZM19 19H5V8H19V19Z"/>
+                        </svg>
+                    </div>
+                    <h3 class="template-title">Invoice Processor</h3>
+                    <p class="template-desc">
+                        Extract data from invoices, validate information, update accounting systems, and send payment reminders automatically.
+                    </p>
+                    <div class="template-apps">
+                        <span class="app-tag">QuickBooks</span>
+                        <span class="app-tag">Xero</span>
+                        <span class="app-tag">Stripe</span>
+                    </div>
+                </div>
+                <div class="template-card">
+                    <div class="template-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M3 13H5V11H3V13ZM3 17H5V15H3V17ZM3 9H5V7H3V9ZM7 13H21V11H7V13ZM7 17H21V15H7V17ZM7 7V9H21V7H7Z"/>
+                        </svg>
+                    </div>
+                    <h3 class="template-title">Project Automator</h3>
+                    <p class="template-desc">
+                        Create tasks from emails, update project boards, notify team members, and generate reports across your project management tools.
+                    </p>
+                    <div class="template-apps">
+                        <span class="app-tag">Asana</span>
+                        <span class="app-tag">Trello</span>
+                        <span class="app-tag">Slack</span>
+                        <span class="app-tag">Jira</span>
+                    </div>
+                </div>
+                <div class="template-card">
+                    <div class="template-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M16 11C17.66 11 18.99 9.66 18.99 8S17.66 5 16 5C14.34 5 13 6.34 13 8S14.34 11 16 11ZM8 11C9.66 11 10.99 9.66 10.99 8S9.66 5 8 5C6.34 5 5 6.34 5 8S6.34 11 8 11ZM8 13C5.67 13 1 14.17 1 16.5V19H15V16.5C15 14.17 10.33 13 8 13ZM16 13C15.71 13 15.38 13.02 15.03 13.05C16.19 13.89 17 15.02 17 16.5V19H23V16.5C23 14.17 18.33 13 16 13Z"/>
+                        </svg>
+                    </div>
+                    <h3 class="template-title">HR Onboarding</h3>
+                    <p class="template-desc">
+                        Streamline employee onboarding with automated account creation, equipment requests, training schedules, and welcome communications.
+                    </p>
+                    <div class="template-apps">
+                        <span class="app-tag">Google Workspace</span>
+                        <span class="app-tag">Slack</span>
+                        <span class="app-tag">BambooHR</span>
+                    </div>
+                </div>
+                <div class="template-card">
+                    <div class="template-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19 3H5C3.89 3 3 3.89 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.89 20.1 3 19 3ZM19 19H5V5H19V19ZM7 10H9V17H7V10ZM11 7H13V17H11V7ZM15 13H17V17H15V13Z"/>
+                        </svg>
+                    </div>
+                    <h3 class="template-title">Analytics Reporter</h3>
+                    <p class="template-desc">
+                        Collect data from multiple sources, create consolidated reports, and distribute insights to stakeholders on schedule.
+                    </p>
+                    <div class="template-apps">
+                        <span class="app-tag">Google Analytics</span>
+                        <span class="app-tag">Sheets</span>
+                        <span class="app-tag">Email</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Make vs n8n Comparison -->
+    <section class="section comparison-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Make.com vs n8n</h2>
+                <p>Choose the right automation platform for your needs</p>
+            </div>
+            <div class="comparison-grid">
+                <div class="comparison-column">
+                    <h3>Make.com Strengths</h3>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <div class="check-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 12L11 14L15 10"/>
+                                </svg>
+                            </div>
+                            <span>Visual scenario builder with real-time data flow</span>
+                        </li>
+                        <li class="feature-item">
+                            <div class="check-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 12L11 14L15 10"/>
+                                </svg>
+                            </div>
+                            <span>1500+ pre-built integrations</span>
+                        </li>
+                        <li class="feature-item">
+                            <div class="check-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 12L11 14L15 10"/>
+                                </svg>
+                            </div>
+                            <span>No coding required for most automations</span>
+                        </li>
+                        <li class="feature-item">
+                            <div class="check-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 12L11 14L15 10"/>
+                                </svg>
+                            </div>
+                            <span>Advanced data transformation tools</span>
+                        </li>
+                        <li class="feature-item">
+                            <div class="check-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 12L11 14L15 10"/>
+                                </svg>
+                            </div>
+                            <span>Built-in error handling and data storage</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="comparison-column">
+                    <h3>n8n Strengths</h3>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <div class="check-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 12L11 14L15 10"/>
+                                </svg>
+                            </div>
+                            <span>Self-hosted option for complete data control</span>
+                        </li>
+                        <li class="feature-item">
+                            <div class="check-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 12L11 14L15 10"/>
+                                </svg>
+                            </div>
+                            <span>Fair-source license with source code access</span>
+                        </li>
+                        <li class="feature-item">
+                            <div class="check-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 12L11 14L15 10"/>
+                                </svg>
+                            </div>
+                            <span>Custom code support for advanced logic</span>
+                        </li>
+                        <li class="feature-item">
+                            <div class="check-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 12L11 14L15 10"/>
+                                </svg>
+                            </div>
+                            <span>Build custom nodes for proprietary systems</span>
+                        </li>
+                        <li class="feature-item">
+                            <div class="check-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 12L11 14L15 10"/>
+                                </svg>
+                            </div>
+                            <span>No usage limits when self-hosted</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section">
+        <div class="container">
+            <div class="cta-section">
+                <h2>Ready to Automate with Make?</h2>
+                <p>Let our experts help you design and implement powerful visual automations that transform your business</p>
+                <a href="contact.html" class="btn-primary">Get Started with Make</a>
+                <p style="margin-top: 2rem; font-size: 0.9rem; color: var(--text-gray);">
+                    Or explore our <a href="n8n-guide.html" style="color: var(--make-purple); text-decoration: none;">n8n guide</a> for self-hosted automation
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h4>Solutions</h4>
+                <a href="automations.html" class="footer-link">Automations</a>
+                <a href="why-local-ai.html" class="footer-link">Why Local AI?</a>
+            </div>
+            <div class="footer-column">
+                <h4>Company</h4>
+                <a href="about.html" class="footer-link">About Us</a>
+                <a href="news.html" class="footer-link">News</a>
+                <a href="contact.html" class="footer-link">Contact</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-copyright">© 2024 Corprex. All rights reserved.</div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const navMenu = document.getElementById('navMenu');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            
+            if (!navMenu.contains(event.target) && !menuBtn.contains(event.target)) {
+                navMenu.classList.remove('active');
+            }
+        });
+
+        // Add scroll effect to navigation
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(0, 0, 0, 0.98)';
+                nav.style.boxShadow = '0 2px 20px rgba(0,0,0,0.5)';
+            } else {
+                nav.style.background = 'rgba(0, 0, 0, 0.95)';
+                nav.style.boxShadow = 'none';
+            }
+        });
+
+        // Module hover effect
+        const modules = document.querySelectorAll('.module');
+        modules.forEach(module => {
+            module.addEventListener('mouseenter', function() {
+                this.style.zIndex = '10';
+            });
+            module.addEventListener('mouseleave', function() {
+                this.style.zIndex = '1';
+            });
+        });
+    </script>
+</body>
+</html>
