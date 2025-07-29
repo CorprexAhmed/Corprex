@@ -35,6 +35,16 @@
             overflow-x: hidden;
         }
 
+        /* Initial state to prevent flash */
+        body {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        body.loaded {
+            opacity: 1;
+        }
+
         /* Loading Screen */
         .loading-screen {
             position: fixed;
@@ -604,6 +614,11 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
     <script>
+        // Prevent FOUC
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.classList.add('loaded');
+        });
+
         // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyBiUDyNj1R4-QBRDZY-mxN0fPg_4TdSDCY",
@@ -621,25 +636,27 @@
         const db = firebase.firestore();
 
         // Check authentication state
-        let isAuthChecking = true;
+        let authChecked = false;
+        let isRedirecting = false;
         
         auth.onAuthStateChanged((user) => {
             const loadingScreen = document.getElementById('loadingScreen');
             const mainContent = document.getElementById('mainContent');
             
-            if (isAuthChecking) {
-                // First auth check
+            if (!authChecked) {
+                authChecked = true;
+                
                 if (user) {
                     // User is signed in
                     document.getElementById('userInfo').textContent = user.email;
                     loadingScreen.style.display = 'none';
                     mainContent.style.display = 'block';
                     loadArticles();
-                } else {
+                } else if (!isRedirecting) {
                     // User is not signed in - redirect to login
-                    window.location.href = 'adminlogin.html';
+                    isRedirecting = true;
+                    window.location.replace('adminlogin.html');
                 }
-                isAuthChecking = false;
             }
         });
 
@@ -801,12 +818,16 @@
 
         // Logout
         document.getElementById('logoutBtn').addEventListener('click', async () => {
+            if (isRedirecting) return;
+            
             try {
+                isRedirecting = true;
                 await auth.signOut();
-                window.location.href = 'adminlogin.html';
+                window.location.replace('adminlogin.html');
             } catch (error) {
                 console.error('Logout error:', error);
                 showMessage('Error logging out', 'error');
+                isRedirecting = false;
             }
         });
     </script>
