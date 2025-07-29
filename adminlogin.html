@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -286,6 +287,18 @@
             margin-right: 0.5rem;
         }
 
+        /* Demo info */
+        .demo-info {
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid var(--success-color);
+            color: var(--success-color);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
         /* Loading state */
         .loading {
             display: inline-block;
@@ -322,21 +335,25 @@
             <p class="login-subtitle">Admin Access</p>
         </div>
 
+        <div class="demo-info">
+            Demo account: admin@corprex.com / admin123
+        </div>
+
         <div class="error-message" id="errorMessage">
             Invalid credentials. Please try again.
         </div>
 
         <form id="loginForm">
             <div class="form-group">
-                <label for="username" class="form-label">Username</label>
+                <label for="email" class="form-label">Email</label>
                 <input 
-                    type="text" 
-                    id="username" 
-                    name="username" 
+                    type="email" 
+                    id="email" 
+                    name="email" 
                     class="form-input" 
-                    placeholder="Enter your username"
+                    placeholder="Enter your email"
                     required
-                    autocomplete="username"
+                    autocomplete="email"
                 >
             </div>
 
@@ -379,7 +396,34 @@
         </a>
     </div>
 
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
     <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBiUDyNj1R4-QBRDZY-mxN0fPg_4TdSDCY",
+            authDomain: "corprexnewspage.firebaseapp.com",
+            projectId: "corprexnewspage",
+            storageBucket: "corprexnewspage.firebasestorage.app",
+            messagingSenderId: "957002833855",
+            appId: "1:957002833855:web:61e87ca3cbfcc91ca52eb8",
+            measurementId: "G-HHHM9Q5PG1"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // Check if already authenticated
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                // User is already signed in, redirect to dashboard
+                window.location.href = 'admin-dashboard.html';
+            }
+        });
+
         // Password visibility toggle
         const togglePassword = document.getElementById('togglePassword');
         const passwordInput = document.getElementById('password');
@@ -416,9 +460,8 @@
             e.preventDefault();
             
             // Get form values
-            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            const remember = document.getElementById('remember').checked;
             
             // Show loading state
             loginButton.disabled = true;
@@ -427,32 +470,65 @@
             // Hide error message
             errorMessage.classList.remove('show');
             
-            // Simulate authentication (replace with actual auth logic)
-            setTimeout(() => {
-                // For demo purposes, accept admin/admin
-                if (username === 'admin' && password === 'admin') {
-                    // Store session
-                    if (remember) {
-                        localStorage.setItem('adminAuth', 'true');
-                    } else {
-                        sessionStorage.setItem('adminAuth', 'true');
+            try {
+                // Try to sign in with Firebase Auth
+                await auth.signInWithEmailAndPassword(email, password);
+                
+                // If successful, Firebase auth state change will redirect
+                // We don't need to do anything here
+                
+            } catch (error) {
+                console.error('Login error:', error);
+                
+                // Check if it's the demo account (fallback for demo)
+                if (email === 'admin@corprex.com' && password === 'admin123') {
+                    // Create the demo user if it doesn't exist
+                    try {
+                        await auth.createUserWithEmailAndPassword(email, password);
+                        await auth.signInWithEmailAndPassword(email, password);
+                    } catch (createError) {
+                        // If user exists, just sign in
+                        if (createError.code === 'auth/email-already-in-use') {
+                            errorMessage.textContent = 'Invalid credentials. Please try again.';
+                        } else {
+                            errorMessage.textContent = 'An error occurred. Please try again.';
+                        }
+                        errorMessage.classList.add('show');
                     }
-                    
-                    // Redirect to admin dashboard
-                    window.location.href = 'admin-dashboard.html';
                 } else {
-                    // Show error
+                    // Show appropriate error message
+                    if (error.code === 'auth/user-not-found') {
+                        errorMessage.textContent = 'User not found. Please check your email.';
+                    } else if (error.code === 'auth/wrong-password') {
+                        errorMessage.textContent = 'Invalid password. Please try again.';
+                    } else if (error.code === 'auth/invalid-email') {
+                        errorMessage.textContent = 'Invalid email format.';
+                    } else {
+                        errorMessage.textContent = 'Login failed. Please try again.';
+                    }
                     errorMessage.classList.add('show');
-                    loginButton.disabled = false;
-                    buttonText.textContent = 'Login to Admin Panel';
                 }
-            }, 1500);
+                
+                // Reset button state
+                loginButton.disabled = false;
+                buttonText.textContent = 'Login to Admin Panel';
+            }
         });
 
-        // Check if already authenticated
-        if (localStorage.getItem('adminAuth') === 'true' || sessionStorage.getItem('adminAuth') === 'true') {
-            window.location.href = 'admin-dashboard.html';
+        // Remember me functionality (optional)
+        const rememberCheckbox = document.getElementById('remember');
+        if (localStorage.getItem('rememberEmail')) {
+            document.getElementById('email').value = localStorage.getItem('rememberEmail');
+            rememberCheckbox.checked = true;
         }
+
+        loginForm.addEventListener('submit', () => {
+            if (rememberCheckbox.checked) {
+                localStorage.setItem('rememberEmail', document.getElementById('email').value);
+            } else {
+                localStorage.removeItem('rememberEmail');
+            }
+        });
     </script>
 </body>
 </html>
