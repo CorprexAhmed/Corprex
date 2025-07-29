@@ -745,6 +745,7 @@
             overflow: hidden;
             min-width: 0;
             position: relative;
+            height: 100%;
         }
 
         /* Views Container */
@@ -752,6 +753,7 @@
             height: 100%;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
+            position: relative;
         }
 
         /* Calendar View */
@@ -759,6 +761,7 @@
             display: flex;
             flex-direction: column;
             height: 100%;
+            position: relative;
         }
 
         /* Calendar Header */
@@ -978,16 +981,22 @@
 
         /* Booking Form - Fixed Display */
         .booking-form {
-            display: none;
+            display: none !important;
             padding: 2rem;
             background: #0a0a0a;
             height: 100%;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 100;
         }
 
         .booking-form.active {
-            display: block;
+            display: block !important;
         }
 
         .form-header {
@@ -1071,17 +1080,24 @@
 
         /* Success State - Fixed Display */
         .booking-success {
-            display: none;
+            display: none !important;
             text-align: center;
             padding: 3rem 2rem;
             height: 100%;
             align-items: center;
             justify-content: center;
             flex-direction: column;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #0a0a0a;
+            z-index: 200;
         }
 
         .booking-success.active {
-            display: flex;
+            display: flex !important;
         }
 
         .success-icon {
@@ -1145,9 +1161,11 @@
 
             .scheduler-container {
                 border-radius: 0;
-                max-height: none;
+                max-height: 100vh;
                 height: 100vh;
                 flex-direction: column;
+                max-width: 100%;
+                width: 100%;
             }
 
             .scheduler-sidebar {
@@ -1157,22 +1175,39 @@
             .scheduler-main {
                 flex: 1;
                 height: 100%;
+                min-height: 0;
+            }
+
+            .scheduler-views {
+                height: 100%;
+                min-height: 0;
+            }
+
+            #calendarView {
+                min-height: 0;
             }
 
             .calendar-content {
                 flex-direction: column;
                 padding: 1rem;
                 gap: 1rem;
+                overflow-y: auto;
+                flex: 1;
+                min-height: 0;
             }
 
             .time-slots {
                 width: 100%;
                 border-radius: 16px 16px 0 0;
                 padding: 1rem;
+                position: sticky;
+                bottom: 0;
+                background: #0a0a0a;
+                border-top: 2px solid #333;
             }
 
             .booking-form {
-                position: absolute;
+                position: fixed !important;
                 top: 0;
                 left: 0;
                 right: 0;
@@ -1182,6 +1217,18 @@
                 border-radius: 0;
                 padding: 1.5rem;
                 padding-top: 3rem;
+                height: 100vh;
+                overflow-y: auto;
+            }
+
+            .booking-success {
+                position: fixed !important;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: #0a0a0a;
+                z-index: 200;
             }
 
             .booking-form.active {
@@ -1896,10 +1943,12 @@
 
         // Reset scheduler to initial state
         function resetScheduler() {
-            // Show calendar view
-            document.getElementById('calendarView').style.display = 'block';
+            // Hide all views first
             document.getElementById('bookingForm').classList.remove('active');
             document.getElementById('bookingSuccess').classList.remove('active');
+            
+            // Show calendar view
+            document.getElementById('calendarView').style.display = 'flex';
             
             // Hide time slots initially
             document.getElementById('timeSlots').classList.remove('active');
@@ -1910,6 +1959,9 @@
             
             // Clear form
             document.getElementById('schedulerForm').reset();
+            
+            // Ensure success state is hidden
+            document.getElementById('bookingSuccess').style.display = 'none';
         }
 
         // Scheduler State
@@ -2058,8 +2110,16 @@
 
         // Show booking form
         function showBookingForm() {
+            // Hide calendar view completely
             document.getElementById('calendarView').style.display = 'none';
+            
+            // Show booking form
             document.getElementById('bookingForm').classList.add('active');
+            document.getElementById('bookingForm').style.display = 'block';
+            
+            // Make sure success is hidden
+            document.getElementById('bookingSuccess').classList.remove('active');
+            document.getElementById('bookingSuccess').style.display = 'none';
             
             // Update booking summary
             const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -2074,7 +2134,7 @@
         // Back to calendar
         function backToCalendar() {
             document.getElementById('bookingForm').classList.remove('active');
-            document.getElementById('calendarView').style.display = 'block';
+            document.getElementById('calendarView').style.display = 'flex';
         }
 
         // Handle form submission
@@ -2092,15 +2152,21 @@
             
             // Simulate API call
             setTimeout(() => {
-                // Hide form and show success
+                // Hide loading spinner
+                loadingSpinner.classList.remove('active');
+                
+                // Hide form first
                 document.getElementById('bookingForm').classList.remove('active');
+                document.getElementById('bookingForm').style.display = 'none';
+                
+                // Show success
                 document.getElementById('bookingSuccess').classList.add('active');
+                document.getElementById('bookingSuccess').style.display = 'flex';
                 
                 // Reset form
                 document.getElementById('schedulerForm').reset();
                 submitBtn.disabled = false;
                 submitText.textContent = 'Schedule Meeting';
-                loadingSpinner.classList.remove('active');
             }, 2000);
         });
 
