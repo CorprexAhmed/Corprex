@@ -520,28 +520,24 @@
             font-size: 0.9rem;
         }
 
-        /* Scheduler Styles - Optimized for all screen sizes */
+        /* Scheduler Styles - Completely Redesigned for Better Responsiveness */
         .scheduler-overlay {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100vw;
-            height: 100vh;
-            height: 100dvh; /* Dynamic viewport height for mobile */
+            width: 100%;
+            height: 100%;
             background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             z-index: 10000;
             display: none;
-            overflow: hidden;
-            padding: 0;
-            margin: 0;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .scheduler-overlay.active {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: block;
         }
 
         @keyframes fadeIn {
@@ -549,20 +545,27 @@
             to { opacity: 1; }
         }
 
+        .scheduler-wrapper {
+            min-height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+            animation: fadeIn 0.3s ease;
+        }
+
         .scheduler-container {
             background: #0a0a0a;
             border: 1px solid #333333;
             border-radius: 24px;
-            width: 95%;
+            width: 100%;
             max-width: 1100px;
-            height: 90vh;
-            height: 90dvh;
             display: flex;
-            overflow: hidden;
             position: relative;
             animation: slideUp 0.3s ease;
-            margin: auto;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            max-height: 90vh;
+            overflow: hidden;
         }
 
         @keyframes slideUp {
@@ -741,6 +744,21 @@
             background: #0a0a0a;
             overflow: hidden;
             min-width: 0;
+            position: relative;
+        }
+
+        /* Views Container */
+        .scheduler-views {
+            height: 100%;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Calendar View */
+        #calendarView {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
         /* Calendar Header */
@@ -794,22 +812,20 @@
             text-align: center;
         }
 
-        /* Calendar Grid - Optimized for scrolling */
+        /* Calendar Grid - New Responsive Design */
         .calendar-content {
             flex: 1;
             display: flex;
-            overflow: hidden;
             padding: 1.5rem;
             gap: 1.5rem;
-            min-height: 0;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .calendar-grid-wrapper {
             flex: 1;
             display: flex;
             flex-direction: column;
-            min-width: 0;
-            overflow: hidden;
         }
 
         .calendar-weekdays {
@@ -817,7 +833,6 @@
             grid-template-columns: repeat(7, 1fr);
             gap: 0.5rem;
             margin-bottom: 0.75rem;
-            flex-shrink: 0;
         }
 
         .weekday {
@@ -827,15 +842,6 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
             padding: 0.5rem 0;
-        }
-
-        .calendar-days-container {
-            flex: 1;
-            overflow-y: auto;
-            overflow-x: hidden;
-            -webkit-overflow-scrolling: touch;
-            padding-right: 0.5rem;
-            min-height: 0;
         }
 
         .calendar-days {
@@ -902,23 +908,24 @@
             font-weight: 500;
         }
 
-        /* Time Slots - Optimized layout */
+        /* Time Slots */
         .time-slots {
             width: 280px;
             background: rgba(0, 0, 0, 0.5);
             border: 1px solid rgba(51, 51, 51, 0.5);
             border-radius: 16px;
             padding: 1.25rem;
-            display: flex;
+            display: none;
             flex-direction: column;
             flex-shrink: 0;
-            max-height: 100%;
-            overflow: hidden;
+        }
+
+        .time-slots.active {
+            display: flex;
         }
 
         .time-slots-header {
             margin-bottom: 1rem;
-            flex-shrink: 0;
         }
 
         .time-slots-title {
@@ -939,9 +946,7 @@
             gap: 0.5rem;
             overflow-y: auto;
             flex: 1;
-            min-height: 0;
             -webkit-overflow-scrolling: touch;
-            padding-right: 0.25rem;
         }
 
         .time-slot {
@@ -971,14 +976,14 @@
             font-weight: 500;
         }
 
-        /* Booking Form - Full screen on mobile */
+        /* Booking Form - Fixed Display */
         .booking-form {
             display: none;
             padding: 2rem;
             background: #0a0a0a;
+            height: 100%;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
-            height: 100%;
         }
 
         .booking-form.active {
@@ -1064,16 +1069,15 @@
             transform: none;
         }
 
-        /* Success State */
+        /* Success State - Fixed Display */
         .booking-success {
             display: none;
             text-align: center;
             padding: 3rem 2rem;
             height: 100%;
-            display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
+            flex-direction: column;
         }
 
         .booking-success.active {
@@ -1132,15 +1136,18 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Mobile Responsive - Enhanced */
+        /* Mobile Responsive - Complete Overhaul */
         @media (max-width: 1024px) {
+            .scheduler-wrapper {
+                padding: 0;
+                align-items: flex-start;
+            }
+
             .scheduler-container {
-                width: 100%;
-                height: 100vh;
-                height: 100dvh;
-                max-width: none;
                 border-radius: 0;
-                margin: 0;
+                max-height: none;
+                height: 100vh;
+                flex-direction: column;
             }
 
             .scheduler-sidebar {
@@ -1149,6 +1156,7 @@
 
             .scheduler-main {
                 flex: 1;
+                height: 100%;
             }
 
             .calendar-content {
@@ -1157,18 +1165,14 @@
                 gap: 1rem;
             }
 
-            .calendar-grid-wrapper {
-                max-height: 50vh;
-            }
-
             .time-slots {
                 width: 100%;
-                max-height: 40vh;
-                margin-top: auto;
+                border-radius: 16px 16px 0 0;
+                padding: 1rem;
             }
 
             .booking-form {
-                position: fixed;
+                position: absolute;
                 top: 0;
                 left: 0;
                 right: 0;
@@ -1303,10 +1307,6 @@
                 padding: 0.25rem 0;
             }
 
-            .time-slots {
-                padding: 1rem;
-            }
-
             .time-slots-grid {
                 grid-template-columns: repeat(3, 1fr);
                 gap: 0.4rem;
@@ -1348,14 +1348,6 @@
                 height: 32px;
             }
 
-            .calendar-grid-wrapper {
-                max-height: 45vh;
-            }
-
-            .time-slots {
-                max-height: 35vh;
-            }
-
             .time-slots-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -1371,27 +1363,31 @@
         }
 
         /* Custom scrollbar for better UX */
-        .calendar-days-container::-webkit-scrollbar,
+        .scheduler-views::-webkit-scrollbar,
+        .calendar-content::-webkit-scrollbar,
         .time-slots-grid::-webkit-scrollbar,
         .booking-form::-webkit-scrollbar {
             width: 6px;
         }
 
-        .calendar-days-container::-webkit-scrollbar-track,
+        .scheduler-views::-webkit-scrollbar-track,
+        .calendar-content::-webkit-scrollbar-track,
         .time-slots-grid::-webkit-scrollbar-track,
         .booking-form::-webkit-scrollbar-track {
             background: rgba(51, 51, 51, 0.3);
             border-radius: 3px;
         }
 
-        .calendar-days-container::-webkit-scrollbar-thumb,
+        .scheduler-views::-webkit-scrollbar-thumb,
+        .calendar-content::-webkit-scrollbar-thumb,
         .time-slots-grid::-webkit-scrollbar-thumb,
         .booking-form::-webkit-scrollbar-thumb {
             background: rgba(255, 255, 255, 0.2);
             border-radius: 3px;
         }
 
-        .calendar-days-container::-webkit-scrollbar-thumb:hover,
+        .scheduler-views::-webkit-scrollbar-thumb:hover,
+        .calendar-content::-webkit-scrollbar-thumb:hover,
         .time-slots-grid::-webkit-scrollbar-thumb:hover,
         .booking-form::-webkit-scrollbar-thumb:hover {
             background: rgba(255, 255, 255, 0.3);
@@ -1410,9 +1406,19 @@
 
         /* Fix for notch devices */
         @supports (padding: max(0px)) {
-            .scheduler-container {
-                padding-left: max(0px, env(safe-area-inset-left));
-                padding-right: max(0px, env(safe-area-inset-right));
+            .scheduler-wrapper {
+                padding-top: max(2rem, env(safe-area-inset-top));
+                padding-bottom: max(2rem, env(safe-area-inset-bottom));
+            }
+
+            @media (max-width: 1024px) {
+                .scheduler-wrapper {
+                    padding: 0;
+                }
+
+                .scheduler-container {
+                    padding-top: env(safe-area-inset-top);
+                }
             }
 
             @media (max-width: 768px) {
@@ -1583,187 +1589,189 @@
 
     <!-- Scheduler Component -->
     <div class="scheduler-overlay" id="schedulerOverlay">
-        <div class="scheduler-container">
-            <!-- Close Button -->
-            <button class="scheduler-close" onclick="closeScheduler()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M18 6L6 18M6 6l12 12"/>
-                </svg>
-            </button>
+        <div class="scheduler-wrapper">
+            <div class="scheduler-container">
+                <!-- Close Button -->
+                <button class="scheduler-close" onclick="closeScheduler()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 6L6 18M6 6l12 12"/>
+                    </svg>
+                </button>
 
-            <!-- Sidebar -->
-            <div class="scheduler-sidebar">
-                <svg class="scheduler-logo" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
-                    <g fill="currentColor">
-                        <!-- C -->
-                        <path d="M10 15 Q5 15 5 20 L5 40 Q5 45 10 45 L20 45 Q22 45 22 43 Q22 41 20 41 L10 41 Q9 41 9 40 L9 20 Q9 19 10 19 L20 19 Q22 19 22 17 Q22 15 20 15 Z"/>
-                        
-                        <!-- O -->
-                        <path d="M35 15 Q30 15 30 20 L30 40 Q30 45 35 45 L40 45 Q45 45 45 40 L45 20 Q45 15 40 15 Z M35 19 L40 19 Q41 19 41 20 L41 40 Q41 41 40 41 L35 41 Q34 41 34 40 L34 20 Q34 19 35 19 Z"/>
-                        
-                        <!-- R -->
-                        <path d="M52 15 L52 45 Q52 45 54 45 Q56 45 56 45 L56 32 L62 32 L66 44 Q66.5 45 68 45 Q70 45 69 43 L65 31 Q68 30 68 26 L68 20 Q68 15 63 15 Z M56 19 L63 19 Q64 19 64 20 L64 26 Q64 28 63 28 L56 28 Z"/>
-                        
-                        <!-- P -->
-                        <path d="M76 15 L76 45 Q76 45 78 45 Q80 45 80 45 L80 32 L86 32 Q90 32 90 28 L90 20 Q90 15 86 15 Z M80 19 L86 19 Q86 19 86 20 L86 28 L80 28 Z"/>
-                        
-                        <!-- R -->
-                        <path d="M96 15 L96 45 Q96 45 98 45 Q100 45 100 45 L100 32 L106 32 L110 44 Q110.5 45 112 45 Q114 45 113 43 L109 31 Q112 30 112 26 L112 20 Q112 15 107 15 Z M100 19 L107 19 Q108 19 108 20 L108 26 Q108 28 107 28 L100 28 Z"/>
-                        
-                        <!-- E -->
-                        <path d="M120 15 L120 45 L130 45 Q132 45 132 43 Q132 41 130 41 L124 41 L124 32 L129 32 Q131 32 131 30 Q131 28 129 28 L124 28 L124 19 L130 19 Q132 19 132 17 Q132 15 130 15 Z"/>
-                        
-                        <!-- X -->
-                        <path d="M140 15 Q138 15 139 17 L145 30 L139 43 Q138 45 140 45 Q142 45 143 43 L147 33 L151 43 Q152 45 154 45 Q156 45 155 43 L149 30 L155 17 Q156 15 154 15 Q152 15 151 17 L147 27 L143 17 Q142 15 140 15 Z"/>
-                    </g>
-                </svg>
-                
-                <div class="scheduler-header">
-                    <h1 class="scheduler-title">Schedule Your Consultation</h1>
-                    <p class="scheduler-subtitle">Let's discuss how Corprex can transform your AI infrastructure</p>
-                </div>
-
-                <div class="meeting-info">
-                    <div class="meeting-type">
-                        <div class="meeting-icon">
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M17 10.5V7C17 6.45 16.55 6 16 6H4C3.45 6 3 6.45 3 7V17C3 17.55 3.45 18 4 18H16C16.55 18 17 17.55 17 17V13.5L21 17.5V6.5L17 10.5Z"/>
-                            </svg>
-                        </div>
-                        <div class="meeting-details">
-                            <h3>Strategy Session</h3>
-                            <span class="meeting-duration">45 minutes</span>
-                        </div>
-                    </div>
-                    <p class="meeting-description">
-                        A focused discussion about your AI needs, current challenges, and how our Omega infrastructure can deliver immediate ROI for your organization.
-                    </p>
-                </div>
-
-                <div class="timezone-selector">
-                    <label class="timezone-label">Time Zone</label>
-                    <select class="timezone-select" id="timezoneSelect">
-                        <option value="America/New_York">Eastern Time (ET)</option>
-                        <option value="America/Chicago">Central Time (CT)</option>
-                        <option value="America/Denver">Mountain Time (MT)</option>
-                        <option value="America/Los_Angeles">Pacific Time (PT)</option>
-                        <option value="Europe/London">London (GMT)</option>
-                        <option value="Europe/Paris">Central European Time (CET)</option>
-                        <option value="Asia/Tokyo">Tokyo (JST)</option>
-                        <option value="Asia/Shanghai">China Standard Time (CST)</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Main Content -->
-            <div class="scheduler-main">
-                <!-- Calendar View -->
-                <div id="calendarView">
-                    <div class="calendar-header">
-                        <div class="calendar-nav">
-                            <button class="calendar-nav-btn" onclick="previousMonth()">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M15 18l-6-6 6-6"/>
-                                </svg>
-                            </button>
-                            <h2 class="calendar-month" id="calendarMonth">January 2025</h2>
-                            <button class="calendar-nav-btn" onclick="nextMonth()">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M9 18l6-6-6-6"/>
-                                </svg>
-                            </button>
-                        </div>
+                <!-- Sidebar -->
+                <div class="scheduler-sidebar">
+                    <svg class="scheduler-logo" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+                        <g fill="currentColor">
+                            <!-- C -->
+                            <path d="M10 15 Q5 15 5 20 L5 40 Q5 45 10 45 L20 45 Q22 45 22 43 Q22 41 20 41 L10 41 Q9 41 9 40 L9 20 Q9 19 10 19 L20 19 Q22 19 22 17 Q22 15 20 15 Z"/>
+                            
+                            <!-- O -->
+                            <path d="M35 15 Q30 15 30 20 L30 40 Q30 45 35 45 L40 45 Q45 45 45 40 L45 20 Q45 15 40 15 Z M35 19 L40 19 Q41 19 41 20 L41 40 Q41 41 40 41 L35 41 Q34 41 34 40 L34 20 Q34 19 35 19 Z"/>
+                            
+                            <!-- R -->
+                            <path d="M52 15 L52 45 Q52 45 54 45 Q56 45 56 45 L56 32 L62 32 L66 44 Q66.5 45 68 45 Q70 45 69 43 L65 31 Q68 30 68 26 L68 20 Q68 15 63 15 Z M56 19 L63 19 Q64 19 64 20 L64 26 Q64 28 63 28 L56 28 Z"/>
+                            
+                            <!-- P -->
+                            <path d="M76 15 L76 45 Q76 45 78 45 Q80 45 80 45 L80 32 L86 32 Q90 32 90 28 L90 20 Q90 15 86 15 Z M80 19 L86 19 Q86 19 86 20 L86 28 L80 28 Z"/>
+                            
+                            <!-- R -->
+                            <path d="M96 15 L96 45 Q96 45 98 45 Q100 45 100 45 L100 32 L106 32 L110 44 Q110.5 45 112 45 Q114 45 113 43 L109 31 Q112 30 112 26 L112 20 Q112 15 107 15 Z M100 19 L107 19 Q108 19 108 20 L108 26 Q108 28 107 28 L100 28 Z"/>
+                            
+                            <!-- E -->
+                            <path d="M120 15 L120 45 L130 45 Q132 45 132 43 Q132 41 130 41 L124 41 L124 32 L129 32 Q131 32 131 30 Q131 28 129 28 L124 28 L124 19 L130 19 Q132 19 132 17 Q132 15 130 15 Z"/>
+                            
+                            <!-- X -->
+                            <path d="M140 15 Q138 15 139 17 L145 30 L139 43 Q138 45 140 45 Q142 45 143 43 L147 33 L151 43 Q152 45 154 45 Q156 45 155 43 L149 30 L155 17 Q156 15 154 15 Q152 15 151 17 L147 27 L143 17 Q142 15 140 15 Z"/>
+                        </g>
+                    </svg>
+                    
+                    <div class="scheduler-header">
+                        <h1 class="scheduler-title">Schedule Your Consultation</h1>
+                        <p class="scheduler-subtitle">Let's discuss how Corprex can transform your AI infrastructure</p>
                     </div>
 
-                    <div class="calendar-content">
-                        <div class="calendar-grid-wrapper">
-                            <div class="calendar-weekdays">
-                                <div class="weekday">Sun</div>
-                                <div class="weekday">Mon</div>
-                                <div class="weekday">Tue</div>
-                                <div class="weekday">Wed</div>
-                                <div class="weekday">Thu</div>
-                                <div class="weekday">Fri</div>
-                                <div class="weekday">Sat</div>
+                    <div class="meeting-info">
+                        <div class="meeting-type">
+                            <div class="meeting-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M17 10.5V7C17 6.45 16.55 6 16 6H4C3.45 6 3 6.45 3 7V17C3 17.55 3.45 18 4 18H16C16.55 18 17 17.55 17 17V13.5L21 17.5V6.5L17 10.5Z"/>
+                                </svg>
                             </div>
-                            <div class="calendar-days-container">
-                                <div class="calendar-days" id="calendarDays">
-                                    <!-- Calendar days will be generated dynamically -->
+                            <div class="meeting-details">
+                                <h3>Strategy Session</h3>
+                                <span class="meeting-duration">45 minutes</span>
+                            </div>
+                        </div>
+                        <p class="meeting-description">
+                            A focused discussion about your AI needs, current challenges, and how our Omega infrastructure can deliver immediate ROI for your organization.
+                        </p>
+                    </div>
+
+                    <div class="timezone-selector">
+                        <label class="timezone-label">Time Zone</label>
+                        <select class="timezone-select" id="timezoneSelect">
+                            <option value="America/New_York">Eastern Time (ET)</option>
+                            <option value="America/Chicago">Central Time (CT)</option>
+                            <option value="America/Denver">Mountain Time (MT)</option>
+                            <option value="America/Los_Angeles">Pacific Time (PT)</option>
+                            <option value="Europe/London">London (GMT)</option>
+                            <option value="Europe/Paris">Central European Time (CET)</option>
+                            <option value="Asia/Tokyo">Tokyo (JST)</option>
+                            <option value="Asia/Shanghai">China Standard Time (CST)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="scheduler-main">
+                    <div class="scheduler-views">
+                        <!-- Calendar View -->
+                        <div id="calendarView">
+                            <div class="calendar-header">
+                                <div class="calendar-nav">
+                                    <button class="calendar-nav-btn" onclick="previousMonth()">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M15 18l-6-6 6-6"/>
+                                        </svg>
+                                    </button>
+                                    <h2 class="calendar-month" id="calendarMonth">January 2025</h2>
+                                    <button class="calendar-nav-btn" onclick="nextMonth()">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M9 18l6-6-6-6"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="calendar-content">
+                                <div class="calendar-grid-wrapper">
+                                    <div class="calendar-weekdays">
+                                        <div class="weekday">Sun</div>
+                                        <div class="weekday">Mon</div>
+                                        <div class="weekday">Tue</div>
+                                        <div class="weekday">Wed</div>
+                                        <div class="weekday">Thu</div>
+                                        <div class="weekday">Fri</div>
+                                        <div class="weekday">Sat</div>
+                                    </div>
+                                    <div class="calendar-days" id="calendarDays">
+                                        <!-- Calendar days will be generated dynamically -->
+                                    </div>
+                                </div>
+
+                                <div class="time-slots" id="timeSlots">
+                                    <div class="time-slots-header">
+                                        <h3 class="time-slots-title">Select a time</h3>
+                                        <p class="selected-date" id="selectedDate">Thursday, January 30</p>
+                                    </div>
+                                    <div class="time-slots-grid" id="timeSlotsGrid">
+                                        <!-- Time slots will be generated dynamically -->
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="time-slots" id="timeSlots" style="display: none;">
-                            <div class="time-slots-header">
-                                <h3 class="time-slots-title">Select a time</h3>
-                                <p class="selected-date" id="selectedDate">Thursday, January 30</p>
+                        <!-- Booking Form -->
+                        <div class="booking-form" id="bookingForm">
+                            <div class="form-header">
+                                <h2 class="form-title">Enter your details</h2>
+                                <p class="booking-summary" id="bookingSummary">January 30, 2025 at 2:00 PM ET</p>
                             </div>
-                            <div class="time-slots-grid" id="timeSlotsGrid">
-                                <!-- Time slots will be generated dynamically -->
+
+                            <form id="schedulerForm">
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label class="form-label">First Name *</label>
+                                        <input type="text" class="form-input" id="schedFirstName" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Last Name *</label>
+                                        <input type="text" class="form-input" id="schedLastName" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Email *</label>
+                                        <input type="email" class="form-input" id="schedEmail" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Phone</label>
+                                        <input type="tel" class="form-input" id="schedPhone">
+                                    </div>
+                                    <div class="form-group full-width">
+                                        <label class="form-label">Company *</label>
+                                        <input type="text" class="form-input" id="schedCompany" required>
+                                    </div>
+                                    <div class="form-group full-width">
+                                        <label class="form-label">What would you like to discuss?</label>
+                                        <textarea class="form-textarea" id="schedMessage" rows="4"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-actions">
+                                    <button type="button" class="btn-secondary" onclick="backToCalendar()">Back</button>
+                                    <button type="submit" class="btn-primary" id="submitBtn">
+                                        <span id="submitText">Schedule Meeting</span>
+                                    </button>
+                                </div>
+                            </form>
+
+                            <div class="loading-spinner" id="loadingSpinner"></div>
+                        </div>
+
+                        <!-- Success State -->
+                        <div class="booking-success" id="bookingSuccess">
+                            <div class="success-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                    <path d="M20 6L9 17l-5-5"/>
+                                </svg>
                             </div>
+                            <h2 class="success-title">Meeting Scheduled!</h2>
+                            <p class="success-message-text">
+                                You'll receive a calendar invitation at the email address provided.<br>
+                                We look forward to discussing how Corprex can transform your AI infrastructure.
+                            </p>
+                            <button class="btn-primary" onclick="closeScheduler()">Done</button>
                         </div>
                     </div>
-                </div>
-
-                <!-- Booking Form -->
-                <div class="booking-form" id="bookingForm">
-                    <div class="form-header">
-                        <h2 class="form-title">Enter your details</h2>
-                        <p class="booking-summary" id="bookingSummary">January 30, 2025 at 2:00 PM ET</p>
-                    </div>
-
-                    <form id="schedulerForm">
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label class="form-label">First Name *</label>
-                                <input type="text" class="form-input" id="schedFirstName" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Last Name *</label>
-                                <input type="text" class="form-input" id="schedLastName" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Email *</label>
-                                <input type="email" class="form-input" id="schedEmail" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Phone</label>
-                                <input type="tel" class="form-input" id="schedPhone">
-                            </div>
-                            <div class="form-group full-width">
-                                <label class="form-label">Company *</label>
-                                <input type="text" class="form-input" id="schedCompany" required>
-                            </div>
-                            <div class="form-group full-width">
-                                <label class="form-label">What would you like to discuss?</label>
-                                <textarea class="form-textarea" id="schedMessage" rows="4"></textarea>
-                            </div>
-                        </div>
-
-                        <div class="form-actions">
-                            <button type="button" class="btn-secondary" onclick="backToCalendar()">Back</button>
-                            <button type="submit" class="btn-primary" id="submitBtn">
-                                <span id="submitText">Schedule Meeting</span>
-                            </button>
-                        </div>
-                    </form>
-
-                    <div class="loading-spinner" id="loadingSpinner"></div>
-                </div>
-
-                <!-- Success State -->
-                <div class="booking-success" id="bookingSuccess">
-                    <div class="success-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                            <path d="M20 6L9 17l-5-5"/>
-                        </svg>
-                    </div>
-                    <h2 class="success-title">Meeting Scheduled!</h2>
-                    <p class="success-message-text">
-                        You'll receive a calendar invitation at the email address provided.<br>
-                        We look forward to discussing how Corprex can transform your AI infrastructure.
-                    </p>
-                    <button class="btn-primary" onclick="closeScheduler()">Done</button>
                 </div>
             </div>
         </div>
@@ -1879,8 +1887,29 @@
             // Show scheduler
             document.getElementById('schedulerOverlay').classList.add('active');
             
+            // Reset scheduler state
+            resetScheduler();
+            
             // Initialize scheduler
             initScheduler();
+        }
+
+        // Reset scheduler to initial state
+        function resetScheduler() {
+            // Show calendar view
+            document.getElementById('calendarView').style.display = 'block';
+            document.getElementById('bookingForm').classList.remove('active');
+            document.getElementById('bookingSuccess').classList.remove('active');
+            
+            // Hide time slots initially
+            document.getElementById('timeSlots').classList.remove('active');
+            
+            // Reset selected date and time
+            selectedDate = null;
+            selectedTime = null;
+            
+            // Clear form
+            document.getElementById('schedulerForm').reset();
         }
 
         // Scheduler State
@@ -1989,7 +2018,7 @@
         // Show available time slots
         function showTimeSlots(date) {
             const timeSlots = document.getElementById('timeSlots');
-            timeSlots.style.display = 'flex';
+            timeSlots.classList.add('active');
             
             // Update selected date display
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -2038,10 +2067,8 @@
             const timezone = document.getElementById('timezoneSelect').selectedOptions[0].text;
             document.getElementById('bookingSummary').textContent = `${dateStr} at ${selectedTime} ${timezone}`;
             
-            // Scroll to top on mobile
-            if (window.innerWidth <= 768) {
-                document.querySelector('.scheduler-main').scrollTop = 0;
-            }
+            // Scroll to top
+            document.querySelector('.scheduler-views').scrollTop = 0;
         }
 
         // Back to calendar
@@ -2066,7 +2093,7 @@
             // Simulate API call
             setTimeout(() => {
                 // Hide form and show success
-                document.getElementById('bookingForm').style.display = 'none';
+                document.getElementById('bookingForm').classList.remove('active');
                 document.getElementById('bookingSuccess').classList.add('active');
                 
                 // Reset form
@@ -2090,24 +2117,15 @@
             document.getElementById('schedulerOverlay').classList.remove('active');
             
             // Reset state
-            selectedDate = null;
-            selectedTime = null;
-            document.getElementById('calendarView').style.display = 'block';
-            document.getElementById('bookingForm').classList.remove('active');
-            document.getElementById('bookingForm').style.display = 'block';
-            document.getElementById('bookingSuccess').classList.remove('active');
-            document.getElementById('timeSlots').style.display = 'none';
-            
-            // Reset calendar
-            generateCalendar();
+            resetScheduler();
         }
 
-        // Prevent background scroll when scheduler is open
-        document.getElementById('schedulerOverlay').addEventListener('touchmove', function(e) {
+        // Close scheduler when clicking overlay background
+        document.getElementById('schedulerOverlay').addEventListener('click', function(e) {
             if (e.target === this) {
-                e.preventDefault();
+                closeScheduler();
             }
-        }, { passive: false });
+        });
 
         // Handle escape key to close scheduler
         document.addEventListener('keydown', function(e) {
