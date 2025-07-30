@@ -609,6 +609,10 @@
                 checkHealthStatus();
                 loadMeetings();
             }, 30000);
+            
+            // Add debug info to console
+            console.log('Admin Dashboard initialized');
+            console.log('API URL:', API_URL);
         });
 
         // Refresh data manually
@@ -643,11 +647,19 @@
         // Load all meetings
         async function loadMeetings() {
             try {
+                console.log('Loading meetings from:', `${API_URL}/meetings`);
                 const response = await fetch(`${API_URL}/meetings`);
-                if (!response.ok) throw new Error('Failed to fetch meetings');
+                
+                if (!response.ok) {
+                    console.error('Response not OK:', response.status, response.statusText);
+                    throw new Error('Failed to fetch meetings');
+                }
                 
                 const data = await response.json();
+                console.log('Received data:', data);
+                
                 allMeetings = data.meetings || [];
+                console.log('Loaded meetings:', allMeetings.length, 'meetings');
                 
                 // Update statistics
                 updateStatistics();
@@ -657,7 +669,7 @@
                 
             } catch (error) {
                 console.error('Error loading meetings:', error);
-                showError('Failed to load meetings. Please try again.');
+                showError('Failed to load meetings. The API may be starting up - please wait 30 seconds and try refreshing.');
             }
         }
 
@@ -794,13 +806,13 @@
                             </span>
                         </td>
                         <td>
-                            ${meeting.status !== 'cancelled' ? 
-                                `<div class="table-actions">
-                                    <button class="action-btn" onclick="viewMeeting('${meeting.id}')">View</button>
-                                    <button class="action-btn danger" onclick="cancelMeeting('${meeting.id}')">Cancel</button>
-                                </div>` 
-                                : '-'
-                            }
+                            <div class="table-actions">
+                                <button class="action-btn" onclick="viewMeeting('${meeting.id}')">View</button>
+                                ${meeting.status !== 'cancelled' ? 
+                                    `<button class="action-btn danger" onclick="cancelMeeting('${meeting.id}')">Cancel</button>` 
+                                    : '-'
+                                }
+                            </div>
                         </td>
                     </tr>
                 `;
@@ -830,24 +842,35 @@
         // View meeting details
         function viewMeeting(id) {
             const meeting = allMeetings.find(m => m.id === id);
-            if (!meeting) return;
+            if (!meeting) {
+                alert('Meeting not found');
+                return;
+            }
             
-            const details = `
-Meeting Details:
+            // Create a proper date object
+            let meetingDateTime = 'Invalid Date';
+            try {
+                if (meeting.meetingDate && meeting.meetingTime) {
+                    meetingDateTime = new Date(`${meeting.meetingDate} ${meeting.meetingTime}`).toLocaleString();
+                }
+            } catch (e) {
+                console.error('Date parsing error:', e);
+            }
+            
+            const details = `Meeting Details:
 
-Name: ${meeting.firstName} ${meeting.lastName}
-Email: ${meeting.email}
+Name: ${meeting.firstName || 'Unknown'} ${meeting.lastName || ''}
+Email: ${meeting.email || 'No email'}
 Phone: ${meeting.phone || 'Not provided'}
-Company: ${meeting.company}
-Date: ${new Date(`${meeting.meetingDate} ${meeting.meetingTime}`).toLocaleString()}
-Timezone: ${meeting.timezone}
-Status: ${meeting.status}
+Company: ${meeting.company || 'Not specified'}
+Date & Time: ${meetingDateTime}
+Timezone: ${meeting.timezone || 'Not specified'}
+Status: ${meeting.status || 'Unknown'}
 
 Message: ${meeting.message || 'No additional message'}
 
 Meeting ID: ${meeting.id}
-Created: ${new Date(meeting.createdAt).toLocaleString()}
-            `;
+Created: ${meeting.createdAt ? new Date(meeting.createdAt).toLocaleString() : 'Unknown'}`;
             
             alert(details);
         }
@@ -857,6 +880,8 @@ Created: ${new Date(meeting.createdAt).toLocaleString()}
             if (!confirm('Are you sure you want to cancel this meeting?')) return;
             
             try {
+                console.log('Cancelling meeting:', id);
+                
                 const response = await fetch(`${API_URL}/meetings/${id}/cancel`, {
                     method: 'POST',
                     headers: {
@@ -864,9 +889,12 @@ Created: ${new Date(meeting.createdAt).toLocaleString()}
                     }
                 });
                 
+                console.log('Cancel response:', response.status, response.statusText);
+                
                 if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.error || 'Failed to cancel meeting');
+                    const errorText = await response.text();
+                    console.error('Cancel error response:', errorText);
+                    throw new Error('Failed to cancel meeting');
                 }
                 
                 // Reload meetings
@@ -877,7 +905,7 @@ Created: ${new Date(meeting.createdAt).toLocaleString()}
                 
             } catch (error) {
                 console.error('Error cancelling meeting:', error);
-                alert(`Failed to cancel meeting: ${error.message}`);
+                alert('Failed to cancel meeting. Please check the console for details.');
             }
         }
 
@@ -891,6 +919,70 @@ Created: ${new Date(meeting.createdAt).toLocaleString()}
                 </div>
             `;
         }
+
+        // Debug function - Add to console for testing
+        window.debugDashboard = function() {
+            console.log('=== Dashboard Debug Info ===');
+            console.log('API URL:', API_URL);
+            console.log('Total meetings loaded:', allMeetings.length);
+            console.log('Current filter:', currentFilter);
+            console.log('First meeting (if any):', allMeetings[0]);
+            console.log('=========================');
+            
+            // Test API connection
+            fetch(`${API_URL}/health`)
+                .then(r => r.json())
+                .then(data => console.log('API Health:', data))
+                .catch(err => console.error('API Error:', err));
+        };
+
+        // Add keyboard shortcut for debug (Ctrl+Shift+D)
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.shiftKey && e.key === 'D') {
+                window.debugDashboard();
+            }
+        });
+
+        // Test function to create a sample meeting (for debugging)
+        window.createTestMeeting = async function() {
+            const testDate = new Date();
+            testDate.setDate(testDate.getDate() + 3);
+            
+            const testMeeting = {
+                firstName: 'Test',
+                lastName: 'User',
+                email: 'test@example.com',
+                phone: '555-1234',
+                company: 'Test Company',
+                message: 'This is a test meeting',
+                date: testDate.toISOString().split('T')[0],
+                time: '2:00 PM',
+                timezone: 'America/New_York'
+            };
+            
+            try {
+                const response = await fetch(`${API_URL}/meetings/book`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(testMeeting)
+                });
+                
+                const result = await response.json();
+                console.log('Test meeting created:', result);
+                
+                if (response.ok) {
+                    alert('Test meeting created successfully!');
+                    await loadMeetings();
+                } else {
+                    alert('Failed to create test meeting: ' + (result.error || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error('Error creating test meeting:', error);
+                alert('Error creating test meeting. Check console.');
+            }
+        };
     </script>
 </body>
 </html>
