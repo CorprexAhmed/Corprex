@@ -4,7 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Corprex</title>
+    <script src="admin-auth.js"></script>
+    <script>
+        // Immediate authentication check before page loads
+        if (!sessionStorage.getItem('corprex_admin_session')) {
+            window.location.replace('adminlogin.html');
+        }
+    </script>
     <style>
+        /* Hide body initially until auth check completes */
+        body { display: none; }
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
         
         * {
@@ -428,6 +437,9 @@
     </style>
 </head>
 <body>
+    <noscript>
+        <meta http-equiv="refresh" content="0;url=adminlogin.html">
+    </noscript>
     <!-- Admin Navigation -->
     <nav class="admin-nav">
         <div class="nav-container">
@@ -500,8 +512,20 @@
 
     <script src="admin-auth.js"></script>
     <script>
-        // Check authentication on page load
-        checkAuth();
+        // Immediate authentication check - blocks page content
+        (function() {
+            // Check if authenticated
+            if (!isAuthenticated()) {
+                // Not authenticated - redirect immediately
+                window.location.replace('adminlogin.html');
+                return;
+            }
+            
+            // Authenticated - show body after a brief delay to ensure styles are loaded
+            setTimeout(function() {
+                document.body.style.display = 'block';
+            }, 100);
+        })();
 
         // API Configuration
         const API_URL = 'https://corprex-scheduler.onrender.com/api';
