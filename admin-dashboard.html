@@ -5,359 +5,775 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Corprex Scheduler</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
+        :root {
+            --primary-black: #000000;
+            --secondary-black: #0a0a0a;
+            --dark-gray: #1a1a1a;
+            --medium-gray: #2a2a2a;
+            --light-gray: #666666;
+            --text-gray: #999999;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --border-color: #333333;
+            --accent-green: #4CAF50;
+            --error-red: #ff4444;
+            --warning-yellow: #FFC107;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-            background: #f5f7fa;
-            color: #333;
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--primary-black);
+            color: var(--text-primary);
             line-height: 1.6;
+            overflow-x: hidden;
         }
-        
-        .header {
-            background: #2c3e50;
-            color: white;
-            padding: 1.5rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+        /* Navigation */
+        .admin-nav {
+            background: var(--secondary-black);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
         }
-        
-        .header h1 {
-            font-size: 1.75rem;
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .health-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .health-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--error-red);
+        }
+
+        .health-indicator.healthy {
+            background: var(--accent-green);
+        }
+
+        .nav-user {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            background: var(--dark-gray);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.875rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .logout-btn {
+            background: var(--dark-gray);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .logout-btn:hover {
+            background: var(--medium-gray);
+            color: var(--text-primary);
+        }
+
+        /* Main Content */
+        .dashboard-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 6rem 1.5rem 2rem;
+        }
+
+        .dashboard-header {
+            margin-bottom: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dashboard-title {
+            font-size: 2.5rem;
             font-weight: 300;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
         }
-        
-        .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
+
+        .dashboard-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
         }
-        
-        .stats {
+
+        .refresh-btn {
+            background: var(--dark-gray);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .refresh-btn:hover {
+            background: var(--medium-gray);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1.5rem;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
         }
-        
+
         .stat-card {
-            background: white;
+            background: var(--secondary-black);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
             padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-        
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #3498db;
-        }
-        
-        .stat-label {
-            color: #7f8c8d;
-            font-size: 0.875rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .controls {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            margin-bottom: 2rem;
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-        
-        button {
-            background: #3498db;
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.875rem;
-            transition: background 0.2s;
-        }
-        
-        button:hover {
-            background: #2980b9;
-        }
-        
-        button.danger {
-            background: #e74c3c;
-        }
-        
-        button.danger:hover {
-            background: #c0392b;
-        }
-        
-        select {
-            padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 0.875rem;
-        }
-        
-        .meetings-table {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
             overflow: hidden;
         }
-        
+
+        .stat-card.loading {
+            min-height: 120px;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .stat-description {
+            font-size: 0.875rem;
+            color: var(--text-gray);
+            margin-top: 0.5rem;
+        }
+
+        /* Loading Skeleton */
+        .skeleton {
+            background: linear-gradient(90deg, var(--dark-gray) 25%, var(--medium-gray) 50%, var(--dark-gray) 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 4px;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .skeleton-text {
+            height: 1em;
+            margin: 0.5rem 0;
+            width: 80%;
+        }
+
+        .skeleton-number {
+            height: 2rem;
+            width: 60%;
+            margin: 0.5rem 0;
+        }
+
+        /* Meetings Table */
+        .meetings-section {
+            background: var(--secondary-black);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .filter-tab {
+            background: var(--dark-gray);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .filter-tab.active {
+            background: var(--text-primary);
+            color: var(--primary-black);
+        }
+
+        .filter-tab:hover {
+            background: var(--medium-gray);
+            color: var(--text-primary);
+        }
+
+        /* Table Styles */
+        .meetings-table {
+            width: 100%;
+            overflow-x: auto;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
         }
-        
+
         th {
-            background: #34495e;
-            color: white;
-            padding: 1rem;
             text-align: left;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-secondary);
             font-weight: 500;
             font-size: 0.875rem;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.05em;
         }
-        
+
         td {
             padding: 1rem;
-            border-bottom: 1px solid #ecf0f1;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.9rem;
         }
-        
-        tr:hover {
-            background: #f8f9fa;
+
+        tr:last-child td {
+            border-bottom: none;
         }
-        
-        .status {
+
+        tbody tr {
+            transition: background 0.3s ease;
+        }
+
+        tbody tr:hover {
+            background: var(--dark-gray);
+        }
+
+        .status-badge {
             display: inline-block;
             padding: 0.25rem 0.75rem;
-            border-radius: 20px;
+            border-radius: 12px;
             font-size: 0.75rem;
             font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
-        
-        .status.scheduled {
-            background: #d4edda;
-            color: #155724;
+
+        .status-badge.confirmed {
+            background: rgba(76, 175, 80, 0.2);
+            color: var(--accent-green);
         }
-        
-        .status.cancelled {
-            background: #f8d7da;
-            color: #721c24;
+
+        .status-badge.cancelled {
+            background: rgba(255, 68, 68, 0.2);
+            color: var(--error-red);
         }
-        
-        .loading {
+
+        .action-btn {
+            background: var(--dark-gray);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .action-btn:hover {
+            background: var(--error-red);
+            color: var(--text-primary);
+            border-color: var(--error-red);
+        }
+
+        .action-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Empty State */
+        .empty-state {
             text-align: center;
             padding: 3rem;
-            color: #7f8c8d;
+            color: var(--text-secondary);
         }
-        
-        .error {
-            background: #f8d7da;
-            color: #721c24;
-            padding: 1rem;
-            border-radius: 4px;
+
+        .empty-icon {
+            font-size: 3rem;
             margin-bottom: 1rem;
+            opacity: 0.5;
         }
-        
-        .empty {
-            text-align: center;
-            padding: 3rem;
-            color: #7f8c8d;
+
+        /* Error State */
+        .error-message {
+            background: rgba(255, 68, 68, 0.1);
+            border: 1px solid rgba(255, 68, 68, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            color: var(--error-red);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
         }
-        
+
+        /* Mobile Responsive */
         @media (max-width: 768px) {
+            .dashboard-content {
+                padding: 5rem 1rem 2rem;
+            }
+
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .dashboard-title {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
             .meetings-table {
+                display: block;
                 overflow-x: auto;
+                white-space: nowrap;
             }
-            
-            table {
-                min-width: 600px;
+
+            .health-status span {
+                display: none;
             }
+
+            .filter-tabs {
+                overflow-x: auto;
+                white-space: nowrap;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            border: 2px solid var(--dark-gray);
+            border-top-color: var(--text-primary);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>📊 Corprex Scheduler - Admin Dashboard</h1>
-    </div>
-    
-    <div class="container">
-        <div class="stats">
-            <div class="stat-card">
-                <div class="stat-number" id="totalMeetings">0</div>
-                <div class="stat-label">Total Meetings</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="scheduledMeetings">0</div>
-                <div class="stat-label">Scheduled</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="cancelledMeetings">0</div>
-                <div class="stat-label">Cancelled</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="todayMeetings">0</div>
-                <div class="stat-label">Today's Meetings</div>
+    <!-- Admin Navigation -->
+    <nav class="admin-nav">
+        <div class="nav-container">
+            <div class="nav-logo">CORPREX SCHEDULER ADMIN</div>
+            <div class="nav-right">
+                <div class="health-status">
+                    <div class="health-indicator" id="healthIndicator"></div>
+                    <span id="healthText">Checking...</span>
+                </div>
+                <div class="nav-user">
+                    <div class="user-info">
+                        <div class="user-avatar">A</div>
+                        <span id="username">Admin</span>
+                    </div>
+                    <button class="logout-btn" onclick="handleLogout()">Logout</button>
+                </div>
             </div>
         </div>
-        
-        <div class="controls">
-            <button onclick="refreshData()">🔄 Refresh</button>
-            <select id="filterStatus" onchange="filterMeetings()">
-                <option value="">All Meetings</option>
-                <option value="scheduled">Scheduled Only</option>
-                <option value="cancelled">Cancelled Only</option>
-            </select>
-            <button onclick="exportData()">📥 Export CSV</button>
-        </div>
-        
-        <div class="meetings-table">
-            <div class="loading" id="loading">Loading meetings...</div>
-            <div class="error" id="error" style="display:none;"></div>
-            <table id="meetingsTable" style="display:none;">
-                <thead>
-                    <tr>
-                        <th>Date & Time</th>
-                        <th>Name</th>
-                        <th>Company</th>
-                        <th>Email</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="meetingsBody">
-                </tbody>
-            </table>
-            <div class="empty" id="emptyState" style="display:none;">
-                No meetings found
-            </div>
-        </div>
-    </div>
+    </nav>
 
-    <script>
-        // Your Corprex Scheduler API URL
-        const API_URL = 'https://corprex-scheduler.onrender.com/api';
-        
-        let allMeetings = [];
-        
-        console.log('Using Corprex production API URL:', API_URL);
-        
-        // Load meetings on page load
-        window.addEventListener('load', loadMeetings);
-        
-        async function loadMeetings() {
-            const loading = document.getElementById('loading');
-            const error = document.getElementById('error');
-            const table = document.getElementById('meetingsTable');
-            const empty = document.getElementById('emptyState');
+    <!-- Dashboard Content -->
+    <main class="dashboard-content">
+        <div class="dashboard-header">
+            <div>
+                <h1 class="dashboard-title">Meeting Scheduler Dashboard</h1>
+                <p class="dashboard-subtitle">Manage all scheduled meetings and appointments</p>
+            </div>
+            <button class="refresh-btn" onclick="refreshData()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/>
+                </svg>
+                Refresh
+            </button>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card loading" id="totalMeetingsCard">
+                <div class="stat-label">Total Meetings</div>
+                <div class="skeleton skeleton-number"></div>
+                <div class="skeleton skeleton-text"></div>
+            </div>
+            <div class="stat-card loading" id="upcomingMeetingsCard">
+                <div class="stat-label">Upcoming Meetings</div>
+                <div class="skeleton skeleton-number"></div>
+                <div class="skeleton skeleton-text"></div>
+            </div>
+            <div class="stat-card loading" id="todayMeetingsCard">
+                <div class="stat-label">Today's Meetings</div>
+                <div class="skeleton skeleton-number"></div>
+                <div class="skeleton skeleton-text"></div>
+            </div>
+            <div class="stat-card loading" id="cancelledMeetingsCard">
+                <div class="stat-label">Cancelled</div>
+                <div class="skeleton skeleton-number"></div>
+                <div class="skeleton skeleton-text"></div>
+            </div>
+        </div>
+
+        <!-- Meetings Table -->
+        <div class="meetings-section">
+            <div class="section-header">
+                <h2 class="section-title">All Meetings</h2>
+                <div class="filter-tabs">
+                    <button class="filter-tab active" onclick="filterMeetings('all')">All</button>
+                    <button class="filter-tab" onclick="filterMeetings('upcoming')">Upcoming</button>
+                    <button class="filter-tab" onclick="filterMeetings('past')">Past</button>
+                    <button class="filter-tab" onclick="filterMeetings('cancelled')">Cancelled</button>
+                </div>
+            </div>
             
-            loading.style.display = 'block';
-            error.style.display = 'none';
-            table.style.display = 'none';
-            empty.style.display = 'none';
+            <div class="meetings-table" id="meetingsTableContainer">
+                <div style="text-align: center; padding: 2rem;">
+                    <div class="spinner"></div>
+                    <p style="margin-top: 1rem; color: var(--text-secondary);">Loading meetings...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="admin-auth.js"></script>
+    <script>
+        // Check authentication on page load
+        checkAuth();
+
+        // API Configuration
+        const API_URL = 'https://corprex-scheduler.onrender.com/api';
+        let allMeetings = [];
+        let currentFilter = 'all';
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            checkHealthStatus();
+            loadMeetings();
+            
+            // Refresh data every 30 seconds
+            setInterval(() => {
+                checkHealthStatus();
+                loadMeetings();
+            }, 30000);
+        });
+
+        // Check API health status
+        async function checkHealthStatus() {
+            const indicator = document.getElementById('healthIndicator');
+            const text = document.getElementById('healthText');
             
             try {
-                const response = await fetch(`${API_URL}/meetings`);
-                if (!response.ok) {
-                    throw new Error('Failed to fetch meetings');
+                const response = await fetch(`${API_URL}/health`);
+                const data = await response.json();
+                
+                if (response.ok && data.status === 'ok') {
+                    indicator.classList.add('healthy');
+                    text.textContent = 'System Healthy';
+                } else {
+                    indicator.classList.remove('healthy');
+                    text.textContent = 'System Error';
                 }
+            } catch (error) {
+                indicator.classList.remove('healthy');
+                text.textContent = 'Connection Error';
+            }
+        }
+
+        // Load all meetings
+        async function loadMeetings() {
+            try {
+                const response = await fetch(`${API_URL}/meetings`);
+                if (!response.ok) throw new Error('Failed to fetch meetings');
                 
                 const data = await response.json();
                 allMeetings = data.meetings || [];
                 
-                updateStats();
-                displayMeetings(allMeetings);
+                // Update statistics
+                updateStatistics();
                 
-            } catch (err) {
-                loading.style.display = 'none';
-                error.style.display = 'block';
-                error.textContent = `Error: ${err.message}. The API may be starting up - please wait 30 seconds and try again.`;
+                // Display meetings
+                displayMeetings();
+                
+            } catch (error) {
+                console.error('Error loading meetings:', error);
+                showError('Failed to load meetings. Please try again.');
             }
         }
-        
-        function updateStats() {
-            const total = allMeetings.length;
-            const scheduled = allMeetings.filter(m => m.status === 'scheduled').length;
-            const cancelled = allMeetings.filter(m => m.status === 'cancelled').length;
+
+        // Update statistics cards
+        function updateStatistics() {
+            const now = new Date();
+            const today = now.toISOString().split('T')[0];
             
-            const today = new Date().toISOString().split('T')[0];
+            // Total meetings
+            const totalCard = document.getElementById('totalMeetingsCard');
+            totalCard.classList.remove('loading');
+            totalCard.innerHTML = `
+                <div class="stat-label">Total Meetings</div>
+                <div class="stat-value">${allMeetings.length}</div>
+                <div class="stat-description">All time bookings</div>
+            `;
+            
+            // Upcoming meetings
+            const upcoming = allMeetings.filter(m => {
+                if (m.status === 'cancelled') return false;
+                const meetingDate = new Date(`${m.meetingDate} ${m.meetingTime}`);
+                return meetingDate > now;
+            });
+            
+            const upcomingCard = document.getElementById('upcomingMeetingsCard');
+            upcomingCard.classList.remove('loading');
+            upcomingCard.innerHTML = `
+                <div class="stat-label">Upcoming Meetings</div>
+                <div class="stat-value">${upcoming.length}</div>
+                <div class="stat-description">Future appointments</div>
+            `;
+            
+            // Today's meetings
             const todayMeetings = allMeetings.filter(m => 
-                m.meetingDate === today && m.status === 'scheduled'
-            ).length;
+                m.meetingDate === today && m.status !== 'cancelled'
+            );
             
-            document.getElementById('totalMeetings').textContent = total;
-            document.getElementById('scheduledMeetings').textContent = scheduled;
-            document.getElementById('cancelledMeetings').textContent = cancelled;
-            document.getElementById('todayMeetings').textContent = todayMeetings;
+            const todayCard = document.getElementById('todayMeetingsCard');
+            todayCard.classList.remove('loading');
+            todayCard.innerHTML = `
+                <div class="stat-label">Today's Meetings</div>
+                <div class="stat-value">${todayMeetings.length}</div>
+                <div class="stat-description">${new Date().toLocaleDateString()}</div>
+            `;
+            
+            // Cancelled meetings
+            const cancelled = allMeetings.filter(m => m.status === 'cancelled');
+            
+            const cancelledCard = document.getElementById('cancelledMeetingsCard');
+            cancelledCard.classList.remove('loading');
+            cancelledCard.innerHTML = `
+                <div class="stat-label">Cancelled</div>
+                <div class="stat-value">${cancelled.length}</div>
+                <div class="stat-description">Cancelled bookings</div>
+            `;
         }
-        
-        function displayMeetings(meetings) {
-            const loading = document.getElementById('loading');
-            const table = document.getElementById('meetingsTable');
-            const tbody = document.getElementById('meetingsBody');
-            const empty = document.getElementById('emptyState');
+
+        // Display meetings in table
+        function displayMeetings() {
+            const container = document.getElementById('meetingsTableContainer');
+            let filteredMeetings = [...allMeetings];
+            const now = new Date();
             
-            loading.style.display = 'none';
+            // Apply filter
+            switch(currentFilter) {
+                case 'upcoming':
+                    filteredMeetings = filteredMeetings.filter(m => {
+                        if (m.status === 'cancelled') return false;
+                        const meetingDate = new Date(`${m.meetingDate} ${m.meetingTime}`);
+                        return meetingDate > now;
+                    });
+                    break;
+                case 'past':
+                    filteredMeetings = filteredMeetings.filter(m => {
+                        const meetingDate = new Date(`${m.meetingDate} ${m.meetingTime}`);
+                        return meetingDate <= now && m.status !== 'cancelled';
+                    });
+                    break;
+                case 'cancelled':
+                    filteredMeetings = filteredMeetings.filter(m => m.status === 'cancelled');
+                    break;
+            }
             
-            if (meetings.length === 0) {
-                empty.style.display = 'block';
-                table.style.display = 'none';
+            // Sort by date (most recent first)
+            filteredMeetings.sort((a, b) => {
+                const dateA = new Date(`${a.meetingDate} ${a.meetingTime}`);
+                const dateB = new Date(`${b.meetingDate} ${b.meetingTime}`);
+                return dateB - dateA;
+            });
+            
+            if (filteredMeetings.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">📅</div>
+                        <p>No meetings found</p>
+                    </div>
+                `;
                 return;
             }
             
-            empty.style.display = 'none';
-            table.style.display = 'table';
+            // Build table
+            let tableHTML = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date & Time</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Company</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
             
-            tbody.innerHTML = meetings.map(meeting => `
-                <tr>
-                    <td>
-                        <strong>${formatDate(meeting.meetingDate)}</strong><br>
-                        <small>${meeting.meetingTime}</small>
-                    </td>
-                    <td>${meeting.firstName} ${meeting.lastName}</td>
-                    <td>${meeting.company}</td>
-                    <td>
-                        <a href="mailto:${meeting.email}">${meeting.email}</a>
-                        ${meeting.phone ? `<br><small>${meeting.phone}</small>` : ''}
-                    </td>
-                    <td>
-                        <span class="status ${meeting.status}">${meeting.status}</span>
-                    </td>
-                    <td>
-                        ${meeting.status === 'scheduled' ? 
-                            `<button class="danger" onclick="cancelMeeting('${meeting.id}')">Cancel</button>` : 
-                            '-'
-                        }
-                    </td>
-                </tr>
-            `).join('');
+            filteredMeetings.forEach(meeting => {
+                const meetingDateTime = new Date(`${meeting.meetingDate} ${meeting.meetingTime}`);
+                const formattedDate = meetingDateTime.toLocaleDateString();
+                const formattedTime = meeting.meetingTime;
+                
+                tableHTML += `
+                    <tr>
+                        <td>
+                            <strong>${formattedDate}</strong><br>
+                            <span style="color: var(--text-secondary); font-size: 0.875rem;">${formattedTime}</span>
+                        </td>
+                        <td>${meeting.firstName} ${meeting.lastName}</td>
+                        <td>${meeting.email}</td>
+                        <td>${meeting.company || '-'}</td>
+                        <td>
+                            <span class="status-badge ${meeting.status}">
+                                ${meeting.status}
+                            </span>
+                        </td>
+                        <td>
+                            ${meeting.status !== 'cancelled' ? 
+                                `<button class="action-btn" onclick="cancelMeeting('${meeting.id}')">Cancel</button>` : 
+                                `<button class="action-btn" disabled>Cancelled</button>`
+                            }
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            tableHTML += `
+                    </tbody>
+                </table>
+            `;
+            
+            container.innerHTML = tableHTML;
         }
-        
-        function formatDate(dateStr) {
-            const date = new Date(dateStr + 'T00:00:00');
-            const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
-            return date.toLocaleDateString('en-US', options);
+
+        // Filter meetings
+        function filterMeetings(filter) {
+            currentFilter = filter;
+            
+            // Update active tab
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Re-display meetings
+            displayMeetings();
         }
-        
-        function filterMeetings() {
-            const filter = document.getElementById('filterStatus').value;
-            const filtered = filter ? 
-                allMeetings.filter(m => m.status === filter) : 
-                allMeetings;
-            displayMeetings(filtered);
-        }
-        
+
+        // Cancel a meeting
         async function cancelMeeting(meetingId) {
             if (!confirm('Are you sure you want to cancel this meeting?')) {
                 return;
@@ -365,50 +781,55 @@
             
             try {
                 const response = await fetch(`${API_URL}/meetings/${meetingId}/cancel`, {
-                    method: 'POST'
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
                 });
                 
-                if (response.ok) {
-                    alert('Meeting cancelled successfully');
-                    await loadMeetings();
-                } else {
-                    throw new Error('Failed to cancel meeting');
-                }
-            } catch (err) {
-                alert(`Error: ${err.message}`);
+                if (!response.ok) throw new Error('Failed to cancel meeting');
+                
+                // Reload meetings
+                await loadMeetings();
+                
+                // Show success message
+                alert('Meeting cancelled successfully');
+                
+            } catch (error) {
+                console.error('Error cancelling meeting:', error);
+                alert('Failed to cancel meeting. Please try again.');
             }
         }
-        
+
+        // Refresh data
         function refreshData() {
-            loadMeetings();
-        }
-        
-        function exportData() {
-            const csv = [
-                ['Date', 'Time', 'First Name', 'Last Name', 'Email', 'Phone', 'Company', 'Status', 'Message'],
-                ...allMeetings.map(m => [
-                    m.meetingDate,
-                    m.meetingTime,
-                    m.firstName,
-                    m.lastName,
-                    m.email,
-                    m.phone || '',
-                    m.company,
-                    m.status,
-                    m.message || ''
-                ])
-            ].map(row => row.map(cell => `"${cell}"`).join(',')).join('\n');
+            const btn = event.target.closest('.refresh-btn');
+            btn.disabled = true;
             
-            const blob = new Blob([csv], { type: 'text/csv' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `meetings-${new Date().toISOString().split('T')[0]}.csv`;
-            a.click();
+            // Add spinning animation to icon
+            const svg = btn.querySelector('svg');
+            svg.style.animation = 'spin 1s linear infinite';
+            
+            Promise.all([checkHealthStatus(), loadMeetings()]).then(() => {
+                setTimeout(() => {
+                    btn.disabled = false;
+                    svg.style.animation = '';
+                }, 500);
+            });
         }
-        
-        // Auto-refresh every 30 seconds
-        setInterval(loadMeetings, 30000);
+
+        // Show error message
+        function showError(message) {
+            const container = document.getElementById('meetingsTableContainer');
+            container.innerHTML = `
+                <div class="error-message">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                    </svg>
+                    ${message}
+                </div>
+            `;
+        }
     </script>
 </body>
 </html>
