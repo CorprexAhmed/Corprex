@@ -52,7 +52,7 @@ function clearSession() {
 }
 
 // Handle login form submission
-function handleLogin(event) {
+async function handleLogin(event) {
     event.preventDefault();
     
     const username = document.getElementById('username').value.trim();
@@ -68,35 +68,45 @@ function handleLogin(event) {
     submitBtn.classList.add('loading');
     submitBtn.disabled = true;
     
-    // Simulate network delay for realistic feel
-    setTimeout(() => {
-        // Validate credentials
-        if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
-            // Save session
-            saveSession(username);
-            
-            // If remember me is checked, save username
-            if (rememberMe) {
-                localStorage.setItem('corprex_remember_username', username);
-            } else {
-                localStorage.removeItem('corprex_remember_username');
+    // Validate credentials
+    if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+        try {
+            // Check if scheduler API is accessible
+            const apiCheck = await fetch('https://corprex-scheduler.onrender.com/api/health');
+            if (!apiCheck.ok) {
+                console.warn('Scheduler API not responding, but proceeding with login');
             }
-            
-            // Redirect to dashboard
-            window.location.href = 'admin-dashboard.html';
-        } else {
-            // Show error
-            errorMessage.classList.add('show');
-            
-            // Reset button state
-            submitBtn.classList.remove('loading');
-            submitBtn.disabled = false;
-            
-            // Clear password field
-            document.getElementById('password').value = '';
-            document.getElementById('password').focus();
+        } catch (error) {
+            console.warn('Could not reach scheduler API:', error);
         }
-    }, 1000);
+        
+        // Save session
+        saveSession(username);
+        
+        // If remember me is checked, save username
+        if (rememberMe) {
+            localStorage.setItem('corprex_remember_username', username);
+        } else {
+            localStorage.removeItem('corprex_remember_username');
+        }
+        
+        // Redirect to dashboard
+        setTimeout(() => {
+            window.location.href = 'admin-dashboard.html';
+        }, 500);
+    } else {
+        // Show error
+        errorMessage.classList.add('show');
+        errorMessage.textContent = 'Invalid username or password';
+        
+        // Reset button state
+        submitBtn.classList.remove('loading');
+        submitBtn.disabled = false;
+        
+        // Clear password field
+        document.getElementById('password').value = '';
+        document.getElementById('password').focus();
+    }
 }
 
 // Handle logout
