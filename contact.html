@@ -1,34 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Contact Us - Corprex | Get in Touch</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-overflow-scrolling: touch;
-        }
 
-        :root {
-            --primary-black: #000000;
-            --secondary-black: #0a0a0a;
-            --dark-gray: #1a1a1a;
-            --medium-gray: #2a2a2a;
-            --light-gray: #666666;
-            --text-gray: #999999;
-            --text-primary: #ffffff;
-            --text-secondary: #cccccc;
-            --border-color: #333333;
-            --accent-green: #4CAF50;
-            --safe-area-inset-top: env(safe-area-inset-top, 0px);
-            --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
-            --safe-area-inset-left: env(safe-area-inset-left, 0px);
-            --safe-area-inset-right: env(safe-area-inset-right, 0px);
         }
 
         html {
@@ -1954,21 +1924,21 @@
             document.getElementById('timeSlots').classList.remove('active');
             
             // Reset selected date and time
-            selectedDate = null;
-            selectedTime = null;
+            window.selectedDate = null;
+            window.selectedTime = null;
             
             // Clear form
             document.getElementById('schedulerForm').reset();
         }
 
-        // Scheduler State
-        let currentDate = new Date();
-        let selectedDate = null;
-        let selectedTime = null;
+        // Scheduler State - Make these global on window object
+        window.currentDate = new Date();
+        window.selectedDate = null;
+        window.selectedTime = null;
 
         // Initialize scheduler
         function initScheduler() {
-            generateCalendar();
+            window.generateCalendar();
             detectTimezone();
         }
 
@@ -1986,10 +1956,10 @@
             }
         }
 
-        // Generate calendar
-        function generateCalendar() {
-            const year = currentDate.getFullYear();
-            const month = currentDate.getMonth();
+        // Make generateCalendar global
+        window.generateCalendar = async function() {
+            const year = window.currentDate.getFullYear();
+            const month = window.currentDate.getMonth();
             
             // Update month display
             const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
@@ -2030,7 +2000,7 @@
                     const dayOfWeek = dayDate.getDay();
                     if (dayOfWeek >= 1 && dayOfWeek <= 5) { // Monday to Friday
                         dayElement.classList.add('available');
-                        dayElement.onclick = () => selectDate(dayDate);
+                        dayElement.onclick = () => window.selectDate(dayDate);
                     }
                 }
                 
@@ -2041,18 +2011,18 @@
 
         // Navigate months
         function previousMonth() {
-            currentDate.setMonth(currentDate.getMonth() - 1);
-            generateCalendar();
+            window.currentDate.setMonth(window.currentDate.getMonth() - 1);
+            window.generateCalendar();
         }
 
         function nextMonth() {
-            currentDate.setMonth(currentDate.getMonth() + 1);
-            generateCalendar();
+            window.currentDate.setMonth(window.currentDate.getMonth() + 1);
+            window.generateCalendar();
         }
 
-        // Select date
-        function selectDate(date) {
-            selectedDate = date;
+        // Make selectDate global
+        window.selectDate = function(date) {
+            window.selectedDate = date;
             
             // Update selected state
             document.querySelectorAll('.calendar-day').forEach(day => {
@@ -2061,11 +2031,11 @@
             event.target.closest('.calendar-day').classList.add('selected');
             
             // Show time slots
-            showTimeSlots(date);
+            window.showTimeSlots(date);
         }
 
-        // Show available time slots
-        function showTimeSlots(date) {
+        // Make showTimeSlots global
+        window.showTimeSlots = async function(date) {
             const timeSlots = document.getElementById('timeSlots');
             timeSlots.classList.add('active');
             
@@ -2073,27 +2043,36 @@
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             document.getElementById('selectedDate').textContent = date.toLocaleDateString('en-US', options);
             
-            // Generate time slots (mock availability)
+            // Show loading state
             const timeSlotsGrid = document.getElementById('timeSlotsGrid');
-            timeSlotsGrid.innerHTML = '';
+            timeSlotsGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center;"><div class="loading-spinner active"></div></div>';
             
-            const slots = [
-                '9:00 AM', '9:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM',
-                '2:00 PM', '2:30 PM', '3:00 PM', '3:30 PM', '4:00 PM', '4:30 PM'
-            ];
-            
-            slots.forEach(time => {
-                const slot = document.createElement('button');
-                slot.className = 'time-slot';
-                slot.textContent = time;
-                slot.onclick = () => selectTime(time, slot);
-                timeSlotsGrid.appendChild(slot);
-            });
+            try {
+                // This will be overridden by scheduler-api.js if it's loaded
+                // For now, use mock data
+                const slots = [
+                    '9:00 AM', '9:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM',
+                    '2:00 PM', '2:30 PM', '3:00 PM', '3:30 PM', '4:00 PM', '4:30 PM'
+                ];
+                
+                timeSlotsGrid.innerHTML = '';
+                
+                slots.forEach(time => {
+                    const slot = document.createElement('button');
+                    slot.className = 'time-slot';
+                    slot.textContent = time;
+                    slot.onclick = () => window.selectTime(time, slot);
+                    timeSlotsGrid.appendChild(slot);
+                });
+            } catch (error) {
+                console.error('Error loading times:', error);
+                timeSlotsGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #f00;">Error loading times. Please try again.</p>';
+            }
         }
 
-        // Select time
-        function selectTime(time, element) {
-            selectedTime = time;
+        // Make selectTime global
+        window.selectTime = function(time, element) {
+            window.selectedTime = time;
             
             // Update selected state
             document.querySelectorAll('.time-slot').forEach(slot => {
@@ -2121,9 +2100,9 @@
             
             // Update booking summary
             const options = { year: 'numeric', month: 'long', day: 'numeric' };
-            const dateStr = selectedDate.toLocaleDateString('en-US', options);
+            const dateStr = window.selectedDate.toLocaleDateString('en-US', options);
             const timezone = document.getElementById('timezoneSelect').selectedOptions[0].text;
-            document.getElementById('bookingSummary').textContent = `${dateStr} at ${selectedTime} ${timezone}`;
+            document.getElementById('bookingSummary').textContent = `${dateStr} at ${window.selectedTime} ${timezone}`;
             
             // Scroll to top of the scheduler views
             const schedulerViews = document.querySelector('.scheduler-views');
