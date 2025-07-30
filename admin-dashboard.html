@@ -3,832 +3,412 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Corprex</title>
+    <title>Admin Dashboard - Corprex Scheduler</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
-        :root {
-            --primary-black: #000000;
-            --secondary-black: #0a0a0a;
-            --dark-gray: #1a1a1a;
-            --medium-gray: #2a2a2a;
-            --light-gray: #666666;
-            --text-gray: #999999;
-            --text-primary: #ffffff;
-            --text-secondary: #cccccc;
-            --border-color: #333333;
-            --error-color: #ff4444;
-            --success-color: #4CAF50;
-        }
-
+        
         body {
-            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: var(--primary-black);
-            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: #f5f7fa;
+            color: #333;
             line-height: 1.6;
-            overflow-x: hidden;
         }
-
-        /* Initial state to prevent flash */
-        body {
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        body.loaded {
-            opacity: 1;
-        }
-
-        /* Loading Screen */
-        .loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--primary-black);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-        }
-
-        .loading-spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid var(--border-color);
-            border-radius: 50%;
-            border-top-color: var(--text-primary);
-            animation: spin 0.8s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Main Content - Hidden by default */
-        .main-content {
-            display: none;
-        }
-
-        /* Admin Navigation */
-        .admin-nav {
-            background: var(--secondary-black);
-            border-bottom: 1px solid var(--border-color);
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            backdrop-filter: blur(20px);
-        }
-
-        .admin-logo {
-            font-size: 1.5rem;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .admin-badge {
-            background: var(--error-color);
-            color: var(--text-primary);
-            padding: 0.25rem 0.75rem;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            letter-spacing: 0.05em;
-        }
-
-        .admin-actions {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        .user-info {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            margin-right: 1rem;
-        }
-
-        .btn-logout {
-            background: transparent;
-            color: var(--text-secondary);
-            border: 1px solid var(--border-color);
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 0.875rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .btn-logout:hover {
-            color: var(--error-color);
-            border-color: var(--error-color);
-        }
-
-        .btn-view-site {
-            background: var(--text-primary);
-            color: var(--primary-black);
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 0.875rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .btn-view-site:hover {
-            background: var(--text-secondary);
-            transform: translateY(-2px);
-        }
-
-        /* Main Container */
-        .admin-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 6rem 2rem 2rem;
-        }
-
-        /* Dashboard Header */
-        .dashboard-header {
-            margin-bottom: 3rem;
-        }
-
-        .dashboard-title {
-            font-size: 2.5rem;
-            font-weight: 300;
-            margin-bottom: 0.5rem;
-        }
-
-        .dashboard-subtitle {
-            color: var(--text-secondary);
-            font-size: 1.125rem;
-        }
-
-        /* News Article Form */
-        .article-form-container {
-            background: var(--secondary-black);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .form-header {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            font-weight: 500;
-        }
-
-        .form-grid {
-            display: grid;
-            gap: 1.5rem;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .form-label {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-
-        .form-input,
-        .form-textarea,
-        .form-select {
-            background: var(--dark-gray);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 0.875rem 1rem;
-            color: var(--text-primary);
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        .form-input:focus,
-        .form-textarea:focus,
-        .form-select:focus {
-            outline: none;
-            border-color: var(--text-primary);
-            background: var(--primary-black);
-        }
-
-        .form-textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-        }
-
-        .image-preview {
-            margin-top: 1rem;
-            max-width: 300px;
-            border-radius: 8px;
-            overflow: hidden;
-            display: none;
-        }
-
-        .image-preview img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .form-actions {
-            display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .btn-primary {
-            background: var(--text-primary);
-            color: var(--primary-black);
-            border: none;
-            padding: 0.875rem 2rem;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            letter-spacing: 0.02em;
-        }
-
-        .btn-primary:hover {
-            background: var(--text-secondary);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
-        }
-
-        .btn-primary:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-            padding: 0.875rem 2rem;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--text-primary);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        /* Status Messages */
-        .status-message {
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            display: none;
-            animation: slideIn 0.3s ease;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateY(-10px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .status-success {
-            background: rgba(76, 175, 80, 0.1);
-            border: 1px solid var(--success-color);
-            color: var(--success-color);
-        }
-
-        .status-error {
-            background: rgba(255, 68, 68, 0.1);
-            border: 1px solid var(--error-color);
-            color: var(--error-color);
-        }
-
-        /* Articles List */
-        .articles-section {
-            margin-top: 3rem;
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-
-        .section-title {
-            font-size: 1.75rem;
-            font-weight: 500;
-        }
-
-        .articles-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 2rem;
-        }
-
-        .article-card {
-            background: var(--secondary-black);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .article-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--text-primary);
-            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.05);
-        }
-
-        .article-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            background: var(--dark-gray);
-        }
-
-        .article-content {
+        
+        .header {
+            background: #2c3e50;
+            color: white;
             padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-
-        .article-title {
-            font-size: 1.25rem;
-            margin-bottom: 0.5rem;
+        
+        .header h1 {
+            font-size: 1.75rem;
+            font-weight: 300;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #3498db;
+        }
+        
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .controls {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: background 0.2s;
+        }
+        
+        button:hover {
+            background: #2980b9;
+        }
+        
+        button.danger {
+            background: #e74c3c;
+        }
+        
+        button.danger:hover {
+            background: #c0392b;
+        }
+        
+        select {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.875rem;
+        }
+        
+        .meetings-table {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th {
+            background: #34495e;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 500;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
             font-weight: 500;
         }
-
-        .article-excerpt {
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-            line-height: 1.6;
-            margin-bottom: 1rem;
+        
+        .status.scheduled {
+            background: #d4edda;
+            color: #155724;
         }
-
-        .article-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.75rem;
-            color: var(--text-gray);
+        
+        .status.cancelled {
+            background: #f8d7da;
+            color: #721c24;
         }
-
-        .article-actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .btn-icon {
-            background: transparent;
-            border: 1px solid var(--border-color);
-            color: var(--text-secondary);
-            padding: 0.5rem;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .btn-icon:hover {
-            color: var(--text-primary);
-            border-color: var(--text-primary);
-        }
-
-        .btn-icon.delete:hover {
-            color: var(--error-color);
-            border-color: var(--error-color);
-        }
-
-        .btn-icon svg {
-            width: 16px;
-            height: 16px;
-        }
-
-        /* Empty State */
-        .empty-state {
+        
+        .loading {
             text-align: center;
-            padding: 4rem 2rem;
-            color: var(--text-secondary);
+            padding: 3rem;
+            color: #7f8c8d;
         }
-
-        .empty-state-icon {
-            font-size: 3rem;
+        
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 1rem;
+            border-radius: 4px;
             margin-bottom: 1rem;
-            opacity: 0.5;
         }
-
-        /* Responsive */
+        
+        .empty {
+            text-align: center;
+            padding: 3rem;
+            color: #7f8c8d;
+        }
+        
         @media (max-width: 768px) {
-            .form-row {
-                grid-template-columns: 1fr;
+            .meetings-table {
+                overflow-x: auto;
             }
-
-            .articles-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .admin-container {
-                padding: 5rem 1rem 1rem;
-            }
-
-            .dashboard-title {
-                font-size: 2rem;
-            }
-
-            .user-info {
-                display: none;
+            
+            table {
+                min-width: 600px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div class="loading-screen" id="loadingScreen">
-        <div class="loading-spinner"></div>
+    <div class="header">
+        <h1>📊 Corprex Scheduler - Admin Dashboard</h1>
     </div>
-
-    <!-- Main Content -->
-    <div class="main-content" id="mainContent">
-        <!-- Admin Navigation -->
-        <nav class="admin-nav">
-            <div class="admin-logo">
-                CORPREX
-                <span class="admin-badge">ADMIN</span>
+    
+    <div class="container">
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalMeetings">0</div>
+                <div class="stat-label">Total Meetings</div>
             </div>
-            <div class="admin-actions">
-                <span class="user-info" id="userInfo">Loading...</span>
-                <a href="news.html" class="btn-view-site">View News Page</a>
-                <button class="btn-logout" id="logoutBtn">Logout</button>
+            <div class="stat-card">
+                <div class="stat-number" id="scheduledMeetings">0</div>
+                <div class="stat-label">Scheduled</div>
             </div>
-        </nav>
-
-        <!-- Main Container -->
-        <div class="admin-container">
-            <!-- Dashboard Header -->
-            <div class="dashboard-header">
-                <h1 class="dashboard-title">News Management</h1>
-                <p class="dashboard-subtitle">Add and manage news articles for your website</p>
+            <div class="stat-card">
+                <div class="stat-number" id="cancelledMeetings">0</div>
+                <div class="stat-label">Cancelled</div>
             </div>
-
-            <!-- Status Messages -->
-            <div class="status-message status-success" id="successMessage"></div>
-            <div class="status-message status-error" id="errorMessage"></div>
-
-            <!-- Article Form -->
-            <div class="article-form-container">
-                <h2 class="form-header">Add New Article</h2>
-                <form id="articleForm" class="form-grid">
-                    <div class="form-group">
-                        <label for="articleUrl" class="form-label">Article URL</label>
-                        <input 
-                            type="url" 
-                            id="articleUrl" 
-                            class="form-input" 
-                            placeholder="https://example.com/article"
-                            required
-                        >
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="articleTitle" class="form-label">Article Title</label>
-                            <input 
-                                type="text" 
-                                id="articleTitle" 
-                                class="form-input" 
-                                placeholder="Enter article title"
-                                required
-                            >
-                        </div>
-                        <div class="form-group">
-                            <label for="articleAuthor" class="form-label">Author</label>
-                            <input 
-                                type="text" 
-                                id="articleAuthor" 
-                                class="form-input" 
-                                placeholder="Author name"
-                            >
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="articleCategory" class="form-label">Category</label>
-                        <select id="articleCategory" class="form-select" required>
-                            <option value="">Select a category</option>
-                            <option value="announcements">Announcements</option>
-                            <option value="insights">Industry Insights</option>
-                            <option value="technical">Technical</option>
-                            <option value="case-studies">Case Studies</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="articleSummary" class="form-label">Article Summary</label>
-                        <textarea 
-                            id="articleSummary" 
-                            class="form-textarea" 
-                            placeholder="Brief summary of the article"
-                            required
-                        ></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="articleImage" class="form-label">Featured Image URL</label>
-                        <input 
-                            type="url" 
-                            id="articleImage" 
-                            class="form-input" 
-                            placeholder="https://example.com/image.jpg"
-                        >
-                        <div class="image-preview" id="imagePreview">
-                            <img src="" alt="Preview" id="previewImg">
-                        </div>
-                    </div>
-
-                    <div class="form-actions">
-                        <button type="submit" class="btn-primary" id="submitBtn">
-                            <span id="submitText">Publish Article</span>
-                        </button>
-                        <button type="reset" class="btn-secondary">Clear Form</button>
-                    </div>
-                </form>
+            <div class="stat-card">
+                <div class="stat-number" id="todayMeetings">0</div>
+                <div class="stat-label">Today's Meetings</div>
             </div>
-
-            <!-- Articles List -->
-            <div class="articles-section">
-                <div class="section-header">
-                    <h2 class="section-title">Published Articles</h2>
-                    <span id="articleCount" class="article-count">0 articles</span>
-                </div>
-                <div class="articles-grid" id="articlesGrid">
-                    <!-- Articles will be dynamically loaded here -->
-                </div>
-                <div class="empty-state" id="emptyState" style="display: none;">
-                    <div class="empty-state-icon">📰</div>
-                    <h3>No articles yet</h3>
-                    <p>Add your first news article using the form above</p>
-                </div>
+        </div>
+        
+        <div class="controls">
+            <button onclick="refreshData()">🔄 Refresh</button>
+            <select id="filterStatus" onchange="filterMeetings()">
+                <option value="">All Meetings</option>
+                <option value="scheduled">Scheduled Only</option>
+                <option value="cancelled">Cancelled Only</option>
+            </select>
+            <button onclick="exportData()">📥 Export CSV</button>
+        </div>
+        
+        <div class="meetings-table">
+            <div class="loading" id="loading">Loading meetings...</div>
+            <div class="error" id="error" style="display:none;"></div>
+            <table id="meetingsTable" style="display:none;">
+                <thead>
+                    <tr>
+                        <th>Date & Time</th>
+                        <th>Name</th>
+                        <th>Company</th>
+                        <th>Email</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="meetingsBody">
+                </tbody>
+            </table>
+            <div class="empty" id="emptyState" style="display:none;">
+                No meetings found
             </div>
         </div>
     </div>
 
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-
     <script>
-        // Prevent FOUC
-        document.addEventListener('DOMContentLoaded', function() {
-            document.body.classList.add('loaded');
-        });
-
-        // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyBMRKuHwm6WSUmOLOJ7xBCORctdCMVF61w",    
-            authDomain: "corprex-news.firebaseapp.com",
-            projectId: "corprex-news",
-            storageBucket: "corprex-news.firebasestorage.app",
-            messagingSenderId: "155707539367",
-            appId: "1:155707539367:web:c55a2cec16bb126d86c082"
-        };
-
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-
-        // Check authentication state
-        let authChecked = false;
-        let isRedirecting = false;
+        // Your Corprex Scheduler API URL
+        const API_URL = 'https://corprex-scheduler.onrender.com/api';
         
-        auth.onAuthStateChanged((user) => {
-            const loadingScreen = document.getElementById('loadingScreen');
-            const mainContent = document.getElementById('mainContent');
+        let allMeetings = [];
+        
+        console.log('Using Corprex production API URL:', API_URL);
+        
+        // Load meetings on page load
+        window.addEventListener('load', loadMeetings);
+        
+        async function loadMeetings() {
+            const loading = document.getElementById('loading');
+            const error = document.getElementById('error');
+            const table = document.getElementById('meetingsTable');
+            const empty = document.getElementById('emptyState');
             
-            if (!authChecked) {
-                authChecked = true;
-                
-                if (user) {
-                    // User is signed in
-                    document.getElementById('userInfo').textContent = user.email;
-                    loadingScreen.style.display = 'none';
-                    mainContent.style.display = 'block';
-                    loadArticles();
-                } else if (!isRedirecting) {
-                    // User is not signed in - redirect to login
-                    isRedirecting = true;
-                    window.location.replace('adminlogin.html');
-                }
-            }
-        });
-
-        // Load articles
-        async function loadArticles() {
+            loading.style.display = 'block';
+            error.style.display = 'none';
+            table.style.display = 'none';
+            empty.style.display = 'none';
+            
             try {
-                const snapshot = await db.collection('articles').get();
-                const articles = [];
+                const response = await fetch(`${API_URL}/meetings`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch meetings');
+                }
                 
-                snapshot.forEach(doc => {
-                    articles.push({ id: doc.id, ...doc.data() });
-                });
+                const data = await response.json();
+                allMeetings = data.meetings || [];
                 
-                // Sort by date
-                articles.sort((a, b) => {
-                    const dateA = new Date(a.date || 0);
-                    const dateB = new Date(b.date || 0);
-                    return dateB - dateA;
-                });
+                updateStats();
+                displayMeetings(allMeetings);
                 
-                renderArticles(articles);
-            } catch (error) {
-                console.error('Error loading articles:', error);
-                showMessage('Error loading articles', 'error');
+            } catch (err) {
+                loading.style.display = 'none';
+                error.style.display = 'block';
+                error.textContent = `Error: ${err.message}. The API may be starting up - please wait 30 seconds and try again.`;
             }
         }
-
-        // Render articles
-        function renderArticles(articles) {
-            const grid = document.getElementById('articlesGrid');
-            const emptyState = document.getElementById('emptyState');
-            const count = document.getElementById('articleCount');
+        
+        function updateStats() {
+            const total = allMeetings.length;
+            const scheduled = allMeetings.filter(m => m.status === 'scheduled').length;
+            const cancelled = allMeetings.filter(m => m.status === 'cancelled').length;
             
-            count.textContent = `${articles.length} article${articles.length !== 1 ? 's' : ''}`;
+            const today = new Date().toISOString().split('T')[0];
+            const todayMeetings = allMeetings.filter(m => 
+                m.meetingDate === today && m.status === 'scheduled'
+            ).length;
             
-            if (articles.length === 0) {
-                grid.style.display = 'none';
-                emptyState.style.display = 'block';
+            document.getElementById('totalMeetings').textContent = total;
+            document.getElementById('scheduledMeetings').textContent = scheduled;
+            document.getElementById('cancelledMeetings').textContent = cancelled;
+            document.getElementById('todayMeetings').textContent = todayMeetings;
+        }
+        
+        function displayMeetings(meetings) {
+            const loading = document.getElementById('loading');
+            const table = document.getElementById('meetingsTable');
+            const tbody = document.getElementById('meetingsBody');
+            const empty = document.getElementById('emptyState');
+            
+            loading.style.display = 'none';
+            
+            if (meetings.length === 0) {
+                empty.style.display = 'block';
+                table.style.display = 'none';
                 return;
             }
             
-            grid.style.display = 'grid';
-            emptyState.style.display = 'none';
+            empty.style.display = 'none';
+            table.style.display = 'table';
             
-            grid.innerHTML = articles.map(article => `
-                <div class="article-card">
-                    <img src="${article.image || 'https://via.placeholder.com/400x300?text=Corprex+News'}" 
-                         alt="${article.title}" 
-                         class="article-image" 
-                         onerror="this.src='https://via.placeholder.com/400x300?text=Corprex+News'">
-                    <div class="article-content">
-                        <h3 class="article-title">${article.title}</h3>
-                        <p class="article-excerpt">${article.summary.substring(0, 150)}...</p>
-                        <div class="article-meta">
-                            <span>${formatDate(article.date)}</span>
-                            <div class="article-actions">
-                                <button class="btn-icon" onclick="window.open('${article.url}', '_blank')" title="View">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                                        <circle cx="12" cy="12" r="3"/>
-                                    </svg>
-                                </button>
-                                <button class="btn-icon delete" onclick="deleteArticle('${article.id}')" title="Delete">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <polyline points="3 6 5 6 21 6"/>
-                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            tbody.innerHTML = meetings.map(meeting => `
+                <tr>
+                    <td>
+                        <strong>${formatDate(meeting.meetingDate)}</strong><br>
+                        <small>${meeting.meetingTime}</small>
+                    </td>
+                    <td>${meeting.firstName} ${meeting.lastName}</td>
+                    <td>${meeting.company}</td>
+                    <td>
+                        <a href="mailto:${meeting.email}">${meeting.email}</a>
+                        ${meeting.phone ? `<br><small>${meeting.phone}</small>` : ''}
+                    </td>
+                    <td>
+                        <span class="status ${meeting.status}">${meeting.status}</span>
+                    </td>
+                    <td>
+                        ${meeting.status === 'scheduled' ? 
+                            `<button class="danger" onclick="cancelMeeting('${meeting.id}')">Cancel</button>` : 
+                            '-'
+                        }
+                    </td>
+                </tr>
             `).join('');
         }
-
-        // Format date
-        function formatDate(dateString) {
-            if (!dateString) return 'Just now';
-            const date = new Date(dateString);
-            return date.toLocaleDateString('en-US', { 
-                year: 'numeric', 
-                month: 'short', 
-                day: 'numeric' 
-            });
+        
+        function formatDate(dateStr) {
+            const date = new Date(dateStr + 'T00:00:00');
+            const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+            return date.toLocaleDateString('en-US', options);
         }
-
-        // Delete article
-        async function deleteArticle(id) {
-            if (!confirm('Are you sure you want to delete this article?')) return;
+        
+        function filterMeetings() {
+            const filter = document.getElementById('filterStatus').value;
+            const filtered = filter ? 
+                allMeetings.filter(m => m.status === filter) : 
+                allMeetings;
+            displayMeetings(filtered);
+        }
+        
+        async function cancelMeeting(meetingId) {
+            if (!confirm('Are you sure you want to cancel this meeting?')) {
+                return;
+            }
             
             try {
-                await db.collection('articles').doc(id).delete();
-                showMessage('Article deleted successfully', 'success');
-                loadArticles();
-            } catch (error) {
-                console.error('Error deleting article:', error);
-                showMessage('Error deleting article', 'error');
+                const response = await fetch(`${API_URL}/meetings/${meetingId}/cancel`, {
+                    method: 'POST'
+                });
+                
+                if (response.ok) {
+                    alert('Meeting cancelled successfully');
+                    await loadMeetings();
+                } else {
+                    throw new Error('Failed to cancel meeting');
+                }
+            } catch (err) {
+                alert(`Error: ${err.message}`);
             }
         }
-
-        // Show message
-        function showMessage(text, type) {
-            const elem = document.getElementById(type === 'success' ? 'successMessage' : 'errorMessage');
-            elem.textContent = text;
-            elem.style.display = 'block';
-            setTimeout(() => elem.style.display = 'none', 3000);
+        
+        function refreshData() {
+            loadMeetings();
         }
-
-        // Form submission
-        document.getElementById('articleForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
+        
+        function exportData() {
+            const csv = [
+                ['Date', 'Time', 'First Name', 'Last Name', 'Email', 'Phone', 'Company', 'Status', 'Message'],
+                ...allMeetings.map(m => [
+                    m.meetingDate,
+                    m.meetingTime,
+                    m.firstName,
+                    m.lastName,
+                    m.email,
+                    m.phone || '',
+                    m.company,
+                    m.status,
+                    m.message || ''
+                ])
+            ].map(row => row.map(cell => `"${cell}"`).join(',')).join('\n');
             
-            const submitBtn = document.getElementById('submitBtn');
-            const submitText = document.getElementById('submitText');
-            
-            submitBtn.disabled = true;
-            submitText.textContent = 'Publishing...';
-            
-            try {
-                const article = {
-                    url: document.getElementById('articleUrl').value,
-                    title: document.getElementById('articleTitle').value,
-                    author: document.getElementById('articleAuthor').value || 'Corprex Team',
-                    category: document.getElementById('articleCategory').value,
-                    summary: document.getElementById('articleSummary').value,
-                    image: document.getElementById('articleImage').value || 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80',
-                    date: new Date().toISOString(),
-                    published: true
-                };
-                
-                await db.collection('articles').add(article);
-                
-                showMessage('Article published successfully!', 'success');
-                e.target.reset();
-                document.getElementById('imagePreview').style.display = 'none';
-                loadArticles();
-                
-            } catch (error) {
-                console.error('Error publishing article:', error);
-                showMessage('Error publishing article', 'error');
-            } finally {
-                submitBtn.disabled = false;
-                submitText.textContent = 'Publish Article';
-            }
-        });
-
-        // Image preview
-        document.getElementById('articleImage').addEventListener('input', (e) => {
-            const preview = document.getElementById('imagePreview');
-            const img = document.getElementById('previewImg');
-            
-            if (e.target.value) {
-                img.src = e.target.value;
-                preview.style.display = 'block';
-            } else {
-                preview.style.display = 'none';
-            }
-        });
-
-        // Logout
-        document.getElementById('logoutBtn').addEventListener('click', async () => {
-            if (isRedirecting) return;
-            
-            try {
-                isRedirecting = true;
-                await auth.signOut();
-                window.location.replace('adminlogin.html');
-            } catch (error) {
-                console.error('Logout error:', error);
-                showMessage('Error logging out', 'error');
-                isRedirecting = false;
-            }
-        });
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `meetings-${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+        }
+        
+        // Auto-refresh every 30 seconds
+        setInterval(loadMeetings, 30000);
     </script>
 </body>
 </html>
