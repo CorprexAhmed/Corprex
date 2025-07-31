@@ -972,33 +972,6 @@
             document.getElementById('calendarView').style.display = 'block';
         }
 
-        // Handle form submission
-        document.getElementById('schedulerForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const submitBtn = document.getElementById('submitBtn');
-            const submitText = document.getElementById('submitText');
-            const loadingSpinner = document.getElementById('loadingSpinner');
-            
-            // Show loading state
-            submitBtn.disabled = true;
-            submitText.textContent = 'Scheduling...';
-            loadingSpinner.classList.add('active');
-            
-            // Simulate API call
-            setTimeout(() => {
-                // Hide form and show success
-                document.getElementById('bookingForm').style.display = 'none';
-                document.getElementById('bookingSuccess').classList.add('active');
-                
-                // Reset form
-                document.getElementById('schedulerForm').reset();
-                submitBtn.disabled = false;
-                submitText.textContent = 'Schedule Meeting';
-                loadingSpinner.classList.remove('active');
-            }, 2000);
-        });
-
         // Close scheduler
         function closeScheduler() {
             document.getElementById('schedulerOverlay').classList.remove('active');
