@@ -24,7 +24,7 @@
             --text-primary: #ffffff;
             --text-secondary: #cccccc;
             --border-color: #333333;
-            --accent-green: #4CAF50;
+            --accent-color: #ffffff;
             --safe-area-inset-top: env(safe-area-inset-top, 0px);
             --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
             --safe-area-inset-left: env(safe-area-inset-left, 0px);
@@ -82,14 +82,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            min-height: 60px;
         }
 
         .logo {
             font-size: 1.5rem;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            flex-shrink: 0;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: 2px;
         }
 
         .logo a {
@@ -97,60 +96,46 @@
             text-decoration: none;
         }
 
-        /* Mobile Menu Button */
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 0.5rem;
-            touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
-        }
-
         .nav-menu {
             display: flex;
-            gap: 2rem;
             list-style: none;
+            gap: 2rem;
             align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+            font-size: 0.95rem;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--text-primary);
         }
 
         .nav-item {
             position: relative;
         }
 
-        .nav-link {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.95rem;
-            transition: color 0.3s ease;
-            cursor: pointer;
-            padding: 0.5rem 0;
-            display: block;
-        }
-
-        .nav-link:hover, .nav-link.active {
-            color: var(--text-primary);
-        }
-
-        /* Dropdown Menu */
         .dropdown {
             position: absolute;
             top: 100%;
             left: 0;
-            background: var(--secondary-black);
+            background: var(--dark-gray);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 0.5rem 0;
+            padding: 1rem;
             margin-top: 0.5rem;
             opacity: 0;
             visibility: hidden;
             transform: translateY(-10px);
             transition: all 0.3s ease;
             min-width: 200px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
         }
 
         .nav-item:hover .dropdown {
@@ -161,255 +146,218 @@
 
         .dropdown-link {
             display: block;
-            padding: 0.75rem 1.5rem;
             color: var(--text-secondary);
             text-decoration: none;
+            padding: 0.5rem 0;
+            transition: color 0.3s ease;
             font-size: 0.9rem;
-            transition: all 0.3s ease;
         }
 
         .dropdown-link:hover {
             color: var(--text-primary);
-            background: var(--dark-gray);
         }
 
         .nav-cta {
-            background: var(--text-primary);
-            color: var(--primary-black);
-            padding: 0.6rem 1.2rem;
-            border-radius: 6px;
+            background: transparent;
+            color: var(--text-primary);
+            padding: 0.75rem 1.5rem;
+            border: 1px solid var(--text-primary);
+            border-radius: 8px;
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 600;
             transition: all 0.3s ease;
-            letter-spacing: 0.02em;
-            font-size: 0.9rem;
-            white-space: nowrap;
+            font-size: 0.95rem;
         }
 
         .nav-cta:hover {
-            background: var(--text-secondary);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+            background: var(--text-primary);
+            color: var(--primary-black);
+            transform: translateY(-1px);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
         }
 
         /* Hero Section */
         .hero {
-            padding: calc(6rem + var(--safe-area-inset-top)) 1.5rem 4rem;
-            padding-left: max(1.5rem, var(--safe-area-inset-left));
-            padding-right: max(1.5rem, var(--safe-area-inset-right));
+            padding-top: calc(80px + var(--safe-area-inset-top));
+            padding-bottom: 4rem;
             background: linear-gradient(180deg, var(--primary-black) 0%, var(--secondary-black) 100%);
-            text-align: center;
-            min-height: 40vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         .hero-content {
             max-width: 800px;
             margin: 0 auto;
-            width: 100%;
+            text-align: center;
+            padding: 4rem 1.5rem;
+            padding-left: max(1.5rem, var(--safe-area-inset-left));
+            padding-right: max(1.5rem, var(--safe-area-inset-right));
         }
 
         .hero-title {
-            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-size: 3rem;
             font-weight: 300;
-            line-height: 1.1;
             margin-bottom: 1.5rem;
+            line-height: 1.2;
             letter-spacing: -0.02em;
         }
 
         .hero-subtitle {
-            font-size: clamp(1rem, 2.5vw, 1.125rem);
+            font-size: 1.25rem;
             color: var(--text-secondary);
-            line-height: 1.8;
-            max-width: 600px;
-            margin: 0 auto;
+            line-height: 1.6;
+            margin-bottom: 2rem;
         }
 
-        /* Contact Section */
+        .hero-cta {
+            display: inline-block;
+            background: transparent;
+            color: var(--text-primary);
+            padding: 1rem 2rem;
+            border: 1px solid var(--text-primary);
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .hero-cta:hover {
+            background: var(--text-primary);
+            color: var(--primary-black);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Contact Form Section */
         .contact-section {
             padding: 4rem 1.5rem;
             padding-left: max(1.5rem, var(--safe-area-inset-left));
             padding-right: max(1.5rem, var(--safe-area-inset-right));
-            padding-bottom: calc(4rem + var(--safe-area-inset-bottom));
-            background: var(--primary-black);
+            background: var(--secondary-black);
         }
 
         .contact-container {
-            max-width: 1200px;
+            max-width: 800px;
             margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: start;
-        }
-
-        /* Schedule Button */
-        .schedule-button {
-            background: #ffffff;
-            color: #000000;
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.75rem;
-            letter-spacing: 0.02em;
-            border: none;
-            margin-bottom: 2rem;
-            touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .schedule-button:hover {
-            background: #cccccc;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
-        }
-
-        .schedule-button svg {
-            width: 20px;
-            height: 20px;
-            flex-shrink: 0;
-        }
-
-        /* Contact Form */
-        .contact-form-container {
-            background: var(--secondary-black);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 2.5rem;
-        }
-
-        .form-title {
-            font-size: clamp(1.5rem, 4vw, 2rem);
-            margin-bottom: 1rem;
-            font-weight: 300;
-        }
-
-        .form-subtitle {
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            font-size: 0.95rem;
         }
 
         .contact-form {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
+            background: var(--dark-gray);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 3rem;
+            margin-bottom: 4rem;
         }
 
         .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
+            margin-bottom: 1.5rem;
         }
 
-        .form-label {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
+        label {
+            display: block;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
             font-weight: 500;
+            font-size: 0.95rem;
         }
 
-        .form-input,
-        .form-textarea,
-        .form-select {
-            background: var(--dark-gray);
+        input,
+        textarea,
+        select {
+            width: 100%;
+            background: var(--secondary-black);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 0.875rem 1rem;
+            padding: 0.75rem 1rem;
             color: var(--text-primary);
-            font-size: 16px; /* Prevents zoom on iOS */
+            font-size: 16px;
             transition: all 0.3s ease;
-            font-family: 'Montserrat', sans-serif;
-            width: 100%;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
+            font-family: inherit;
         }
 
-        .form-input:focus,
-        .form-textarea:focus,
-        .form-select:focus {
+        input:focus,
+        textarea:focus,
+        select:focus {
             outline: none;
             border-color: var(--text-primary);
-            background: var(--primary-black);
+            background: rgba(255, 255, 255, 0.02);
         }
 
-        .form-textarea {
-            min-height: 120px;
+        textarea {
             resize: vertical;
+            min-height: 120px;
         }
 
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
+            gap: 1rem;
         }
 
-        .form-button {
-            background: var(--text-primary);
-            color: var(--primary-black);
-            border: none;
-            padding: 0.875rem 2rem;
+        .submit-btn {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--text-primary);
+            padding: 1rem 2rem;
             border-radius: 8px;
-            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            letter-spacing: 0.02em;
+            width: 100%;
+            font-size: 1rem;
             margin-top: 1rem;
-            touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
         }
 
-        .form-button:hover {
-            background: var(--text-secondary);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+        .submit-btn:hover:not(:disabled) {
+            background: var(--text-primary);
+            color: var(--primary-black);
+            transform: translateY(-1px);
         }
 
-        .form-button:disabled {
+        .submit-btn:disabled {
             opacity: 0.6;
             cursor: not-allowed;
-            transform: none;
         }
 
-        /* Contact Info */
+        /* Contact Info Cards */
         .contact-info {
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
         }
 
         .info-card {
-            background: var(--secondary-black);
+            background: var(--dark-gray);
             border: 1px solid var(--border-color);
-            border-radius: 16px;
+            border-radius: 12px;
             padding: 2rem;
+            text-align: center;
             transition: all 0.3s ease;
         }
 
         .info-card:hover {
-            transform: translateY(-5px);
             border-color: var(--text-primary);
-            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.05);
+            transform: translateY(-2px);
         }
 
         .info-icon {
-            width: 50px;
-            height: 50px;
-            background: var(--dark-gray);
-            border-radius: 10px;
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 1rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
         }
 
         .info-icon svg {
@@ -420,106 +368,130 @@
 
         .info-title {
             font-size: 1.25rem;
-            margin-bottom: 0.75rem;
-            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
         }
 
         .info-text {
             color: var(--text-secondary);
             line-height: 1.6;
-            font-size: 0.95rem;
         }
 
         .info-link {
             color: var(--text-primary);
             text-decoration: none;
-            transition: color 0.3s ease;
-            word-break: break-all;
+            transition: opacity 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
         }
 
         .info-link:hover {
-            color: var(--accent-green);
+            opacity: 0.8;
+            border-bottom-color: var(--text-primary);
         }
 
-        /* Success Message */
-        .success-message {
-            background: rgba(76, 175, 80, 0.1);
-            border: 1px solid var(--accent-green);
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
+        /* Loading Spinner */
+        .loading-spinner {
             display: none;
-            animation: slideIn 0.3s ease;
-        }
-
-        .success-message.show {
-            display: block;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateY(-10px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        /* Footer */
-        footer {
-            background: var(--secondary-black);
-            border-top: 1px solid var(--border-color);
-            padding: 3rem 1.5rem 2rem;
-            padding-left: max(1.5rem, var(--safe-area-inset-left));
-            padding-right: max(1.5rem, var(--safe-area-inset-right));
-            padding-bottom: calc(2rem + var(--safe-area-inset-bottom));
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-            margin-bottom: 2rem;
-            max-width: 1400px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .footer-column h4 {
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-        }
-
-        .footer-link {
-            display: block;
-            color: var(--text-secondary);
-            text-decoration: none;
-            padding: 0.4rem 0;
-            transition: color 0.3s ease;
-            font-size: 0.9rem;
-        }
-
-        .footer-link:hover {
-            color: var(--text-primary);
-        }
-
-        .footer-bottom {
-            border-top: 1px solid var(--border-color);
-            padding-top: 1.5rem;
-            text-align: center;
-            max-width: 1400px;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
             margin: 0 auto;
         }
 
-        .footer-copyright {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
+        .loading-spinner.active {
+            display: block;
         }
 
-        /* Scheduler Styles - Completely Redesigned for Better Responsiveness */
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .nav-menu {
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: calc(64px + var(--safe-area-inset-top));
+                flex-direction: column;
+                width: 100%;
+                background: var(--secondary-black);
+                padding: 2rem;
+                gap: 1.5rem;
+                transition: left 0.3s ease;
+                border-top: 1px solid var(--border-color);
+                z-index: 999;
+                max-height: calc(100vh - 64px - var(--safe-area-inset-top));
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-item {
+                width: 100%;
+            }
+
+            .dropdown {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                margin-top: 0.5rem;
+                box-shadow: none;
+                background: rgba(26, 26, 26, 0.5);
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-form {
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content {
+                padding: 2rem 1rem;
+            }
+
+            .contact-section {
+                padding: 2rem 1rem;
+            }
+
+            .info-card {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Scheduler Overlay */
         .scheduler-overlay {
             position: fixed;
             top: 0;
@@ -544,6 +516,17 @@
             to { opacity: 1; }
         }
 
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
         .scheduler-wrapper {
             min-height: 100%;
             display: flex;
@@ -565,17 +548,6 @@
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
             max-height: 90vh;
             overflow: hidden;
-        }
-
-        @keyframes slideUp {
-            from {
-                transform: translateY(50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
         }
 
         /* Close Button */
@@ -752,7 +724,8 @@
             height: 100%;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
-            position: relative;
+            display: flex;
+            flex-direction: column;
         }
 
         /* Calendar View */
@@ -760,89 +733,74 @@
             display: flex;
             flex-direction: column;
             height: 100%;
-            position: relative;
+            padding: 2rem;
         }
 
-        /* Calendar Header */
         .calendar-header {
-            padding: 1.5rem 2rem;
-            border-bottom: 1px solid rgba(51, 51, 51, 0.5);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            flex-shrink: 0;
-            background: rgba(0, 0, 0, 0.3);
+            margin-bottom: 2rem;
+            padding: 0 0.5rem;
         }
 
         .calendar-nav {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 1.5rem;
         }
 
         .calendar-nav-btn {
-            background: rgba(26, 26, 26, 0.6);
-            border: 1px solid rgba(51, 51, 51, 0.5);
+            background: none;
+            border: none;
+            color: #999999;
+            cursor: pointer;
+            padding: 0.5rem;
+            transition: all 0.3s ease;
             border-radius: 8px;
-            width: 36px;
-            height: 36px;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
         }
 
         .calendar-nav-btn:hover {
+            color: #ffffff;
             background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.3);
         }
 
         .calendar-nav-btn svg {
-            width: 16px;
-            height: 16px;
-            color: #cccccc;
+            width: 20px;
+            height: 20px;
         }
 
         .calendar-month {
-            font-size: 1.125rem;
+            font-size: 1.5rem;
             color: #ffffff;
-            font-weight: 500;
-            min-width: 180px;
+            font-weight: 300;
+            min-width: 200px;
             text-align: center;
         }
 
-        /* Calendar Grid - New Responsive Design */
         .calendar-content {
             flex: 1;
             display: flex;
-            padding: 1.5rem;
-            gap: 1.5rem;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .calendar-grid-wrapper {
-            flex: 1;
-            display: flex;
             flex-direction: column;
+            min-height: 0;
         }
 
         .calendar-weekdays {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
             gap: 0.5rem;
-            margin-bottom: 0.75rem;
+            margin-bottom: 1rem;
+            padding: 0 0.5rem;
         }
 
         .weekday {
             text-align: center;
-            font-size: 0.75rem;
-            color: #999999;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            font-size: 0.8rem;
+            color: #666666;
+            font-weight: 500;
             padding: 0.5rem 0;
         }
 
@@ -850,27 +808,41 @@
             display: grid;
             grid-template-columns: repeat(7, 1fr);
             gap: 0.5rem;
-            grid-auto-rows: minmax(45px, 1fr);
+            padding: 0 0.5rem;
+            flex: 1;
+            align-content: start;
         }
 
         .calendar-day {
-            background: rgba(26, 26, 26, 0.4);
-            border: 1px solid rgba(51, 51, 51, 0.5);
-            border-radius: 8px;
+            aspect-ratio: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
+            border-radius: 8px;
+            background: rgba(26, 26, 26, 0.4);
+            border: 1px solid rgba(51, 51, 51, 0.3);
+            cursor: default;
             transition: all 0.3s ease;
             position: relative;
-            touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
-            min-height: 45px;
+            min-height: 40px;
         }
 
-        .calendar-day:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.3);
+        .calendar-day.available {
+            cursor: pointer;
+            background: rgba(26, 26, 26, 0.6);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .calendar-day.available:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: scale(1.05);
+        }
+
+        .calendar-day.selected {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--text-primary);
+            color: var(--text-primary);
         }
 
         .calendar-day.disabled {
@@ -878,120 +850,75 @@
             cursor: not-allowed;
         }
 
-        .calendar-day.disabled:hover {
-            background: rgba(26, 26, 26, 0.4);
-            border-color: rgba(51, 51, 51, 0.5);
-        }
-
-        .calendar-day.selected {
-            background: #ffffff;
-            color: #000000;
-            border-color: #ffffff;
-        }
-
-        .calendar-day.selected:hover {
-            background: #cccccc;
-        }
-
-        .calendar-day.available::after {
-            content: '';
-            position: absolute;
-            bottom: 4px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 4px;
-            background: #4CAF50;
-            border-radius: 50%;
-        }
-
         .day-number {
-            font-size: 0.875rem;
-            font-weight: 500;
+            font-size: 0.9rem;
+            color: #cccccc;
+        }
+
+        .calendar-day.available .day-number {
+            color: #ffffff;
         }
 
         /* Time Slots */
         .time-slots {
-            width: 280px;
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(51, 51, 51, 0.5);
-            border-radius: 16px;
-            padding: 1.25rem;
             display: none;
-            flex-direction: column;
-            flex-shrink: 0;
+            padding: 1.5rem;
+            border-top: 1px solid rgba(51, 51, 51, 0.5);
+            background: rgba(0, 0, 0, 0.5);
         }
 
         .time-slots.active {
-            display: flex;
-        }
-
-        .time-slots-header {
-            margin-bottom: 1rem;
-        }
-
-        .time-slots-title {
-            font-size: 0.95rem;
-            color: #ffffff;
-            margin-bottom: 0.25rem;
-            font-weight: 500;
+            display: block;
         }
 
         .selected-date {
-            font-size: 0.8rem;
-            color: #999999;
+            font-size: 1.1rem;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            text-align: center;
         }
 
         .time-slots-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 0.75rem;
+            max-height: 200px;
             overflow-y: auto;
-            flex: 1;
+            padding: 0.5rem;
             -webkit-overflow-scrolling: touch;
         }
 
         .time-slot {
+            padding: 0.75rem 1rem;
             background: rgba(26, 26, 26, 0.6);
             border: 1px solid rgba(51, 51, 51, 0.5);
             border-radius: 8px;
-            padding: 0.75rem;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: #cccccc;
-            touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
         }
 
         .time-slot:hover {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.1);
             border-color: rgba(255, 255, 255, 0.3);
             color: #ffffff;
         }
 
         .time-slot.selected {
-            background: #ffffff;
-            color: #000000;
-            border-color: #ffffff;
-            font-weight: 500;
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--text-primary);
+            color: var(--text-primary);
         }
 
-        /* Booking Form - Fixed Display */
+        /* Booking Form View */
         .booking-form {
             display: none;
             padding: 2rem;
-            background: #0a0a0a;
             height: 100%;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 100;
         }
 
         .booking-form.active {
@@ -999,100 +926,126 @@
         }
 
         .form-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-            gap: 1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .form-title {
+            font-size: 1.5rem;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
         }
 
         .booking-summary {
-            font-size: 0.875rem;
             color: #999999;
+            font-size: 0.9rem;
         }
 
         .form-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 1.25rem;
-            margin-bottom: 1.5rem;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
         }
 
         .form-group.full-width {
             grid-column: 1 / -1;
         }
 
+        .form-label {
+            font-size: 0.85rem;
+            color: #999999;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input {
+            background: rgba(26, 26, 26, 0.6);
+            border: 1px solid rgba(51, 51, 51, 0.5);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            color: #ffffff;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(26, 26, 26, 0.8);
+        }
+
+        textarea.form-input {
+            resize: vertical;
+            min-height: 100px;
+        }
+
         .form-actions {
             display: flex;
             gap: 1rem;
-            justify-content: flex-end;
-            flex-wrap: wrap;
+            justify-content: center;
             margin-top: 2rem;
+        }
+
+        .btn-secondary,
+        .btn-primary {
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
         }
 
         .btn-secondary {
             background: transparent;
-            color: #ffffff;
+            color: #999999;
             border: 1px solid rgba(51, 51, 51, 0.5);
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
         }
 
         .btn-secondary:hover {
-            border-color: rgba(255, 255, 255, 0.3);
             background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.3);
         }
 
         .btn-primary {
-            background: #ffffff;
-            color: #000000;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            letter-spacing: 0.02em;
-            touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
+            background: var(--text-primary);
+            color: var(--primary-black);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 1px solid var(--text-primary);
         }
 
-        .btn-primary:hover {
-            background: #cccccc;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+        .btn-primary:hover:not(:disabled) {
+            background: transparent;
+            color: var(--text-primary);
+            transform: translateY(-1px);
         }
 
         .btn-primary:disabled {
             opacity: 0.6;
             cursor: not-allowed;
-            transform: none;
         }
 
-        /* Success State - Fixed Display */
+        /* Success View */
         .booking-success {
             display: none;
+            padding: 3rem;
             text-align: center;
-            padding: 3rem 2rem;
             height: 100%;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            flex-direction: column;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: #0a0a0a;
-            z-index: 200;
         }
 
         .booking-success.active {
@@ -1100,9 +1053,10 @@
         }
 
         .success-icon {
-            width: 72px;
-            height: 72px;
-            background: #4CAF50;
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -1111,251 +1065,135 @@
         }
 
         .success-icon svg {
-            width: 36px;
-            height: 36px;
-            color: #ffffff;
+            width: 40px;
+            height: 40px;
+            color: var(--text-primary);
         }
 
         .success-title {
             font-size: 1.75rem;
             color: #ffffff;
-            margin-bottom: 0.75rem;
-            font-weight: 300;
+            margin-bottom: 0.5rem;
         }
 
-        .success-message-text {
-            font-size: 0.95rem;
-            color: #cccccc;
+        .success-message {
+            color: #999999;
             line-height: 1.6;
             margin-bottom: 2rem;
-            max-width: 400px;
         }
 
-        /* Loading State */
-        .loading-spinner {
-            display: none;
-            width: 40px;
-            height: 40px;
-            border: 3px solid rgba(51, 51, 51, 0.5);
-            border-radius: 50%;
-            border-top-color: #ffffff;
-            animation: spin 0.8s linear infinite;
-            margin: 2rem auto;
+        /* Footer */
+        footer {
+            background: var(--secondary-black);
+            border-top: 1px solid var(--border-color);
+            padding: 3rem 1.5rem 2rem;
+            padding-left: max(1.5rem, var(--safe-area-inset-left));
+            padding-right: max(1.5rem, var(--safe-area-inset-right));
+            padding-bottom: calc(2rem + var(--safe-area-inset-bottom));
         }
 
-        .loading-spinner.active {
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-bottom: 2rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-column h4 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .footer-link {
             display: block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.4rem 0;
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        .footer-link:hover {
+            color: var(--text-primary);
         }
 
-        /* Mobile Responsive - Complete Overhaul */
+        .footer-bottom {
+            border-top: 1px solid var(--border-color);
+            padding-top: 1.5rem;
+            text-align: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-copyright {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Scheduler */
         @media (max-width: 1024px) {
-            .scheduler-wrapper {
-                padding: 0;
-                align-items: flex-start;
-            }
-
             .scheduler-container {
-                border-radius: 0;
-                max-height: 100vh;
-                height: 100vh;
                 flex-direction: column;
-                max-width: 100%;
-                width: 100%;
+                max-height: none;
+                height: 100%;
             }
 
             .scheduler-sidebar {
-                display: none;
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #333333;
+                padding: 1.5rem;
+                flex-shrink: 0;
             }
 
             .scheduler-main {
+                height: auto;
                 flex: 1;
-                height: 100%;
-                min-height: 0;
+                min-height: 500px;
             }
 
             .scheduler-views {
-                height: 100%;
-                min-height: 0;
+                height: auto;
             }
 
             #calendarView {
-                min-height: 0;
-            }
-
-            .calendar-content {
-                flex-direction: column;
-                padding: 1rem;
-                gap: 1rem;
-                overflow-y: auto;
-                flex: 1;
-                min-height: 0;
-            }
-
-            .time-slots {
-                width: 100%;
-                border-radius: 16px 16px 0 0;
-                padding: 1rem;
-                position: sticky;
-                bottom: 0;
-                background: #0a0a0a;
-                border-top: 2px solid #333;
-            }
-
-            .booking-form {
-                position: fixed !important;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: #0a0a0a;
-                z-index: 100;
-                border-radius: 0;
                 padding: 1.5rem;
-                padding-top: 3rem;
-                height: 100vh;
-                overflow-y: auto;
-            }
-
-            .booking-success {
-                position: fixed !important;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: #0a0a0a;
-                z-index: 200;
-            }
-
-            .booking-form.active {
-                animation: slideInMobile 0.3s ease;
-            }
-
-            @keyframes slideInMobile {
-                from {
-                    transform: translateX(100%);
-                }
-                to {
-                    transform: translateX(0);
-                }
             }
         }
 
         @media (max-width: 768px) {
-            /* Mobile Menu */
-            .mobile-menu-btn {
-                display: block;
-            }
-
-            .nav-menu {
-                position: fixed;
-                top: calc(60px + var(--safe-area-inset-top));
-                left: -100%;
-                width: 100%;
-                height: calc(100vh - 60px - var(--safe-area-inset-top));
-                background: var(--secondary-black);
-                flex-direction: column;
-                padding: 2rem;
-                padding-left: max(2rem, var(--safe-area-inset-left));
-                padding-right: max(2rem, var(--safe-area-inset-right));
-                gap: 1.5rem;
-                transition: left 0.3s ease;
-                border-top: 1px solid var(--border-color);
-                overflow-y: auto;
+            .scheduler-wrapper {
+                padding: 0;
                 align-items: stretch;
-                -webkit-overflow-scrolling: touch;
             }
 
-            .nav-menu.active {
-                left: 0;
+            .scheduler-container {
+                border-radius: 0;
+                max-width: 100%;
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
             }
 
-            .dropdown {
-                position: static;
-                opacity: 1;
-                visibility: visible;
-                transform: none;
-                box-shadow: none;
-                background: var(--dark-gray);
-                margin-top: 0.5rem;
-                border-radius: 8px;
+            .scheduler-sidebar {
+                padding: 1.25rem;
             }
 
-            .nav-cta {
-                width: 100%;
-                text-align: center;
-                padding: 0.875rem;
-            }
-
-            /* Hero */
-            .hero {
-                padding: calc(5rem + var(--safe-area-inset-top)) 1rem 3rem;
-                min-height: auto;
-            }
-
-            /* Contact */
-            .contact-section {
-                padding: 3rem 1rem;
-                padding-bottom: calc(3rem + var(--safe-area-inset-bottom));
-            }
-
-            .contact-container {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .contact-form-container {
-                padding: 2rem 1.5rem;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-
-            .schedule-button {
-                width: 100%;
-                justify-content: center;
-            }
-
-            /* Scheduler Mobile */
-            .calendar-header {
-                padding: 1rem;
-            }
-
-            .calendar-nav-btn {
-                width: 32px;
-                height: 32px;
+            .scheduler-title {
+                font-size: 1.5rem;
             }
 
             .calendar-month {
-                font-size: 1rem;
-                min-width: 140px;
-            }
-
-            .calendar-content {
-                padding: 0.75rem;
-            }
-
-            .calendar-days {
-                gap: 0.25rem;
+                font-size: 1.25rem;
+                min-width: 150px;
             }
 
             .calendar-day {
-                min-height: 38px;
-                font-size: 0.8rem;
-            }
-
-            .weekday {
-                font-size: 0.65rem;
-                padding: 0.25rem 0;
-            }
-
-            .time-slots-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 0.4rem;
+                min-height: 35px;
             }
 
             .time-slot {
@@ -1520,107 +1358,94 @@
             <p class="hero-subtitle">
                 Whether you're ready to transform your infrastructure or just exploring possibilities, we're here to help. Reach out to discuss how private AI can revolutionize your operations.
             </p>
+            <a href="#" class="hero-cta" onclick="openScheduler()">Schedule a Consultation</a>
         </div>
     </section>
 
-    <!-- Contact Section -->
+    <!-- Contact Form Section -->
     <section class="contact-section">
         <div class="contact-container">
-            <!-- Contact Form -->
-            <div class="contact-form-container">
-                <button class="schedule-button" onclick="openScheduler()">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                    </svg>
-                    Schedule a Meeting
-                </button>
-
-                <h2 class="form-title">Get in Touch</h2>
-                <p class="form-subtitle">Fill out the form below and our team will respond within 24 hours</p>
+            <form class="contact-form" id="contactForm">
+                <h2 style="text-align: center; margin-bottom: 2rem; font-weight: 300;">Send Us a Message</h2>
                 
-                <div class="success-message" id="successMessage">
-                    Your message has been sent successfully! We'll be in touch soon.
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
                 </div>
-
-                <!-- Note: This form uses Formspree for email handling. Replace YOUR_FORM_ID with your actual Formspree form ID -->
-                <form class="contact-form" id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="firstName" class="form-label">First Name</label>
-                            <input type="text" id="firstName" name="firstName" class="form-input" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="lastName" class="form-label">Last Name</label>
-                            <input type="text" id="lastName" name="lastName" class="form-input" required>
-                        </div>
-                    </div>
-
+                
+                <div class="form-row">
                     <div class="form-group">
-                        <label for="email" class="form-label">Email Address</label>
-                        <input type="email" id="email" name="_replyto" class="form-input" required>
+                        <label for="company">Company</label>
+                        <input type="text" id="company" name="company">
                     </div>
-
                     <div class="form-group">
-                        <label for="company" class="form-label">Company</label>
-                        <input type="text" id="company" name="company" class="form-input">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone">
                     </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="subject">Subject *</label>
+                    <select id="subject" name="subject" required>
+                        <option value="">Select a topic</option>
+                        <option value="consultation">Schedule Consultation</option>
+                        <option value="demo">Request Demo</option>
+                        <option value="partnership">Partnership Opportunity</option>
+                        <option value="technical">Technical Question</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Message *</label>
+                    <textarea id="message" name="message" required placeholder="Tell us about your project or requirements..."></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    <span id="submitText">Send Message</span>
+                    <div class="loading-spinner" id="loadingSpinner"></div>
+                </button>
+            </form>
 
-                    <div class="form-group">
-                        <label for="interest" class="form-label">Area of Interest</label>
-                        <select id="interest" name="interest" class="form-select" required>
-                            <option value="">Select an option</option>
-                            <option value="omega-hardware">Omega Hardware</option>
-                            <option value="ai-automations">AI Automations</option>
-                            <option value="consulting">Consulting Services</option>
-                            <option value="partnership">Partnership Opportunities</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="message" class="form-label">Message</label>
-                        <textarea id="message" name="message" class="form-textarea" rows="5" required></textarea>
-                    </div>
-
-                    <!-- Honeypot field for spam protection -->
-                    <input type="text" name="_gotcha" style="display:none">
-
-                    <button type="submit" class="form-button" id="submitButton">Send Message</button>
-                </form>
-            </div>
-
-            <!-- Contact Information -->
+            <!-- Contact Info Cards -->
             <div class="contact-info">
                 <div class="info-card">
                     <div class="info-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M9 11H3v10h6V11zm6-7H9v18h6V4zm6 11h-6v6h6v-6z"/>
+                            <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                         </svg>
                     </div>
-                    <h3 class="info-title">Sales Inquiries</h3>
+                    <h3 class="info-title">Email Us</h3>
                     <p class="info-text">
-                        Ready to transform your AI infrastructure?<br>
-                        <a href="mailto:sales@corprex.com" class="info-link">sales@corprex.com</a>
+                        For general inquiries:<br>
+                        <a href="mailto:info@corprex.com" class="info-link">info@corprex.com</a>
                     </p>
                 </div>
 
                 <div class="info-card">
                     <div class="info-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+                            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
                         </svg>
                     </div>
-                    <h3 class="info-title">Press</h3>
+                    <h3 class="info-title">Partnerships</h3>
                     <p class="info-text">
-                        Media inquiries and press resources:<br>
-                        <a href="mailto:press@corprex.com" class="info-link">press@corprex.com</a>
+                        Business development:<br>
+                        <a href="mailto:partners@corprex.com" class="info-link">partners@corprex.com</a>
                     </p>
                 </div>
 
                 <div class="info-card">
                     <div class="info-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
                         </svg>
                     </div>
                     <h3 class="info-title">Investor Relations</h3>
@@ -1664,23 +1489,23 @@
                             <path d="M96 15 L96 45 Q96 45 98 45 Q100 45 100 45 L100 32 L106 32 L110 44 Q110.5 45 112 45 Q114 45 113 43 L109 31 Q112 30 112 26 L112 20 Q112 15 107 15 Z M100 19 L107 19 Q108 19 108 20 L108 26 Q108 28 107 28 L100 28 Z"/>
                             
                             <!-- E -->
-                            <path d="M120 15 L120 45 L130 45 Q132 45 132 43 Q132 41 130 41 L124 41 L124 32 L129 32 Q131 32 131 30 Q131 28 129 28 L124 28 L124 19 L130 19 Q132 19 132 17 Q132 15 130 15 Z"/>
+                            <path d="M120 15 L120 45 L130 45 Q132 45 132 43 Q132 41 130 41 L124 41 L124 31 L129 31 Q131 31 131 29 Q131 27 129 27 L124 27 L124 19 L130 19 Q132 19 132 17 Q132 15 130 15 Z"/>
                             
                             <!-- X -->
-                            <path d="M140 15 Q138 15 139 17 L145 30 L139 43 Q138 45 140 45 Q142 45 143 43 L147 33 L151 43 Q152 45 154 45 Q156 45 155 43 L149 30 L155 17 Q156 15 154 15 Q152 15 151 17 L147 27 L143 17 Q142 15 140 15 Z"/>
+                            <path d="M138 15 Q137 15 137.5 16 L144 30 L137.5 44 Q137 45 138 45 Q140 45 140.5 44 L146 31 L151.5 44 Q152 45 154 45 Q155 45 154.5 44 L148 30 L154.5 16 Q155 15 154 15 Q152 15 151.5 16 L146 29 L140.5 16 Q140 15 138 15 Z"/>
                         </g>
                     </svg>
-                    
+
                     <div class="scheduler-header">
-                        <h1 class="scheduler-title">Schedule Your Consultation</h1>
-                        <p class="scheduler-subtitle">Let's discuss how Corprex can transform your AI infrastructure</p>
+                        <h2 class="scheduler-title">Schedule Your Consultation</h2>
+                        <p class="scheduler-subtitle">Let's discuss how private AI infrastructure can transform your business operations.</p>
                     </div>
 
                     <div class="meeting-info">
                         <div class="meeting-type">
                             <div class="meeting-icon">
-                                <svg viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M17 10.5V7C17 6.45 16.55 6 16 6H4C3.45 6 3 6.45 3 7V17C3 17.55 3.45 18 4 18H16C16.55 18 17 17.55 17 17V13.5L21 17.5V6.5L17 10.5Z"/>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M8 2v4m8-4v4M3 10h18M5 4h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2z"/>
                                 </svg>
                             </div>
                             <div class="meeting-details">
@@ -1689,7 +1514,7 @@
                             </div>
                         </div>
                         <p class="meeting-description">
-                            A focused discussion about your AI needs, current challenges, and how our Omega infrastructure can deliver immediate ROI for your organization.
+                            A focused consultation to understand your requirements and explore how our private AI solutions can address your specific needs.
                         </p>
                     </div>
 
@@ -1730,29 +1555,25 @@
                             </div>
 
                             <div class="calendar-content">
-                                <div class="calendar-grid-wrapper">
-                                    <div class="calendar-weekdays">
-                                        <div class="weekday">Sun</div>
-                                        <div class="weekday">Mon</div>
-                                        <div class="weekday">Tue</div>
-                                        <div class="weekday">Wed</div>
-                                        <div class="weekday">Thu</div>
-                                        <div class="weekday">Fri</div>
-                                        <div class="weekday">Sat</div>
-                                    </div>
-                                    <div class="calendar-days" id="calendarDays">
-                                        <!-- Calendar days will be generated dynamically -->
-                                    </div>
+                                <div class="calendar-weekdays">
+                                    <div class="weekday">Sun</div>
+                                    <div class="weekday">Mon</div>
+                                    <div class="weekday">Tue</div>
+                                    <div class="weekday">Wed</div>
+                                    <div class="weekday">Thu</div>
+                                    <div class="weekday">Fri</div>
+                                    <div class="weekday">Sat</div>
                                 </div>
+                                <div class="calendar-days" id="calendarDays">
+                                    <!-- Calendar days will be generated dynamically -->
+                                </div>
+                            </div>
 
-                                <div class="time-slots" id="timeSlots">
-                                    <div class="time-slots-header">
-                                        <h3 class="time-slots-title">Select a time</h3>
-                                        <p class="selected-date" id="selectedDate">Thursday, January 30</p>
-                                    </div>
-                                    <div class="time-slots-grid" id="timeSlotsGrid">
-                                        <!-- Time slots will be generated dynamically -->
-                                    </div>
+                            <!-- Time Slots Section -->
+                            <div class="time-slots" id="timeSlots">
+                                <h3 class="selected-date" id="selectedDate">Select a time</h3>
+                                <div class="time-slots-grid" id="timeSlotsGrid">
+                                    <!-- Time slots will be generated dynamically -->
                                 </div>
                             </div>
                         </div>
@@ -1768,27 +1589,27 @@
                                 <div class="form-grid">
                                     <div class="form-group">
                                         <label class="form-label">First Name *</label>
-                                        <input type="text" class="form-input" id="schedFirstName" required>
+                                        <input type="text" class="form-input" id="firstName" required>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Last Name *</label>
-                                        <input type="text" class="form-input" id="schedLastName" required>
+                                        <input type="text" class="form-input" id="lastName" required>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Email *</label>
-                                        <input type="email" class="form-input" id="schedEmail" required>
+                                        <input type="email" class="form-input" id="email" required>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Phone</label>
-                                        <input type="tel" class="form-input" id="schedPhone">
+                                        <input type="tel" class="form-input" id="phone">
                                     </div>
                                     <div class="form-group full-width">
                                         <label class="form-label">Company *</label>
-                                        <input type="text" class="form-input" id="schedCompany" required>
+                                        <input type="text" class="form-input" id="company" required>
                                     </div>
                                     <div class="form-group full-width">
-                                        <label class="form-label">What would you like to discuss?</label>
-                                        <textarea class="form-textarea" id="schedMessage" rows="4"></textarea>
+                                        <label class="form-label">Additional Information</label>
+                                        <textarea class="form-input" id="message" placeholder="Tell us about your project or specific areas of interest..."></textarea>
                                     </div>
                                 </div>
 
@@ -1796,24 +1617,22 @@
                                     <button type="button" class="btn-secondary" onclick="backToCalendar()">Back</button>
                                     <button type="submit" class="btn-primary" id="submitBtn">
                                         <span id="submitText">Schedule Meeting</span>
+                                        <div class="loading-spinner" id="loadingSpinner"></div>
                                     </button>
                                 </div>
                             </form>
-
-                            <div class="loading-spinner" id="loadingSpinner"></div>
                         </div>
 
-                        <!-- Success State -->
+                        <!-- Success View -->
                         <div class="booking-success" id="bookingSuccess">
                             <div class="success-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="M20 6L9 17l-5-5"/>
                                 </svg>
                             </div>
                             <h2 class="success-title">Meeting Scheduled!</h2>
-                            <p class="success-message-text">
-                                You'll receive a calendar invitation at the email address provided.<br>
-                                We look forward to discussing how Corprex can transform your AI infrastructure.
+                            <p class="success-message">
+                                Your consultation has been confirmed. You'll receive a confirmation email shortly with meeting details and a calendar invite.
                             </p>
                             <button class="btn-primary" onclick="closeScheduler()">Done</button>
                         </div>
@@ -1827,63 +1646,57 @@
     <footer>
         <div class="footer-grid">
             <div class="footer-column">
-                <h4>Solutions</h4>
-                <a href="/automations" class="footer-link">Automations</a>
-                <a href="/why-local-ai" class="footer-link">Why Local AI?</a>
-            </div>
-            <div class="footer-column">
                 <h4>Company</h4>
                 <a href="/about" class="footer-link">About Us</a>
-                <a href="/news" class="footer-link">News</a>
+                <a href="/news" class="footer-link">News & Updates</a>
+                <a href="/careers" class="footer-link">Careers</a>
                 <a href="/contact" class="footer-link">Contact</a>
+            </div>
+            <div class="footer-column">
+                <h4>Resources</h4>
+                <a href="/why-local-ai" class="footer-link">Why Local AI?</a>
+                <a href="/case-studies" class="footer-link">Case Studies</a>
+                <a href="/documentation" class="footer-link">Documentation</a>
+                <a href="/support" class="footer-link">Support</a>
             </div>
         </div>
         <div class="footer-bottom">
-            <div class="footer-copyright">© 2024 Corprex. All rights reserved.</div>
+            <p class="footer-copyright">© 2024 Corprex. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
-        // Save scroll position before opening scheduler
-        let scrollPosition = 0;
-
-        // Form submission handling
-        const contactForm = document.getElementById('contactForm');
-        const submitButton = document.getElementById('submitButton');
-        const successMessage = document.getElementById('successMessage');
-
-        contactForm.addEventListener('submit', async function(e) {
+        // Contact form handling
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
             e.preventDefault();
+            
+            const submitButton = document.getElementById('submitBtn');
+            const loadingSpinner = document.getElementById('loadingSpinner');
             
             // Disable submit button
             submitButton.disabled = true;
             submitButton.textContent = 'Sending...';
             
             // Get form data
-            const formData = new FormData(contactForm);
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                company: document.getElementById('company').value,
+                phone: document.getElementById('phone').value,
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value
+            };
             
             try {
-                // Submit to Formspree
-                const response = await fetch(contactForm.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                });
+                // Here you would send the form data to your backend
+                // For now, we'll simulate a successful submission
+                await new Promise(resolve => setTimeout(resolve, 2000));
                 
-                if (response.ok) {
-                    // Show success message
-                    successMessage.classList.add('show');
-                    contactForm.reset();
-                    
-                    // Hide success message after 5 seconds
-                    setTimeout(() => {
-                        successMessage.classList.remove('show');
-                    }, 5000);
-                } else {
-                    throw new Error('Form submission failed');
-                }
+                // Show success message
+                alert('Thank you for your message! We\'ll get back to you within 24 hours.');
+                
+                // Reset form
+                this.reset();
             } catch (error) {
                 alert('There was an error sending your message. Please try again later.');
             } finally {
@@ -1922,6 +1735,8 @@
         });
 
         // Scheduler Functions
+        let scrollPosition = 0;
+
         function openScheduler() {
             // Save current scroll position
             scrollPosition = window.pageYOffset;
@@ -2095,7 +1910,7 @@
                 });
             } catch (error) {
                 console.error('Error loading times:', error);
-                timeSlotsGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #f00;">Error loading times. Please try again.</p>';
+                timeSlotsGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #f00;">Error loading times. Please refresh.</p>';
             }
         }
 
@@ -2109,23 +1924,14 @@
             });
             element.classList.add('selected');
             
-            // Show booking form
+            // Show booking form after a short delay
             setTimeout(() => showBookingForm(), 300);
         }
 
         // Show booking form
         function showBookingForm() {
-            // Hide calendar view
             document.getElementById('calendarView').style.display = 'none';
-            
-            // Remove any lingering display styles
-            document.getElementById('bookingForm').style.display = '';
-            
-            // Add active class to show booking form
             document.getElementById('bookingForm').classList.add('active');
-            
-            // Make sure success is hidden
-            document.getElementById('bookingSuccess').classList.remove('active');
             
             // Update booking summary
             const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -2214,6 +2020,6 @@
 <!-- Add scheduler API -->
 <script src="scheduler-api.js"></script>
 <!-- Add scheduler integration -->
-<script src="scheduler-integration.js"></script>
+<script src="scheduler_integration.js"></script>
 </body>
 </html>
