@@ -2152,37 +2152,6 @@
             document.getElementById('calendarView').style.display = 'flex';
         }
 
-        // Handle form submission
-        document.getElementById('schedulerForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const submitBtn = document.getElementById('submitBtn');
-            const submitText = document.getElementById('submitText');
-            const loadingSpinner = document.getElementById('loadingSpinner');
-            
-            // Show loading state
-            submitBtn.disabled = true;
-            submitText.textContent = 'Scheduling...';
-            loadingSpinner.classList.add('active');
-            
-            // Simulate API call
-            setTimeout(() => {
-                // Hide loading spinner
-                loadingSpinner.classList.remove('active');
-                
-                // Hide form first
-                document.getElementById('bookingForm').classList.remove('active');
-                
-                // Show success
-                document.getElementById('bookingSuccess').classList.add('active');
-                
-                // Reset form
-                document.getElementById('schedulerForm').reset();
-                submitBtn.disabled = false;
-                submitText.textContent = 'Schedule Meeting';
-            }, 2000);
-        });
-
         // Close scheduler
         function closeScheduler() {
             // Remove scheduler open class from body
