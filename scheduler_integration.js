@@ -1,77 +1,223 @@
 // Scheduler Integration - Fixed Version
-// This replaces all dummy handlers with real API calls
+// This properly integrates the scheduler with the API and fixes all date selection issues
 
-// Wait for DOM and ensure scheduler-api.js is loaded
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🚀 Initializing Scheduler Integration...');
     
-    // Remove ALL existing event listeners by cloning elements
-    function removeAllListeners(elementId) {
-        const element = document.getElementById(elementId);
-        if (element) {
-            const newElement = element.cloneNode(true);
-            element.parentNode.replaceChild(newElement, element);
-            return newElement;
+    // Wait for scheduler API to be ready
+    function waitForAPI(callback) {
+        if (typeof SCHEDULER_API !== 'undefined') {
+            callback();
+        } else {
+            setTimeout(() => waitForAPI(callback), 100);
         }
-        return null;
     }
     
-    // Initialize the scheduler form handler
-    function initializeSchedulerForm() {
-        const form = removeAllListeners('schedulerForm');
-        if (!form) {
-            console.log('❌ Scheduler form not found');
-            return;
-        }
+    waitForAPI(function() {
+        console.log('✅ Scheduler API is ready');
         
-        console.log('✅ Setting up real API form handler');
-        
-        form.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            console.log('📤 Real API submission starting...');
+        // Override generateCalendar to use API
+        window.generateCalendar = async function() {
+            const year = window.currentDate.getFullYear();
+            const month = window.currentDate.getMonth();
             
-            const submitBtn = document.getElementById('submitBtn');
-            const submitText = document.getElementById('submitText');
-            const loadingSpinner = document.getElementById('loadingSpinner');
-            
-            // Validate required data
-            if (!window.selectedDate || !window.selectedTime) {
-                alert('Please select a date and time');
-                return;
-            }
+            // Update month display
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                              'July', 'August', 'September', 'October', 'November', 'December'];
+            document.getElementById('calendarMonth').textContent = `${monthNames[month]} ${year}`;
             
             // Show loading state
-            submitBtn.disabled = true;
-            submitText.textContent = 'Scheduling...';
-            if (loadingSpinner) loadingSpinner.classList.add('active');
+            const calendarDays = document.getElementById('calendarDays');
+            calendarDays.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: #999;">Loading available dates...</div>';
             
             try {
-                // Format date
-                const year = window.selectedDate.getFullYear();
-                const month = String(window.selectedDate.getMonth() + 1).padStart(2, '0');
-                const day = String(window.selectedDate.getDate()).padStart(2, '0');
-                const dateStr = `${year}-${month}-${day}`;
+                // Get available dates from API
+                const availableDates = await SCHEDULER_API.getAvailableDates(year, month);
+                console.log('Available dates:', availableDates);
                 
-                // Determine which form we're on and get values accordingly
-                let bookingData = {};
+                // Clear loading state
+                calendarDays.innerHTML = '';
                 
-                // Check if we're on contact.html (fields prefixed with 'sched')
-                if (document.getElementById('schedFirstName')) {
-                    bookingData = {
-                        firstName: document.getElementById('schedFirstName').value,
-                        lastName: document.getElementById('schedLastName').value,
-                        email: document.getElementById('schedEmail').value,
-                        phone: document.getElementById('schedPhone')?.value || '',
-                        company: document.getElementById('schedCompany').value,
-                        message: document.getElementById('schedMessage')?.value || '',
-                        date: dateStr,
-                        time: window.selectedTime,
-                        timezone: document.getElementById('timezoneSelect')?.value || 'America/New_York'
+                // Get first day of month and number of days
+                const firstDay = new Date(year, month, 1).getDay();
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+                
+                // Add empty cells for days before month starts
+                for (let i = 0; i < firstDay; i++) {
+                    const emptyDay = document.createElement('div');
+                    emptyDay.className = 'calendar-day disabled';
+                    calendarDays.appendChild(emptyDay);
+                }
+                
+                // Add days of the month
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const dayElement = document.createElement('div');
+                    dayElement.className = 'calendar-day';
+                    
+                    const dayDate = new Date(year, month, day);
+                    dayDate.setHours(0, 0, 0, 0);
+                    
+                    // Format date for comparison
+                    const dateMonth = String(dayDate.getMonth() + 1).padStart(2, '0');
+                    const dateDay = String(dayDate.getDate()).padStart(2, '0');
+                    const dateStr = `${dayDate.getFullYear()}-${dateMonth}-${dateDay}`;
+                    
+                    // Check if date is available from API
+                    if (availableDates.includes(dateStr) && dayDate >= today) {
+                        dayElement.classList.add('available');
+                        // Fix: Create closure to capture the correct date
+                        (function(capturedDate) {
+                            dayElement.onclick = function() {
+                                window.selectDate(capturedDate);
+                            };
+                        })(dayDate);
+                    } else {
+                        dayElement.classList.add('disabled');
+                    }
+                    
+                    dayElement.innerHTML = `<span class="day-number">${day}</span>`;
+                    calendarDays.appendChild(dayElement);
+                }
+            } catch (error) {
+                console.error('Error generating calendar:', error);
+                calendarDays.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: #f00;">Error loading calendar. Please refresh the page.</div>';
+            }
+        };
+        
+        // Override selectDate function
+        window.selectDate = function(date) {
+            console.log('Date selected:', date);
+            window.selectedDate = date;
+            
+            // Update selected state
+            document.querySelectorAll('.calendar-day').forEach(day => {
+                day.classList.remove('selected');
+            });
+            
+            // Find and highlight the selected day
+            const selectedDay = date.getDate();
+            const calendarDays = document.querySelectorAll('.calendar-day');
+            calendarDays.forEach(dayElement => {
+                const dayNumber = dayElement.querySelector('.day-number');
+                if (dayNumber && parseInt(dayNumber.textContent) === selectedDay && dayElement.classList.contains('available')) {
+                    dayElement.classList.add('selected');
+                }
+            });
+            
+            // Show time slots
+            window.showTimeSlots(date);
+        };
+        
+        // Override showTimeSlots to use API
+        window.showTimeSlots = async function(date) {
+            const timeSlots = document.getElementById('timeSlots');
+            timeSlots.classList.add('active');
+            
+            // Update selected date display
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('selectedDate').textContent = date.toLocaleDateString('en-US', options);
+            
+            // Show loading state
+            const timeSlotsGrid = document.getElementById('timeSlotsGrid');
+            timeSlotsGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: #999;">Loading available times...</div>';
+            
+            try {
+                // Get available times from API
+                const availableTimes = await SCHEDULER_API.getAvailableTimes(date);
+                console.log('Available times:', availableTimes);
+                
+                if (availableTimes.length === 0) {
+                    timeSlotsGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: #999;">No available times for this date</div>';
+                    return;
+                }
+                
+                // Clear loading state and generate time slots
+                timeSlotsGrid.innerHTML = '';
+                
+                availableTimes.forEach(time => {
+                    const slot = document.createElement('button');
+                    slot.className = 'time-slot';
+                    slot.textContent = time;
+                    slot.onclick = function() {
+                        window.selectTime(time, this);
                     };
-                } 
-                // Otherwise we're on corprex-scheduler.html
-                else if (document.getElementById('firstName')) {
-                    bookingData = {
+                    timeSlotsGrid.appendChild(slot);
+                });
+                
+            } catch (error) {
+                console.error('Error loading times:', error);
+                timeSlotsGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: #f00;">Error loading times. Please try again.</div>';
+            }
+        };
+        
+        // Override selectTime function
+        window.selectTime = function(time, element) {
+            console.log('Time selected:', time);
+            window.selectedTime = time;
+            
+            // Update selected state
+            document.querySelectorAll('.time-slot').forEach(slot => {
+                slot.classList.remove('selected');
+            });
+            element.classList.add('selected');
+            
+            // Show booking form after a short delay
+            setTimeout(() => {
+                document.getElementById('calendarView').style.display = 'none';
+                document.getElementById('bookingForm').classList.add('active');
+                
+                // Update booking summary
+                const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                const dateStr = window.selectedDate.toLocaleDateString('en-US', options);
+                const timezone = document.getElementById('timezoneSelect').selectedOptions[0].text;
+                document.getElementById('bookingSummary').textContent = `${dateStr} at ${window.selectedTime} ${timezone}`;
+                
+                // Scroll to top of the scheduler views
+                const schedulerViews = document.querySelector('.scheduler-views');
+                if (schedulerViews) {
+                    schedulerViews.scrollTop = 0;
+                }
+            }, 300);
+        };
+        
+        // Set up form submission handler
+        const schedulerForm = document.getElementById('schedulerForm');
+        if (schedulerForm) {
+            // Remove any existing listeners
+            const newForm = schedulerForm.cloneNode(true);
+            schedulerForm.parentNode.replaceChild(newForm, schedulerForm);
+            
+            newForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                console.log('📤 Submitting booking...');
+                
+                const submitBtn = document.getElementById('submitBtn');
+                const submitText = document.getElementById('submitText');
+                const loadingSpinner = document.getElementById('loadingSpinner');
+                
+                // Validate required data
+                if (!window.selectedDate || !window.selectedTime) {
+                    alert('Please select a date and time');
+                    return;
+                }
+                
+                // Show loading state
+                submitBtn.disabled = true;
+                submitText.textContent = 'Scheduling...';
+                if (loadingSpinner) loadingSpinner.classList.add('active');
+                
+                try {
+                    // Format date
+                    const year = window.selectedDate.getFullYear();
+                    const month = String(window.selectedDate.getMonth() + 1).padStart(2, '0');
+                    const day = String(window.selectedDate.getDate()).padStart(2, '0');
+                    const dateStr = `${year}-${month}-${day}`;
+                    
+                    // Get form data - Fixed to use correct field IDs
+                    const bookingData = {
                         firstName: document.getElementById('firstName').value,
                         lastName: document.getElementById('lastName').value,
                         email: document.getElementById('email').value,
@@ -82,198 +228,63 @@ document.addEventListener('DOMContentLoaded', function() {
                         time: window.selectedTime,
                         timezone: document.getElementById('timezoneSelect')?.value || 'America/New_York'
                     };
-                }
-                
-                console.log('📧 Booking data:', bookingData);
-                
-                // Make the actual API call
-                const response = await fetch('https://corprex-scheduler.onrender.com/api/meetings/book', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(bookingData)
-                });
-                
-                const result = await response.json();
-                
-                if (!response.ok) {
-                    throw new Error(result.error || 'Booking failed');
-                }
-                
-                console.log('✅ Booking successful:', result);
-                
-                // Hide loading spinner
-                if (loadingSpinner) loadingSpinner.classList.remove('active');
-                
-                // Hide form and show success
-                document.getElementById('bookingForm').classList.remove('active');
-                document.getElementById('bookingSuccess').classList.add('active');
-                
-                // Reset form
-                form.reset();
-                
-            } catch (error) {
-                console.error('❌ Booking error:', error);
-                
-                // Hide loading spinner
-                if (loadingSpinner) loadingSpinner.classList.remove('active');
-                
-                // Show user-friendly error
-                let errorMessage = 'Failed to schedule meeting. ';
-                if (error.message.includes('fetch') || error.message.includes('Failed to fetch')) {
-                    errorMessage += 'The booking service is starting up. Please wait 30 seconds and try again.';
-                } else {
-                    errorMessage += error.message;
-                }
-                
-                alert(errorMessage);
-            } finally {
-                // Reset button state
-                submitBtn.disabled = false;
-                submitText.textContent = 'Schedule Meeting';
-            }
-        });
-    }
-    
-    // Initialize calendar with API data
-    async function initializeCalendar() {
-        if (typeof window.generateCalendar !== 'function') {
-            console.log('⏳ Waiting for calendar functions...');
-            setTimeout(initializeCalendar, 100);
-            return;
-        }
-        
-        // Override generateCalendar to use API
-        const originalGenerateCalendar = window.generateCalendar;
-        window.generateCalendar = async function() {
-            const year = window.currentDate.getFullYear();
-            const month = window.currentDate.getMonth();
-            
-            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
-                              'July', 'August', 'September', 'October', 'November', 'December'];
-            document.getElementById('calendarMonth').textContent = `${monthNames[month]} ${year}`;
-            
-            const calendarDays = document.getElementById('calendarDays');
-            calendarDays.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 2rem;">Loading...</div>';
-            
-            try {
-                const response = await fetch(`https://corprex-scheduler.onrender.com/api/availability/dates?year=${year}&month=${month + 1}`);
-                const data = await response.json();
-                const availableDates = data.availableDates || [];
-                
-                // Generate calendar with available dates
-                const firstDay = new Date(year, month, 1).getDay();
-                const daysInMonth = new Date(year, month + 1, 0).getDate();
-                
-                calendarDays.innerHTML = '';
-                
-                // Add day headers
-                const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-                dayHeaders.forEach(day => {
-                    const header = document.createElement('div');
-                    header.className = 'calendar-header-day';
-                    header.textContent = day;
-                    calendarDays.appendChild(header);
-                });
-                
-                // Add empty cells
-                for (let i = 0; i < firstDay; i++) {
-                    calendarDays.appendChild(document.createElement('div'));
-                }
-                
-                // Add days
-                for (let day = 1; day <= daysInMonth; day++) {
-                    const dayCell = document.createElement('div');
-                    dayCell.className = 'calendar-day';
-                    dayCell.textContent = day;
                     
-                    const currentDateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-                    const cellDate = new Date(year, month, day);
-                    const today = new Date();
-                    today.setHours(0, 0, 0, 0);
+                    console.log('Booking data:', bookingData);
                     
-                    if (cellDate < today) {
-                        dayCell.classList.add('disabled');
-                    } else if (availableDates.includes(currentDateStr)) {
-                        dayCell.classList.add('available');
-                        dayCell.onclick = () => {
-                            window.selectedDate = cellDate;
-                            window.showTimeSlots(cellDate);
-                        };
+                    // Book the meeting via API
+                    const result = await SCHEDULER_API.bookMeeting(bookingData);
+                    console.log('✅ Booking successful:', result);
+                    
+                    // Hide loading spinner
+                    if (loadingSpinner) loadingSpinner.classList.remove('active');
+                    
+                    // Hide form and show success
+                    document.getElementById('bookingForm').classList.remove('active');
+                    document.getElementById('bookingSuccess').classList.add('active');
+                    
+                    // Reset form
+                    newForm.reset();
+                    
+                    // Reset button state
+                    submitBtn.disabled = false;
+                    submitText.textContent = 'Schedule Meeting';
+                    
+                } catch (error) {
+                    console.error('❌ Booking error:', error);
+                    
+                    // Hide loading spinner
+                    if (loadingSpinner) loadingSpinner.classList.remove('active');
+                    
+                    // Reset button state
+                    submitBtn.disabled = false;
+                    submitText.textContent = 'Schedule Meeting';
+                    
+                    // Show user-friendly error
+                    let errorMessage = 'Failed to schedule meeting. ';
+                    if (error.message.includes('fetch') || error.message.includes('Failed to fetch')) {
+                        errorMessage += 'The booking service is starting up. Please wait 30 seconds and try again.';
                     } else {
-                        dayCell.classList.add('disabled');
+                        errorMessage += error.message;
                     }
                     
-                    calendarDays.appendChild(dayCell);
+                    alert(errorMessage);
                 }
-            } catch (error) {
-                console.error('Error loading calendar:', error);
-                calendarDays.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: red;">Error loading calendar. Please refresh.</div>';
-            }
-        };
+            });
+        }
         
-        // Override showTimeSlots to use API
-        window.showTimeSlots = async function(date) {
-            const timeSlots = document.getElementById('timeSlots');
-            timeSlots.classList.add('active');
-            
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById('selectedDate').textContent = date.toLocaleDateString('en-US', options);
-            
-            const timeSlotsGrid = document.getElementById('timeSlotsGrid');
-            timeSlotsGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center;">Loading times...</div>';
-            
-            try {
-                const year = date.getFullYear();
-                const month = String(date.getMonth() + 1).padStart(2, '0');
-                const day = String(date.getDate()).padStart(2, '0');
-                const dateStr = `${year}-${month}-${day}`;
-                
-                const response = await fetch(`https://corprex-scheduler.onrender.com/api/availability/times?date=${dateStr}`);
-                const data = await response.json();
-                const availableTimes = data.availableTimes || [];
-                
-                timeSlotsGrid.innerHTML = '';
-                
-                if (availableTimes.length === 0) {
-                    timeSlotsGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999;">No available times for this date</p>';
-                    return;
-                }
-                
-                availableTimes.forEach(time => {
-                    const slot = document.createElement('button');
-                    slot.className = 'time-slot';
-                    slot.textContent = time;
-                    slot.onclick = () => window.selectTime(time, slot);
-                    timeSlotsGrid.appendChild(slot);
-                });
-            } catch (error) {
-                console.error('Error loading times:', error);
-                timeSlotsGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: red;">Error loading times. Please try again.</p>';
-            }
-        };
-        
-        // Initialize calendar
-        if (window.currentDate) {
+        // Initialize calendar if scheduler is open
+        if (document.getElementById('schedulerOverlay').classList.contains('active')) {
             window.generateCalendar();
         }
-    }
-    
-    // Check API health on load
-    fetch('https://corprex-scheduler.onrender.com/api/health')
-        .then(response => response.json())
-        .then(data => {
-            console.log('✅ API Health Check:', data);
-        })
-        .catch(error => {
-            console.warn('⚠️ API may be starting up. This is normal for Render free tier.');
-            console.warn('Please wait 30-60 seconds and refresh if needed.');
+        
+        // Check API health
+        SCHEDULER_API.checkHealth().then(isHealthy => {
+            if (!isHealthy) {
+                console.warn('⚠️ Scheduler API is not responding. This is normal for Render free tier.');
+                console.warn('The service will start automatically when you try to book.');
+            }
         });
-    
-    // Initialize everything
-    initializeSchedulerForm();
-    initializeCalendar();
+    });
 });
 
-console.log('📋 Scheduler Integration loaded');
+console.log('📋 Scheduler Integration Script Loaded');
