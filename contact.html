@@ -2015,11 +2015,63 @@
             });
         });
     </script>
+Here's the bottom portion of the contact.html file showing how it should end:
+html            });
+        });
+    </script>
 <!-- Add moment.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 <!-- Add scheduler API -->
 <script src="scheduler-api.js"></script>
 <!-- Add scheduler integration -->
 <script src="scheduler_integration.js"></script>
+<!-- Date Selection Fix -->
+<script>
+// Date Selection Fix
+document.addEventListener('click', function(e) {
+    const dayEl = e.target.closest('.calendar-day.available');
+    if (dayEl) {
+        const dayNum = parseInt(dayEl.textContent.trim());
+        const month = window.currentDate.getMonth();
+        const year = window.currentDate.getFullYear();
+        const clickedDate = new Date(year, month, dayNum);
+        
+        // Force select the date
+        window.selectedDate = clickedDate;
+        
+        // Update UI
+        document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
+        dayEl.classList.add('selected');
+        
+        // Show time slots
+        const timeSlots = document.getElementById('timeSlots');
+        if (timeSlots) {
+            timeSlots.classList.add('active');
+            timeSlots.style.display = 'block';
+        }
+        
+        // Update date display
+        const selectedDateEl = document.getElementById('selectedDate');
+        if (selectedDateEl) {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            selectedDateEl.textContent = clickedDate.toLocaleDateString('en-US', options);
+        }
+        
+        // Load time slots
+        if (window.showTimeSlots) {
+            window.showTimeSlots(clickedDate);
+        } else {
+            // Fallback with mock data
+            const timeSlotsGrid = document.getElementById('timeSlotsGrid');
+            if (timeSlotsGrid) {
+                const slots = ['9:00 AM', '10:00 AM', '11:00 AM', '2:00 PM', '3:00 PM', '4:00 PM'];
+                timeSlotsGrid.innerHTML = slots.map(time => 
+                    `<button class="time-slot" onclick="window.selectTime('${time}', this)">${time}</button>`
+                ).join('');
+            }
+        }
+    }
+});
+</script>
 </body>
 </html>
