@@ -1165,7 +1165,7 @@
                         </div>
 
                         <!-- Booking Form View -->
-                        <div class="scheduler-view" id="bookingFormView">
+                        <div class="scheduler-view" id="bookingForm">
                             <div class="booking-form">
                                 <h3 class="form-title">Complete Your Booking</h3>
                                 
@@ -1187,29 +1187,34 @@
                                 <form id="schedulerForm">
                                     <div class="form-grid">
                                         <div class="form-group">
-                                            <label for="schedulerName">Full Name</label>
-                                            <input type="text" id="schedulerName" name="name" required>
+                                            <label for="schedFirstName">First Name</label>
+                                            <input type="text" id="schedFirstName" name="firstName" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="schedulerEmail">Email</label>
-                                            <input type="email" id="schedulerEmail" name="email" required>
+                                            <label for="schedLastName">Last Name</label>
+                                            <input type="text" id="schedLastName" name="lastName" required>
                                         </div>
                                     </div>
                                     
                                     <div class="form-grid">
                                         <div class="form-group">
-                                            <label for="schedulerCompany">Company</label>
-                                            <input type="text" id="schedulerCompany" name="company" required>
+                                            <label for="schedEmail">Email</label>
+                                            <input type="email" id="schedEmail" name="email" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="schedulerPhone">Phone</label>
-                                            <input type="tel" id="schedulerPhone" name="phone">
+                                            <label for="schedPhone">Phone</label>
+                                            <input type="tel" id="schedPhone" name="phone">
                                         </div>
                                     </div>
                                     
                                     <div class="form-group">
-                                        <label for="schedulerMessage">What would you like to discuss?</label>
-                                        <textarea id="schedulerMessage" name="message" rows="3" placeholder="Tell us about your AI needs..."></textarea>
+                                        <label for="schedCompany">Company</label>
+                                        <input type="text" id="schedCompany" name="company" required>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="schedMessage">What would you like to discuss?</label>
+                                        <textarea id="schedMessage" name="message" rows="3" placeholder="Tell us about your AI needs..."></textarea>
                                     </div>
                                     
                                     <div class="form-actions">
@@ -1224,7 +1229,7 @@
                         </div>
 
                         <!-- Success View -->
-                        <div class="scheduler-view" id="successView">
+                        <div class="scheduler-view" id="bookingSuccess">
                             <div class="success-content">
                                 <div class="success-icon">
                                     <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
@@ -1247,10 +1252,10 @@
 
     <!-- Page Scripts -->
     <script>
-        // Scheduler State
-        let currentDate = new Date();
-        let selectedDate = null;
-        let selectedTime = null;
+        // Scheduler State - Make these global for scheduler-api.js
+        window.currentDate = new Date();
+        window.selectedDate = null;
+        window.selectedTime = null;
 
         // Open/Close Scheduler
         function openScheduler() {
@@ -1279,8 +1284,8 @@
 
         // Reset Scheduler
         function resetScheduler() {
-            selectedDate = null;
-            selectedTime = null;
+            window.selectedDate = null;
+            window.selectedTime = null;
             showView('calendarView');
             const form = document.getElementById('schedulerForm');
             if (form) form.reset();
@@ -1312,8 +1317,8 @@
 
         // Calendar Generation
         async function generateCalendar() {
-            const year = currentDate.getFullYear();
-            const month = currentDate.getMonth();
+            const year = window.currentDate.getFullYear();
+            const month = window.currentDate.getMonth();
             
             // Update month display
             const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
@@ -1381,18 +1386,18 @@
 
         // Month Navigation
         function previousMonth() {
-            currentDate.setMonth(currentDate.getMonth() - 1);
+            window.currentDate.setMonth(window.currentDate.getMonth() - 1);
             generateCalendar();
         }
 
         function nextMonth() {
-            currentDate.setMonth(currentDate.getMonth() + 1);
+            window.currentDate.setMonth(window.currentDate.getMonth() + 1);
             generateCalendar();
         }
 
         // Date Selection
         async function selectDate(date) {
-            selectedDate = date;
+            window.selectedDate = date;
             
             // Update UI
             document.querySelectorAll('.calendar-day').forEach(day => {
@@ -1448,7 +1453,7 @@
 
         // Time Selection
         function selectTime(time, element) {
-            selectedTime = time;
+            window.selectedTime = time;
             
             // Update UI
             document.querySelectorAll('.time-slot').forEach(slot => {
@@ -1458,21 +1463,21 @@
             
             // Show booking form
             setTimeout(() => {
-                showView('bookingFormView');
+                showView('bookingForm');
                 
                 // Update summary
                 const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                 const dateEl = document.getElementById('summaryDate');
                 const timeEl = document.getElementById('summaryTime');
-                if (dateEl && selectedDate) dateEl.textContent = selectedDate.toLocaleDateString('en-US', options);
-                if (timeEl) timeEl.textContent = selectedTime;
+                if (dateEl && window.selectedDate) dateEl.textContent = window.selectedDate.toLocaleDateString('en-US', options);
+                if (timeEl) timeEl.textContent = window.selectedTime;
             }, 300);
         }
 
         // Navigation Functions
         function backToCalendar() {
             showView('calendarView');
-            selectedTime = null;
+            window.selectedTime = null;
         }
 
         function backToTimeSlots() {
@@ -1520,90 +1525,6 @@
                 });
             }
 
-            // Booking Form Handler
-            const schedulerForm = document.getElementById('schedulerForm');
-            if (schedulerForm) {
-                schedulerForm.addEventListener('submit', async (e) => {
-                    e.preventDefault();
-                    
-                    console.log('Form submission started');
-                    console.log('Selected date:', selectedDate);
-                    console.log('Selected time:', selectedTime);
-                    
-                    // Check if date and time are selected
-                    if (!selectedDate || !selectedTime) {
-                        alert('Please select both a date and time before booking.');
-                        return;
-                    }
-                    
-                    const submitBtn = e.target.querySelector('.btn-primary');
-                    const submitText = submitBtn ? submitBtn.querySelector('#submitText') : null;
-                    const loadingSpinner = submitBtn ? submitBtn.querySelector('#loadingSpinner') : null;
-                    
-                    if (!submitBtn || !submitText) {
-                        console.error('Submit button elements not found');
-                        return;
-                    }
-                    
-                    // Show loading
-                    submitBtn.disabled = true;
-                    submitText.textContent = 'Scheduling...';
-                    if (loadingSpinner) loadingSpinner.classList.add('active');
-                    
-                    try {
-                        // Debug: Check all elements
-                        console.log('Getting form elements...');
-                        
-                        // Get timezone select element
-                        const timezoneSelect = document.getElementById('timezoneSelect');
-                        console.log('Timezone select element:', timezoneSelect);
-                        
-                        if (!timezoneSelect) {
-                            throw new Error('Timezone selector not found');
-                        }
-                        
-                        // Prepare booking data
-                        const formData = new FormData(e.target);
-                        console.log('Form data created');
-                        
-                        const bookingData = {
-                            date: selectedDate.toISOString().split('T')[0],
-                            time: selectedTime,
-                            timezone: timezoneSelect.value,
-                            name: formData.get('name') || '',
-                            email: formData.get('email') || '',
-                            company: formData.get('company') || '',
-                            phone: formData.get('phone') || '',
-                            message: formData.get('message') || ''
-                        };
-                        
-                        console.log('Booking data:', bookingData);
-                        
-                        // Check if SCHEDULER_API exists
-                        if (typeof SCHEDULER_API === 'undefined' || !SCHEDULER_API.bookMeeting) {
-                            throw new Error('Scheduler API not available');
-                        }
-                        
-                        // Submit booking
-                        const result = await SCHEDULER_API.bookMeeting(bookingData);
-                        
-                        if (result.success) {
-                            showView('successView');
-                        } else {
-                            throw new Error(result.error || 'Booking failed');
-                        }
-                    } catch (error) {
-                        console.error('Booking error details:', error);
-                        console.error('Error stack:', error.stack);
-                        alert('Failed to schedule meeting: ' + error.message);
-                    } finally {
-                        submitBtn.disabled = false;
-                        submitText.textContent = 'Schedule Meeting';
-                        if (loadingSpinner) loadingSpinner.classList.remove('active');
-                    }
-                });
-            }
-
             // Close on overlay click
             const schedulerOverlay = document.getElementById('schedulerOverlay');
             if (schedulerOverlay) {
@@ -1614,6 +1535,21 @@
                 });
             }
         });
+
+        // Make functions globally available
+        window.openScheduler = openScheduler;
+        window.closeScheduler = closeScheduler;
+        window.previousMonth = previousMonth;
+        window.nextMonth = nextMonth;
+        window.selectDate = selectDate;
+        window.selectTime = selectTime;
+        window.backToCalendar = backToCalendar;
+        window.backToTimeSlots = backToTimeSlots;
+        window.showView = showView;
+        window.generateCalendar = generateCalendar;
+        window.initScheduler = initScheduler;
+        window.resetScheduler = resetScheduler;
+        window.detectTimezone = detectTimezone;
     </script>
 </body>
 </html>
