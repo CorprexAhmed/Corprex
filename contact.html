@@ -1526,6 +1526,10 @@
                 schedulerForm.addEventListener('submit', async (e) => {
                     e.preventDefault();
                     
+                    console.log('Form submission started');
+                    console.log('Selected date:', selectedDate);
+                    console.log('Selected time:', selectedTime);
+                    
                     // Check if date and time are selected
                     if (!selectedDate || !selectedTime) {
                         alert('Please select both a date and time before booking.');
@@ -1533,27 +1537,52 @@
                     }
                     
                     const submitBtn = e.target.querySelector('.btn-primary');
-                    const submitText = submitBtn.querySelector('#submitText');
-                    const loadingSpinner = submitBtn.querySelector('#loadingSpinner');
+                    const submitText = submitBtn ? submitBtn.querySelector('#submitText') : null;
+                    const loadingSpinner = submitBtn ? submitBtn.querySelector('#loadingSpinner') : null;
+                    
+                    if (!submitBtn || !submitText) {
+                        console.error('Submit button elements not found');
+                        return;
+                    }
                     
                     // Show loading
                     submitBtn.disabled = true;
                     submitText.textContent = 'Scheduling...';
-                    loadingSpinner.classList.add('active');
+                    if (loadingSpinner) loadingSpinner.classList.add('active');
                     
                     try {
+                        // Debug: Check all elements
+                        console.log('Getting form elements...');
+                        
+                        // Get timezone select element
+                        const timezoneSelect = document.getElementById('timezoneSelect');
+                        console.log('Timezone select element:', timezoneSelect);
+                        
+                        if (!timezoneSelect) {
+                            throw new Error('Timezone selector not found');
+                        }
+                        
                         // Prepare booking data
                         const formData = new FormData(e.target);
+                        console.log('Form data created');
+                        
                         const bookingData = {
                             date: selectedDate.toISOString().split('T')[0],
                             time: selectedTime,
-                            timezone: document.getElementById('timezoneSelect').value,
-                            name: formData.get('name'),
-                            email: formData.get('email'),
-                            company: formData.get('company'),
-                            phone: formData.get('phone'),
-                            message: formData.get('message')
+                            timezone: timezoneSelect.value,
+                            name: formData.get('name') || '',
+                            email: formData.get('email') || '',
+                            company: formData.get('company') || '',
+                            phone: formData.get('phone') || '',
+                            message: formData.get('message') || ''
                         };
+                        
+                        console.log('Booking data:', bookingData);
+                        
+                        // Check if SCHEDULER_API exists
+                        if (typeof SCHEDULER_API === 'undefined' || !SCHEDULER_API.bookMeeting) {
+                            throw new Error('Scheduler API not available');
+                        }
                         
                         // Submit booking
                         const result = await SCHEDULER_API.bookMeeting(bookingData);
@@ -1564,12 +1593,13 @@
                             throw new Error(result.error || 'Booking failed');
                         }
                     } catch (error) {
-                        console.error('Booking error:', error);
-                        alert('Failed to schedule meeting. Please try again.');
+                        console.error('Booking error details:', error);
+                        console.error('Error stack:', error.stack);
+                        alert('Failed to schedule meeting: ' + error.message);
                     } finally {
                         submitBtn.disabled = false;
                         submitText.textContent = 'Schedule Meeting';
-                        loadingSpinner.classList.remove('active');
+                        if (loadingSpinner) loadingSpinner.classList.remove('active');
                     }
                 });
             }
