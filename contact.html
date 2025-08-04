@@ -2,11 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Contact - Corprex</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
-        
+        /* Reset and Base Styles */
         * {
             margin: 0;
             padding: 0;
@@ -15,33 +14,47 @@
 
         :root {
             --primary-black: #000000;
-            --secondary-black: #0a0a0a;
+            --primary-white: #FFFFFF;
+            --accent-gray: #666666;
             --dark-gray: #1a1a1a;
-            --medium-gray: #2a2a2a;
-            --light-gray: #666666;
-            --text-gray: #999999;
+            --border-color: #333333;
+            --text-gray: #CCCCCC;
             --text-primary: #ffffff;
             --text-secondary: #cccccc;
-            --border-color: #333333;
+            --highlight-green: #4CAF50;
+            --error-red: #ff6b6b;
+            --safe-area-inset-top: env(safe-area-inset-top, 0px);
+            --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
         }
 
         body {
-            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background: var(--primary-black);
-            color: var(--text-primary);
+            color: var(--primary-white);
             line-height: 1.6;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--text-primary);
+            font-weight: 300;
         }
 
         /* Navigation */
         nav {
             position: fixed;
             top: 0;
-            width: 100%;
+            left: 0;
+            right: 0;
             background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(20px);
-            z-index: 1000;
+            -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            padding-top: var(--safe-area-inset-top);
         }
 
         .nav-container {
@@ -51,7 +64,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            min-height: 60px;
         }
 
         .logo {
@@ -157,7 +169,7 @@
 
         /* Hero Section */
         .hero {
-            padding-top: 120px;
+            padding-top: calc(80px + var(--safe-area-inset-top));
             min-height: 40vh;
             display: flex;
             align-items: center;
@@ -182,14 +194,14 @@
 
         .hero-subtitle {
             font-size: 1.25rem;
-            color: var(--text-secondary);
+            color: var(--text-gray);
             margin-bottom: 2rem;
             font-weight: 300;
         }
 
         .hero-cta {
             display: inline-block;
-            background: var(--text-primary);
+            background: var(--primary-white);
             color: var(--primary-black);
             padding: 0.875rem 2rem;
             border: none;
@@ -215,9 +227,10 @@
         }
 
         .contact-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 4rem;
+            align-items: start;
         }
 
         /* Contact Form */
@@ -243,7 +256,7 @@
 
         .form-group label {
             font-size: 0.875rem;
-            color: var(--text-secondary);
+            color: var(--text-gray);
             font-weight: 500;
         }
 
@@ -254,7 +267,7 @@
             border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 0.875rem 1rem;
-            color: var(--text-primary);
+            color: var(--primary-white);
             font-size: 1rem;
             font-family: inherit;
             transition: all 0.2s ease;
@@ -271,7 +284,7 @@
         .form-group textarea:focus,
         .form-group select:focus {
             outline: none;
-            border-color: var(--text-primary);
+            border-color: var(--primary-white);
             background: rgba(255, 255, 255, 0.03);
         }
 
@@ -281,7 +294,7 @@
         }
 
         .form-submit {
-            background: var(--text-primary);
+            background: var(--primary-white);
             color: var(--primary-black);
             border: none;
             padding: 0.875rem 2rem;
@@ -309,7 +322,6 @@
             display: flex;
             flex-direction: column;
             gap: 2rem;
-            max-width: 400px;
         }
 
         .info-card {
@@ -323,18 +335,18 @@
             font-size: 1.25rem;
             font-weight: 400;
             margin-bottom: 1rem;
-            color: var(--text-primary);
+            color: var(--primary-white);
             letter-spacing: -0.02em;
         }
 
         .info-card p {
-            color: var(--text-secondary);
+            color: var(--text-gray);
             line-height: 1.6;
             margin-bottom: 0.5rem;
         }
 
         .info-card a {
-            color: var(--text-primary);
+            color: var(--primary-white);
             text-decoration: none;
             transition: opacity 0.3s ease;
         }
@@ -346,7 +358,7 @@
         /* Footer */
         footer {
             margin-top: 8rem;
-            padding: 3rem 2rem;
+            padding: 3rem 2rem calc(3rem + var(--safe-area-inset-bottom));
             border-top: 1px solid var(--border-color);
         }
 
@@ -354,22 +366,21 @@
             max-width: 1200px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 4rem;
-            margin-bottom: 3rem;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
         }
 
         .footer-section h4 {
             font-size: 0.875rem;
             font-weight: 500;
             margin-bottom: 1rem;
-            color: var(--text-primary);
+            color: var(--primary-white);
             letter-spacing: -0.01em;
         }
 
         .footer-section a {
             display: block;
-            color: var(--text-secondary);
+            color: var(--text-gray);
             text-decoration: none;
             font-size: 0.875rem;
             margin-bottom: 0.5rem;
@@ -377,84 +388,17 @@
         }
 
         .footer-section a:hover {
-            color: var(--text-primary);
+            color: var(--primary-white);
         }
 
         .footer-bottom {
             max-width: 1200px;
-            margin: 0 auto;
-            text-align: center;
-            color: var(--light-gray);
-            font-size: 0.875rem;
+            margin: 3rem auto 0;
             padding-top: 2rem;
             border-top: 1px solid var(--border-color);
-        }
-
-        /* Scheduler Overlay */
-        .scheduler-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 2000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .scheduler-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .scheduler-container {
-            background: var(--dark-gray);
-            border-radius: 16px;
-            width: 90%;
-            max-width: 600px;
-            max-height: 90vh;
-            overflow: hidden;
-            position: relative;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
-        }
-
-        .scheduler-header {
-            padding: 2rem;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .scheduler-header h2 {
-            font-size: 1.5rem;
-            font-weight: 400;
-        }
-
-        .scheduler-close {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 0.5rem;
-            transition: color 0.3s ease;
-        }
-
-        .scheduler-close:hover {
-            color: var(--text-primary);
-        }
-
-        .scheduler-body {
-            padding: 2rem;
-            overflow-y: auto;
-            max-height: calc(90vh - 140px);
+            text-align: center;
+            color: var(--accent-gray);
+            font-size: 0.875rem;
         }
 
         /* Responsive */
@@ -462,21 +406,21 @@
             .nav-menu {
                 position: fixed;
                 top: 60px;
-                left: -100%;
-                width: 100%;
-                height: calc(100vh - 60px);
-                background: var(--secondary-black);
+                left: 0;
+                right: 0;
+                background: var(--primary-black);
+                border-bottom: 1px solid var(--border-color);
                 flex-direction: column;
-                padding: 2rem;
-                gap: 1.5rem;
-                transition: left 0.3s ease;
-                border-top: 1px solid var(--border-color);
+                padding: 0;
+                gap: 0;
+                max-height: calc(100vh - 60px);
                 overflow-y: auto;
-                align-items: stretch;
+                transform: translateY(-100%);
+                transition: transform 0.3s ease;
             }
 
             .nav-menu.active {
-                left: 0;
+                transform: translateY(0);
             }
 
             .nav-item {
@@ -485,8 +429,9 @@
 
             .nav-link {
                 display: block;
-                padding: 1rem 0;
+                padding: 1rem 1.5rem;
                 width: 100%;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             }
 
             .dropdown {
@@ -494,20 +439,21 @@
                 opacity: 1;
                 visibility: visible;
                 transform: none;
+                margin: 0;
+                border: none;
+                border-radius: 0;
+                background: rgba(0, 0, 0, 0.5);
                 box-shadow: none;
-                background: var(--dark-gray);
-                margin-top: 0.5rem;
-                border-radius: 8px;
             }
 
             .dropdown-link {
-                padding-left: 2rem;
+                padding-left: 3rem;
             }
 
             .nav-cta {
-                width: 100%;
+                margin: 1rem 1.5rem;
                 text-align: center;
-                padding: 0.875rem;
+                display: block;
             }
 
             .mobile-menu-btn {
@@ -519,7 +465,7 @@
             }
 
             .contact-container {
-                justify-content: center;
+                grid-template-columns: 1fr;
             }
 
             .contact-form {
@@ -531,9 +477,8 @@
             }
 
             .footer-content {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
                 gap: 2rem;
-                text-align: center;
             }
         }
 
@@ -546,8 +491,729 @@
                 padding: 2rem 1rem;
             }
 
-            .contact-form {
+            .info-card {
                 padding: 1.5rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        /* Scheduler Overlay */
+        .scheduler-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 10000;
+            display: none;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .scheduler-overlay.active {
+            display: block;
+        }
+
+        .scheduler-wrapper {
+            min-height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .scheduler-container {
+            background: #0f0f0f;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 1100px;
+            display: flex;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            max-height: 90vh;
+            overflow: hidden;
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Close Button */
+        .scheduler-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            z-index: 10;
+        }
+
+        .scheduler-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .scheduler-close svg {
+            width: 18px;
+            height: 18px;
+            stroke-width: 2.5;
+        }
+
+        /* Sidebar */
+        .scheduler-sidebar {
+            width: 350px;
+            padding: 3rem 2.5rem;
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .scheduler-title {
+            font-size: 1.875rem;
+            font-weight: 400;
+            color: #ffffff;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+        }
+
+        .scheduler-subtitle {
+            font-size: 0.95rem;
+            color: #a0a0a0;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        .timezone-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.625rem;
+        }
+
+        .timezone-label {
+            font-size: 0.8125rem;
+            color: #b0b0b0;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+
+        #timezoneSelect {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            color: #ffffff;
+            font-size: 0.875rem;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 400;
+        }
+
+        #timezoneSelect:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        #timezoneSelect:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.05);
+        }
+
+        /* Main Content */
+        .scheduler-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .scheduler-views {
+            flex: 1;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+
+        .scheduler-view {
+            display: none;
+            animation: viewFadeIn 0.3s ease;
+        }
+
+        .scheduler-view.active {
+            display: block;
+        }
+
+        @keyframes viewFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Calendar View */
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .calendar-month {
+            font-size: 1.125rem;
+            font-weight: 500;
+            color: #ffffff;
+            letter-spacing: -0.01em;
+        }
+
+        .calendar-nav {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .calendar-nav button {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            color: #b0b0b0;
+        }
+
+        .calendar-nav button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+        }
+
+        .calendar-nav button:active {
+            transform: scale(0.95);
+        }
+
+        .calendar-nav button svg {
+            width: 16px;
+            height: 16px;
+            stroke-width: 2.5;
+        }
+
+        /* Calendar Grid - Calendly Style */
+        .calendar-grid {
+            background: transparent;
+            border: none;
+            border-radius: 16px;
+            padding: 0;
+        }
+
+        .calendar-weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .weekday {
+            text-align: center;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #858585;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.5rem 0;
+        }
+
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: 2px solid transparent;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            position: relative;
+            min-height: 42px;
+            font-weight: 500;
+        }
+
+        .calendar-day.available {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        .calendar-day.available:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .calendar-day.available:hover .day-number {
+            color: #ffffff;
+            transform: scale(1.1);
+        }
+
+        .calendar-day.disabled {
+            opacity: 0.25;
+            cursor: not-allowed;
+            color: #666666;
+        }
+
+        .calendar-day.selected {
+            background: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+            font-weight: 600;
+            box-shadow: 0 4px 16px rgba(255, 255, 255, 0.25);
+        }
+
+        .calendar-day.selected:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.35);
+        }
+
+        .calendar-day.selected .day-number {
+            transform: scale(1);
+        }
+
+        .day-number {
+            font-size: 0.875rem;
+            font-weight: inherit;
+            transition: all 0.15s ease;
+        }
+
+        /* Time Slots View - Calendly Style */
+        .time-slots-header {
+            margin-bottom: 2rem;
+        }
+
+        .time-slots-header h3 {
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .selected-date {
+            font-size: 0.95rem;
+            color: #999999;
+            font-weight: 400;
+        }
+
+        .back-to-calendar {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #999999;
+            text-decoration: none;
+            margin-bottom: 2rem;
+            transition: all 0.2s ease;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .back-to-calendar:hover {
+            color: #ffffff;
+            transform: translateX(-3px);
+        }
+
+        .time-slots-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.625rem;
+            max-height: 420px;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+
+        .time-slot {
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 0.875rem 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-size: 0.875rem;
+            color: #e0e0e0;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .time-slot::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.15s ease;
+        }
+
+        .time-slot:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .time-slot:hover::before {
+            opacity: 1;
+        }
+
+        .time-slot.selected {
+            background: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+            font-weight: 600;
+            box-shadow: 0 4px 16px rgba(255, 255, 255, 0.25);
+        }
+
+        .time-slot.selected:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.35);
+        }
+
+        .time-slot.selected::before {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.05) 0%, transparent 100%);
+        }
+
+        /* Booking Form View - Enhanced */
+        .booking-form {
+            padding: 2.5rem;
+        }
+
+        .form-title {
+            font-size: 1.375rem;
+            font-weight: 400;
+            color: #ffffff;
+            margin-bottom: 2rem;
+        }
+
+        .booking-summary {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.875rem;
+            font-size: 0.875rem;
+        }
+
+        .summary-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .summary-label {
+            color: #888888;
+            font-weight: 400;
+        }
+
+        .summary-value {
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .booking-form .form-group label {
+            font-size: 0.8125rem;
+            color: #b0b0b0;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.02em;
+        }
+
+        .booking-form .form-group input,
+        .booking-form .form-group textarea {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 0.875rem 1rem;
+            color: #ffffff;
+            font-size: 0.925rem;
+            font-family: inherit;
+            transition: all 0.2s ease;
+        }
+
+        .booking-form .form-group input:focus,
+        .booking-form .form-group textarea:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.05);
+        }
+
+        .booking-form .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            padding: 0.875rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-size: 0.925rem;
+            font-family: inherit;
+            font-weight: 500;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        .btn-primary {
+            background: #ffffff;
+            color: #000000;
+            border: none;
+            padding: 0.875rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-size: 0.925rem;
+            font-weight: 600;
+            font-family: inherit;
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.1) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.15s ease;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-primary:hover:not(:disabled)::before {
+            opacity: 1;
+        }
+
+        .btn-primary:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Success View */
+        .success-content {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .success-icon {
+            width: 64px;
+            height: 64px;
+            background: #4CAF50;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+        }
+
+        .success-title {
+            font-size: 2rem;
+            font-weight: 300;
+            color: #ffffff;
+            margin-bottom: 1rem;
+        }
+
+        .success-message {
+            font-size: 1.125rem;
+            color: #999999;
+            margin-bottom: 2rem;
+        }
+
+        /* Custom Scrollbar */
+        .scheduler-views::-webkit-scrollbar,
+        .time-slots-grid::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .scheduler-views::-webkit-scrollbar-track,
+        .time-slots-grid::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 3px;
+        }
+
+        .scheduler-views::-webkit-scrollbar-thumb,
+        .time-slots-grid::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            transition: background 0.2s ease;
+        }
+
+        .scheduler-views::-webkit-scrollbar-thumb:hover,
+        .time-slots-grid::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Loading State Enhancement */
+        .loading-spinner {
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            border-top: 2px solid rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 0.7s linear infinite;
+            display: none;
+            margin-left: 0.5rem;
+        }
+
+        .loading-spinner.active {
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .scheduler-wrapper {
+                padding: 0;
+                align-items: stretch;
+            }
+
+            .scheduler-container {
+                border-radius: 0;
+                max-width: 100%;
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .scheduler-sidebar {
+                width: 100%;
+                padding: 1.5rem;
+                border-right: none;
+                border-bottom: 1px solid #333333;
+            }
+
+            .scheduler-title {
+                font-size: 1.5rem;
+            }
+
+            .calendar-month {
+                font-size: 1.25rem;
+            }
+
+            .calendar-day {
+                min-height: 35px;
+                font-size: 0.75rem;
+            }
+
+            .time-slots-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .form-actions {
+                flex-direction: column-reverse;
+                gap: 0.75rem;
+            }
+
+            .btn-secondary,
+            .btn-primary {
+                width: 100%;
+                padding: 0.875rem;
             }
         }
     </style>
@@ -582,7 +1248,7 @@
                     <a href="/contact" class="nav-link active">Contact</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#demo" class="nav-cta">Request Demo</a>
+                    <a href="/contact" class="nav-cta" onclick="handleDemoClick(event)">Request Demo</a>
                 </li>
             </ul>
         </div>
@@ -591,29 +1257,71 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <h1 class="hero-title">Let's Build Something Extraordinary</h1>
-            <p class="hero-subtitle">
-                Ready to revolutionize your AI infrastructure? Connect with our team to explore how Corprex can transform your operations.
-            </p>
-            <button class="hero-cta" onclick="openScheduler()">Schedule a Call</button>
+            <h1 class="hero-title">Get in Touch</h1>
+            <p class="hero-subtitle">Ready to transform your business with private AI? Let's discuss how Corprex can help you achieve your goals.</p>
+            <button class="hero-cta" onclick="openScheduler()">Schedule a Demo</button>
         </div>
     </section>
 
     <!-- Contact Section -->
     <section class="contact-section">
         <div class="contact-container">
-            <!-- Contact Info -->
+            <form class="contact-form" id="contactForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="company">Company</label>
+                        <input type="text" id="company" name="company" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" name="subject" required placeholder="How can we help?">
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required placeholder="Tell us about your project..."></textarea>
+                </div>
+                
+                <button type="submit" class="form-submit" id="contactSubmitBtn" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                    <span id="contactSubmitText">Send Message</span>
+                    <div class="loading-spinner" id="contactLoadingSpinner"></div>
+                </button>
+            </form>
+
             <div class="contact-info">
                 <div class="info-card">
-                    <h3>Direct Contact</h3>
-                    <p>
-                        <strong>Email:</strong><br>
-                        <a href="mailto:sales@corprex.com">sales@corprex.com</a>
-                    </p>
-                    <p>
-                        <strong>Response Time:</strong><br>
-                        Within 24 hours
-                    </p>
+                    <h3>Email Us</h3>
+                    <p><a href="mailto:hello@corprex.ai">hello@corprex.ai</a></p>
+                    <p>We typically respond within 24 hours</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3>Office Hours</h3>
+                    <p>Monday - Friday: 9:00 AM - 6:00 PM EST</p>
+                    <p>Weekend support available for enterprise clients</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3>Location</h3>
+                    <p>San Francisco, CA</p>
+                    <p>Remote consultations available worldwide</p>
                 </div>
             </div>
         </div>
@@ -623,15 +1331,28 @@
     <footer>
         <div class="footer-content">
             <div class="footer-section">
-                <h4>Solutions</h4>
+                <h4>Product</h4>
+                <a href="/">Omega System</a>
+                <a href="/about">About</a>
                 <a href="/automations">Automations</a>
-                <a href="/why-local-ai">Why Local AI?</a>
             </div>
             <div class="footer-section">
                 <h4>Company</h4>
-                <a href="/about">About Us</a>
-                <a href="/news">News</a>
                 <a href="/contact">Contact</a>
+                <a href="#">Careers</a>
+                <a href="#">Privacy</a>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <a href="#">Documentation</a>
+                <a href="#">Support</a>
+                <a href="#">Blog</a>
+            </div>
+            <div class="footer-section">
+                <h4>Connect</h4>
+                <a href="#">Twitter</a>
+                <a href="#">LinkedIn</a>
+                <a href="#">GitHub</a>
             </div>
         </div>
         <div class="footer-bottom">
@@ -641,69 +1362,170 @@
 
     <!-- Scheduler Overlay -->
     <div class="scheduler-overlay" id="schedulerOverlay">
-        <div class="scheduler-container">
-            <div class="scheduler-header">
-                <h2>Schedule a Meeting</h2>
-                <button class="scheduler-close" onclick="closeScheduler()">×</button>
-            </div>
-            <div class="scheduler-body">
-                <!-- Calendar View -->
-                <div id="calendarView" class="scheduler-view active">
-                    <div class="calendar-nav">
-                        <button onclick="changeMonth(-1)">&lt;</button>
-                        <span id="currentMonth"></span>
-                        <button onclick="changeMonth(1)">&gt;</button>
+        <div class="scheduler-wrapper">
+            <div class="scheduler-container">
+                <!-- Close Button -->
+                <button class="scheduler-close" onclick="closeScheduler()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M18 6L6 18M6 6l12 12"/>
+                    </svg>
+                </button>
+
+                <!-- Sidebar -->
+                <div class="scheduler-sidebar">
+                    <div>
+                        <h2 class="scheduler-title">Schedule a Demo</h2>
+                        <p class="scheduler-subtitle">Book a 30-minute consultation to explore how Corprex can transform your business with private AI infrastructure.</p>
                     </div>
-                    <div id="calendar" class="calendar-grid"></div>
-                </div>
-
-                <!-- Time Slots View -->
-                <div id="timeSlotsView" class="scheduler-view">
-                    <button class="back-btn" onclick="showView('calendarView')">← Back to Calendar</button>
-                    <h3 id="selectedDateDisplay"></h3>
-                    <div id="timeSlotsGrid" class="time-slots-grid"></div>
-                </div>
-
-                <!-- Form View -->
-                <div id="formView" class="scheduler-view">
-                    <button class="back-btn" onclick="showView('timeSlotsView')">← Back to Times</button>
-                    <div class="meeting-summary">
-                        <h3>Meeting Details</h3>
-                        <p><strong>Date:</strong> <span id="meetingDate"></span></p>
-                        <p><strong>Time:</strong> <span id="meetingTime"></span></p>
+                    
+                    <div class="timezone-group">
+                        <label class="timezone-label">Timezone</label>
+                        <select id="timezoneSelect">
+                            <option value="America/New_York">Eastern Time (ET)</option>
+                            <option value="America/Chicago">Central Time (CT)</option>
+                            <option value="America/Denver">Mountain Time (MT)</option>
+                            <option value="America/Los_Angeles">Pacific Time (PT)</option>
+                            <option value="Europe/London">London (GMT)</option>
+                            <option value="Europe/Paris">Paris (CET)</option>
+                            <option value="Asia/Tokyo">Tokyo (JST)</option>
+                            <option value="Australia/Sydney">Sydney (AEDT)</option>
+                        </select>
                     </div>
-                    <form id="schedulerForm" onsubmit="submitScheduler(event)">
-                        <div class="form-group">
-                            <label for="schedulerName">Full Name *</label>
-                            <input type="text" id="schedulerName" name="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="schedulerEmail">Email *</label>
-                            <input type="email" id="schedulerEmail" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="schedulerCompany">Company</label>
-                            <input type="text" id="schedulerCompany" name="company">
-                        </div>
-                        <div class="form-group">
-                            <label for="schedulerMessage">Additional Notes</label>
-                            <textarea id="schedulerMessage" name="message" rows="3"></textarea>
-                        </div>
-                        <button type="submit" class="form-submit" id="submitBtn">
-                            <span id="submitText">Schedule Meeting</span>
-                            <span id="loadingSpinner" class="spinner"></span>
-                        </button>
-                    </form>
                 </div>
 
-                <!-- Success View -->
-                <div id="successView" class="scheduler-view">
-                    <div class="success-content">
-                        <div class="success-icon">✓</div>
-                        <h3>Meeting Scheduled!</h3>
-                        <p>You'll receive a calendar invitation at your email address shortly.</p>
-                        <p>Looking forward to speaking with you!</p>
-                        <button class="form-submit" onclick="closeScheduler()">Done</button>
+                <!-- Main Content -->
+                <div class="scheduler-main">
+                    <div class="scheduler-views">
+                        <!-- Calendar View -->
+                        <div class="scheduler-view active" id="calendarView">
+                            <div class="calendar-header">
+                                <h3 class="calendar-month" id="calendarMonth">January 2024</h3>
+                                <div class="calendar-nav">
+                                    <button onclick="previousMonth()">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M15 18l-6-6 6-6"/>
+                                        </svg>
+                                    </button>
+                                    <button onclick="nextMonth()">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M9 18l6-6-6-6"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="calendar-grid">
+                                <div class="calendar-weekdays">
+                                    <div class="weekday">Sun</div>
+                                    <div class="weekday">Mon</div>
+                                    <div class="weekday">Tue</div>
+                                    <div class="weekday">Wed</div>
+                                    <div class="weekday">Thu</div>
+                                    <div class="weekday">Fri</div>
+                                    <div class="weekday">Sat</div>
+                                </div>
+                                <div class="calendar-days" id="calendarDays">
+                                    <!-- Calendar days will be generated dynamically -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Time Slots View -->
+                        <div class="scheduler-view" id="timeSlotsView">
+                            <a href="#" class="back-to-calendar" onclick="backToCalendar(); return false;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 18l-6-6 6-6"/>
+                                </svg>
+                                Back to calendar
+                            </a>
+                            
+                            <div class="time-slots-header">
+                                <h3>Select a time</h3>
+                                <p class="selected-date" id="selectedDateDisplay">Thursday, January 30</p>
+                            </div>
+                            
+                            <div class="time-slots-grid" id="timeSlotsGrid">
+                                <!-- Time slots will be generated dynamically -->
+                            </div>
+                        </div>
+
+                        <!-- Booking Form View -->
+                        <div class="scheduler-view" id="bookingForm">
+                            <div class="booking-form">
+                                <h3 class="form-title">Complete Your Booking</h3>
+                                
+                                <div class="booking-summary">
+                                    <div class="summary-item">
+                                        <span class="summary-label">Date</span>
+                                        <span class="summary-value" id="summaryDate">-</span>
+                                    </div>
+                                    <div class="summary-item">
+                                        <span class="summary-label">Time</span>
+                                        <span class="summary-value" id="summaryTime">-</span>
+                                    </div>
+                                    <div class="summary-item">
+                                        <span class="summary-label">Duration</span>
+                                        <span class="summary-value">30 minutes</span>
+                                    </div>
+                                </div>
+                                
+                                <form id="schedulerForm">
+                                    <div class="form-grid">
+                                        <div class="form-group">
+                                            <label for="schedFirstName">First Name</label>
+                                            <input type="text" id="schedFirstName" name="firstName" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="schedLastName">Last Name</label>
+                                            <input type="text" id="schedLastName" name="lastName" required>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-grid">
+                                        <div class="form-group">
+                                            <label for="schedEmail">Email</label>
+                                            <input type="email" id="schedEmail" name="email" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="schedPhone">Phone</label>
+                                            <input type="tel" id="schedPhone" name="phone">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="schedCompany">Company</label>
+                                        <input type="text" id="schedCompany" name="company" required>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="schedMessage">What would you like to discuss?</label>
+                                        <textarea id="schedMessage" name="message" rows="3" placeholder="Tell us about your AI needs..."></textarea>
+                                    </div>
+                                    
+                                    <div class="form-actions">
+                                        <button type="button" class="btn-secondary" onclick="backToTimeSlots()">Back</button>
+                                        <button type="submit" class="btn-primary" id="submitBtn" style="display: flex; align-items: center; justify-content: center;">
+                                            <span id="submitText">Schedule Meeting</span>
+                                            <div class="loading-spinner" id="loadingSpinner"></div>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Success View -->
+                        <div class="scheduler-view" id="bookingSuccess">
+                            <div class="success-content">
+                                <div class="success-icon">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                        <path d="M20 6L9 17l-5-5"/>
+                                    </svg>
+                                </div>
+                                <h3 class="success-title">Meeting Scheduled!</h3>
+                                <p class="success-message">We've sent a confirmation email with all the details. Looking forward to speaking with you!</p>
+                                <button class="btn-primary" onclick="closeScheduler()">Done</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -715,23 +1537,7 @@
 
     <!-- Page Scripts -->
     <script>
-        // Mobile Menu Toggle
-        function toggleMenu() {
-            const navMenu = document.getElementById('navMenu');
-            navMenu.classList.toggle('active');
-        }
-
-        // Close menu when clicking outside
-        document.addEventListener('click', function(event) {
-            const navMenu = document.getElementById('navMenu');
-            const menuBtn = document.querySelector('.mobile-menu-btn');
-            
-            if (!navMenu.contains(event.target) && !menuBtn.contains(event.target)) {
-                navMenu.classList.remove('active');
-            }
-        });
-
-        // Scheduler State
+        // Scheduler State - Make these global for scheduler-api.js
         window.currentDate = new Date();
         window.selectedDate = null;
         window.selectedTime = null;
@@ -779,28 +1585,155 @@
             if (view) view.classList.add('active');
         }
 
-        // Calendar Generation
-        function generateCalendar() {
-            // This will be overridden by scheduler-api.js
-            console.log('Calendar generation will be handled by scheduler-api.js');
+        // Detect Timezone
+        function detectTimezone() {
+            const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            const timezoneSelect = document.getElementById('timezoneSelect');
+            
+            if (timezoneSelect) {
+                for (let option of timezoneSelect.options) {
+                    if (option.value === userTimezone) {
+                        option.selected = true;
+                        break;
+                    }
+                }
+            }
         }
 
-        // Timezone Detection
-        function detectTimezone() {
-            const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-            console.log('Detected timezone:', timezone);
+        // Calendar Generation
+        async function generateCalendar() {
+            const year = window.currentDate.getFullYear();
+            const month = window.currentDate.getMonth();
+            
+            // Update month display
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                              'July', 'August', 'September', 'October', 'November', 'December'];
+            const monthEl = document.getElementById('calendarMonth');
+            if (monthEl) monthEl.textContent = `${monthNames[month]} ${year}`;
+            
+            const calendarDays = document.getElementById('calendarDays');
+            if (!calendarDays) return;
+            
+            calendarDays.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: #999;">Loading available dates...</div>';
+            
+            try {
+                // Get available dates from API
+                const availableDates = await SCHEDULER_API.getAvailableDates(year, month);
+                
+                // Clear loading state
+                calendarDays.innerHTML = '';
+                
+                // Get first day and days in month
+                const firstDay = new Date(year, month, 1).getDay();
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                
+                // Add empty cells
+                for (let i = 0; i < firstDay; i++) {
+                    const emptyDay = document.createElement('div');
+                    emptyDay.className = 'calendar-day disabled';
+                    calendarDays.appendChild(emptyDay);
+                }
+                
+                // Add days
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const dayElement = document.createElement('div');
+                    dayElement.className = 'calendar-day';
+                    
+                    const dayDate = new Date(year, month, day);
+                    dayDate.setHours(0, 0, 0, 0);
+                    
+                    // Format date for comparison
+                    const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                    
+                    // Check availability
+                    if (availableDates.includes(dateStr) && dayDate >= today) {
+                        dayElement.classList.add('available');
+                        // Create a closure to capture the date
+                        (function(capturedDate) {
+                            dayElement.onclick = function() {
+                                selectDate(capturedDate);
+                            };
+                        })(new Date(year, month, day));
+                    } else {
+                        dayElement.classList.add('disabled');
+                    }
+                    
+                    dayElement.innerHTML = `<span class="day-number">${day}</span>`;
+                    calendarDays.appendChild(dayElement);
+                }
+            } catch (error) {
+                console.error('Error generating calendar:', error);
+                calendarDays.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: #ff6b6b;">Failed to load calendar. Please refresh.</div>';
+            }
         }
 
         // Month Navigation
-        function changeMonth(direction) {
-            window.currentDate.setMonth(window.currentDate.getMonth() + direction);
+        function previousMonth() {
+            window.currentDate.setMonth(window.currentDate.getMonth() - 1);
+            generateCalendar();
+        }
+
+        function nextMonth() {
+            window.currentDate.setMonth(window.currentDate.getMonth() + 1);
             generateCalendar();
         }
 
         // Date Selection
-        function selectDate(year, month, day) {
-            // This will be overridden by scheduler-api.js
-            console.log('Date selection will be handled by scheduler-api.js');
+        async function selectDate(date) {
+            window.selectedDate = date;
+            
+            // Update UI
+            document.querySelectorAll('.calendar-day').forEach(day => {
+                day.classList.remove('selected');
+            });
+            
+            // Find and highlight the selected day
+            const selectedDay = date.getDate();
+            const calendarDays = document.querySelectorAll('.calendar-day.available');
+            calendarDays.forEach(dayElement => {
+                const dayNumber = dayElement.querySelector('.day-number');
+                if (dayNumber && parseInt(dayNumber.textContent) === selectedDay) {
+                    dayElement.classList.add('selected');
+                }
+            });
+            
+            // Show time slots
+            showView('timeSlotsView');
+            
+            // Update date display
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const dateDisplay = document.getElementById('selectedDateDisplay');
+            if (dateDisplay) dateDisplay.textContent = date.toLocaleDateString('en-US', options);
+            
+            // Load time slots
+            const timeSlotsGrid = document.getElementById('timeSlotsGrid');
+            if (!timeSlotsGrid) return;
+            
+            timeSlotsGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center;"><div class="loading-spinner active" style="margin: 2rem auto;"></div></div>';
+            
+            try {
+                const availableTimes = await SCHEDULER_API.getAvailableTimes(date);
+                
+                timeSlotsGrid.innerHTML = '';
+                
+                if (availableTimes.length === 0) {
+                    timeSlotsGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999;">No available times for this date</p>';
+                    return;
+                }
+                
+                availableTimes.forEach(time => {
+                    const slot = document.createElement('button');
+                    slot.className = 'time-slot';
+                    slot.textContent = time;
+                    slot.onclick = () => selectTime(time, slot);
+                    timeSlotsGrid.appendChild(slot);
+                });
+            } catch (error) {
+                console.error('Error loading times:', error);
+                timeSlotsGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #ff6b6b;">Failed to load times. Please try again.</p>';
+            }
         }
 
         // Time Selection
@@ -813,191 +1746,111 @@
             });
             element.classList.add('selected');
             
-            // Show form view
-            showView('formView');
-            
-            // Update meeting details
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById('meetingDate').textContent = window.selectedDate.toLocaleDateString('en-US', options);
-            document.getElementById('meetingTime').textContent = time;
+            // Show booking form
+            setTimeout(() => {
+                showView('bookingForm');
+                
+                // Update summary
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                const dateEl = document.getElementById('summaryDate');
+                const timeEl = document.getElementById('summaryTime');
+                if (dateEl && window.selectedDate) dateEl.textContent = window.selectedDate.toLocaleDateString('en-US', options);
+                if (timeEl) timeEl.textContent = window.selectedTime;
+            }, 300);
         }
 
-        // Form Submission
-        function submitScheduler(event) {
-            // This will be overridden by scheduler-api.js
-            console.log('Form submission will be handled by scheduler-api.js');
+        // Navigation Functions
+        function backToCalendar() {
+            showView('calendarView');
+            window.selectedTime = null;
         }
 
-        // Style for scheduler components
-        const schedulerStyles = document.createElement('style');
-        schedulerStyles.textContent = `
-            .scheduler-view {
-                display: none;
+        function backToTimeSlots() {
+            showView('timeSlotsView');
+        }
+
+        // DOM Content Loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Menu Toggle
+            function toggleMenu() {
+                const navMenu = document.getElementById('navMenu');
+                navMenu.classList.toggle('active');
             }
-            
-            .scheduler-view.active {
-                display: block;
-            }
-            
-            .calendar-nav {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 1.5rem;
-            }
-            
-            .calendar-nav button {
-                background: none;
-                border: 1px solid var(--border-color);
-                color: var(--text-primary);
-                padding: 0.5rem 1rem;
-                border-radius: 6px;
-                cursor: pointer;
-                transition: all 0.3s ease;
-            }
-            
-            .calendar-nav button:hover {
-                background: rgba(255, 255, 255, 0.05);
-            }
-            
-            .calendar-grid {
-                display: grid;
-                grid-template-columns: repeat(7, 1fr);
-                gap: 0.5rem;
-            }
-            
-            .calendar-day {
-                aspect-ratio: 1;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                border: 1px solid var(--border-color);
-                border-radius: 6px;
-                cursor: pointer;
-                transition: all 0.3s ease;
-            }
-            
-            .calendar-day:hover:not(.disabled) {
-                background: rgba(255, 255, 255, 0.05);
-                border-color: var(--text-secondary);
-            }
-            
-            .calendar-day.disabled {
-                opacity: 0.3;
-                cursor: not-allowed;
-            }
-            
-            .calendar-day.selected {
-                background: var(--text-primary);
-                color: var(--primary-black);
-            }
-            
-            .calendar-header {
-                font-weight: 600;
-                color: var(--text-secondary);
-                font-size: 0.875rem;
-            }
-            
-            .time-slots-grid {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                gap: 1rem;
-                margin-top: 1.5rem;
-            }
-            
-            .time-slot {
-                padding: 1rem;
-                border: 1px solid var(--border-color);
-                border-radius: 6px;
-                text-align: center;
-                cursor: pointer;
-                transition: all 0.3s ease;
-            }
-            
-            .time-slot:hover {
-                background: rgba(255, 255, 255, 0.05);
-                border-color: var(--text-secondary);
-            }
-            
-            .time-slot.selected {
-                background: var(--text-primary);
-                color: var(--primary-black);
-            }
-            
-            .back-btn {
-                background: none;
-                border: none;
-                color: var(--text-secondary);
-                cursor: pointer;
-                margin-bottom: 1.5rem;
-                transition: color 0.3s ease;
-            }
-            
-            .back-btn:hover {
-                color: var(--text-primary);
-            }
-            
-            .meeting-summary {
-                background: var(--primary-black);
-                border: 1px solid var(--border-color);
-                border-radius: 8px;
-                padding: 1.5rem;
-                margin-bottom: 2rem;
-            }
-            
-            .meeting-summary h3 {
-                margin-bottom: 1rem;
-            }
-            
-            .meeting-summary p {
-                margin-bottom: 0.5rem;
-                color: var(--text-secondary);
-            }
-            
-            .success-content {
-                text-align: center;
-                padding: 2rem;
-            }
-            
-            .success-icon {
-                width: 60px;
-                height: 60px;
-                background: #4CAF50;
-                color: white;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 2rem;
-                margin: 0 auto 2rem;
-            }
-            
-            .spinner {
-                display: none;
-                width: 16px;
-                height: 16px;
-                border: 2px solid var(--primary-black);
-                border-top-color: transparent;
-                border-radius: 50%;
-                animation: spin 0.8s linear infinite;
-                margin-left: 0.5rem;
-            }
-            
-            .spinner.active {
-                display: inline-block;
-            }
-            
-            @keyframes spin {
-                to { transform: rotate(360deg); }
-            }
-            
-            @media (max-width: 480px) {
-                .time-slots-grid {
-                    grid-template-columns: repeat(2, 1fr);
+            window.toggleMenu = toggleMenu;
+
+            // Close menu when clicking outside
+            document.addEventListener('click', function(event) {
+                const navMenu = document.getElementById('navMenu');
+                const menuBtn = document.querySelector('.mobile-menu-btn');
+                
+                if (!navMenu.contains(event.target) && !menuBtn.contains(event.target)) {
+                    navMenu.classList.remove('active');
                 }
+            });
+
+            // Contact Form Handler
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    
+                    const submitBtn = document.getElementById('contactSubmitBtn');
+                    const submitText = document.getElementById('contactSubmitText');
+                    const loadingSpinner = document.getElementById('contactLoadingSpinner');
+                    
+                    submitBtn.disabled = true;
+                    submitText.textContent = 'Sending...';
+                    if (loadingSpinner) loadingSpinner.classList.add('active');
+                    
+                    // Simulate form submission
+                    await new Promise(resolve => setTimeout(resolve, 1500));
+                    
+                    // Show success
+                    submitText.textContent = 'Message Sent!';
+                    if (loadingSpinner) loadingSpinner.classList.remove('active');
+                    contactForm.reset();
+                    
+                    setTimeout(() => {
+                        submitBtn.disabled = false;
+                        submitText.textContent = 'Send Message';
+                    }, 2000);
+                });
             }
-        `;
-        document.head.appendChild(schedulerStyles);
+
+            // Close on overlay click
+            const schedulerOverlay = document.getElementById('schedulerOverlay');
+            if (schedulerOverlay) {
+                schedulerOverlay.addEventListener('click', (e) => {
+                    if (e.target === e.currentTarget) {
+                        closeScheduler();
+                    }
+                });
+            }
+        });
+
+        // Handle Demo Click
+        function handleDemoClick(event) {
+            if (window.location.pathname === '/contact' || window.location.pathname === '/contact.html') {
+                event.preventDefault();
+                openScheduler();
+            }
+        }
+
+        // Make functions globally available
+        window.openScheduler = openScheduler;
+        window.closeScheduler = closeScheduler;
+        window.previousMonth = previousMonth;
+        window.nextMonth = nextMonth;
+        window.selectDate = selectDate;
+        window.selectTime = selectTime;
+        window.backToCalendar = backToCalendar;
+        window.backToTimeSlots = backToTimeSlots;
+        window.showView = showView;
+        window.generateCalendar = generateCalendar;
+        window.initScheduler = initScheduler;
+        window.resetScheduler = resetScheduler;
+        window.detectTimezone = detectTimezone;
+        window.handleDemoClick = handleDemoClick;
     </script>
 </body>
 </html>
