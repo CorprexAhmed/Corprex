@@ -35,6 +35,12 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--primary-white);
+            font-weight: 300;
+        }
+
         /* Navigation */
         nav {
             position: fixed;
@@ -131,9 +137,12 @@
             background: var(--primary-white);
             color: var(--primary-black);
             padding: 0.875rem 2rem;
+            border: none;
             border-radius: 8px;
             text-decoration: none;
             font-weight: 500;
+            font-size: 1rem;
+            font-family: inherit;
             transition: all 0.3s ease;
             cursor: pointer;
         }
@@ -252,6 +261,7 @@
             font-weight: 400;
             margin-bottom: 1rem;
             color: var(--primary-white);
+            letter-spacing: -0.02em;
         }
 
         .info-card p {
@@ -290,6 +300,7 @@
             font-weight: 500;
             margin-bottom: 1rem;
             color: var(--primary-white);
+            letter-spacing: -0.01em;
         }
 
         .footer-section a {
@@ -963,7 +974,7 @@
         <div class="hero-content">
             <h1 class="hero-title">Get in Touch</h1>
             <p class="hero-subtitle">Ready to transform your business with private AI? Let's discuss how Corprex can help you achieve your goals.</p>
-            <a href="#" class="hero-cta" onclick="openScheduler(); return false;">Schedule a Demo</a>
+            <button class="hero-cta" onclick="openScheduler()">Schedule a Demo</button>
         </div>
     </section>
 
@@ -1236,41 +1247,6 @@
 
     <!-- Page Scripts -->
     <script>
-        // Navigation Menu Toggle
-        const menuToggle = document.getElementById('menuToggle');
-        const navMenu = document.getElementById('navMenu');
-        
-        menuToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-        });
-
-        // Contact Form Handler
-        const contactForm = document.getElementById('contactForm');
-        contactForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const submitBtn = document.getElementById('contactSubmitBtn');
-            const submitText = document.getElementById('contactSubmitText');
-            const loadingSpinner = document.getElementById('contactLoadingSpinner');
-            
-            submitBtn.disabled = true;
-            submitText.textContent = 'Sending...';
-            loadingSpinner.classList.add('active');
-            
-            // Simulate form submission
-            await new Promise(resolve => setTimeout(resolve, 1500));
-            
-            // Show success
-            submitText.textContent = 'Message Sent!';
-            loadingSpinner.classList.remove('active');
-            contactForm.reset();
-            
-            setTimeout(() => {
-                submitBtn.disabled = false;
-                submitText.textContent = 'Send Message';
-            }, 2000);
-        });
-
         // Scheduler State
         let currentDate = new Date();
         let selectedDate = null;
@@ -1278,15 +1254,21 @@
 
         // Open/Close Scheduler
         function openScheduler() {
-            document.getElementById('schedulerOverlay').classList.add('active');
-            document.body.style.overflow = 'hidden';
-            initScheduler();
+            const overlay = document.getElementById('schedulerOverlay');
+            if (overlay) {
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                initScheduler();
+            }
         }
 
         function closeScheduler() {
-            document.getElementById('schedulerOverlay').classList.remove('active');
-            document.body.style.overflow = '';
-            resetScheduler();
+            const overlay = document.getElementById('schedulerOverlay');
+            if (overlay) {
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+                resetScheduler();
+            }
         }
 
         // Initialize Scheduler
@@ -1300,7 +1282,8 @@
             selectedDate = null;
             selectedTime = null;
             showView('calendarView');
-            document.getElementById('schedulerForm').reset();
+            const form = document.getElementById('schedulerForm');
+            if (form) form.reset();
         }
 
         // View Management
@@ -1308,7 +1291,8 @@
             document.querySelectorAll('.scheduler-view').forEach(view => {
                 view.classList.remove('active');
             });
-            document.getElementById(viewId).classList.add('active');
+            const view = document.getElementById(viewId);
+            if (view) view.classList.add('active');
         }
 
         // Detect Timezone
@@ -1316,10 +1300,12 @@
             const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
             const timezoneSelect = document.getElementById('timezoneSelect');
             
-            for (let option of timezoneSelect.options) {
-                if (option.value === userTimezone) {
-                    option.selected = true;
-                    break;
+            if (timezoneSelect) {
+                for (let option of timezoneSelect.options) {
+                    if (option.value === userTimezone) {
+                        option.selected = true;
+                        break;
+                    }
                 }
             }
         }
@@ -1332,9 +1318,12 @@
             // Update month display
             const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
                               'July', 'August', 'September', 'October', 'November', 'December'];
-            document.getElementById('calendarMonth').textContent = `${monthNames[month]} ${year}`;
+            const monthEl = document.getElementById('calendarMonth');
+            if (monthEl) monthEl.textContent = `${monthNames[month]} ${year}`;
             
             const calendarDays = document.getElementById('calendarDays');
+            if (!calendarDays) return;
+            
             calendarDays.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: #999;">Loading available dates...</div>';
             
             try {
@@ -1425,10 +1414,13 @@
             
             // Update date display
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById('selectedDateDisplay').textContent = date.toLocaleDateString('en-US', options);
+            const dateDisplay = document.getElementById('selectedDateDisplay');
+            if (dateDisplay) dateDisplay.textContent = date.toLocaleDateString('en-US', options);
             
             // Load time slots
             const timeSlotsGrid = document.getElementById('timeSlotsGrid');
+            if (!timeSlotsGrid) return;
+            
             timeSlotsGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center;"><div class="loading-spinner active" style="margin: 2rem auto;"></div></div>';
             
             try {
@@ -1470,8 +1462,10 @@
                 
                 // Update summary
                 const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                document.getElementById('summaryDate').textContent = selectedDate.toLocaleDateString('en-US', options);
-                document.getElementById('summaryTime').textContent = selectedTime;
+                const dateEl = document.getElementById('summaryDate');
+                const timeEl = document.getElementById('summaryTime');
+                if (dateEl && selectedDate) dateEl.textContent = selectedDate.toLocaleDateString('en-US', options);
+                if (timeEl) timeEl.textContent = selectedTime;
             }, 300);
         }
 
@@ -1485,22 +1479,109 @@
             showView('timeSlotsView');
         }
 
- new Error(result.error || 'Booking failed');
-                }
-            } catch (error) {
-                console.error('Booking error:', error);
-                alert('Failed to schedule meeting. Please try again.');
-            } finally {
-                submitBtn.disabled = false;
-                submitText.textContent = 'Schedule Meeting';
-                loadingSpinner.classList.remove('active');
+        // DOM Content Loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Navigation Menu Toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+            
+            if (menuToggle && navMenu) {
+                menuToggle.addEventListener('click', () => {
+                    navMenu.classList.toggle('active');
+                });
             }
-        });
 
-        // Close on overlay click
-        document.getElementById('schedulerOverlay').addEventListener('click', (e) => {
-            if (e.target === e.currentTarget) {
-                closeScheduler();
+            // Contact Form Handler
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    
+                    const submitBtn = document.getElementById('contactSubmitBtn');
+                    const submitText = document.getElementById('contactSubmitText');
+                    const loadingSpinner = document.getElementById('contactLoadingSpinner');
+                    
+                    submitBtn.disabled = true;
+                    submitText.textContent = 'Sending...';
+                    if (loadingSpinner) loadingSpinner.classList.add('active');
+                    
+                    // Simulate form submission
+                    await new Promise(resolve => setTimeout(resolve, 1500));
+                    
+                    // Show success
+                    submitText.textContent = 'Message Sent!';
+                    if (loadingSpinner) loadingSpinner.classList.remove('active');
+                    contactForm.reset();
+                    
+                    setTimeout(() => {
+                        submitBtn.disabled = false;
+                        submitText.textContent = 'Send Message';
+                    }, 2000);
+                });
+            }
+
+            // Booking Form Handler
+            const schedulerForm = document.getElementById('schedulerForm');
+            if (schedulerForm) {
+                schedulerForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    
+                    // Check if date and time are selected
+                    if (!selectedDate || !selectedTime) {
+                        alert('Please select both a date and time before booking.');
+                        return;
+                    }
+                    
+                    const submitBtn = e.target.querySelector('.btn-primary');
+                    const submitText = submitBtn.querySelector('#submitText');
+                    const loadingSpinner = submitBtn.querySelector('#loadingSpinner');
+                    
+                    // Show loading
+                    submitBtn.disabled = true;
+                    submitText.textContent = 'Scheduling...';
+                    loadingSpinner.classList.add('active');
+                    
+                    try {
+                        // Prepare booking data
+                        const formData = new FormData(e.target);
+                        const bookingData = {
+                            date: selectedDate.toISOString().split('T')[0],
+                            time: selectedTime,
+                            timezone: document.getElementById('timezoneSelect').value,
+                            name: formData.get('name'),
+                            email: formData.get('email'),
+                            company: formData.get('company'),
+                            phone: formData.get('phone'),
+                            message: formData.get('message')
+                        };
+                        
+                        // Submit booking
+                        const result = await SCHEDULER_API.bookMeeting(bookingData);
+                        
+                        if (result.success) {
+                            showView('successView');
+                        } else {
+                            throw new Error(result.error || 'Booking failed');
+                        }
+                    } catch (error) {
+                        console.error('Booking error:', error);
+                        alert('Failed to schedule meeting. Please try again.');
+                    } finally {
+                        submitBtn.disabled = false;
+                        submitText.textContent = 'Schedule Meeting';
+                        loadingSpinner.classList.remove('active');
+                    }
+                });
+            }
+
+            // Close on overlay click
+            const schedulerOverlay = document.getElementById('schedulerOverlay');
+            if (schedulerOverlay) {
+                schedulerOverlay.addEventListener('click', (e) => {
+                    if (e.target === e.currentTarget) {
+                        closeScheduler();
+                    }
+                });
             }
         });
     </script>
