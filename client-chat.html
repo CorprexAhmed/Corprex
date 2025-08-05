@@ -454,38 +454,40 @@
             max-width: 600px;
         }
 
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            max-width: 800px;
-            width: 100%;
-        }
-
-        .feature-card {
+        .warning-box {
             background: var(--secondary-black);
-            border: 1px solid var(--border-color);
+            border: 2px solid var(--error-red);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+            margin: 0 auto;
             text-align: left;
-            transition: all 0.3s ease;
         }
 
-        .feature-card:hover {
-            border-color: var(--text-primary);
-            transform: translateY(-2px);
+        .warning-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--error-red);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
-        .feature-title {
-            font-size: 1rem;
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-        }
-
-        .feature-description {
-            font-size: 0.875rem;
+        .warning-text {
+            font-size: 0.95rem;
             color: var(--text-secondary);
-            line-height: 1.5;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .warning-text:last-child {
+            margin-bottom: 0;
+        }
+
+        .warning-text strong {
+            color: var(--text-primary);
+            font-weight: 600;
         }
 
         /* Mobile Menu Toggle */
@@ -592,9 +594,17 @@
                 padding: 0 1rem;
             }
 
-            .feature-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
+            .warning-box {
+                padding: 1.5rem;
+                margin: 0 1rem;
+            }
+
+            .warning-title {
+                font-size: 1.125rem;
+            }
+
+            .warning-text {
+                font-size: 0.875rem;
             }
 
             .input-container {
@@ -632,9 +642,7 @@
                 padding: 2rem 1rem;
             }
 
-            .feature-card {
-                padding: 1.25rem;
-            }
+
         }
 
         /* Scrollbar Styling */
@@ -719,19 +727,17 @@
                     <h1 class="welcome-title">Welcome to Corprex Omega</h1>
                     <p class="welcome-subtitle">Experience the power of private AI infrastructure. Start a conversation to see how Omega can transform your business operations.</p>
                     
-                    <div class="feature-grid">
-                        <div class="feature-card">
-                            <h3 class="feature-title">Complete Privacy</h3>
-                            <p class="feature-description">Your data never leaves your infrastructure. Complete control and sovereignty.</p>
-                        </div>
-                        <div class="feature-card">
-                            <h3 class="feature-title">Lightning Fast</h3>
-                            <p class="feature-description">Local processing means zero latency and instant responses.</p>
-                        </div>
-                        <div class="feature-card">
-                            <h3 class="feature-title">Multiple Models</h3>
-                            <p class="feature-description">Switch between different AI models to find the perfect fit for your task.</p>
-                        </div>
+                    <div class="warning-box">
+                        <h3 class="warning-title">Important Notice</h3>
+                        <p class="warning-text">
+                            This is a <strong>demonstration environment</strong> of the Corprex Omega system. Unlike the actual Omega hardware that runs entirely on your premises, this demo operates in the cloud to showcase functionality.
+                        </p>
+                        <p class="warning-text">
+                            <strong>Your data is NOT private in this demo.</strong> All conversations are processed through third-party AI services (OpenAI, Anthropic, etc.) and may be stored on their servers.
+                        </p>
+                        <p class="warning-text">
+                            The real Corprex Omega system provides complete data sovereignty with all processing happening locally on your infrastructure. This demo is solely to demonstrate the interface and capabilities.
+                        </p>
                     </div>
                 </div>
             </div>
