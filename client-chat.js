@@ -105,6 +105,11 @@ function startNewChat() {
     saveChatHistory();
     renderChatHistory();
     renderMessages();
+    
+    // Close sidebar on mobile after creating new chat
+    if (typeof closeSidebarOnMobile === 'function') {
+        closeSidebarOnMobile();
+    }
 }
 
 // Load existing chat
@@ -115,6 +120,11 @@ function loadChat(chatId) {
         messages = chat.messages || [];
         renderChatHistory();
         renderMessages();
+        
+        // Close sidebar on mobile after selecting chat
+        if (typeof closeSidebarOnMobile === 'function') {
+            closeSidebarOnMobile();
+        }
     }
 }
 
@@ -409,6 +419,16 @@ function handleLogout() {
 window.onload = function() {
     loadChatHistory();
     document.getElementById('messageInput').focus();
+    
+    // Fix viewport height on mobile
+    function setViewportHeight() {
+        const vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }
+    
+    setViewportHeight();
+    window.addEventListener('resize', setViewportHeight);
+    window.addEventListener('orientationchange', setViewportHeight);
 };
 
 // Save chat history before unload
