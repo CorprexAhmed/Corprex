@@ -4,9 +4,9 @@
 (function() {
     'use strict';
     
-    // Configuration - REPLACE THESE WITH YOUR ACTUAL VALUES
-    const CALCOM_USERNAME = 'YOUR_USERNAME'; // Replace with your Cal.com username
-    const EVENT_SLUG = '30min'; // Replace with your event slug (e.g., '30min', 'consultation', etc.)
+    // Configuration
+    const CALCOM_USERNAME = 'team/corprex';
+    const EVENT_SLUG = 'quickchat';
     
     // Initialize Cal.com custom styling
     window.CalcomIntegration = {
