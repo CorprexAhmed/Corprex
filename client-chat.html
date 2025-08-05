@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Corprex Omega Demo - Chat Interface</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
@@ -11,6 +11,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         :root {
@@ -32,9 +33,12 @@
             background: var(--primary-black);
             color: var(--text-primary);
             height: 100vh;
+            height: -webkit-fill-available;
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         /* Header */
@@ -45,6 +49,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-shrink: 0;
         }
 
         .header-left {
@@ -82,6 +87,9 @@
             cursor: pointer;
             transition: all 0.3s ease;
             min-width: 180px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
         }
 
         .model-dropdown:focus {
@@ -149,6 +157,7 @@
             border-right: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
+            flex-shrink: 0;
         }
 
         .sidebar-header {
@@ -226,6 +235,7 @@
             display: flex;
             flex-direction: column;
             background: var(--primary-black);
+            min-width: 0;
         }
 
         /* Messages Area */
@@ -236,6 +246,7 @@
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
+            -webkit-overflow-scrolling: touch;
         }
 
         .message {
@@ -268,6 +279,7 @@
 
         .message-content {
             flex: 1;
+            min-width: 0;
         }
 
         .message-role {
@@ -281,6 +293,8 @@
             font-size: 0.95rem;
             line-height: 1.6;
             color: var(--text-primary);
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         .message-text p {
@@ -298,6 +312,7 @@
             padding: 1rem;
             overflow-x: auto;
             margin: 1rem 0;
+            -webkit-overflow-scrolling: touch;
         }
 
         .message-text code {
@@ -346,6 +361,7 @@
             background: var(--secondary-black);
             border-top: 1px solid var(--border-color);
             padding: 1.5rem;
+            flex-shrink: 0;
         }
 
         .input-wrapper {
@@ -363,13 +379,16 @@
             border-radius: 8px;
             padding: 0.875rem 1rem;
             color: var(--text-primary);
-            font-size: 0.95rem;
+            font-size: 16px;
             font-family: inherit;
             resize: none;
             min-height: 44px;
             max-height: 120px;
             overflow-y: auto;
             transition: all 0.3s ease;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
         }
 
         .input-field:focus {
@@ -396,6 +415,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            flex-shrink: 0;
         }
 
         .send-btn:hover {
@@ -456,18 +476,6 @@
             transform: translateY(-2px);
         }
 
-        .feature-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--dark-gray);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1rem;
-            font-size: 1.25rem;
-        }
-
         .feature-title {
             font-size: 1rem;
             font-weight: 500;
@@ -480,32 +488,152 @@
             line-height: 1.5;
         }
 
-        /* Responsive */
+        /* Mobile Menu Toggle */
+        .mobile-menu-btn {
+            display: none;
+            background: var(--dark-gray);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.25rem;
+            width: 40px;
+            height: 40px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Mobile Responsive */
         @media (max-width: 768px) {
-            .chat-sidebar {
-                display: none;
+            .chat-header {
+                padding: 0.75rem 1rem;
             }
 
             .header-left {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.5rem;
+                gap: 1rem;
             }
 
-            .model-selector {
-                order: 2;
+            .logo {
+                font-size: 1.125rem;
+            }
+
+            .model-selector label {
+                display: none;
+            }
+
+            .model-dropdown {
+                min-width: 140px;
+                padding: 0.5rem 0.75rem;
+                font-size: 0.813rem;
+            }
+
+            .user-info span {
+                display: none;
+            }
+
+            .logout-btn {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.813rem;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .chat-sidebar {
+                position: fixed;
+                left: -260px;
+                top: 0;
+                height: 100%;
+                z-index: 100;
+                transition: left 0.3s ease;
+            }
+
+            .chat-sidebar.open {
+                left: 0;
+            }
+
+            .sidebar-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.7);
+                z-index: 99;
+            }
+
+            .sidebar-overlay.active {
+                display: block;
             }
 
             .messages-container {
                 padding: 1rem;
             }
 
+            .message {
+                gap: 0.75rem;
+            }
+
+            .message-avatar {
+                width: 32px;
+                height: 32px;
+                font-size: 0.75rem;
+            }
+
             .welcome-title {
                 font-size: 2rem;
             }
 
+            .welcome-subtitle {
+                font-size: 1rem;
+                padding: 0 1rem;
+            }
+
             .feature-grid {
                 grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .input-container {
+                padding: 1rem;
+            }
+
+            .input-wrapper {
+                gap: 0.75rem;
+            }
+
+            .input-field {
+                padding: 0.75rem;
+                font-size: 16px;
+            }
+
+            .send-btn {
+                padding: 0.75rem 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .chat-header {
+                padding: 0.75rem;
+            }
+
+            .logo {
+                font-size: 1rem;
+            }
+
+            .welcome-title {
+                font-size: 1.75rem;
+            }
+
+            .welcome-screen {
+                padding: 2rem 1rem;
+            }
+
+            .feature-card {
+                padding: 1.25rem;
             }
         }
 
@@ -526,12 +654,27 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--medium-gray);
         }
+
+        /* iOS specific fixes */
+        @supports (-webkit-touch-callout: none) {
+            .chat-container {
+                height: -webkit-fill-available;
+            }
+
+            .messages-container {
+                -webkit-overflow-scrolling: touch;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Mobile Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
     <!-- Header -->
     <header class="chat-header">
         <div class="header-left">
+            <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
             <div class="logo">CORPREX OMEGA</div>
             <div class="model-selector">
                 <label for="modelSelect">Model:</label>
@@ -556,10 +699,10 @@
     <!-- Main Content -->
     <div class="chat-container">
         <!-- Sidebar -->
-        <aside class="chat-sidebar">
+        <aside class="chat-sidebar" id="chatSidebar">
             <div class="sidebar-header">
                 <button class="new-chat-btn" onclick="startNewChat()">
-                    <span>+</span> New Chat
+                    New Chat
                 </button>
             </div>
             <div class="chat-history" id="chatHistory">
@@ -578,17 +721,14 @@
                     
                     <div class="feature-grid">
                         <div class="feature-card">
-                            <div class="feature-icon">🔒</div>
                             <h3 class="feature-title">Complete Privacy</h3>
                             <p class="feature-description">Your data never leaves your infrastructure. Complete control and sovereignty.</p>
                         </div>
                         <div class="feature-card">
-                            <div class="feature-icon">⚡</div>
                             <h3 class="feature-title">Lightning Fast</h3>
                             <p class="feature-description">Local processing means zero latency and instant responses.</p>
                         </div>
                         <div class="feature-card">
-                            <div class="feature-icon">🔄</div>
                             <h3 class="feature-title">Multiple Models</h3>
                             <p class="feature-description">Switch between different AI models to find the perfect fit for your task.</p>
                         </div>
@@ -615,5 +755,34 @@
     </div>
 
     <script src="client-chat.js"></script>
+    <script>
+        // Mobile sidebar toggle
+        function toggleSidebar() {
+            const sidebar = document.getElementById('chatSidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+        }
+
+        // Close sidebar when selecting a chat on mobile
+        function closeSidebarOnMobile() {
+            if (window.innerWidth <= 768) {
+                const sidebar = document.getElementById('chatSidebar');
+                const overlay = document.getElementById('sidebarOverlay');
+                
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+            }
+        }
+
+        // Prevent iOS bounce scrolling
+        document.addEventListener('touchmove', function(e) {
+            if (e.target.closest('.messages-container') || e.target.closest('.chat-history')) {
+                return;
+            }
+            e.preventDefault();
+        }, { passive: false });
+    </script>
 </body>
 </html>
