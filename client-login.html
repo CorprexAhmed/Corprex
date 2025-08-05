@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Client Portal - Corprex</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
@@ -11,6 +11,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         :root {
@@ -33,10 +34,13 @@
             color: var(--text-primary);
             line-height: 1.6;
             min-height: 100vh;
+            min-height: -webkit-fill-available;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 1rem;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         /* Login Container */
@@ -111,9 +115,12 @@
             border-radius: 8px;
             padding: 0.875rem 1rem;
             color: var(--text-primary);
-            font-size: 0.95rem;
+            font-size: 16px; /* Prevents zoom on iOS */
             font-family: inherit;
             transition: all 0.3s ease;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
         }
 
         .form-input:focus {
@@ -155,6 +162,8 @@
             transition: all 0.3s ease;
             font-family: inherit;
             margin-top: 0.5rem;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
 
         .submit-btn:hover {
@@ -190,40 +199,22 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Demo Notice */
-        .demo-notice {
-            text-align: center;
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid var(--border-color);
-        }
+        /* Mobile Responsive */
+        @media (max-width: 640px) {
+            body {
+                padding: 0;
+                align-items: stretch;
+            }
 
-        .demo-notice h3 {
-            font-size: 0.875rem;
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-            color: var(--text-secondary);
-        }
-
-        .demo-notice p {
-            font-size: 0.75rem;
-            color: var(--text-gray);
-            line-height: 1.5;
-        }
-
-        .demo-credentials {
-            background: var(--dark-gray);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 0.75rem;
-            margin-top: 0.75rem;
-            font-family: 'Monaco', 'Consolas', monospace;
-            font-size: 0.875rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 480px) {
             .login-container {
+                max-width: none;
+                height: 100vh;
+                height: -webkit-fill-available;
+                border-radius: 0;
+                border: none;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
                 padding: 2rem 1.5rem;
             }
 
@@ -233,6 +224,43 @@
 
             .form-title h2 {
                 font-size: 1.25rem;
+            }
+
+            .form-input {
+                padding: 1rem;
+                font-size: 16px;
+            }
+
+            .submit-btn {
+                padding: 1rem;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 375px) {
+            .login-container {
+                padding: 1.5rem 1rem;
+            }
+
+            .login-logo h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Landscape Mobile */
+        @media (max-width: 640px) and (orientation: landscape) {
+            .login-container {
+                height: auto;
+                min-height: 100vh;
+                padding: 1.5rem;
+            }
+
+            .login-logo {
+                margin-bottom: 1.5rem;
+            }
+
+            .form-title {
+                margin-bottom: 1rem;
             }
         }
     </style>
@@ -268,6 +296,8 @@
                     placeholder="Enter your username"
                     required
                     autocomplete="username"
+                    autocapitalize="off"
+                    spellcheck="false"
                 >
             </div>
 
@@ -288,22 +318,14 @@
                 Sign In
             </button>
         </form>
-
-        <!-- Demo Notice -->
-        <div class="demo-notice">
-            <h3>Demo Credentials</h3>
-            <p>Use these credentials to explore the Corprex Omega interface:</p>
-            <div class="demo-credentials">
-                Username: demo<br>
-                Password: corprex2024
-            </div>
-        </div>
     </div>
 
     <script>
         // Client credentials (in production, this would be server-side)
         const validCredentials = [
             { username: 'demo', password: 'corprex2024' },
+            { username: 'client1', password: 'secure_pass_123' },
+            { username: 'client2', password: 'omega_demo_456' },
             // Add more client credentials here
         ];
 
@@ -343,6 +365,9 @@
                 errorMessage.classList.add('show');
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = 'Sign In';
+                
+                // Focus back on username field
+                document.getElementById('username').focus();
             }
         });
 
@@ -350,6 +375,16 @@
         if (sessionStorage.getItem('corprexAuth')) {
             window.location.href = 'client-chat.html';
         }
+
+        // Prevent zoom on double tap (iOS)
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', (e) => {
+            const now = Date.now();
+            if (now - lastTouchEnd <= 300) {
+                e.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
     </script>
 </body>
 </html>
