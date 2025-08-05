@@ -6,7 +6,7 @@
     
     // Configuration
     const CALCOM_USERNAME = 'team/corprex';
-    const EVENT_SLUG = 'quickchat';
+    const EVENT_SLUG = 'firstlook';
     
     // Initialize Cal.com custom styling
     window.CalcomIntegration = {
