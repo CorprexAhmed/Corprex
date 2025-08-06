@@ -81,6 +81,7 @@
             font-weight: 400;
             letter-spacing: 0.02em;
             white-space: nowrap;
+            z-index: 10;
         }
 
         .client-login-btn:hover {
@@ -109,6 +110,11 @@
 
         .nav-item {
             position: relative;
+        }
+
+        /* Hide mobile-only items on desktop */
+        .mobile-only-item {
+            display: none;
         }
 
         .nav-link {
@@ -916,18 +922,30 @@
             font-size: 0.9rem;
         }
 
+        /* Hide client login button when it would overlap with nav menu */
+        @media (max-width: 1200px) {
+            .client-login-btn {
+                display: none;
+            }
+            
+            /* Show mobile-only item in nav menu on medium screens */
+            .mobile-only-item {
+                display: list-item;
+            }
+        }
+
         /* Tablet and Medium Screens */
         @media (max-width: 1024px) and (min-width: 769px) {
             .client-login-btn {
-                left: calc(1.5rem + 140px);
+                display: none;
             }
         }
 
         /* Mobile Responsive */
         @media (max-width: 768px) {
-            /* Client Login Button on Mobile - Hide since it's in hamburger menu */
-            .client-login-btn {
-                display: none;
+            /* Show mobile-only items in hamburger menu */
+            .mobile-only-item {
+                display: block;
             }
 
             /* Mobile Menu */
@@ -1224,7 +1242,7 @@
                 <li class="nav-item">
                     <a href="/contact" class="nav-link">Contact</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item mobile-only-item">
                     <a href="/client-login" class="nav-link">Client Login</a>
                 </li>
                 <li class="nav-item">
