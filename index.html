@@ -70,7 +70,7 @@
         /* Client Login Button */
         .client-login-btn {
             position: absolute;
-            left: calc(1.5rem + 120px);
+            left: calc(1.5rem + 160px);
             font-size: 0.8rem;
             color: var(--text-secondary);
             text-decoration: none;
@@ -80,6 +80,7 @@
             transition: all 0.3s ease;
             font-weight: 400;
             letter-spacing: 0.02em;
+            white-space: nowrap;
         }
 
         .client-login-btn:hover {
@@ -915,15 +916,24 @@
             font-size: 0.9rem;
         }
 
+        /* Tablet and Medium Screens */
+        @media (max-width: 1024px) and (min-width: 769px) {
+            .client-login-btn {
+                left: calc(1.5rem + 140px);
+            }
+        }
+
         /* Mobile Responsive */
         @media (max-width: 768px) {
             /* Client Login Button on Mobile */
             .client-login-btn {
-                position: static;
-                margin-left: auto;
-                margin-right: 1rem;
+                position: absolute;
+                left: calc(50% - 40px);
+                top: 60px;
                 font-size: 0.75rem;
                 padding: 0.25rem 0.5rem;
+                z-index: 999;
+                background: var(--secondary-black);
             }
 
             /* Mobile Menu */
@@ -933,10 +943,10 @@
 
             .nav-menu {
                 position: fixed;
-                top: 60px;
+                top: 100px;
                 left: -100%;
                 width: 100%;
-                height: calc(100vh - 60px);
+                height: calc(100vh - 100px);
                 background: var(--secondary-black);
                 flex-direction: column;
                 padding: 2rem;
@@ -970,7 +980,7 @@
 
             /* Hero */
             .hero {
-                padding: 6rem 1rem 3rem;
+                padding: 7rem 1rem 3rem;
                 min-height: 100vh;
             }
 
@@ -1118,6 +1128,12 @@
 
             /* Client Login Button on very small screens */
             .client-login-btn {
+                position: relative;
+                left: auto;
+                top: auto;
+                display: block;
+                margin: 0.5rem auto;
+                width: fit-content;
                 font-size: 0.7rem;
                 padding: 0.2rem 0.4rem;
             }
@@ -1125,6 +1141,8 @@
             /* Ensure nothing is cut off on very small screens */
             .nav-container {
                 padding: 0.75rem 1rem;
+                flex-direction: column;
+                gap: 0.5rem;
             }
 
             .logo {
@@ -1151,7 +1169,7 @@
             }
 
             .hero {
-                padding-top: 8rem;
+                padding-top: 9rem;
             }
 
             /* Ensure sections have proper spacing */
@@ -1227,7 +1245,7 @@
                     <a href="/contact" class="nav-link">Contact</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#demo" class="nav-cta">Request Demo</a>
+                    <a href="/contact" class="nav-cta">Request Demo</a>
                 </li>
             </ul>
         </div>
@@ -1258,7 +1276,7 @@
                     The Omega is your complete AI infrastructure in one powerful device. No cloud dependencies. No data leaks. Just pure, private computational excellence at your command.
                 </p>
                 <div class="hero-cta">
-                    <a href="#demo" class="btn-primary">Request Demo</a>
+                    <a href="/contact" class="btn-primary">Request Demo</a>
                     <a href="#omega" class="btn-secondary">Explore the Omega</a>
                 </div>
             </div>
