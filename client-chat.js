@@ -1,5 +1,32 @@
-// Check authentication
-function checkAuth() {
+// ==================== AUTHENTICATION ====================
+// Immediately check authentication on script load
+(function() {
+    const auth = sessionStorage.getItem('corprexAuth');
+    if (!auth) {
+        window.location.href = 'client-login.html';
+        return;
+    }
+    
+    try {
+        const authData = JSON.parse(auth);
+        // Optional: Check if session is expired (e.g., 24 hours)
+        const sessionAge = Date.now() - authData.loginTime;
+        const maxAge = 24 * 60 * 60 * 1000; // 24 hours
+        
+        if (sessionAge > maxAge) {
+            sessionStorage.removeItem('corprexAuth');
+            window.location.href = 'client-login.html';
+            return;
+        }
+    } catch (e) {
+        sessionStorage.removeItem('corprexAuth');
+        window.location.href = 'client-login.html';
+        return;
+    }
+})();
+
+// Get authenticated user data
+function getAuthData() {
     const auth = sessionStorage.getItem('corprexAuth');
     if (!auth) {
         window.location.href = 'client-login.html';
@@ -8,66 +35,133 @@ function checkAuth() {
     return JSON.parse(auth);
 }
 
-// Initialize
-const auth = checkAuth();
-if (auth) {
-    // Set username
-    document.getElementById('username').textContent = auth.username;
-    document.getElementById('userAvatar').textContent = auth.username.charAt(0).toUpperCase();
-}
-
-// Chat state
+// ==================== INITIALIZATION ====================
 let currentChatId = null;
 let chatHistory = [];
 let messages = [];
 let isLoading = false;
+let currentModel = 'gpt-4';
 
-// API configuration
-const API_CONFIG = {
-    'gpt-4': {
-        url: 'https://api.openai.com/v1/chat/completions',
-        apiKey: 'YOUR_OPENAI_API_KEY', // Replace with your API key
-        model: 'gpt-4'
-    },
-    'gpt-3.5-turbo': {
-        url: 'https://api.openai.com/v1/chat/completions',
-        apiKey: 'YOUR_OPENAI_API_KEY', // Replace with your API key
-        model: 'gpt-3.5-turbo'
-    },
-    'claude-3': {
-        url: 'https://api.anthropic.com/v1/messages',
-        apiKey: 'YOUR_ANTHROPIC_API_KEY', // Replace with your API key
-        model: 'claude-3-opus-20240229'
-    },
-    'llama-2': {
-        url: 'YOUR_LLAMA_ENDPOINT', // Replace with your endpoint
-        apiKey: 'YOUR_LLAMA_API_KEY', // Replace with your API key
-        model: 'llama-2-70b'
-    },
-    'mistral': {
-        url: 'YOUR_MISTRAL_ENDPOINT', // Replace with your endpoint
-        apiKey: 'YOUR_MISTRAL_API_KEY', // Replace with your API key
-        model: 'mistral-large'
+// ==================== CHAT FUNCTIONALITY ====================
+
+// Initialize on DOM load
+document.addEventListener('DOMContentLoaded', function() {
+    // Set user info
+    const authData = getAuthData();
+    if (authData) {
+        const usernameEl = document.getElementById('username');
+        const avatarEl = document.getElementById('userAvatar');
+        
+        if (usernameEl) usernameEl.textContent = authData.username;
+        if (avatarEl) avatarEl.textContent = authData.username.charAt(0).toUpperCase();
     }
-};
+    
+    // Load chat history
+    loadChatHistory();
+    
+    // Set up event listeners
+    setupEventListeners();
+    
+    // Focus message input
+    const messageInput = document.getElementById('messageInput');
+    if (messageInput) messageInput.focus();
+    
+    // Initialize mobile viewport
+    setViewportHeight();
+});
+
+// Set up all event listeners
+function setupEventListeners() {
+    // Message input auto-resize
+    const messageInput = document.getElementById('messageInput');
+    if (messageInput) {
+        messageInput.addEventListener('input', function() {
+            this.style.height = '44px';
+            this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+        });
+        
+        // Handle Enter key
+        messageInput.addEventListener('keypress', handleKeyPress);
+    }
+    
+    // Send button
+    const sendButton = document.getElementById('sendButton');
+    if (sendButton) {
+        sendButton.addEventListener('click', sendMessage);
+    }
+    
+    // New chat button
+    const newChatBtn = document.getElementById('newChatBtn');
+    if (newChatBtn) {
+        newChatBtn.addEventListener('click', startNewChat);
+    }
+    
+    // Model selector
+    const modelSelect = document.getElementById('modelSelect');
+    if (modelSelect) {
+        modelSelect.addEventListener('change', (e) => {
+            currentModel = e.target.value;
+        });
+    }
+    
+    // Logout button
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', handleLogout);
+    }
+    
+    // Mobile menu
+    const mobileMenu = document.getElementById('mobileMenu');
+    const sidebar = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+    
+    if (mobileMenu && sidebar) {
+        mobileMenu.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+            if (sidebarOverlay) sidebarOverlay.classList.toggle('active');
+        });
+    }
+    
+    if (sidebarOverlay && sidebar) {
+        sidebarOverlay.addEventListener('click', () => {
+            sidebar.classList.remove('open');
+            sidebarOverlay.classList.remove('active');
+        });
+    }
+    
+    // Window resize
+    window.addEventListener('resize', setViewportHeight);
+    window.addEventListener('orientationchange', setViewportHeight);
+}
 
 // Load chat history from localStorage
 function loadChatHistory() {
-    const saved = localStorage.getItem('corprexChatHistory');
-    if (saved) {
-        chatHistory = JSON.parse(saved);
-        renderChatHistory();
+    try {
+        const saved = localStorage.getItem('corprexChatHistory');
+        if (saved) {
+            chatHistory = JSON.parse(saved);
+            renderChatHistory();
+        }
+    } catch (e) {
+        console.error('Error loading chat history:', e);
+        chatHistory = [];
     }
 }
 
 // Save chat history to localStorage
 function saveChatHistory() {
-    localStorage.setItem('corprexChatHistory', JSON.stringify(chatHistory));
+    try {
+        localStorage.setItem('corprexChatHistory', JSON.stringify(chatHistory));
+    } catch (e) {
+        console.error('Error saving chat history:', e);
+    }
 }
 
-// Render chat history
+// Render chat history sidebar
 function renderChatHistory() {
     const historyContainer = document.getElementById('chatHistory');
+    if (!historyContainer) return;
+    
     historyContainer.innerHTML = '';
     
     chatHistory.forEach(chat => {
@@ -106,10 +200,8 @@ function startNewChat() {
     renderChatHistory();
     renderMessages();
     
-    // Close sidebar on mobile after creating new chat
-    if (typeof closeSidebarOnMobile === 'function') {
-        closeSidebarOnMobile();
-    }
+    // Close sidebar on mobile
+    closeSidebarOnMobile();
 }
 
 // Load existing chat
@@ -120,27 +212,27 @@ function loadChat(chatId) {
         messages = chat.messages || [];
         renderChatHistory();
         renderMessages();
-        
-        // Close sidebar on mobile after selecting chat
-        if (typeof closeSidebarOnMobile === 'function') {
-            closeSidebarOnMobile();
-        }
+        closeSidebarOnMobile();
     }
 }
 
-// Render messages
+// Render messages in chat window
 function renderMessages() {
     const container = document.getElementById('messagesContainer');
     const welcomeScreen = document.getElementById('welcomeScreen');
     
+    if (!container) return;
+    
     if (messages.length === 0) {
-        welcomeScreen.style.display = 'flex';
-        container.innerHTML = '';
-        container.appendChild(welcomeScreen);
+        if (welcomeScreen) {
+            welcomeScreen.style.display = 'flex';
+            container.innerHTML = '';
+            container.appendChild(welcomeScreen);
+        }
         return;
     }
     
-    welcomeScreen.style.display = 'none';
+    if (welcomeScreen) welcomeScreen.style.display = 'none';
     container.innerHTML = '';
     
     messages.forEach(msg => {
@@ -166,7 +258,7 @@ function createMessageElement(role, content) {
     
     const roleLabel = document.createElement('div');
     roleLabel.className = 'message-role';
-    roleLabel.textContent = role === 'user' ? 'You' : 'Corprex Omega';
+    roleLabel.textContent = role === 'user' ? 'You' : 'Corprex AI';
     
     const text = document.createElement('div');
     text.className = 'message-text';
@@ -183,219 +275,150 @@ function createMessageElement(role, content) {
 
 // Format message content
 function formatMessage(content) {
-    // Basic markdown-like formatting
-    let formatted = content
-        .replace(/```(.*?)```/gs, '<pre><code>$1</code></pre>')
-        .replace(/`([^`]+)`/g, '<code>$1</code>')
-        .replace(/\n\n/g, '</p><p>')
-        .replace(/\n/g, '<br>');
-    
-    return `<p>${formatted}</p>`;
-}
-
-// Create typing indicator
-function createTypingIndicator() {
-    const message = document.createElement('div');
-    message.className = 'message';
-    message.id = 'typingIndicator';
-    
-    const avatar = document.createElement('div');
-    avatar.className = 'message-avatar ai';
-    avatar.textContent = 'AI';
-    
-    const contentWrapper = document.createElement('div');
-    contentWrapper.className = 'message-content';
-    
-    const roleLabel = document.createElement('div');
-    roleLabel.className = 'message-role';
-    roleLabel.textContent = 'Corprex Omega';
-    
-    const typingDiv = document.createElement('div');
-    typingDiv.className = 'typing-indicator';
-    typingDiv.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
-    
-    contentWrapper.appendChild(roleLabel);
-    contentWrapper.appendChild(typingDiv);
-    
-    message.appendChild(avatar);
-    message.appendChild(contentWrapper);
-    
-    return message;
+    // Convert markdown-style code blocks to HTML
+    content = content.replace(/```(.*?)\n([\s\S]*?)```/g, '<pre><code>$2</code></pre>');
+    // Convert inline code to HTML
+    content = content.replace(/`([^`]+)`/g, '<code>$1</code>');
+    // Convert line breaks to <br>
+    content = content.replace(/\n/g, '<br>');
+    return content;
 }
 
 // Send message
 async function sendMessage() {
-    const input = document.getElementById('messageInput');
-    const message = input.value.trim();
+    const messageInput = document.getElementById('messageInput');
+    if (!messageInput) return;
     
-    if (!message || isLoading) return;
+    const userMessage = messageInput.value.trim();
+    if (!userMessage || isLoading) return;
     
-    // Create new chat if needed
+    // If no current chat, start a new one
     if (!currentChatId) {
         startNewChat();
     }
     
     // Add user message
-    messages.push({ role: 'user', content: message });
+    const userMsg = {
+        role: 'user',
+        content: userMessage,
+        timestamp: Date.now()
+    };
+    messages.push(userMsg);
     
     // Update chat title if it's the first message
-    const chat = chatHistory.find(c => c.id === currentChatId);
-    if (chat && messages.length === 1) {
-        chat.title = message.substring(0, 50) + (message.length > 50 ? '...' : '');
+    if (messages.length === 1) {
+        const chat = chatHistory.find(c => c.id === currentChatId);
+        if (chat) {
+            chat.title = userMessage.substring(0, 50);
+            saveChatHistory();
+            renderChatHistory();
+        }
     }
     
-    // Clear input
-    input.value = '';
-    input.style.height = '44px';
-    
-    // Render messages
+    // Clear input and render
+    messageInput.value = '';
+    messageInput.style.height = '44px';
     renderMessages();
     
-    // Show typing indicator
-    const container = document.getElementById('messagesContainer');
-    const typingIndicator = createTypingIndicator();
-    container.appendChild(typingIndicator);
-    container.scrollTop = container.scrollHeight;
-    
-    // Disable send button
+    // Show loading state
     isLoading = true;
-    document.getElementById('sendBtn').disabled = true;
+    showTypingIndicator();
     
     try {
-        // Get selected model
-        const model = document.getElementById('modelSelect').value;
-        const config = API_CONFIG[model];
+        // Generate demo response (replace with actual API call when backend is ready)
+        const response = await generateDemoResponse(userMessage, currentModel);
         
-        // Prepare API request
-        const response = await callAI(config, messages);
+        // Add assistant message
+        const assistantMsg = {
+            role: 'assistant',
+            content: response,
+            timestamp: Date.now()
+        };
+        messages.push(assistantMsg);
         
-        // Remove typing indicator
-        document.getElementById('typingIndicator')?.remove();
-        
-        // Add AI response
-        messages.push({ role: 'assistant', content: response });
-        
-        // Update chat history
+        // Save chat
+        const chat = chatHistory.find(c => c.id === currentChatId);
         if (chat) {
             chat.messages = messages;
-            chat.timestamp = Date.now();
             saveChatHistory();
         }
         
-        // Render messages
-        renderMessages();
-        
     } catch (error) {
-        console.error('Error:', error);
-        document.getElementById('typingIndicator')?.remove();
-        
-        // Show error message
+        console.error('Error sending message:', error);
         const errorMsg = {
             role: 'assistant',
-            content: 'I apologize, but I encountered an error processing your request. Please ensure the API keys are configured correctly or try again later.'
+            content: 'Sorry, I encountered an error. Please try again.',
+            timestamp: Date.now()
         };
         messages.push(errorMsg);
-        renderMessages();
     } finally {
         isLoading = false;
-        document.getElementById('sendBtn').disabled = false;
-        input.focus();
+        hideTypingIndicator();
+        renderMessages();
     }
 }
 
-// Call AI API
-async function callAI(config, messages) {
-    const model = document.getElementById('modelSelect').value;
+// Generate demo response
+async function generateDemoResponse(userMessage, model) {
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 1000));
     
-    // For demo purposes, return a mock response if API keys are not configured
-    if (config.apiKey.includes('YOUR_')) {
-        await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate API delay
-        return getDemoResponse(messages[messages.length - 1].content, model);
-    }
-    
-    // OpenAI format
-    if (model.includes('gpt')) {
-        const response = await fetch(config.url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${config.apiKey}`
-            },
-            body: JSON.stringify({
-                model: config.model,
-                messages: messages,
-                temperature: 0.7,
-                max_tokens: 1000
-            })
-        });
-        
-        const data = await response.json();
-        return data.choices[0].message.content;
-    }
-    
-    // Anthropic format
-    if (model.includes('claude')) {
-        const response = await fetch(config.url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'x-api-key': config.apiKey,
-                'anthropic-version': '2023-06-01'
-            },
-            body: JSON.stringify({
-                model: config.model,
-                messages: messages.map(m => ({
-                    role: m.role === 'user' ? 'user' : 'assistant',
-                    content: m.content
-                })),
-                max_tokens: 1000
-            })
-        });
-        
-        const data = await response.json();
-        return data.content[0].text;
-    }
-    
-    // Other models - implement based on your endpoints
-    throw new Error('Model not yet implemented');
-}
-
-// Demo responses when API keys are not configured
-function getDemoResponse(userMessage, model) {
     const responses = {
-        'gpt-4': `I'm running as GPT-4 in demo mode. Your message: "${userMessage}"
+        'gpt-4': `I understand you're asking about: "${userMessage}"
 
-In a production Corprex Omega system, this would be processed entirely on your local infrastructure, ensuring complete data privacy and sovereignty. The response time would be near-instantaneous since there's no external API latency.
+As a Corprex Omega demonstration, I'm showing you how GPT-4 would respond when running on your private infrastructure. With Corprex Omega, you get:
 
-Key benefits you're experiencing:
-• Zero data exposure to external services
-• Sub-millisecond response times
-• Complete control over model behavior
-• No usage-based costs or rate limits
+• Complete data privacy - nothing leaves your servers
+• Lightning-fast responses with local processing
+• Full customization and control
+• No API costs or rate limits
 
-Would you like to learn more about how Corprex Omega can transform your AI operations?`,
+This is just a demo response. When properly configured with your API keys or local models, you'll get actual AI responses tailored to your needs.`,
 
-        'gpt-3.5-turbo': `Running GPT-3.5 Turbo locally via Corprex Omega. I received: "${userMessage}"
+        'gpt-3.5-turbo': `Processing your query: "${userMessage}"
 
-This demonstrates the flexibility of our system - you can run multiple models and switch between them instantly, all while maintaining complete data privacy.`,
+This demonstrates GPT-3.5 Turbo running through Corprex Omega. You're experiencing enterprise-grade AI without external dependencies.`,
 
-        'claude-3': `This is Claude 3 running on your Corprex Omega infrastructure. I'm processing: "${userMessage}"
+        'claude-3': `Thank you for your message: "${userMessage}"
 
-With Corprex, you get enterprise-grade AI capabilities without compromising on security or compliance. Your data never leaves your premises.`,
+This is Claude 3 via Corprex Omega, providing secure, private AI assistance within your infrastructure.`,
 
-        'llama-2': `Llama 2 responding via Corprex Omega: "${userMessage}"
+        'llama-2': `Llama 2 responding to: "${userMessage}"
 
-Open-source models like Llama 2 offer complete transparency and customization options when running on your private infrastructure.`,
+Open-source models like Llama 2 offer complete transparency when deployed through Corprex Omega.`,
 
-        'mistral': `Mistral AI processing locally: "${userMessage}"
+        'mistral': `Mistral AI processing: "${userMessage}"
 
-Experience the power of state-of-the-art language models without external dependencies or recurring costs.`
+Experience cutting-edge language models privately and securely with Corprex Omega.`
     };
     
-    return responses[model] || 'Demo response from Corprex Omega';
+    return responses[model] || responses['gpt-4'];
 }
 
-// Handle enter key
+// Show typing indicator
+function showTypingIndicator() {
+    const container = document.getElementById('messagesContainer');
+    if (!container) return;
+    
+    const indicator = document.createElement('div');
+    indicator.id = 'typingIndicator';
+    indicator.className = 'typing-indicator';
+    indicator.innerHTML = `
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+    `;
+    container.appendChild(indicator);
+    container.scrollTop = container.scrollHeight;
+}
+
+// Hide typing indicator
+function hideTypingIndicator() {
+    const indicator = document.getElementById('typingIndicator');
+    if (indicator) indicator.remove();
+}
+
+// Handle Enter key
 function handleKeyPress(event) {
     if (event.key === 'Enter' && !event.shiftKey) {
         event.preventDefault();
@@ -403,36 +426,33 @@ function handleKeyPress(event) {
     }
 }
 
-// Auto-resize textarea
-document.getElementById('messageInput').addEventListener('input', function() {
-    this.style.height = '44px';
-    this.style.height = Math.min(this.scrollHeight, 120) + 'px';
-});
-
-// Logout
+// Handle logout
 function handleLogout() {
-    sessionStorage.removeItem('corprexAuth');
-    window.location.href = 'client-login.html';
+    if (confirm('Are you sure you want to logout?')) {
+        sessionStorage.removeItem('corprexAuth');
+        window.location.href = 'client-login.html';
+    }
 }
 
-// Initialize on load
-window.onload = function() {
-    loadChatHistory();
-    document.getElementById('messageInput').focus();
+// Close sidebar on mobile
+function closeSidebarOnMobile() {
+    const sidebar = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
     
-    // Fix viewport height on mobile
-    function setViewportHeight() {
-        const vh = window.innerHeight * 0.01;
-        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    if (window.innerWidth <= 768) {
+        if (sidebar) sidebar.classList.remove('open');
+        if (sidebarOverlay) sidebarOverlay.classList.remove('active');
     }
-    
-    setViewportHeight();
-    window.addEventListener('resize', setViewportHeight);
-    window.addEventListener('orientationchange', setViewportHeight);
-};
+}
 
-// Save chat history before unload
-window.onbeforeunload = function() {
+// Set viewport height for mobile
+function setViewportHeight() {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
+
+// Save chat before unload
+window.addEventListener('beforeunload', function() {
     if (currentChatId && messages.length > 0) {
         const chat = chatHistory.find(c => c.id === currentChatId);
         if (chat) {
@@ -440,4 +460,12 @@ window.onbeforeunload = function() {
             saveChatHistory();
         }
     }
-};
+});
+
+// Periodic session check (every 5 minutes)
+setInterval(function() {
+    const auth = sessionStorage.getItem('corprexAuth');
+    if (!auth) {
+        window.location.href = 'client-login.html';
+    }
+}, 5 * 60 * 1000);
