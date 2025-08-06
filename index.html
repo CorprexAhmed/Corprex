@@ -925,15 +925,9 @@
 
         /* Mobile Responsive */
         @media (max-width: 768px) {
-            /* Client Login Button on Mobile */
+            /* Client Login Button on Mobile - Hide since it's in hamburger menu */
             .client-login-btn {
-                position: absolute;
-                left: calc(50% - 40px);
-                top: 60px;
-                font-size: 0.75rem;
-                padding: 0.25rem 0.5rem;
-                z-index: 999;
-                background: var(--secondary-black);
+                display: none;
             }
 
             /* Mobile Menu */
@@ -943,10 +937,10 @@
 
             .nav-menu {
                 position: fixed;
-                top: 100px;
+                top: 60px;
                 left: -100%;
                 width: 100%;
-                height: calc(100vh - 100px);
+                height: calc(100vh - 60px);
                 background: var(--secondary-black);
                 flex-direction: column;
                 padding: 2rem;
@@ -980,7 +974,7 @@
 
             /* Hero */
             .hero {
-                padding: 7rem 1rem 3rem;
+                padding: 6rem 1rem 3rem;
                 min-height: 100vh;
             }
 
@@ -1126,23 +1120,9 @@
                 text-align: left;
             }
 
-            /* Client Login Button on very small screens */
-            .client-login-btn {
-                position: relative;
-                left: auto;
-                top: auto;
-                display: block;
-                margin: 0.5rem auto;
-                width: fit-content;
-                font-size: 0.7rem;
-                padding: 0.2rem 0.4rem;
-            }
-
             /* Ensure nothing is cut off on very small screens */
             .nav-container {
                 padding: 0.75rem 1rem;
-                flex-direction: column;
-                gap: 0.5rem;
             }
 
             .logo {
@@ -1169,7 +1149,7 @@
             }
 
             .hero {
-                padding-top: 9rem;
+                padding-top: 8rem;
             }
 
             /* Ensure sections have proper spacing */
@@ -1243,6 +1223,9 @@
                 </li>
                 <li class="nav-item">
                     <a href="/contact" class="nav-link">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/client-login" class="nav-link">Client Login</a>
                 </li>
                 <li class="nav-item">
                     <a href="/contact" class="nav-cta">Request Demo</a>
