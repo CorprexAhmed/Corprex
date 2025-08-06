@@ -58,12 +58,34 @@
             justify-content: space-between;
             align-items: center;
             min-height: 60px;
+            position: relative;
         }
 
         .logo {
             font-size: 1.5rem;
             font-weight: 400;
             letter-spacing: -0.02em;
+        }
+
+        /* Client Login Button */
+        .client-login-btn {
+            position: absolute;
+            left: calc(1.5rem + 120px);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.3rem 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+        }
+
+        .client-login-btn:hover {
+            color: var(--text-primary);
+            border-color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.05);
         }
 
         /* Mobile Menu Button */
@@ -895,6 +917,15 @@
 
         /* Mobile Responsive */
         @media (max-width: 768px) {
+            /* Client Login Button on Mobile */
+            .client-login-btn {
+                position: static;
+                margin-left: auto;
+                margin-right: 1rem;
+                font-size: 0.75rem;
+                padding: 0.25rem 0.5rem;
+            }
+
             /* Mobile Menu */
             .mobile-menu-btn {
                 display: block;
@@ -1085,6 +1116,12 @@
                 text-align: left;
             }
 
+            /* Client Login Button on very small screens */
+            .client-login-btn {
+                font-size: 0.7rem;
+                padding: 0.2rem 0.4rem;
+            }
+
             /* Ensure nothing is cut off on very small screens */
             .nav-container {
                 padding: 0.75rem 1rem;
@@ -1164,6 +1201,7 @@
     <nav>
         <div class="nav-container">
             <div class="logo">CORPREX</div>
+            <a href="/client-login" class="client-login-btn">Client Login</a>
             <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
             <ul class="nav-menu" id="navMenu">
                 <li class="nav-item">
@@ -1311,8 +1349,8 @@
                         <li class="advantage-item">
                             <span class="advantage-icon">✓</span>
                             <div class="advantage-text">
-                                <h4>White Glove Service</h4>
-                                <p>From unboxing to optimization, our experts handle everything. Includes installation, training, and ongoing support.</p>
+                                <h4>Managed AI Operations</h4>
+                                <p>We run your AI infrastructure so you don't have to. Complete operational management, performance tuning, and strategic consulting included.</p>
                             </div>
                         </li>
                         <li class="advantage-item">
