@@ -1,18 +1,15 @@
 /**
- * Corprex Client Chat - Fixed Version
+ * Corprex Client Chat - Backend Integrated Version
  * 
- * IMPORTANT: To use this script:
- * 1. Remove any inline JavaScript from your client-chat.html
- * 2. Include this script at the END of the body tag:
- *    <script src="client-chat.js"></script>
- * 3. Ensure your HTML has these required elements:
- *    - id="chatContainer" for messages
- *    - id="messageInput" for input field
- *    - id="modelSelect" for model selector
- *    - class="chat-history" for sidebar history
- *    - class="user-section" for user info area
+ * FEATURES:
+ * - Full Vercel backend integration
+ * - API endpoint connectivity (/api/chat, /api/health)
+ * - Authentication with session management
+ * - Model switching (GPT-4, GPT-3.5, Claude, Llama, Mistral)
+ * - Chat history persistence
+ * - Automatic fallback to demo mode if backend unavailable
  * 
- * This script handles authentication, chat functionality, and session management.
+ * BACKEND URL: https://backend-kup9y8oxz-corprexs-projects.vercel.app
  */
 
 // ==================== AUTHENTICATION ====================
@@ -64,15 +61,55 @@ let messages = [];
 let isLoading = false;
 let currentModel = 'gpt-4';
 
+// ==================== BACKEND CONFIGURATION ====================
+// Automatically detect environment and set backend URL
+const API_BASE_URL = window.location.hostname === 'localhost' 
+    ? 'http://localhost:3001' 
+    : 'https://backend-kup9y8oxz-corprexs-projects.vercel.app';
+
+// Check backend health on load
+async function checkBackendHealth() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/health`);
+        const data = await response.json();
+        console.log('Backend connected:', data);
+        showConnectionStatus(true, data.database === 'connected');
+        return true;
+    } catch (error) {
+        console.error('Backend connection failed:', error);
+        showConnectionStatus(false);
+        return false;
+    }
+}
+
+// Show connection status
+function showConnectionStatus(isConnected, dbConnected = false) {
+    const statusDiv = document.getElementById('connectionStatus');
+    if (statusDiv) {
+        statusDiv.className = `connection-status ${isConnected ? 'connected' : 'disconnected'}`;
+        statusDiv.textContent = isConnected 
+            ? `Connected to Backend${dbConnected ? ' (Database Active)' : ''}` 
+            : 'Backend Offline - Running in Demo Mode';
+        statusDiv.style.display = 'block';
+        
+        setTimeout(() => {
+            statusDiv.style.display = 'none';
+        }, 5000);
+    }
+}
+
 // ==================== CHAT FUNCTIONALITY ====================
 
 // Initialize on DOM load
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     // Verify authentication once more after DOM loads
     const authData = getAuthData();
     if (!authData) {
         return; // Will redirect in getAuthData
     }
+    
+    // Check backend health
+    const backendAvailable = await checkBackendHealth();
     
     // Update user info in header if elements exist
     const usernameEl = document.getElementById('username');
@@ -98,6 +135,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize mobile viewport
     setViewportHeight();
+    
+    // Log backend status
+    console.log('Backend available:', backendAvailable);
+    console.log('API Base URL:', API_BASE_URL);
 });
 
 // Set up all event listeners
@@ -370,16 +411,53 @@ async function sendMessage() {
     showTypingIndicator();
     
     try {
-        // Generate demo response (replace with actual API call when backend is ready)
-        const response = await generateDemoResponse(userMessage, currentModel);
+        // Prepare conversation history for API
+        const conversationHistory = messages.map(msg => ({
+            role: msg.role,
+            content: msg.content
+        }));
         
-        // Add assistant message
-        const assistantMsg = {
-            role: 'assistant',
-            content: response,
-            timestamp: Date.now()
-        };
-        messages.push(assistantMsg);
+        // Call backend API
+        const response = await fetch(`${API_BASE_URL}/api/chat`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionStorage.getItem('corprexAuthToken') || ''}`
+            },
+            body: JSON.stringify({
+                model: currentModel,
+                messages: conversationHistory
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok && data.content) {
+            // Add assistant message
+            const assistantMsg = {
+                role: 'assistant',
+                content: data.content,
+                timestamp: Date.now()
+            };
+            messages.push(assistantMsg);
+        } else if (data.error) {
+            // Handle API error
+            const errorMsg = {
+                role: 'assistant',
+                content: `Error: ${data.error}. Please check your API configuration.`,
+                timestamp: Date.now()
+            };
+            messages.push(errorMsg);
+        } else {
+            // Fallback to demo mode if backend fails
+            const demoResponse = await generateDemoResponse(userMessage, currentModel);
+            const assistantMsg = {
+                role: 'assistant',
+                content: demoResponse,
+                timestamp: Date.now()
+            };
+            messages.push(assistantMsg);
+        }
         
         // Save chat
         const chat = chatHistory.find(c => c.id === currentChatId);
@@ -390,12 +468,22 @@ async function sendMessage() {
         
     } catch (error) {
         console.error('Error sending message:', error);
-        const errorMsg = {
+        
+        // If backend is unavailable, use demo mode
+        const demoResponse = await generateDemoResponse(userMessage, currentModel);
+        const assistantMsg = {
             role: 'assistant',
-            content: 'Sorry, I encountered an error. Please try again.',
+            content: demoResponse,
             timestamp: Date.now()
         };
-        messages.push(errorMsg);
+        messages.push(assistantMsg);
+        
+        // Save chat
+        const chat = chatHistory.find(c => c.id === currentChatId);
+        if (chat) {
+            chat.messages = messages;
+            saveChatHistory();
+        }
     } finally {
         isLoading = false;
         hideTypingIndicator();
@@ -409,9 +497,19 @@ if (typeof window !== 'undefined') {
     window.sendMessage = sendMessage;
     window.startNewChat = startNewChat;
     window.handleKeyPress = handleKeyPress;
+    window.API_BASE_URL = API_BASE_URL;
+    
+    // Function to handle suggestion clicks from HTML
+    window.sendSuggestion = function(text) {
+        const input = document.getElementById('messageInput');
+        if (input) {
+            input.value = text;
+            sendMessage();
+        }
+    };
 }
 
-// Generate demo response
+// Generate demo response (fallback when backend unavailable)
 async function generateDemoResponse(userMessage, model) {
     // Simulate API delay
     await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 1000));
@@ -419,33 +517,52 @@ async function generateDemoResponse(userMessage, model) {
     const responses = {
         'gpt-4': `I understand you're asking about: "${userMessage}"
 
-As a Corprex Omega demonstration, I'm showing you how GPT-4 would respond when running on your private infrastructure. With Corprex Omega, you get:
+This is a demo response from GPT-4 via Corprex. When your backend is properly configured with API keys, you'll receive actual AI responses.
 
-• Complete data privacy - nothing leaves your servers
-• Lightning-fast responses with local processing
-• Full customization and control
-• No API costs or rate limits
+To activate full functionality:
+1. Ensure your backend is running at: ${API_BASE_URL}
+2. Configure your API keys in the admin panel
+3. Check the connection status indicator
 
-This is just a demo response. When properly configured with your API keys or local models, you'll get actual AI responses tailored to your needs.`,
+The system is currently running in demo mode.`,
 
-        'gpt-3.5-turbo': `Processing your query: "${userMessage}"
+        'gpt-3.5-turbo': `Processing: "${userMessage}"
 
-This demonstrates GPT-3.5 Turbo running through Corprex Omega. You're experiencing enterprise-grade AI without external dependencies.`,
+Demo response from GPT-3.5 Turbo. Configure your OpenAI API key in the backend to enable real responses.`,
 
-        'claude-3': `Thank you for your message: "${userMessage}"
+        'claude-3': `Received: "${userMessage}"
 
-This is Claude 3 via Corprex Omega, providing secure, private AI assistance within your infrastructure.`,
+This is a Claude 3 demo response. Add your Anthropic API key to enable actual Claude responses.`,
 
-        'llama-2': `Llama 2 responding to: "${userMessage}"
+        'llama-2': `Query: "${userMessage}"
 
-Open-source models like Llama 2 offer complete transparency when deployed through Corprex Omega.`,
+Llama 2 demo mode. Configure your model endpoint for actual responses.`,
 
-        'mistral': `Mistral AI processing: "${userMessage}"
+        'mistral': `Input: "${userMessage}"
 
-Experience cutting-edge language models privately and securely with Corprex Omega.`
+Mistral demo response. Set up your API configuration for real AI interactions.`
     };
     
     return responses[model] || responses['gpt-4'];
+}
+
+// Check if API keys are configured
+async function checkAPIConfiguration() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/models/status`, {
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem('corprexAuthToken') || ''}`
+            }
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            return data.configured || [];
+        }
+    } catch (error) {
+        console.log('Could not check API configuration:', error);
+    }
+    return [];
 }
 
 // Show typing indicator
