@@ -3,364 +3,508 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Corprex Omega Demo - Chat Interface</title>
+    <title>Corprex AI - Chat Interface</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
         }
 
         :root {
-            --primary-black: #000000;
-            --secondary-black: #0a0a0a;
-            --dark-gray: #1a1a1a;
-            --medium-gray: #2a2a2a;
-            --light-gray: #666666;
-            --text-gray: #999999;
-            --text-primary: #ffffff;
-            --text-secondary: #cccccc;
-            --border-color: #333333;
-            --accent-green: #4CAF50;
-            --error-red: #ff4444;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f9f9f9;
+            --bg-tertiary: #f4f4f4;
+            --bg-hover: #ececec;
+            --text-primary: #202123;
+            --text-secondary: #666666;
+            --text-tertiary: #8e8ea0;
+            --accent: #10a37f;
+            --accent-hover: #0d9373;
+            --border: #e5e5e5;
+            --border-light: #f0f0f0;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --user-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --assistant-gradient: linear-gradient(135deg, #10a37f 0%, #1aa885 100%);
         }
 
         body {
-            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: var(--primary-black);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', 'Helvetica', sans-serif;
+            background: var(--bg-primary);
             color: var(--text-primary);
             height: 100vh;
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
+            position: relative;
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Header */
-        .chat-header {
-            background: var(--secondary-black);
-            border-bottom: 1px solid var(--border-color);
-            padding: 1rem 1.5rem;
+        /* Main Layout */
+        .app-container {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-shrink: 0;
-            min-height: 60px;
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-            flex: 1;
-        }
-
-        .logo {
-            font-size: 1.25rem;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            white-space: nowrap;
-        }
-
-        .model-selector {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .model-selector label {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            font-weight: 500;
-            white-space: nowrap;
-        }
-
-        .model-dropdown {
-            background: var(--dark-gray);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 0.5rem 1rem;
-            padding-right: 2rem;
-            color: var(--text-primary);
-            font-size: 0.875rem;
-            font-family: inherit;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            min-width: 160px;
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: right 0.7rem center;
-            background-size: 1.2em;
-        }
-
-        .model-dropdown:focus {
-            outline: none;
-            border-color: var(--text-primary);
-            background-color: var(--medium-gray);
-        }
-
-        .model-dropdown:hover {
-            background-color: var(--medium-gray);
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            flex-shrink: 0;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-        }
-
-        .user-avatar {
-            width: 36px;
-            height: 36px;
-            background: var(--dark-gray);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            font-size: 0.875rem;
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
-        }
-
-        .username-text {
-            font-weight: 500;
-            color: var(--text-secondary);
-        }
-
-        .logout-btn {
-            background: var(--dark-gray);
-            border: 1px solid var(--border-color);
-            color: var(--text-secondary);
-            padding: 0.5rem 1.25rem;
-            border-radius: 6px;
-            font-size: 0.875rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: inherit;
-            white-space: nowrap;
-        }
-
-        .logout-btn:hover {
-            background: var(--medium-gray);
-            color: var(--text-primary);
-            border-color: var(--text-secondary);
-        }
-
-        /* Chat Container */
-        .chat-container {
-            display: flex;
-            flex: 1;
-            overflow: hidden;
+            height: 100vh;
             position: relative;
         }
 
         /* Sidebar */
-        .chat-sidebar {
-            width: 280px;
-            background: var(--secondary-black);
-            border-right: 1px solid var(--border-color);
+        .sidebar {
+            width: 260px;
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border);
             display: flex;
             flex-direction: column;
-            flex-shrink: 0;
-            position: relative;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
         }
 
         .sidebar-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid var(--border-color);
+            padding: 12px;
+            border-bottom: 1px solid var(--border-light);
         }
 
         .new-chat-btn {
             width: 100%;
-            background: var(--dark-gray);
-            border: 1px solid var(--border-color);
+            padding: 12px 14px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
             color: var(--text-primary);
-            padding: 0.875rem 1rem;
-            border-radius: 8px;
-            font-size: 0.875rem;
-            font-weight: 500;
+            border-radius: 6px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: inherit;
+            font-size: 14px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
+            gap: 12px;
+            transition: all 0.15s ease;
+            font-weight: 500;
         }
 
         .new-chat-btn:hover {
-            background: var(--medium-gray);
-            border-color: var(--text-primary);
-            transform: translateY(-1px);
+            background: var(--bg-hover);
+        }
+
+        .new-chat-btn svg {
+            width: 16px;
+            height: 16px;
         }
 
         .chat-history {
             flex: 1;
             overflow-y: auto;
-            padding: 1rem;
+            padding: 8px;
         }
 
-        .chat-history-item {
-            padding: 0.875rem 1rem;
-            margin-bottom: 0.5rem;
-            background: var(--dark-gray);
-            border: 1px solid var(--border-color);
+        .chat-history::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .chat-history::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .chat-history::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        .chat-history::-webkit-scrollbar-thumb:hover {
+            background: #c1c1c1;
+        }
+
+        .chat-item {
+            padding: 12px;
+            margin-bottom: 2px;
             border-radius: 6px;
             cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .chat-history-item:hover {
-            background: var(--medium-gray);
-            border-color: var(--text-secondary);
-        }
-
-        .chat-history-item.active {
-            background: var(--medium-gray);
-            border-color: var(--text-primary);
-        }
-
-        .chat-history-title {
-            font-size: 0.875rem;
-            font-weight: 500;
+            transition: all 0.15s ease;
             color: var(--text-primary);
-            margin-bottom: 0.25rem;
+            white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            white-space: nowrap;
+            font-size: 14px;
+            position: relative;
         }
 
-        .chat-history-date {
-            font-size: 0.75rem;
-            color: var(--text-gray);
+        .chat-item:hover {
+            background: var(--bg-hover);
         }
 
-        /* Main Chat Area */
-        .chat-main {
+        .chat-item.active {
+            background: var(--bg-primary);
+            font-weight: 500;
+        }
+
+        /* Main Content */
+        .main-content {
             flex: 1;
             display: flex;
             flex-direction: column;
-            background: var(--primary-black);
-            min-width: 0;
+            background: var(--bg-primary);
+            position: relative;
         }
 
-        /* Messages Area */
-        .messages-container {
-            flex: 1;
-            overflow-y: auto;
-            padding: 2rem;
+        /* Header */
+        .header {
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border-light);
+            padding: 10px 20px;
             display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            -webkit-overflow-scrolling: touch;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 53px;
         }
 
-        .message {
+        .header-left {
             display: flex;
-            gap: 1rem;
-            max-width: 900px;
-            width: 100%;
-            align-self: center;
+            align-items: center;
+            gap: 16px;
         }
 
-        .message-avatar {
-            width: 40px;
-            height: 40px;
-            background: var(--dark-gray);
-            border-radius: 8px;
+        .model-selector {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .model-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .model-dropdown {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 6px 32px 6px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23666666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 6px center;
+            background-size: 18px;
+            font-weight: 500;
+            min-width: 200px;
+        }
+
+        .model-dropdown:hover {
+            border-color: #c1c1c1;
+        }
+
+        .model-dropdown:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 600;
-            font-size: 0.875rem;
-            border: 1px solid var(--border-color);
+            font-size: 14px;
+            color: white;
+        }
+
+        /* Chat Area */
+        .chat-container {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .chat-container::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        .chat-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .chat-container::-webkit-scrollbar-thumb {
+            background: #d1d1d1;
+            border-radius: 6px;
+            border: 3px solid var(--bg-primary);
+        }
+
+        .chat-container::-webkit-scrollbar-thumb:hover {
+            background: #b1b1b1;
+        }
+
+        /* Welcome Screen */
+        .welcome-screen {
+            max-width: 768px;
+            width: 100%;
+            padding: 60px 24px;
+            text-align: center;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .logo-container {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 24px;
+            background: var(--assistant-gradient);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .welcome-title {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .welcome-subtitle {
+            color: var(--text-secondary);
+            font-size: 16px;
+            margin-bottom: 48px;
+            line-height: 1.5;
+        }
+
+        .suggestions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 12px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .suggestion-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-align: left;
+        }
+
+        .suggestion-card:hover {
+            background: var(--bg-secondary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .suggestion-card.model-info {
+            background: linear-gradient(135deg, #f6f9fc 0%, #e9f3ff 100%);
+            border: 1px solid #c3dafe;
+        }
+
+        .suggestion-card.model-info:hover {
+            background: linear-gradient(135deg, #e9f3ff 0%, #dbeafe 100%);
+        }
+
+        .suggestion-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+
+        .suggestion-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .model-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            background: var(--accent);
+            color: white;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .tasks-button {
+            margin-top: 12px;
+            padding: 8px 16px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-weight: 500;
+        }
+
+        .tasks-button:hover {
+            background: var(--bg-hover);
+        }
+
+        .tasks-list {
+            margin-top: 12px;
+            padding: 12px;
+            background: var(--bg-secondary);
+            border-radius: 6px;
+            display: none;
+        }
+
+        .tasks-list.show {
+            display: block;
+            animation: slideDown 0.2s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .task-item {
+            padding: 4px 0;
+            color: var(--text-secondary);
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .task-item::before {
+            content: "•";
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        /* Messages */
+        .message-group {
+            width: 100%;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .message-group.user {
+            background: var(--bg-primary);
+        }
+
+        .message-group.assistant {
+            background: var(--bg-secondary);
+        }
+
+        .message {
+            max-width: 768px;
+            margin: 0 auto;
+            padding: 24px;
+            display: flex;
+            gap: 20px;
+            animation: messageSlide 0.2s ease;
+        }
+
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 13px;
             flex-shrink: 0;
         }
 
-        .message-avatar.ai {
-            background: var(--accent-green);
-            color: var(--primary-black);
-            border-color: var(--accent-green);
+        .message.user .message-avatar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .message.assistant .message-avatar {
+            background: var(--assistant-gradient);
+            color: white;
         }
 
         .message-content {
             flex: 1;
-            min-width: 0;
-        }
-
-        .message-role {
-            font-size: 0.875rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--text-secondary);
-        }
-
-        .message-text {
-            font-size: 0.95rem;
-            line-height: 1.7;
             color: var(--text-primary);
-            word-wrap: break-word;
-            overflow-wrap: break-word;
+            line-height: 1.6;
+            font-size: 15px;
+            padding-top: 2px;
         }
 
-        .message-text p {
-            margin-bottom: 1rem;
+        .message-content p {
+            margin-bottom: 1em;
         }
 
-        .message-text p:last-child {
+        .message-content p:last-child {
             margin-bottom: 0;
         }
 
-        .message-text pre {
-            background: var(--secondary-black);
-            border: 1px solid var(--border-color);
+        .message-content pre {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
             border-radius: 6px;
-            padding: 1rem;
+            padding: 12px;
+            margin: 12px 0;
             overflow-x: auto;
-            margin: 1rem 0;
-            -webkit-overflow-scrolling: touch;
+            font-size: 14px;
         }
 
-        .message-text code {
-            background: var(--secondary-black);
-            padding: 0.125rem 0.375rem;
+        .message-content code {
+            background: var(--bg-tertiary);
+            padding: 2px 4px;
             border-radius: 3px;
-            font-size: 0.875rem;
-            font-family: 'Monaco', 'Consolas', monospace;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 14px;
         }
 
-        /* Loading Animation */
+        /* Typing Indicator */
         .typing-indicator {
             display: flex;
-            gap: 0.3rem;
-            padding: 0.5rem 0;
+            gap: 3px;
+            padding: 4px 0;
         }
 
         .typing-dot {
             width: 8px;
             height: 8px;
-            background: var(--text-gray);
+            background: var(--text-tertiary);
             border-radius: 50%;
-            animation: typing 1.4s infinite;
+            animation: typingBounce 1.4s ease-in-out infinite;
         }
 
         .typing-dot:nth-child(2) {
@@ -371,175 +515,148 @@
             animation-delay: 0.4s;
         }
 
-        @keyframes typing {
+        @keyframes typingBounce {
             0%, 60%, 100% {
                 transform: translateY(0);
-                opacity: 0.7;
             }
             30% {
                 transform: translateY(-10px);
-                opacity: 1;
             }
         }
 
         /* Input Area */
         .input-container {
-            background: var(--secondary-black);
-            border-top: 1px solid var(--border-color);
-            padding: 1.5rem;
-            flex-shrink: 0;
+            border-top: 1px solid var(--border-light);
+            background: var(--bg-primary);
+            padding: 0;
         }
 
         .input-wrapper {
-            max-width: 900px;
+            max-width: 768px;
             margin: 0 auto;
+            padding: 12px 24px 24px;
+            position: relative;
+        }
+
+        .input-box {
             display: flex;
-            gap: 1rem;
             align-items: flex-end;
+            gap: 8px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 8px 8px 16px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            transition: border-color 0.15s ease;
+        }
+
+        .input-box:focus-within {
+            border-color: var(--accent);
         }
 
         .input-field {
             flex: 1;
-            background: var(--dark-gray);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 0.875rem 1rem;
+            background: transparent;
+            border: none;
             color: var(--text-primary);
-            font-size: 16px;
-            font-family: inherit;
+            font-size: 15px;
+            line-height: 1.5;
             resize: none;
-            min-height: 48px;
-            max-height: 120px;
-            overflow-y: auto;
-            transition: all 0.3s ease;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-        }
-
-        .input-field:focus {
             outline: none;
-            border-color: var(--text-primary);
-            background: var(--medium-gray);
+            max-height: 200px;
+            font-family: inherit;
+            padding: 4px 0;
         }
 
         .input-field::placeholder {
-            color: var(--text-gray);
+            color: var(--text-tertiary);
         }
 
-        .send-btn {
+        .send-button {
+            width: 32px;
+            height: 32px;
             background: var(--text-primary);
-            color: var(--primary-black);
             border: none;
-            border-radius: 8px;
-            padding: 0.875rem 1.75rem;
-            font-size: 0.875rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: inherit;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            flex-shrink: 0;
-            white-space: nowrap;
-        }
-
-        .send-btn:hover {
-            background: var(--text-secondary);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
-        }
-
-        .send-btn:active {
-            transform: translateY(0);
-        }
-
-        .send-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        /* Welcome Screen */
-        .welcome-screen {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 3rem;
-            text-align: center;
-            height: 100%;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .welcome-title {
-            font-size: 2.5rem;
-            font-weight: 300;
-            margin-bottom: 1rem;
-            letter-spacing: -0.02em;
-        }
-
-        .welcome-subtitle {
-            font-size: 1.125rem;
-            color: var(--text-secondary);
-            margin-bottom: 3rem;
-            max-width: 600px;
-            line-height: 1.6;
-        }
-
-        .warning-box {
-            background: var(--secondary-black);
-            border: 2px solid var(--error-red);
-            border-radius: 12px;
-            padding: 2rem;
-            max-width: 700px;
-            width: 100%;
-            margin: 0 auto;
-            text-align: left;
-        }
-
-        .warning-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--error-red);
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .warning-text {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            line-height: 1.7;
-            margin-bottom: 1rem;
-        }
-
-        .warning-text:last-child {
-            margin-bottom: 0;
-        }
-
-        .warning-text strong {
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
-        /* Mobile Menu Toggle */
-        .mobile-menu-btn {
-            display: none;
-            background: var(--dark-gray);
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
-            padding: 0.5rem;
             border-radius: 6px;
+            color: white;
             cursor: pointer;
-            font-size: 1.25rem;
-            width: 40px;
-            height: 40px;
+            display: flex;
             align-items: center;
             justify-content: center;
+            transition: all 0.15s ease;
             flex-shrink: 0;
+        }
+
+        .send-button:hover:not(:disabled) {
+            background: var(--text-primary);
+            opacity: 0.8;
+        }
+
+        .send-button:disabled {
+            background: var(--text-tertiary);
+            cursor: not-allowed;
+        }
+
+        .send-button svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Mobile Menu Button */
+        .mobile-menu {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 20px;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        /* Footer */
+        .input-footer {
+            text-align: center;
+            padding: 12px;
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                height: 100vh;
+                transform: translateX(-100%);
+                z-index: 1001;
+                box-shadow: 2px 0 12px rgba(0, 0, 0, 0.1);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .suggestions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .message {
+                padding: 16px;
+            }
+
+            .input-wrapper {
+                padding: 12px 16px 20px;
+            }
+
+            .model-dropdown {
+                min-width: 140px;
+                font-size: 13px;
+            }
         }
 
         /* Sidebar Overlay */
@@ -548,248 +665,135 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 99;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            .chat-header {
-                padding: 0.75rem 1rem;
-            }
-
-            .header-left {
-                gap: 1rem;
-                flex: initial;
-            }
-
-            .logo {
-                font-size: 1.125rem;
-            }
-
-            .model-selector label {
-                display: none;
-            }
-
-            .model-dropdown {
-                min-width: 120px;
-                padding: 0.5rem 0.75rem;
-                padding-right: 1.75rem;
-                font-size: 0.813rem;
-            }
-
-            .username-text {
-                display: none;
-            }
-
-            .user-avatar {
-                width: 32px;
-                height: 32px;
-            }
-
-            .logout-btn {
-                padding: 0.5rem 0.875rem;
-                font-size: 0.813rem;
-            }
-
-            .mobile-menu-btn {
-                display: flex;
-            }
-
-            .chat-sidebar {
-                position: fixed;
-                left: 0;
-                top: 0;
-                height: 100%;
-                z-index: 100;
-                transform: translateX(-100%);
-            }
-
-            .chat-sidebar.open {
-                transform: translateX(0);
-            }
-
-            .sidebar-overlay.active {
-                display: block;
-            }
-
-            .messages-container {
-                padding: 1rem;
-            }
-
-            .message {
-                gap: 0.75rem;
-            }
-
-            .message-avatar {
-                width: 32px;
-                height: 32px;
-                font-size: 0.75rem;
-            }
-
-            .welcome-title {
-                font-size: 2rem;
-            }
-
-            .welcome-subtitle {
-                font-size: 1rem;
-                padding: 0 1rem;
-            }
-
-            .warning-box {
-                padding: 1.5rem;
-                margin: 0 1rem;
-            }
-
-            .warning-title {
-                font-size: 1.125rem;
-            }
-
-            .warning-text {
-                font-size: 0.875rem;
-            }
-
-            .input-container {
-                padding: 1rem;
-            }
-
-            .input-wrapper {
-                gap: 0.75rem;
-            }
-
-            .input-field {
-                padding: 0.75rem;
-                font-size: 16px;
-                min-height: 44px;
-            }
-
-            .send-btn {
-                padding: 0.75rem 1.25rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .chat-header {
-                padding: 0.75rem;
-            }
-
-            .logo {
-                font-size: 1rem;
-            }
-
-            .model-dropdown {
-                min-width: 100px;
-            }
-
-            .welcome-title {
-                font-size: 1.75rem;
-            }
-
-            .welcome-screen {
-                padding: 2rem 1rem;
-            }
-        }
-
-        /* Scrollbar Styling */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--secondary-black);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--dark-gray);
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--medium-gray);
-        }
-
-        /* iOS specific fixes */
-        @supports (-webkit-touch-callout: none) {
-            body {
-                height: -webkit-fill-available;
-            }
-
-            .chat-container {
-                height: -webkit-fill-available;
-            }
-
-            .messages-container {
-                -webkit-overflow-scrolling: touch;
-            }
+        .sidebar-overlay.active {
+            display: block;
+            opacity: 1;
         }
     </style>
 </head>
 <body>
-    <!-- Mobile Sidebar Overlay -->
-    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
-
-    <!-- Header -->
-    <header class="chat-header">
-        <div class="header-left">
-            <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
-            <div class="logo">CORPREX OMEGA</div>
-            <div class="model-selector">
-                <label for="modelSelect">Model:</label>
-                <select id="modelSelect" class="model-dropdown">
-                    <option value="gpt-4">GPT-4</option>
-                    <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
-                    <option value="claude-3">Claude 3</option>
-                    <option value="llama-2">Llama 2</option>
-                    <option value="mistral">Mistral</option>
-                </select>
-            </div>
-        </div>
-        <div class="header-right">
-            <div class="user-info">
-                <div class="user-avatar" id="userAvatar">U</div>
-                <span class="username-text" id="username">User</span>
-            </div>
-            <button class="logout-btn" onclick="handleLogout()">Logout</button>
-        </div>
-    </header>
-
-    <!-- Main Content -->
-    <div class="chat-container">
+    <div class="app-container">
         <!-- Sidebar -->
-        <aside class="chat-sidebar" id="chatSidebar">
+        <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <button class="new-chat-btn" onclick="startNewChat()">
-                    + New Chat
+                    <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
+                    </svg>
+                    <span>New chat</span>
                 </button>
             </div>
-            <div class="chat-history" id="chatHistory">
-                <!-- Chat history items will be dynamically added here -->
+            <div class="chat-history">
+                <div class="chat-item active">Welcome to Corprex AI</div>
+                <div class="chat-item">Project Documentation Review</div>
+                <div class="chat-item">API Integration Strategy</div>
+                <div class="chat-item">Code Optimization Tips</div>
+                <div class="chat-item">Database Schema Design</div>
+                <div class="chat-item">Security Best Practices</div>
+                <div class="chat-item">Performance Analysis</div>
             </div>
         </aside>
 
-        <!-- Main Chat Area -->
-        <main class="chat-main">
-            <!-- Messages Container -->
-            <div class="messages-container" id="messagesContainer">
+        <!-- Sidebar Overlay for Mobile -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu" id="mobileMenu">☰</button>
+                    <div class="model-selector">
+                        <span class="model-label">Model:</span>
+                        <select class="model-dropdown" id="modelSelect" onchange="updateModelInfo()">
+                            <!-- OpenAI Models -->
+                            <optgroup label="OpenAI">
+                                <option value="gpt-4-turbo">GPT-4 Turbo</option>
+                                <option value="gpt-4">GPT-4</option>
+                                <option value="gpt-4-32k">GPT-4 32K</option>
+                                <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
+                                <option value="gpt-3.5-turbo-16k">GPT-3.5 Turbo 16K</option>
+                            </optgroup>
+                            <!-- Anthropic Models -->
+                            <optgroup label="Anthropic">
+                                <option value="claude-3-opus">Claude 3 Opus</option>
+                                <option value="claude-3-sonnet">Claude 3 Sonnet</option>
+                                <option value="claude-3-haiku">Claude 3 Haiku</option>
+                                <option value="claude-2.1">Claude 2.1</option>
+                                <option value="claude-instant">Claude Instant</option>
+                            </optgroup>
+                            <!-- Google Models -->
+                            <optgroup label="Google">
+                                <option value="gemini-pro">Gemini Pro</option>
+                                <option value="gemini-pro-vision">Gemini Pro Vision</option>
+                                <option value="palm-2">PaLM 2</option>
+                                <option value="bard">Bard</option>
+                            </optgroup>
+                            <!-- Meta Models -->
+                            <optgroup label="Meta">
+                                <option value="llama-2-70b">Llama 2 70B</option>
+                                <option value="llama-2-13b">Llama 2 13B</option>
+                                <option value="llama-2-7b">Llama 2 7B</option>
+                                <option value="code-llama-34b">Code Llama 34B</option>
+                                <option value="code-llama-13b">Code Llama 13B</option>
+                            </optgroup>
+                            <!-- Mistral Models -->
+                            <optgroup label="Mistral">
+                                <option value="mistral-large">Mistral Large</option>
+                                <option value="mistral-medium">Mistral Medium</option>
+                                <option value="mistral-small">Mistral Small</option>
+                                <option value="mixtral-8x7b">Mixtral 8x7B</option>
+                                <option value="mistral-7b">Mistral 7B</option>
+                            </optgroup>
+                            <!-- Cohere Models -->
+                            <optgroup label="Cohere">
+                                <option value="command-r-plus">Command R+</option>
+                                <option value="command-r">Command R</option>
+                                <option value="command">Command</option>
+                                <option value="command-light">Command Light</option>
+                            </optgroup>
+                            <!-- Other Models -->
+                            <optgroup label="Other">
+                                <option value="falcon-180b">Falcon 180B</option>
+                                <option value="falcon-40b">Falcon 40B</option>
+                                <option value="grok-1">Grok-1</option>
+                                <option value="vicuna-33b">Vicuna 33B</option>
+                                <option value="alpaca-65b">Alpaca 65B</option>
+                                <option value="stable-lm">StableLM</option>
+                                <option value="dolly-v2">Dolly v2</option>
+                                <option value="mpt-30b">MPT-30B</option>
+                                <option value="gpt-j-6b">GPT-J 6B</option>
+                                <option value="bloom-176b">BLOOM 176B</option>
+                                <option value="opt-175b">OPT-175B</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+                <div class="user-section">
+                    <div class="user-avatar">U</div>
+                </div>
+            </header>
+
+            <!-- Chat Container -->
+            <div class="chat-container" id="chatContainer">
                 <!-- Welcome Screen -->
                 <div class="welcome-screen" id="welcomeScreen">
-                    <h1 class="welcome-title">Welcome to Corprex Omega</h1>
-                    <p class="welcome-subtitle">Experience the power of private AI infrastructure. Start a conversation to see how Omega can transform your business operations.</p>
-                    
-                    <div class="warning-box">
-                        <h3 class="warning-title">Important Notice</h3>
-                        <p class="warning-text">
-                            This is a <strong>demonstration environment</strong> of the Corprex Omega system. Unlike the actual Omega hardware that runs entirely on your premises, this demo operates in the cloud to showcase functionality.
-                        </p>
-                        <p class="warning-text">
-                            <strong>Your data is NOT private in this demo.</strong> All conversations are processed through third-party AI services (OpenAI, Anthropic, etc.) and may be stored on their servers.
-                        </p>
-                        <p class="warning-text">
-                            The real Corprex Omega system provides complete data sovereignty with all processing happening locally on your infrastructure. This demo is solely to demonstrate the interface and capabilities.
-                        </p>
+                    <div class="logo-container">C</div>
+                    <h1 class="welcome-title">How can I help you today?</h1>
+                    <p class="welcome-subtitle">
+                        Powered by Corprex AI - Select a model and start chatting
+                    </p>
+
+                    <div class="suggestions-grid" id="suggestionsGrid">
+                        <!-- Dynamic content will be inserted here -->
                     </div>
                 </div>
             </div>
@@ -797,63 +801,530 @@
             <!-- Input Container -->
             <div class="input-container">
                 <div class="input-wrapper">
-                    <textarea 
-                        class="input-field" 
-                        id="messageInput" 
-                        placeholder="Type your message here..." 
-                        rows="1"
-                        onkeydown="handleKeyPress(event)"
-                    ></textarea>
-                    <button class="send-btn" id="sendBtn" onclick="sendMessage()">
-                        Send
-                    </button>
+                    <div class="input-box">
+                        <textarea 
+                            class="input-field" 
+                            id="messageInput"
+                            placeholder="Message Corprex AI..."
+                            rows="1"
+                            onkeydown="handleKeyPress(event)"
+                        ></textarea>
+                        <button class="send-button" id="sendButton" onclick="sendMessage()">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5L12 3m0 0l7.5 7.5M12 3v18"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="input-footer">
+                    Corprex AI can make mistakes. Consider checking important information.
                 </div>
             </div>
         </main>
     </div>
 
-    <script src="client-chat.js"></script>
     <script>
-        // Mobile sidebar toggle
-        function toggleSidebar() {
-            const sidebar = document.getElementById('chatSidebar');
-            const overlay = document.getElementById('sidebarOverlay');
+        // Model information database
+        const modelInfo = {
+            'gpt-4-turbo': {
+                name: 'GPT-4 Turbo',
+                description: 'Latest and most capable GPT-4 model with 128K context window. Optimized for speed while maintaining GPT-4 level capabilities.',
+                advantages: 'Best for complex reasoning, creative writing, and technical analysis with faster response times than standard GPT-4.',
+                tasks: ['Advanced code generation', 'Complex problem solving', 'Creative writing', 'Multi-step reasoning', 'Large document analysis', 'Technical documentation']
+            },
+            'gpt-4': {
+                name: 'GPT-4',
+                description: 'Most capable model for complex tasks requiring advanced reasoning and creativity.',
+                advantages: 'Superior performance on complex tasks, nuanced understanding, and highly accurate responses.',
+                tasks: ['Complex analysis', 'Advanced mathematics', 'Creative solutions', 'Code architecture', 'Research synthesis', 'Strategic planning']
+            },
+            'gpt-4-32k': {
+                name: 'GPT-4 32K',
+                description: 'Extended context version of GPT-4 for handling longer documents.',
+                advantages: 'Can process up to 32,000 tokens, ideal for analyzing lengthy documents or maintaining extended conversations.',
+                tasks: ['Long document analysis', 'Book summarization', 'Extended conversations', 'Large codebase review', 'Detailed reports', 'Multi-document synthesis']
+            },
+            'gpt-3.5-turbo': {
+                name: 'GPT-3.5 Turbo',
+                description: 'Fast and efficient model optimized for speed and cost-effectiveness.',
+                advantages: 'Best balance of performance and speed for most everyday tasks. 10x cheaper than GPT-4.',
+                tasks: ['Quick responses', 'Simple coding tasks', 'Content generation', 'Translations', 'Summarization', 'Q&A']
+            },
+            'gpt-3.5-turbo-16k': {
+                name: 'GPT-3.5 Turbo 16K',
+                description: 'Extended context version of GPT-3.5 Turbo for longer inputs.',
+                advantages: 'Handles up to 16,000 tokens while maintaining the speed of GPT-3.5.',
+                tasks: ['Medium document analysis', 'Extended conversations', 'Code review', 'Multi-page summaries', 'Report generation', 'Data extraction']
+            },
+            'claude-3-opus': {
+                name: 'Claude 3 Opus',
+                description: 'Most powerful Claude model with exceptional reasoning and creativity.',
+                advantages: 'Excels at nuanced understanding, complex analysis, and maintaining context over very long conversations.',
+                tasks: ['Complex research', 'Creative writing', 'In-depth analysis', 'Code generation', 'Academic work', 'Detailed explanations']
+            },
+            'claude-3-sonnet': {
+                name: 'Claude 3 Sonnet',
+                description: 'Balanced Claude model offering strong capabilities with improved speed.',
+                advantages: 'Great balance between capability and speed, ideal for most professional tasks.',
+                tasks: ['Content creation', 'Code assistance', 'Data analysis', 'Customer support', 'Educational content', 'Business writing']
+            },
+            'claude-3-haiku': {
+                name: 'Claude 3 Haiku',
+                description: 'Fastest Claude model optimized for quick, concise responses.',
+                advantages: 'Lightning-fast responses with good accuracy for straightforward tasks.',
+                tasks: ['Quick answers', 'Simple queries', 'Basic coding', 'Short summaries', 'Rapid prototyping', 'Real-time chat']
+            },
+            'claude-2.1': {
+                name: 'Claude 2.1',
+                description: 'Previous generation Claude with 200K token context window.',
+                advantages: 'Massive context window for processing entire books or codebases.',
+                tasks: ['Book analysis', 'Large codebase review', 'Extensive documentation', 'Long-form content', 'Research papers', 'Legal documents']
+            },
+            'claude-instant': {
+                name: 'Claude Instant',
+                description: 'Faster, cheaper Claude model for routine tasks.',
+                advantages: 'Very fast responses with lower cost, suitable for high-volume applications.',
+                tasks: ['Customer service', 'Simple questions', 'Basic summaries', 'Quick translations', 'Form processing', 'Data categorization']
+            },
+            'gemini-pro': {
+                name: 'Gemini Pro',
+                description: 'Google\'s advanced multimodal AI model with strong reasoning capabilities.',
+                advantages: 'Excellent at both text and reasoning tasks with Google\'s latest AI technology.',
+                tasks: ['Multimodal analysis', 'Complex reasoning', 'Scientific questions', 'Mathematical problems', 'Code generation', 'Research assistance']
+            },
+            'gemini-pro-vision': {
+                name: 'Gemini Pro Vision',
+                description: 'Multimodal version of Gemini Pro that can understand images and video.',
+                advantages: 'Can analyze and understand visual content alongside text for comprehensive multimodal tasks.',
+                tasks: ['Image analysis', 'Visual Q&A', 'Diagram explanation', 'OCR tasks', 'Visual content creation', 'Medical image analysis']
+            },
+            'palm-2': {
+                name: 'PaLM 2',
+                description: 'Google\'s large language model with strong multilingual and reasoning capabilities.',
+                advantages: 'Excellent multilingual support and logical reasoning, trained on diverse scientific and mathematical texts.',
+                tasks: ['Multilingual translation', 'Scientific reasoning', 'Mathematical proofs', 'Code generation', 'Logic puzzles', 'Technical writing']
+            },
+            'bard': {
+                name: 'Bard',
+                description: 'Google\'s conversational AI with real-time information access.',
+                advantages: 'Can access current information and integrate with Google services.',
+                tasks: ['Current events', 'Web research', 'Travel planning', 'Shopping assistance', 'Real-time information', 'Google integration']
+            },
+            'llama-2-70b': {
+                name: 'Llama 2 70B',
+                description: 'Meta\'s largest open-source model with strong general capabilities.',
+                advantages: 'Fully open-source, can be self-hosted, no usage restrictions, excellent for research.',
+                tasks: ['General Q&A', 'Content generation', 'Code assistance', 'Translation', 'Summarization', 'Custom fine-tuning']
+            },
+            'llama-2-13b': {
+                name: 'Llama 2 13B',
+                description: 'Mid-size Llama model balancing capability and efficiency.',
+                advantages: 'Good performance with lower resource requirements, suitable for edge deployment.',
+                tasks: ['Conversational AI', 'Content creation', 'Code completion', 'Text classification', 'Sentiment analysis', 'Local deployment']
+            },
+            'llama-2-7b': {
+                name: 'Llama 2 7B',
+                description: 'Smallest Llama 2 model optimized for efficiency.',
+                advantages: 'Can run on consumer hardware, fast inference, good for resource-constrained environments.',
+                tasks: ['Basic Q&A', 'Simple generation', 'Chatbots', 'Text completion', 'Mobile deployment', 'Edge computing']
+            },
+            'code-llama-34b': {
+                name: 'Code Llama 34B',
+                description: 'Specialized Llama model fine-tuned for code generation and understanding.',
+                advantages: 'Best open-source model for coding tasks, supports many programming languages.',
+                tasks: ['Code generation', 'Bug fixing', 'Code explanation', 'Unit test creation', 'Code review', 'Documentation generation']
+            },
+            'code-llama-13b': {
+                name: 'Code Llama 13B',
+                description: 'Efficient code-focused model for programming assistance.',
+                advantages: 'Good balance of coding capability and speed, suitable for IDE integration.',
+                tasks: ['Code completion', 'Syntax correction', 'Code translation', 'Algorithm implementation', 'Code optimization', 'API generation']
+            },
+            'mistral-large': {
+                name: 'Mistral Large',
+                description: 'Most capable Mistral model with strong reasoning and multilingual support.',
+                advantages: 'Excellent performance on complex tasks with efficient architecture, supports 32K context.',
+                tasks: ['Complex reasoning', 'Multilingual tasks', 'Code generation', 'Creative writing', 'Data analysis', 'Technical documentation']
+            },
+            'mistral-medium': {
+                name: 'Mistral Medium',
+                description: 'Balanced Mistral model for professional applications.',
+                advantages: 'Good performance with reasonable speed, suitable for production deployments.',
+                tasks: ['Business applications', 'Content generation', 'Customer support', 'Data processing', 'Report writing', 'API backends']
+            },
+            'mistral-small': {
+                name: 'Mistral Small',
+                description: 'Lightweight Mistral model for fast responses.',
+                advantages: 'Very fast inference with good accuracy for common tasks.',
+                tasks: ['Quick responses', 'Chat applications', 'Simple queries', 'Text classification', 'Rapid prototyping', 'Edge deployment']
+            },
+            'mixtral-8x7b': {
+                name: 'Mixtral 8x7B',
+                description: 'Mixture of Experts model with 8 expert networks for enhanced capabilities.',
+                advantages: 'Combines multiple specialized models for better performance across diverse tasks.',
+                tasks: ['Versatile applications', 'Multi-domain expertise', 'Complex reasoning', 'Code and language', 'Specialized knowledge', 'Adaptive responses']
+            },
+            'mistral-7b': {
+                name: 'Mistral 7B',
+                description: 'Compact yet powerful model outperforming larger alternatives.',
+                advantages: 'Best performance in its size class, very efficient, Apache 2.0 license.',
+                tasks: ['General assistance', 'Content creation', 'Code help', 'Educational support', 'Local deployment', 'Custom applications']
+            },
+            'command-r-plus': {
+                name: 'Command R+',
+                description: 'Cohere\'s most advanced model optimized for enterprise RAG applications.',
+                advantages: 'Excellent at retrieval-augmented generation, long context (128K), and tool use.',
+                tasks: ['Enterprise search', 'Document Q&A', 'Knowledge retrieval', 'Citation generation', 'Multi-step reasoning', 'Tool integration']
+            },
+            'command-r': {
+                name: 'Command R',
+                description: 'Production-ready model for scalable AI applications.',
+                advantages: 'Optimized for enterprise use cases with good performance and reliability.',
+                tasks: ['Business automation', 'Content generation', 'Data extraction', 'Summarization', 'Classification', 'API integration']
+            },
+            'command': {
+                name: 'Command',
+                description: 'Cohere\'s flagship model for text generation and understanding.',
+                advantages: 'Strong general-purpose capabilities with good API integration.',
+                tasks: ['Text generation', 'Content creation', 'Q&A systems', 'Chatbots', 'Email drafting', 'Product descriptions']
+            },
+            'command-light': {
+                name: 'Command Light',
+                description: 'Faster, more efficient version of Command for high-volume use cases.',
+                advantages: 'Lower latency and cost while maintaining good quality for routine tasks.',
+                tasks: ['High-volume processing', 'Real-time chat', 'Simple generation', 'Quick classification', 'Bulk operations', 'Microservices']
+            },
+            'falcon-180b': {
+                name: 'Falcon 180B',
+                description: 'One of the largest open-source models with strong multilingual capabilities.',
+                advantages: 'Fully open-source, trained on diverse data, excellent for multiple languages.',
+                tasks: ['Multilingual support', 'Large-scale processing', 'Research applications', 'Content generation', 'Translation', 'Custom training']
+            },
+            'falcon-40b': {
+                name: 'Falcon 40B',
+                description: 'Efficient open-source model with strong performance.',
+                advantages: 'Good balance of size and capability, Apache 2.0 license, efficient architecture.',
+                tasks: ['General AI tasks', 'Content creation', 'Code assistance', 'Analysis', 'Conversation', 'Custom deployment']
+            },
+            'grok-1': {
+                name: 'Grok-1',
+                description: 'xAI\'s model with real-time knowledge and unique personality.',
+                advantages: 'Access to real-time information, less filtered responses, unique conversational style.',
+                tasks: ['Current events', 'Real-time analysis', 'Creative responses', 'Unfiltered Q&A', 'Twitter integration', 'News synthesis']
+            },
+            'vicuna-33b': {
+                name: 'Vicuna 33B',
+                description: 'Fine-tuned LLaMA model with enhanced conversational abilities.',
+                advantages: 'Improved conversation quality over base LLaMA, community-driven development.',
+                tasks: ['Conversational AI', 'Role-playing', 'Creative writing', 'Q&A', 'Story generation', 'Chat applications']
+            },
+            'alpaca-65b': {
+                name: 'Alpaca 65B',
+                description: 'Instruction-tuned model based on LLaMA for following complex instructions.',
+                advantages: 'Better instruction following than base models, good for task completion.',
+                tasks: ['Instruction following', 'Task automation', 'Complex commands', 'Workflow assistance', 'Structured output', 'Process automation']
+            },
+            'stable-lm': {
+                name: 'StableLM',
+                description: 'Stability AI\'s language model optimized for efficiency and performance.',
+                advantages: 'Efficient architecture, good performance per parameter, suitable for various deployments.',
+                tasks: ['General assistance', 'Content generation', 'Code help', 'Conversation', 'Edge deployment', 'Custom applications']
+            },
+            'dolly-v2': {
+                name: 'Dolly v2',
+                description: 'Databricks\' commercially usable instruction-following model.',
+                advantages: 'Fully open-source with commercial license, trained on human-generated instructions.',
+                tasks: ['Instruction following', 'Q&A', 'Summarization', 'Content creation', 'Classification', 'Commercial use']
+            },
+            'mpt-30b': {
+                name: 'MPT-30B',
+                description: 'MosaicML\'s model optimized for long context and commercial use.',
+                advantages: 'Supports 8K context, commercially licensed, efficient training.',
+                tasks: ['Long documents', 'Story writing', 'Code generation', 'Commercial applications', 'Content creation', 'Analysis']
+            },
+            'gpt-j-6b': {
+                name: 'GPT-J 6B',
+                description: 'Open-source GPT model suitable for various applications.',
+                advantages: 'Fully open-source, well-documented, good community support.',
+                tasks: ['Text generation', 'Code completion', 'Q&A', 'Chatbots', 'Content creation', 'Research']
+            },
+            'bloom-176b': {
+                name: 'BLOOM 176B',
+                description: 'Multilingual model supporting 46+ languages and 13 programming languages.',
+                advantages: 'Best multilingual support among open models, trained by global collaboration.',
+                tasks: ['Multilingual generation', 'Translation', 'Cross-lingual tasks', 'Code generation', 'Global applications', 'Language research']
+            },
+            'opt-175b': {
+                name: 'OPT-175B',
+                description: 'Meta\'s Open Pre-trained Transformer for research purposes.',
+                advantages: 'Fully open for research, comparable to GPT-3, detailed documentation.',
+                tasks: ['Research applications', 'Text generation', 'Analysis', 'Benchmarking', 'Academic studies', 'Model comparison']
+            }
+        };
+
+        // State management
+        let messages = [];
+        let isTyping = false;
+
+        // Update model information
+        function updateModelInfo() {
+            const selectedModel = document.getElementById('modelSelect').value;
+            const info = modelInfo[selectedModel];
             
+            if (info) {
+                const suggestionsGrid = document.getElementById('suggestionsGrid');
+                suggestionsGrid.innerHTML = `
+                    <div class="suggestion-card model-info">
+                        <div class="model-badge">${info.name}</div>
+                        <div class="suggestion-title">Model Capabilities</div>
+                        <div class="suggestion-desc">${info.description}</div>
+                        <div class="suggestion-desc" style="margin-top: 8px;"><strong>Advantages:</strong> ${info.advantages}</div>
+                        <button class="tasks-button" onclick="toggleTasks('model-tasks')">View Common Tasks →</button>
+                        <div class="tasks-list" id="model-tasks">
+                            ${info.tasks.map(task => `<div class="task-item">${task}</div>`).join('')}
+                        </div>
+                    </div>
+                    <div class="suggestion-card" onclick="sendSuggestion('Explain quantum computing')">
+                        <div class="suggestion-title">Explain a concept</div>
+                        <div class="suggestion-desc">"Explain quantum computing in simple terms"</div>
+                    </div>
+                    <div class="suggestion-card" onclick="sendSuggestion('Write Python code for data analysis')">
+                        <div class="suggestion-title">Write code</div>
+                        <div class="suggestion-desc">"Create a Python script for data analysis"</div>
+                    </div>
+                    <div class="suggestion-card" onclick="sendSuggestion('Help me with creative writing')">
+                        <div class="suggestion-title">Get creative</div>
+                        <div class="suggestion-desc">"Help me write a short story"</div>
+                    </div>
+                    <div class="suggestion-card" onclick="sendSuggestion('Analyze business strategy')">
+                        <div class="suggestion-title">Analyze & plan</div>
+                        <div class="suggestion-desc">"Review my business strategy"</div>
+                    </div>
+                `;
+            }
+        }
+
+        // Toggle tasks list
+        function toggleTasks(id) {
+            const tasksList = document.getElementById(id);
+            tasksList.classList.toggle('show');
+        }
+
+        // Mobile menu toggle
+        const mobileMenu = document.getElementById('mobileMenu');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+        mobileMenu.addEventListener('click', () => {
             sidebar.classList.toggle('open');
-            overlay.classList.toggle('active');
+            sidebarOverlay.classList.toggle('active');
+        });
+
+        sidebarOverlay.addEventListener('click', () => {
+            sidebar.classList.remove('open');
+            sidebarOverlay.classList.remove('active');
+        });
+
+        // Auto-resize textarea
+        const messageInput = document.getElementById('messageInput');
+        messageInput.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 200) + 'px';
+        });
+
+        // Handle Enter key
+        function handleKeyPress(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
         }
 
-        // Close sidebar when selecting a chat on mobile
-        function closeSidebarOnMobile() {
-            if (window.innerWidth <= 768) {
-                const sidebar = document.getElementById('chatSidebar');
-                const overlay = document.getElementById('sidebarOverlay');
+        // Start new chat
+        function startNewChat() {
+            messages = [];
+            const chatContainer = document.getElementById('chatContainer');
+            chatContainer.innerHTML = '';
+            
+            // Re-add welcome screen
+            const welcomeScreen = createWelcomeScreen();
+            chatContainer.appendChild(welcomeScreen);
+            updateModelInfo();
+            
+            // Update active chat
+            document.querySelectorAll('.chat-item').forEach(item => {
+                item.classList.remove('active');
+            });
+        }
+
+        // Create welcome screen
+        function createWelcomeScreen() {
+            const welcomeDiv = document.createElement('div');
+            welcomeDiv.className = 'welcome-screen';
+            welcomeDiv.id = 'welcomeScreen';
+            welcomeDiv.innerHTML = `
+                <div class="logo-container">C</div>
+                <h1 class="welcome-title">How can I help you today?</h1>
+                <p class="welcome-subtitle">
+                    Powered by Corprex AI - Select a model and start chatting
+                </p>
+                <div class="suggestions-grid" id="suggestionsGrid">
+                    <!-- Dynamic content will be inserted here -->
+                </div>
+            `;
+            return welcomeDiv;
+        }
+
+        // Send suggestion
+        function sendSuggestion(text) {
+            messageInput.value = text;
+            sendMessage();
+        }
+
+        // Send message
+        async function sendMessage() {
+            const input = messageInput.value.trim();
+            if (!input || isTyping) return;
+
+            // Hide welcome screen
+            const welcomeScreen = document.getElementById('welcomeScreen');
+            if (welcomeScreen) {
+                welcomeScreen.remove();
+            }
+
+            // Add user message
+            addMessage('user', input);
+            
+            // Clear input
+            messageInput.value = '';
+            messageInput.style.height = 'auto';
+
+            // Disable send button
+            const sendButton = document.getElementById('sendButton');
+            sendButton.disabled = true;
+            isTyping = true;
+
+            // Add typing indicator
+            addTypingIndicator();
+
+            // Simulate API call
+            setTimeout(() => {
+                removeTypingIndicator();
+                const model = document.getElementById('modelSelect').value;
+                const response = generateResponse(input, model);
+                addMessage('assistant', response);
                 
-                sidebar.classList.remove('open');
-                overlay.classList.remove('active');
+                sendButton.disabled = false;
+                isTyping = false;
+            }, 1000 + Math.random() * 1000);
+        }
+
+        // Add message to chat
+        function addMessage(role, content) {
+            const chatContainer = document.getElementById('chatContainer');
+            
+            const messageGroup = document.createElement('div');
+            messageGroup.className = `message-group ${role}`;
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${role}`;
+            
+            const avatar = document.createElement('div');
+            avatar.className = 'message-avatar';
+            avatar.textContent = role === 'user' ? 'U' : 'AI';
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            contentDiv.innerHTML = formatMessage(content);
+            
+            messageDiv.appendChild(avatar);
+            messageDiv.appendChild(contentDiv);
+            messageGroup.appendChild(messageDiv);
+            
+            chatContainer.appendChild(messageGroup);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            
+            messages.push({ role, content });
+        }
+
+        // Format message content
+        function formatMessage(content) {
+            // Simple markdown-like formatting
+            return content
+                .replace(/```(.*?)```/gs, '<pre><code>$1</code></pre>')
+                .replace(/`([^`]+)`/g, '<code>$1</code>')
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                .replace(/\n\n/g, '</p><p>')
+                .replace(/\n/g, '<br>')
+                .replace(/^/, '<p>')
+                .replace(/$/, '</p>');
+        }
+
+        // Add typing indicator
+        function addTypingIndicator() {
+            const chatContainer = document.getElementById('chatContainer');
+            
+            const messageGroup = document.createElement('div');
+            messageGroup.className = 'message-group assistant';
+            messageGroup.id = 'typingIndicator';
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message assistant';
+            
+            const avatar = document.createElement('div');
+            avatar.className = 'message-avatar';
+            avatar.textContent = 'AI';
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            contentDiv.innerHTML = '<div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
+            
+            messageDiv.appendChild(avatar);
+            messageDiv.appendChild(contentDiv);
+            messageGroup.appendChild(messageDiv);
+            
+            chatContainer.appendChild(messageGroup);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        // Remove typing indicator
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            if (indicator) {
+                indicator.remove();
             }
         }
 
-        // Prevent iOS bounce scrolling
-        document.addEventListener('touchmove', function(e) {
-            if (e.target.closest('.messages-container') || e.target.closest('.chat-history')) {
-                return;
+        // Generate response based on model
+        function generateResponse(input, model) {
+            const info = modelInfo[model];
+            if (info) {
+                return `I'm ${info.name}, and I've received your message: "${input}"\n\n${info.description}\n\nI excel at: ${info.tasks.slice(0, 3).join(', ')}, and more. How can I assist you today?`;
             }
-            e.preventDefault();
-        }, { passive: false });
+            return 'Response generated successfully.';
+        }
 
-        // Handle window resize
-        let resizeTimer;
-        window.addEventListener('resize', function() {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(function() {
-                if (window.innerWidth > 768) {
-                    const sidebar = document.getElementById('chatSidebar');
-                    const overlay = document.getElementById('sidebarOverlay');
-                    sidebar.classList.remove('open');
-                    overlay.classList.remove('active');
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updateModelInfo();
+            messageInput.focus();
+            
+            // Add smooth scroll behavior
+            document.getElementById('chatContainer').style.scrollBehavior = 'smooth';
+        });
+
+        // Chat history items click handler
+        document.querySelectorAll('.chat-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.chat-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Could load previous chat history here
+                if (this.textContent === 'Welcome to Corprex AI') {
+                    startNewChat();
                 }
-            }, 250);
+            });
         });
     </script>
 </body>
