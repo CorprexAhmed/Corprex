@@ -1,27 +1,49 @@
+/**
+ * Corprex Client Chat - Fixed Version
+ * 
+ * IMPORTANT: To use this script:
+ * 1. Remove any inline JavaScript from your client-chat.html
+ * 2. Include this script at the END of the body tag:
+ *    <script src="client-chat.js"></script>
+ * 3. Ensure your HTML has these required elements:
+ *    - id="chatContainer" for messages
+ *    - id="messageInput" for input field
+ *    - id="modelSelect" for model selector
+ *    - class="chat-history" for sidebar history
+ *    - class="user-section" for user info area
+ * 
+ * This script handles authentication, chat functionality, and session management.
+ */
+
 // ==================== AUTHENTICATION ====================
-// Immediately check authentication on script load
+// Immediately check authentication on script load - BEFORE any DOM manipulation
 (function() {
     const auth = sessionStorage.getItem('corprexAuth');
-    if (!auth) {
-        window.location.href = 'client-login.html';
+    const currentPath = window.location.pathname;
+    
+    // Only redirect if we're on the client-chat page and not authenticated
+    if (currentPath.includes('client-chat.html') && !auth) {
+        window.location.replace('client-login.html');
         return;
     }
     
-    try {
-        const authData = JSON.parse(auth);
-        // Optional: Check if session is expired (e.g., 24 hours)
-        const sessionAge = Date.now() - authData.loginTime;
-        const maxAge = 24 * 60 * 60 * 1000; // 24 hours
-        
-        if (sessionAge > maxAge) {
+    if (auth) {
+        try {
+            const authData = JSON.parse(auth);
+            // Check if session is expired (24 hours)
+            const sessionAge = Date.now() - authData.loginTime;
+            const maxAge = 24 * 60 * 60 * 1000; // 24 hours
+            
+            if (sessionAge > maxAge) {
+                sessionStorage.removeItem('corprexAuth');
+                window.location.replace('client-login.html');
+                return;
+            }
+        } catch (e) {
             sessionStorage.removeItem('corprexAuth');
-            window.location.href = 'client-login.html';
+            window.location.replace('client-login.html');
             return;
         }
-    } catch (e) {
-        sessionStorage.removeItem('corprexAuth');
-        window.location.href = 'client-login.html';
-        return;
     }
 })();
 
@@ -46,14 +68,22 @@ let currentModel = 'gpt-4';
 
 // Initialize on DOM load
 document.addEventListener('DOMContentLoaded', function() {
-    // Set user info
+    // Verify authentication once more after DOM loads
     const authData = getAuthData();
-    if (authData) {
-        const usernameEl = document.getElementById('username');
-        const avatarEl = document.getElementById('userAvatar');
-        
-        if (usernameEl) usernameEl.textContent = authData.username;
-        if (avatarEl) avatarEl.textContent = authData.username.charAt(0).toUpperCase();
+    if (!authData) {
+        return; // Will redirect in getAuthData
+    }
+    
+    // Update user info in header if elements exist
+    const usernameEl = document.getElementById('username');
+    const avatarEl = document.querySelector('.user-avatar');
+    
+    if (usernameEl) {
+        usernameEl.textContent = authData.username;
+    }
+    if (avatarEl) {
+        avatarEl.textContent = authData.username.charAt(0).toUpperCase();
+        avatarEl.title = authData.username;
     }
     
     // Load chat history
@@ -72,42 +102,46 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Set up all event listeners
 function setupEventListeners() {
-    // Message input auto-resize
+    // Message input auto-resize and keypress
     const messageInput = document.getElementById('messageInput');
     if (messageInput) {
         messageInput.addEventListener('input', function() {
-            this.style.height = '44px';
-            this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 200) + 'px';
         });
         
-        // Handle Enter key
         messageInput.addEventListener('keypress', handleKeyPress);
     }
     
-    // Send button
-    const sendButton = document.getElementById('sendButton');
+    // Send button - look for button with onclick="sendMessage()"
+    const sendButton = document.querySelector('button[onclick*="sendMessage"]');
     if (sendButton) {
+        sendButton.onclick = null; // Remove inline handler
         sendButton.addEventListener('click', sendMessage);
     }
     
-    // New chat button
-    const newChatBtn = document.getElementById('newChatBtn');
-    if (newChatBtn) {
-        newChatBtn.addEventListener('click', startNewChat);
-    }
+    // New chat button - already has inline onclick="startNewChat()"
+    // We'll override the global function instead
     
     // Model selector
     const modelSelect = document.getElementById('modelSelect');
     if (modelSelect) {
+        currentModel = modelSelect.value; // Set initial value
         modelSelect.addEventListener('change', (e) => {
             currentModel = e.target.value;
         });
     }
     
-    // Logout button
-    const logoutBtn = document.getElementById('logoutBtn');
-    if (logoutBtn) {
+    // Add logout button to user section
+    const userSection = document.querySelector('.user-section');
+    if (userSection && !document.getElementById('logoutBtn')) {
+        const logoutBtn = document.createElement('button');
+        logoutBtn.id = 'logoutBtn';
+        logoutBtn.className = 'logout-btn';
+        logoutBtn.textContent = 'Logout';
+        logoutBtn.style.cssText = 'padding: 6px 12px; background: #ff4444; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 13px;';
         logoutBtn.addEventListener('click', handleLogout);
+        userSection.appendChild(logoutBtn);
     }
     
     // Mobile menu
@@ -159,26 +193,23 @@ function saveChatHistory() {
 
 // Render chat history sidebar
 function renderChatHistory() {
-    const historyContainer = document.getElementById('chatHistory');
+    const historyContainer = document.querySelector('.chat-history');
     if (!historyContainer) return;
+    
+    // Keep any existing welcome message if no chats
+    if (chatHistory.length === 0) {
+        historyContainer.innerHTML = '<div class="chat-item active">Welcome to Corprex AI</div>';
+        return;
+    }
     
     historyContainer.innerHTML = '';
     
     chatHistory.forEach(chat => {
         const item = document.createElement('div');
-        item.className = `chat-history-item ${chat.id === currentChatId ? 'active' : ''}`;
+        item.className = `chat-item ${chat.id === currentChatId ? 'active' : ''}`;
         item.onclick = () => loadChat(chat.id);
+        item.textContent = chat.title || 'New Chat';
         
-        const title = document.createElement('div');
-        title.className = 'chat-history-title';
-        title.textContent = chat.title || 'New Chat';
-        
-        const date = document.createElement('div');
-        date.className = 'chat-history-date';
-        date.textContent = new Date(chat.timestamp).toLocaleDateString();
-        
-        item.appendChild(title);
-        item.appendChild(date);
         historyContainer.appendChild(item);
     });
 }
@@ -218,70 +249,79 @@ function loadChat(chatId) {
 
 // Render messages in chat window
 function renderMessages() {
-    const container = document.getElementById('messagesContainer');
-    const welcomeScreen = document.getElementById('welcomeScreen');
-    
+    const container = document.getElementById('chatContainer');
     if (!container) return;
     
+    // Clear container first
+    container.innerHTML = '';
+    
     if (messages.length === 0) {
-        if (welcomeScreen) {
-            welcomeScreen.style.display = 'flex';
-            container.innerHTML = '';
-            container.appendChild(welcomeScreen);
-        }
+        // Show welcome screen
+        const welcomeScreen = createWelcomeScreen();
+        container.appendChild(welcomeScreen);
         return;
     }
     
-    if (welcomeScreen) welcomeScreen.style.display = 'none';
-    container.innerHTML = '';
-    
+    // Render all messages
     messages.forEach(msg => {
-        const messageEl = createMessageElement(msg.role, msg.content);
-        container.appendChild(messageEl);
+        const messageGroup = createMessageGroup(msg.role, msg.content);
+        container.appendChild(messageGroup);
     });
     
     // Scroll to bottom
     container.scrollTop = container.scrollHeight;
 }
 
-// Create message element
-function createMessageElement(role, content) {
+// Create welcome screen
+function createWelcomeScreen() {
+    const welcomeDiv = document.createElement('div');
+    welcomeDiv.className = 'welcome-screen';
+    welcomeDiv.id = 'welcomeScreen';
+    welcomeDiv.innerHTML = `
+        <div class="logo-container">C</div>
+        <h1 class="welcome-title">How can I help you today?</h1>
+        <p class="welcome-subtitle">
+            Powered by Corprex AI - Select a model and start chatting
+        </p>
+    `;
+    return welcomeDiv;
+}
+
+// Create message group element
+function createMessageGroup(role, content) {
+    const messageGroup = document.createElement('div');
+    messageGroup.className = `message-group ${role === 'user' ? 'user' : 'assistant'}`;
+    
     const message = document.createElement('div');
-    message.className = 'message';
+    message.className = `message ${role === 'user' ? 'user' : 'assistant'}`;
     
     const avatar = document.createElement('div');
-    avatar.className = `message-avatar ${role === 'assistant' ? 'ai' : ''}`;
+    avatar.className = 'message-avatar';
     avatar.textContent = role === 'user' ? 'U' : 'AI';
     
-    const contentWrapper = document.createElement('div');
-    contentWrapper.className = 'message-content';
-    
-    const roleLabel = document.createElement('div');
-    roleLabel.className = 'message-role';
-    roleLabel.textContent = role === 'user' ? 'You' : 'Corprex AI';
-    
-    const text = document.createElement('div');
-    text.className = 'message-text';
-    text.innerHTML = formatMessage(content);
-    
-    contentWrapper.appendChild(roleLabel);
-    contentWrapper.appendChild(text);
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'message-content';
+    contentDiv.innerHTML = formatMessage(content);
     
     message.appendChild(avatar);
-    message.appendChild(contentWrapper);
+    message.appendChild(contentDiv);
+    messageGroup.appendChild(message);
     
-    return message;
+    return messageGroup;
 }
 
 // Format message content
 function formatMessage(content) {
-    // Convert markdown-style code blocks to HTML
-    content = content.replace(/```(.*?)\n([\s\S]*?)```/g, '<pre><code>$2</code></pre>');
-    // Convert inline code to HTML
-    content = content.replace(/`([^`]+)`/g, '<code>$1</code>');
-    // Convert line breaks to <br>
-    content = content.replace(/\n/g, '<br>');
-    return content;
+    // Convert markdown-style formatting to HTML
+    let formatted = content
+        .replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>')
+        .replace(/`([^`]+)`/g, '<code>$1</code>')
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+        .replace(/\n\n/g, '</p><p>')
+        .replace(/\n/g, '<br>');
+    
+    return `<p>${formatted}</p>`;
 }
 
 // Send message
@@ -317,8 +357,13 @@ async function sendMessage() {
     
     // Clear input and render
     messageInput.value = '';
-    messageInput.style.height = '44px';
+    messageInput.style.height = 'auto';
     renderMessages();
+    
+    // Disable send button while loading
+    const sendButton = document.querySelector('button[onclick*="sendMessage"]') || 
+                     document.querySelector('.send-button');
+    if (sendButton) sendButton.disabled = true;
     
     // Show loading state
     isLoading = true;
@@ -355,7 +400,15 @@ async function sendMessage() {
         isLoading = false;
         hideTypingIndicator();
         renderMessages();
+        if (sendButton) sendButton.disabled = false;
     }
+}
+
+// Override global function if it exists
+if (typeof window !== 'undefined') {
+    window.sendMessage = sendMessage;
+    window.startNewChat = startNewChat;
+    window.handleKeyPress = handleKeyPress;
 }
 
 // Generate demo response
@@ -397,18 +450,32 @@ Experience cutting-edge language models privately and securely with Corprex Omeg
 
 // Show typing indicator
 function showTypingIndicator() {
-    const container = document.getElementById('messagesContainer');
+    const container = document.getElementById('chatContainer');
     if (!container) return;
     
-    const indicator = document.createElement('div');
-    indicator.id = 'typingIndicator';
-    indicator.className = 'typing-indicator';
-    indicator.innerHTML = `
-        <div class="typing-dot"></div>
-        <div class="typing-dot"></div>
-        <div class="typing-dot"></div>
-    `;
-    container.appendChild(indicator);
+    // Remove any existing indicator
+    hideTypingIndicator();
+    
+    const messageGroup = document.createElement('div');
+    messageGroup.className = 'message-group assistant';
+    messageGroup.id = 'typingIndicator';
+    
+    const message = document.createElement('div');
+    message.className = 'message assistant';
+    
+    const avatar = document.createElement('div');
+    avatar.className = 'message-avatar';
+    avatar.textContent = 'AI';
+    
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'message-content';
+    contentDiv.innerHTML = '<div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
+    
+    message.appendChild(avatar);
+    message.appendChild(contentDiv);
+    messageGroup.appendChild(message);
+    
+    container.appendChild(messageGroup);
     container.scrollTop = container.scrollHeight;
 }
 
@@ -466,6 +533,33 @@ window.addEventListener('beforeunload', function() {
 setInterval(function() {
     const auth = sessionStorage.getItem('corprexAuth');
     if (!auth) {
-        window.location.href = 'client-login.html';
+        window.location.replace('client-login.html');
+    } else {
+        try {
+            const authData = JSON.parse(auth);
+            const sessionAge = Date.now() - authData.loginTime;
+            const maxAge = 24 * 60 * 60 * 1000;
+            
+            if (sessionAge > maxAge) {
+                sessionStorage.removeItem('corprexAuth');
+                alert('Your session has expired. Please login again.');
+                window.location.replace('client-login.html');
+            }
+        } catch (e) {
+            sessionStorage.removeItem('corprexAuth');
+            window.location.replace('client-login.html');
+        }
     }
 }, 5 * 60 * 1000);
+
+// Clean up any inline event handlers on page load
+document.addEventListener('DOMContentLoaded', function() {
+    // Remove inline onclick handlers to avoid conflicts
+    const elementsWithOnclick = document.querySelectorAll('[onclick]');
+    elementsWithOnclick.forEach(el => {
+        if (el.getAttribute('onclick').includes('startNewChat') || 
+            el.getAttribute('onclick').includes('sendMessage')) {
+            el.removeAttribute('onclick');
+        }
+    });
+});
