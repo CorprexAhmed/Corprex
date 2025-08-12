@@ -87,106 +87,47 @@ function showConnectionStatus(isConnected, dbConnected = false) {
     const statusDiv = document.getElementById('connectionStatus');
     if (statusDiv) {
         statusDiv.className = `connection-status ${isConnected ? 'connected' : 'disconnected'}`;
-        statusDiv.textContent = isConnected 
-            ? `Connected to Backend${dbConnected ? ' (Database Active)' : ''}` 
-            : 'Backend Offline - Running in Demo Mode';
-        statusDiv.style.display = 'block';
-        
-        setTimeout(() => {
-            statusDiv.style.display = 'none';
-        }, 5000);
+        statusDiv.innerHTML = `
+            <div class="status-indicator"></div>
+            <span class="status-text">
+                ${isConnected ? 'Backend Connected' : 'Backend Offline'}
+                ${dbConnected ? ' • DB Online' : ''}
+            </span>
+        `;
     }
 }
 
-// ==================== CHAT FUNCTIONALITY ====================
-
-// Initialize on DOM load
+// Initialize the application
 document.addEventListener('DOMContentLoaded', async function() {
-    // Verify authentication once more after DOM loads
+    console.log('Corprex Client Chat - Initializing...');
+    
+    // Check authentication first
     const authData = getAuthData();
-    if (!authData) {
-        return; // Will redirect in getAuthData
-    }
+    if (!authData) return;
     
-    // Check backend health
-    const backendAvailable = await checkBackendHealth();
+    // Initialize UI components
+    initializeUI();
     
-    // Update user info in header if elements exist
-    const usernameEl = document.getElementById('username');
-    const avatarEl = document.querySelector('.user-avatar');
-    
-    if (usernameEl) {
-        usernameEl.textContent = authData.username;
-    }
-    if (avatarEl) {
-        avatarEl.textContent = authData.username.charAt(0).toUpperCase();
-        avatarEl.title = authData.username;
-    }
-    
-    // Load chat history
+    // Load existing chat history
     loadChatHistory();
     
-    // Set up event listeners
-    setupEventListeners();
+    // Check backend health
+    await checkBackendHealth();
     
-    // Focus message input
-    const messageInput = document.getElementById('messageInput');
-    if (messageInput) messageInput.focus();
-    
-    // Initialize mobile viewport
-    setViewportHeight();
-    
-    // Log backend status
-    console.log('Backend available:', backendAvailable);
-    console.log('API Base URL:', API_BASE_URL);
+    console.log('Corprex Client Chat - Ready');
 });
 
-// Set up all event listeners
-function setupEventListeners() {
-    // Message input auto-resize and keypress
+// Initialize UI components
+function initializeUI() {
+    // Handle input
     const messageInput = document.getElementById('messageInput');
     if (messageInput) {
-        messageInput.addEventListener('input', function() {
-            this.style.height = 'auto';
-            this.style.height = Math.min(this.scrollHeight, 200) + 'px';
-        });
-        
         messageInput.addEventListener('keypress', handleKeyPress);
+        messageInput.addEventListener('input', autoResize);
     }
     
-    // Send button - look for button with onclick="sendMessage()"
-    const sendButton = document.querySelector('button[onclick*="sendMessage"]');
-    if (sendButton) {
-        sendButton.onclick = null; // Remove inline handler
-        sendButton.addEventListener('click', sendMessage);
-    }
-    
-    // New chat button - already has inline onclick="startNewChat()"
-    // We'll override the global function instead
-    
-    // Model selector
-    const modelSelect = document.getElementById('modelSelect');
-    if (modelSelect) {
-        currentModel = modelSelect.value; // Set initial value
-        modelSelect.addEventListener('change', (e) => {
-            currentModel = e.target.value;
-        });
-    }
-    
-    // Add logout button to user section
-    const userSection = document.querySelector('.user-section');
-    if (userSection && !document.getElementById('logoutBtn')) {
-        const logoutBtn = document.createElement('button');
-        logoutBtn.id = 'logoutBtn';
-        logoutBtn.className = 'logout-btn';
-        logoutBtn.textContent = 'Logout';
-        logoutBtn.style.cssText = 'padding: 6px 12px; background: #ff4444; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 13px;';
-        logoutBtn.addEventListener('click', handleLogout);
-        userSection.appendChild(logoutBtn);
-    }
-    
-    // Mobile menu
-    const mobileMenu = document.getElementById('mobileMenu');
+    // Mobile menu toggle
+    const mobileMenu = document.getElementById('mobileMenuToggle');
     const sidebar = document.getElementById('sidebar');
     const sidebarOverlay = document.getElementById('sidebarOverlay');
     
@@ -232,6 +173,17 @@ function saveChatHistory() {
     }
 }
 
+// **FIX: Enhanced function to save current chat messages**
+function saveCurrentChatMessages() {
+    if (currentChatId && messages.length > 0) {
+        const chat = chatHistory.find(c => c.id === currentChatId);
+        if (chat) {
+            chat.messages = [...messages]; // Create a copy of messages array
+            saveChatHistory();
+        }
+    }
+}
+
 // Render chat history sidebar
 function renderChatHistory() {
     const historyContainer = document.querySelector('.chat-history');
@@ -257,6 +209,9 @@ function renderChatHistory() {
 
 // Start new chat
 function startNewChat() {
+    // **FIX: Save current chat messages before starting new chat**
+    saveCurrentChatMessages();
+    
     currentChatId = Date.now().toString();
     messages = [];
     
@@ -278,10 +233,13 @@ function startNewChat() {
 
 // Load existing chat
 function loadChat(chatId) {
+    // **FIX: Save current chat messages before switching**
+    saveCurrentChatMessages();
+    
     const chat = chatHistory.find(c => c.id === chatId);
     if (chat) {
         currentChatId = chatId;
-        messages = chat.messages || [];
+        messages = chat.messages || []; // Load the saved messages
         renderChatHistory();
         renderMessages();
         closeSidebarOnMobile();
@@ -338,23 +296,23 @@ function createMessageGroup(role, content) {
     
     const avatar = document.createElement('div');
     avatar.className = 'message-avatar';
-    avatar.textContent = role === 'user' ? 'U' : 'AI';
+    avatar.textContent = role === 'user' ? 'U' : 'A';
     
-    const contentDiv = document.createElement('div');
-    contentDiv.className = 'message-content';
-    contentDiv.innerHTML = formatMessage(content);
+    const content_div = document.createElement('div');
+    content_div.className = 'message-content';
+    content_div.innerHTML = formatMessage(content);
     
     message.appendChild(avatar);
-    message.appendChild(contentDiv);
+    message.appendChild(content_div);
     messageGroup.appendChild(message);
     
     return messageGroup;
 }
 
 // Format message content
-function formatMessage(content) {
-    // Convert markdown-style formatting to HTML
-    let formatted = content
+function formatMessage(text) {
+    // Basic markdown-like formatting
+    let formatted = text
         .replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>')
         .replace(/`([^`]+)`/g, '<code>$1</code>')
         .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
@@ -363,6 +321,54 @@ function formatMessage(content) {
         .replace(/\n/g, '<br>');
     
     return `<p>${formatted}</p>`;
+}
+
+// Handle key press in input
+function handleKeyPress(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+    }
+}
+
+// Auto resize textarea
+function autoResize() {
+    const textarea = document.getElementById('messageInput');
+    if (textarea) {
+        textarea.style.height = 'auto';
+        textarea.style.height = textarea.scrollHeight + 'px';
+    }
+}
+
+// Show typing indicator
+function showTypingIndicator() {
+    const container = document.getElementById('chatContainer');
+    if (!container) return;
+    
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'message-group assistant typing';
+    typingDiv.id = 'typingIndicator';
+    typingDiv.innerHTML = `
+        <div class="message assistant">
+            <div class="message-avatar">A</div>
+            <div class="message-content">
+                <div class="typing-dots">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    container.appendChild(typingDiv);
+    container.scrollTop = container.scrollHeight;
+}
+
+// Hide typing indicator
+function hideTypingIndicator() {
+    const typingIndicator = document.getElementById('typingIndicator');
+    if (typingIndicator) {
+        typingIndicator.remove();
+    }
 }
 
 // Send message
@@ -395,6 +401,9 @@ async function sendMessage() {
             renderChatHistory();
         }
     }
+    
+    // **FIX: Save messages after adding user message**
+    saveCurrentChatMessages();
     
     // Clear input and render
     messageInput.value = '';
@@ -459,13 +468,6 @@ async function sendMessage() {
             messages.push(assistantMsg);
         }
         
-        // Save chat
-        const chat = chatHistory.find(c => c.id === currentChatId);
-        if (chat) {
-            chat.messages = messages;
-            saveChatHistory();
-        }
-        
     } catch (error) {
         console.error('Error sending message:', error);
         
@@ -477,18 +479,14 @@ async function sendMessage() {
             timestamp: Date.now()
         };
         messages.push(assistantMsg);
-        
-        // Save chat
-        const chat = chatHistory.find(c => c.id === currentChatId);
-        if (chat) {
-            chat.messages = messages;
-            saveChatHistory();
-        }
     } finally {
         isLoading = false;
         hideTypingIndicator();
         renderMessages();
         if (sendButton) sendButton.disabled = false;
+        
+        // **FIX: Always save messages after getting response**
+        saveCurrentChatMessages();
     }
 }
 
@@ -532,86 +530,22 @@ Demo response from GPT-3.5 Turbo. Configure your OpenAI API key in the backend t
 
         'claude-3': `Received: "${userMessage}"
 
-This is a Claude 3 demo response. Add your Anthropic API key to enable actual Claude responses.`,
+This is a Claude 3 demo response. Connect your Anthropic API key to enable full functionality.`,
 
-        'llama-2': `Query: "${userMessage}"
+        'llama-2': `Input: "${userMessage}"
 
-Llama 2 demo mode. Configure your model endpoint for actual responses.`,
+Demo response from Llama 2. Add your Replicate API key to access the actual model.`,
 
-        'mistral': `Input: "${userMessage}"
+        'mistral': `Query: "${userMessage}"
 
-Mistral demo response. Set up your API configuration for real AI interactions.`
+Demo response from Mistral AI. Configure your Together AI API key for real responses.`
     };
     
     return responses[model] || responses['gpt-4'];
 }
 
-// Check if API keys are configured
-async function checkAPIConfiguration() {
-    try {
-        const response = await fetch(`${API_BASE_URL}/api/models/status`, {
-            headers: {
-                'Authorization': `Bearer ${sessionStorage.getItem('corprexAuthToken') || ''}`
-            }
-        });
-        
-        if (response.ok) {
-            const data = await response.json();
-            return data.configured || [];
-        }
-    } catch (error) {
-        console.log('Could not check API configuration:', error);
-    }
-    return [];
-}
-
-// Show typing indicator
-function showTypingIndicator() {
-    const container = document.getElementById('chatContainer');
-    if (!container) return;
-    
-    // Remove any existing indicator
-    hideTypingIndicator();
-    
-    const messageGroup = document.createElement('div');
-    messageGroup.className = 'message-group assistant';
-    messageGroup.id = 'typingIndicator';
-    
-    const message = document.createElement('div');
-    message.className = 'message assistant';
-    
-    const avatar = document.createElement('div');
-    avatar.className = 'message-avatar';
-    avatar.textContent = 'AI';
-    
-    const contentDiv = document.createElement('div');
-    contentDiv.className = 'message-content';
-    contentDiv.innerHTML = '<div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
-    
-    message.appendChild(avatar);
-    message.appendChild(contentDiv);
-    messageGroup.appendChild(message);
-    
-    container.appendChild(messageGroup);
-    container.scrollTop = container.scrollHeight;
-}
-
-// Hide typing indicator
-function hideTypingIndicator() {
-    const indicator = document.getElementById('typingIndicator');
-    if (indicator) indicator.remove();
-}
-
-// Handle Enter key
-function handleKeyPress(event) {
-    if (event.key === 'Enter' && !event.shiftKey) {
-        event.preventDefault();
-        sendMessage();
-    }
-}
-
-// Handle logout
-function handleLogout() {
+// Logout function
+function logout() {
     if (confirm('Are you sure you want to logout?')) {
         sessionStorage.removeItem('corprexAuth');
         window.location.href = 'client-login.html';
@@ -635,14 +569,15 @@ function setViewportHeight() {
     document.documentElement.style.setProperty('--vh', `${vh}px`);
 }
 
-// Save chat before unload
+// **FIX: Enhanced beforeunload event to ensure current chat is saved**
 window.addEventListener('beforeunload', function() {
-    if (currentChatId && messages.length > 0) {
-        const chat = chatHistory.find(c => c.id === currentChatId);
-        if (chat) {
-            chat.messages = messages;
-            saveChatHistory();
-        }
+    saveCurrentChatMessages();
+});
+
+// **FIX: Save messages when switching tabs or losing focus**
+window.addEventListener('visibilitychange', function() {
+    if (document.hidden) {
+        saveCurrentChatMessages();
     }
 });
 
