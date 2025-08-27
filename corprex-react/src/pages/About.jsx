@@ -29,7 +29,7 @@ export default function About() {
   return (
     <>
       <Nav active="about" logoWeight={700} ctaHref="#demo" />
-      <section className="hero about-hero">
+      <section className="hero about-hero hero--center hero--compact">
         <div className="hero-content">
           <div className="hero-text">
             <h1>
@@ -157,7 +157,7 @@ export default function About() {
         <p className="cta-subtitle">
           Let's discuss how Corprex can transform your business with secure, private AI infrastructure.
         </p>
-        <a href="/contact" className="btn-primary">Start Your Journey</a>
+        <a href="/contact" className="btn btn--primary">Start Your Journey</a>
       </section>
 
       <Footer />

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Nav from '../components/Nav.jsx'
 import Footer from '../components/Footer.jsx'
-import './n8n-guide.css'
 
 export default function N8nGuide() {
   // Replicate subtle scroll/fade behaviors
@@ -43,11 +42,11 @@ export default function N8nGuide() {
 
 function GuideHero() {
   return (
-    <section className="hero">
+    <section className="hero hero--center">
       <div className="hero-content">
         <div className="hero-text">
-          <span className="hero-badge">n8n Open-Source Automation</span>
-          <h1>Master <span className="highlight">n8n</span> Workflow Automation</h1>
+          <span className="hero-badge n8n">n8n Open-Source Automation</span>
+          <h1>Master <span className="highlight n8n">n8n</span> Workflow Automation</h1>
           <p>
             Build powerful, self-hosted automation workflows with complete control. Connect any API, database, or service with n8n's flexible node-based approach. Your data, your infrastructure, your rules.
           </p>
@@ -61,7 +60,7 @@ function IntroSection() {
   return (
     <section className="section intro-section">
       <div className="container">
-        <div className="intro-grid">
+        <div className="intro-grid grid grid-2 gap-lg">
           <div className="intro-content">
             <h3>What is n8n?</h3>
             <p>
@@ -169,9 +168,9 @@ function NodeTypes() {
           <h2>Understanding n8n Nodes</h2>
           <p>The building blocks of your automation workflows</p>
         </div>
-        <div className="nodes-grid">
+        <div className="nodes-grid grid grid-4 gap-md">
           {nodes.map(([title, desc, path]) => (
-            <div className="node-type-card" key={title}>
+            <div className="node-type-card u-lift u-border-accent u-shadow-soft" key={title}>
               <div className="node-type-icon">
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d={path} /></svg>
               </div>
@@ -206,7 +205,7 @@ function Examples() {
           <p>See how n8n transforms business processes</p>
         </div>
         {examples.map((ex) => (
-          <div className="example-card" key={ex.title}>
+          <div className="example-card u-lift u-border-accent u-shadow-soft" key={ex.title}>
             <div className="example-header">
               <div className="example-icon">
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 6H12L10 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V8C22 6.9 21.1 6 20 6Z"/></svg>
@@ -275,7 +274,7 @@ function GuideCTA() {
         <div className="cta-section">
           <h2>Ready to Automate with n8n?</h2>
           <p>Let our experts help you deploy and optimize n8n for your infrastructure</p>
-          <a href="/contact" className="btn-primary">Get Started with n8n</a>
+          <a href="/contact" className="btn btn--primary">Get Started with n8n</a>
           <p style={{ marginTop: '2rem', fontSize: '0.9rem', color: 'var(--text-gray)' }}>
             Or explore our <a href="/make-guide" style={{ color: 'var(--n8n-red)', textDecoration: 'none' }}>Make.com guide</a> for visual automation
           </p>

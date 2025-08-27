@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import Nav from '../components/Nav.jsx'
 import Footer from '../components/Footer.jsx'
-import './make-guide.css'
 
 export default function MakeGuide() {
   useEffect(() => {
@@ -17,7 +16,7 @@ export default function MakeGuide() {
   return (
     <>
       <Nav logoWeight={600} />
-      <section className="hero">
+      <section className="hero hero--center">
         <div className="hero-content">
           <div className="hero-text">
             <span className="hero-badge">Make.com Visual Automation</span>
@@ -95,7 +94,7 @@ export default function MakeGuide() {
                     ['Real-time Testing','Watch data flow through your scenario live','M12 2C6.48 2 2 6.48 2 12S6.48 22 12 22 22 17.52 22 12 17.52 2 12 2ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z'],
                     ['Precise Control','Configure every detail of your automation','M12 2L2 7V17C2 19.21 3.79 21 6 21H18C20.21 21 22 19.21 22 17V7L12 2ZM12 11.5L20.5 7L12 2.5L3.5 7L12 11.5ZM4 8.31V17C4 18.1 4.9 19 6 19H18C19.1 19 20 18.1 20 17V8.31L12 13L4 8.31Z'],
                   ].map(([title, subtitle, path]) => (
-                    <div className="visual-feature" key={title}>
+                    <div className="visual-feature u-lift u-border-accent u-shadow-soft" key={title}>
                       <div className="visual-feature-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d={path}/></svg></div>
                       <h4>{title}</h4>
                       <p>{subtitle}</p>
@@ -120,7 +119,7 @@ export default function MakeGuide() {
               ['HR Onboarding','Streamline employee onboarding with automated account creation, equipment requests, training schedules, and communications.',['Google Workspace','Slack','BambooHR'],'M16 11C17.66 11 18.99 9.66 18.99 8S17.66 5 16 5C14.34 5 13 6.34 13 8S14.34 11 16 11ZM8 11C9.66 11 10.99 9.66 10.99 8S9.66 5 8 5C6.34 5 5 6.34 5 8S6.34 11 8 11ZM8 13C5.67 13 1 14.17 1 16.5V19H15V16.5C15 14.17 10.33 13 8 13ZM16 13C15.71 13 15.38 13.02 15.03 13.05C16.19 13.89 17 15.02 17 16.5V19H23V16.5C23 14.17 18.33 13 16 13Z'],
               ['Analytics Reporter','Collect data from multiple sources, create consolidated reports, and distribute insights to stakeholders on schedule.',['Google Analytics','Sheets','Email'],'M19 3H5C3.89 3 3 3.89 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.89 20.1 3 19 3ZM19 5V19H5V5H19ZM12 12C10.35 12 9 13.35 9 15S10.35 18 12 18 15 16.65 15 15 13.65 12 12 12Z'],
             ].map(([title, desc, apps, path]) => (
-              <div className="template-card" key={title}>
+              <div className="template-card u-lift u-border-accent u-shadow-soft" key={title}>
                 <div className="template-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d={path}/></svg></div>
                 <h3 className="template-title">{title}</h3>
                 <p className="template-desc">{desc}</p>
@@ -160,7 +159,7 @@ export default function MakeGuide() {
           <div className="cta-section">
             <h2>Ready to Automate with Make?</h2>
             <p>Let our experts help you design and implement powerful visual automations that transform your business</p>
-            <a href="/contact" className="btn-primary">Get Started with Make</a>
+            <a href="/contact" className="btn btn--primary">Get Started with Make</a>
             <p style={{ marginTop: '2rem', fontSize: '0.9rem', color: 'var(--text-gray)' }}>Or explore our <a href="/n8n-guide" style={{ color: 'var(--make-purple)', textDecoration: 'none' }}>n8n guide</a> for self-hosted automation</p>
           </div>
         </div>

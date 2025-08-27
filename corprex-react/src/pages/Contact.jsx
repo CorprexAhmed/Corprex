@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Nav from '../components/Nav.jsx'
 import Footer from '../components/Footer.jsx'
-import './contact.css'
 import { mountInlineCal, attachBookingListener } from '../lib/calcom.js'
 
 export default function Contact() {
@@ -138,9 +137,9 @@ export default function Contact() {
                   <label htmlFor="message">Message</label>
                   <textarea id="message" name="message" rows="4" placeholder="Tell us about your AI infrastructure needs..." required />
                 </div>
-                <button type="submit" className="btn-primary" disabled={submitting}>
+                <button type="submit" className="btn btn--primary" disabled={submitting}>
                   <span ref={submitTextRef}>Send Message</span>
-                  <div className="loading-spinner" ref={spinnerRef}></div>
+                  <div className="contact-loading-spinner" ref={spinnerRef}></div>
                 </button>
               </form>
             </div>
@@ -148,17 +147,17 @@ export default function Contact() {
         </div>
       </section>
 
-      <div className={`scheduler-overlay ${overlayOpen ? 'active' : ''}`} onClick={(e) => { if (e.target === e.currentTarget) closeScheduler() }}>
-        <div className="scheduler-container">
-          <div className="scheduler-header">
-            <h2 className="scheduler-title">Schedule a Meeting</h2>
-            <button className="close-btn" onClick={closeScheduler}>
+      <div className={`contact-overlay ${overlayOpen ? 'active' : ''}`} onClick={(e) => { if (e.target === e.currentTarget) closeScheduler() }}>
+        <div className="contact-scheduler-container">
+          <div className="contact-scheduler-header">
+            <h2 className="contact-scheduler-title">Schedule a Meeting</h2>
+            <button className="contact-close-btn" onClick={closeScheduler}>
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2"/>
               </svg>
             </button>
           </div>
-          <div className="scheduler-body">
+          <div className="contact-scheduler-body">
             <div id="calcom-embed"></div>
           </div>
         </div>

@@ -11,7 +11,7 @@ export default function FAQ() {
         <div className="faq-container">
           <details className="faq-item">
             <summary>What AI models can Omega run?</summary>
-            <p>Omega supports all major open-source models including Llama 3, Mistral, Mixtral, CodeLlama, Gemma, and more. You can also fine-tune models on your own data or deploy custom models. We regularly update available models as new ones are released.</p>
+            <p>Omega supports all major open-source models including Llama 3, Mistral, GPT-OSS, Gemma, and more. You can also fine-tune models on your own data or deploy custom models. We regularly update available models as new ones are released.</p>
           </details>
           <details className="faq-item">
             <summary>Can Omega work without internet connection?</summary>

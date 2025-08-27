@@ -1,7 +1,6 @@
 import React from 'react'
 import Nav from '../components/Nav.jsx'
 import Footer from '../components/Footer.jsx'
-import './news.css'
 
 export default function News() {
   function open(url) {
@@ -17,7 +16,7 @@ export default function News() {
   return (
     <>
       <Nav logoWeight={600} />
-      <section className="hero">
+      <section className="hero hero--center">
         <div className="hero-content">
           <h1 className="hero-title">The Latest in <span className="highlight">Private AI</span></h1>
           <p className="hero-subtitle">Stay informed about the cutting edge of AI sovereignty, infrastructure innovations, and industry insights from the Corprex team.</p>
@@ -26,7 +25,7 @@ export default function News() {
 
       <section className="news-section">
         <div className="container">
-          <article className="featured-article" onClick={() => open('https://economictimes.indiatimes.com/tech/artificial-intelligence/no-legal-confidentiality-when-using-chatgpt-as-a-therapist-or-lawyer-openai-ceo-sam-altman/articleshow/122932223.cms?from=mdr')}>
+          <article className="featured-article u-lift u-border-accent u-shadow-soft-lg" onClick={() => open('https://economictimes.indiatimes.com/tech/artificial-intelligence/no-legal-confidentiality-when-using-chatgpt-as-a-therapist-or-lawyer-openai-ceo-sam-altman/articleshow/122932223.cms?from=mdr')}>
             <div className="featured-image">
               <img src="https://img.etimg.com/thumb/width-650,height-488,imgsize-1132008,resizemode-75,msid-122932217/tech/artificial-intelligence/no-legal-confidentiality-when-using-chatgpt-as-a-therapist-or-lawyer-openai-ceo-sam-altman.jpg" alt="No Legal Confidentiality with ChatGPT" />
             </div>
@@ -108,7 +107,7 @@ export default function News() {
             <p className="newsletter-subtitle">Get the latest insights on private AI infrastructure delivered to your inbox</p>
             <form className="newsletter-form" onSubmit={subscribe}>
               <input type="email" className="newsletter-input" placeholder="Enter your email" required />
-              <button type="submit" className="newsletter-button">Subscribe</button>
+              <button type="submit" className="btn btn--primary btn--sm">Subscribe</button>
             </form>
           </div>
         </div>
@@ -123,7 +122,7 @@ function ArticleCard({ url, img, title, excerpt, meta1, meta2, disableLink }) {
   const onClick = () => { if (!disableLink) window.open(url, '_blank') }
   const onReadMore = (e) => { e.stopPropagation(); window.open(url, '_blank') }
   return (
-    <article className="article-card" onClick={onClick}>
+    <article className="article-card u-lift u-border-accent u-shadow-soft" onClick={onClick}>
       <div className="article-image"><img src={img} alt={title} /></div>
       <div className="article-content">
         <h3 className="article-title">{title}</h3>

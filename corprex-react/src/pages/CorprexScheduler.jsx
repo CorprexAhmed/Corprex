@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react'
-import './scheduler.css'
 import Nav from '../components/Nav.jsx'
 import Footer from '../components/Footer.jsx'
 
@@ -176,8 +175,8 @@ export default function CorprexScheduler() {
                     <div className="form-group full-width"><label className="form-label">What would you like to discuss?</label><textarea className="form-textarea" rows="4"></textarea></div>
                   </div>
                   <div className="form-actions">
-                    <button type="button" className="btn-secondary" onClick={() => setShowForm(false)}>Back</button>
-                    <button type="submit" className="btn-primary" id="submitBtn"><span id="submitText">Schedule Meeting</span></button>
+                    <button type="button" className="btn btn--secondary" onClick={() => setShowForm(false)}>Back</button>
+                    <button type="submit" className="btn btn--primary" id="submitBtn"><span id="submitText">Schedule Meeting</span></button>
                   </div>
                 </form>
                 <div className="loading-spinner" id="loadingSpinner"></div>

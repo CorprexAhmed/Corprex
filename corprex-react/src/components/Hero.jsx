@@ -25,17 +25,17 @@ export default function Hero() {
   }, [])
 
   return (
-    <section className="hero">
-      <div className="hero-content">
-        <div className="hero-text">
-          <h1>Don't think outside the box.</h1>
-          <h2>Think with it.</h2>
-          <p>
+    <section className="hero" style={{ textAlign: 'left' }}>
+      <div className="hero-content" style={{ alignItems: 'flex-start' }}>
+        <div className="hero-text" style={{ textAlign: 'left' }}>
+          <h1 style={{ textAlign: 'left' }}>Don't think outside the box.</h1>
+          <h2 style={{ textAlign: 'left' }}>Think in it.</h2>
+          <p style={{ textAlign: 'left' }}>
             The Omega is your complete AI infrastructure in one powerful device. No cloud dependencies. No data leaks. Just pure, private computational excellence at your command.
           </p>
           <div className="hero-cta">
-            <a href="/contact" className="btn-primary">Request Demo</a>
-            <a href="#omega" className="btn-secondary">Explore the Omega</a>
+            <a href="/contact" className="btn btn--primary">Request Demo</a>
+            <a href="#omega" className="btn btn--secondary">Explore the Omega</a>
           </div>
         </div>
         <div className="omega-visual">

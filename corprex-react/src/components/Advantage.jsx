@@ -51,7 +51,7 @@ export default function Advantage() {
             </div>
             <div className="spec-row">
               <span className="spec-label">Models</span>
-              <span className="spec-value">All Open Source + Custom</span>
+              <span className="spec-value">All Open Source + Custom Fine-Tuning</span>
             </div>
             <div className="spec-row">
               <span className="spec-label">Users</span>
