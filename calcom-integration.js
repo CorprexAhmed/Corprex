@@ -1,4 +1,4 @@
-/ Cal.com Integration for Corprex
+// Cal.com Integration for Corprex
 // This maintains your styling while using Cal.com's scheduling functionality
 
 (function() {

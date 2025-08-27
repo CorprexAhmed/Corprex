@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+:root { --primary-black:#000; --secondary-black:#0a0a0a; --dark-gray:#1a1a1a; --medium-gray:#2a2a2a; --light-gray:#666; --text-gray:#999; --text-primary:#fff; --text-secondary:#ccc; --border-color:#333; }
+
+body { font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background: var(--primary-black); color: var(--text-primary); line-height: 1.6; overflow-x: hidden; min-height: 100vh; display: flex; flex-direction: column; }
+
+/* Coming Soon Section */
+.coming-soon { flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem; background: linear-gradient(180deg, var(--primary-black) 0%, var(--secondary-black) 100%); }
+.coming-soon-content { text-align: center; max-width: 800px; }
+.coming-soon h1 { font-size: 3.5rem; font-weight: 300; margin-bottom: 1.5rem; letter-spacing: -0.02em; }
+.coming-soon p { font-size: 1.125rem; color: var(--text-secondary); margin-bottom: 3rem; line-height: 1.8; }
+.back-home { background: var(--text-primary); color: var(--primary-black); padding: 0.875rem 1.75rem; border-radius: 6px; text-decoration: none; font-weight: 500; transition: all 0.3s ease; display: inline-block; letter-spacing: 0.02em; font-size: 0.95rem; }
+.back-home:hover { background: var(--text-secondary); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1); }
+
+/* Footer */
+footer { background: var(--secondary-black); border-top: 1px solid var(--border-color); padding: 2rem 1.5rem; text-align: center; }
+.footer-copyright { color: var(--text-secondary); font-size: 0.9rem; }
+
+/* Mobile */
+@media (max-width: 768px) {
+  .coming-soon h1 { font-size: 2.5rem; }
+  .coming-soon p { font-size: 1rem; }
+}
+@media (max-width: 480px) {
+  .coming-soon h1 { font-size: 2rem; }
+  .back-home { width: 100%; text-align: center; }
+}
+
+
