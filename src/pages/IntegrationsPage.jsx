@@ -124,7 +124,7 @@ export default function IntegrationsPage() {
             </div>
           </Reveal>
 
-          <Reveal delay={0.1}>
+          <Reveal delay={0.1} threshold={0.01}>
             <div className="integ-all-grid">
               {allIntegrations.map(({ name }) => {
                 const iconPath = getIconPath(name)

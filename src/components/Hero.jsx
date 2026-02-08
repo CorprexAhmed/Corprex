@@ -30,9 +30,9 @@ export default function Hero() {
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
             </Link>
-            <a href="#platform" className="btn btn-secondary">
-              Explore the Platform
-            </a>
+            <Link to="/integrations" className="btn btn-secondary">
+              Learn About Our Integrations
+            </Link>
           </div>
         </div>
         <div className={`hero-visual ${loaded ? 'hero-animate-visual' : ''}`}>
