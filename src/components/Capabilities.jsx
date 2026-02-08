@@ -36,7 +36,7 @@ const capabilities = [
       </svg>
     ),
     title: 'Integrations',
-    desc: 'Connect to 350+ data sources including databases, CRMs, ERPs, marketing tools, accounting platforms, and more.',
+    desc: 'Connect to 230+ data sources including databases, CRMs, ERPs, marketing tools, accounting platforms, and more.',
     link: '/integrations',
   },
 ]

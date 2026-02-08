@@ -51,7 +51,7 @@ export default function ChatShowcase() {
                 </div>
                 <div>
                   <strong>Built-in integrations</strong>
-                  <span>Toggle MCP servers directly from the chat bar to pull live data from 350+ sources into any conversation.</span>
+                  <span>Toggle MCP servers directly from the chat bar to pull live data from 230+ sources into any conversation.</span>
                 </div>
               </li>
               <li>

@@ -60,7 +60,7 @@ const industries = [
 
 const stats = [
   { value: '384+', label: 'GB of VRAM per Omega deployment' },
-  { value: '350+', label: 'Data integrations available' },
+  { value: '230+', label: 'Data integrations available' },
   { value: '0', label: 'Bytes of data sent to the cloud' },
   { value: '24/7', label: 'Managed operations and support' },
 ]
@@ -160,7 +160,7 @@ export default function About() {
                 desc: 'When your AI needs live internet data, our search pipeline uses Microsoft Presidio and a lightweight AI model to strip all identifying information before any query leaves your building.',
               },
               {
-                title: '350+ Data Integrations',
+                title: '230+ Data Integrations',
                 desc: 'Connect to databases, CRMs, ERPs, marketing platforms, accounting software, and more. Every integration runs as a private MCP server on your premises.',
               },
               {

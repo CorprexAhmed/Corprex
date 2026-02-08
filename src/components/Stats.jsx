@@ -9,7 +9,7 @@ const allIntegrations = Object.values(integrationCategories)
 export default function Stats() {
   return (
     <section className="scroller-section">
-      <h2 className="scroller-title">Support for 350+ Integrations</h2>
+      <h2 className="scroller-title">Support for 230+ Integrations</h2>
       <div className="scroller-track">
         <div className="scroller-row">
           <div className="scroller-slide">

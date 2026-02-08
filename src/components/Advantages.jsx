@@ -22,7 +22,7 @@ export default function Advantages() {
             ['Modular MCP architecture', 'Enable, disable, and add capabilities at will'],
             ['HIPAA / SOX / FedRAMP ready', 'Compliance built into every layer'],
             ['Automatic updates', 'New models and features deployed seamlessly'],
-            ['350+ data integrations', 'Databases, CRMs, ERPs, and more out of the box'],
+            ['230+ data integrations', 'Databases, CRMs, ERPs, and more out of the box'],
             ['Privacy-respecting search', 'Internet access without exposing sensitive data'],
           ].map(([title, desc], i) => (
             <div

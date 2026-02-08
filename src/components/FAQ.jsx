@@ -16,7 +16,7 @@ const faqs = [
   {
     question: 'Can Omega integrate with our existing systems?',
     answer:
-      'Yes, Omega provides REST APIs, Python SDKs, and native integrations with popular business tools. It works seamlessly with your existing tech stack including CRMs, ERPs, and data warehouses. Our automation suite supports 350+ app integrations.',
+      'Yes, Omega provides REST APIs, Python SDKs, and native integrations with popular business tools. It works seamlessly with your existing tech stack including CRMs, ERPs, and data warehouses. Our automation suite supports 230+ app integrations.',
   },
   {
     question: 'Can I try Omega before purchasing?',

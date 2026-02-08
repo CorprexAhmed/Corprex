@@ -55,7 +55,7 @@ const steps = [
         <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
       </svg>
     ),
-    title: '350+ Integrations',
+    title: '230+ Integrations',
     desc: 'Connect to databases, CRMs, ERPs, marketing platforms, accounting software, and more. All connections run privately on your premises.',
     link: '/integrations',
   },

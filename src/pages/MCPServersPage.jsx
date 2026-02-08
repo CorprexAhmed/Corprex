@@ -8,7 +8,7 @@ const serverTypes = [
   {
     title: 'Data Integration Servers',
     description:
-      'Each of our 350+ data connectors is packaged as an independent MCP server. Postgres, Salesforce, Snowflake, MongoDB — every source gets its own isolated runtime with schema-aware tooling that your AI model can call directly.',
+      'Each of our 230+ data connectors is packaged as an independent MCP server. Postgres, Salesforce, Snowflake, MongoDB — every source gets its own isolated runtime with schema-aware tooling that your AI model can call directly.',
     capabilities: [
       'Schema introspection and type-safe queries',
       'Read and write operations with access controls',

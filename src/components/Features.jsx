@@ -31,7 +31,7 @@ const features = [
         <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
       </svg>
     ),
-    title: '350+ Integrations',
+    title: '230+ Integrations',
     description:
       'Connect to databases, CRMs, ERPs, marketing platforms, accounting software, e-commerce tools, and more. Every integration runs privately on your premises.',
   },
