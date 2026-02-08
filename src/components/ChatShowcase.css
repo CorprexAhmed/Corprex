@@ -1,0 +1,120 @@
+/* ============================================
+   CHAT SHOWCASE SECTION
+   ============================================ */
+
+.chat-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+/* Animate in — GPU-accelerated */
+.chat-content,
+.chat-image-col {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  transition: opacity 1.05s var(--ease-out-expo), transform 1.05s var(--ease-out-expo);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.chat-visible .chat-content {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.chat-visible .chat-image-col {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition-delay: 0.22s;
+}
+
+.chat-heading {
+  font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.25rem;
+}
+
+.chat-desc {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  margin-bottom: 2rem;
+}
+
+/* Feature list */
+.chat-features {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.chat-features li {
+  display: flex;
+  gap: 0.85rem;
+  align-items: flex-start;
+}
+
+.chat-feature-check {
+  width: 30px;
+  height: 30px;
+  background: var(--bg-dark);
+  color: var(--text-light);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.chat-features li strong {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.15rem;
+}
+
+.chat-features li span {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+/* Image */
+.chat-image-wrapper {
+  background: var(--bg-dark);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow-xl);
+  border: 1px solid var(--border-dark);
+}
+
+.chat-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .chat-layout {
+    gap: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .chat-layout {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .chat-image-wrapper {
+    border-radius: 12px;
+  }
+}

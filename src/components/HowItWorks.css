@@ -1,0 +1,102 @@
+/* ============================================
+   HOW IT WORKS SECTION
+   ============================================ */
+
+.hiw-section {
+  background: var(--bg-primary);
+}
+
+.hiw-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.hiw-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 2.25rem;
+  opacity: 0;
+  transform: translate3d(0, 24px, 0);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transition: opacity 0.9s var(--ease-out-expo),
+              transform 0.9s var(--ease-out-expo),
+              box-shadow var(--transition-base),
+              border-color var(--transition-base);
+}
+
+.hiw-visible .hiw-card {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.hiw-card:hover {
+  transform: translate3d(0, -4px, 0);
+  box-shadow: var(--shadow-lg);
+  border-color: transparent;
+}
+
+.hiw-card-icon {
+  width: 56px;
+  height: 56px;
+  background: var(--bg-primary);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.hiw-card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.01em;
+}
+
+.hiw-card-desc {
+  color: var(--text-secondary);
+  line-height: 1.7;
+  font-size: 0.95rem;
+  font-weight: 400;
+  margin-bottom: 1rem;
+}
+
+.hiw-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  transition: gap var(--transition-base);
+}
+
+.hiw-card-link:hover {
+  gap: 0.75rem;
+}
+
+/* First two cards span full width as a row of 2 */
+.hiw-grid .hiw-card:nth-child(1),
+.hiw-grid .hiw-card:nth-child(2) {
+  grid-column: auto;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .hiw-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .hiw-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}

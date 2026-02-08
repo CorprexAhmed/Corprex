@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Local AI - Corprex | The Case for Private AI Infrastructure</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-black: #000000;
+            --secondary-black: #0a0a0a;
+            --dark-gray: #1a1a1a;
+            --medium-gray: #2a2a2a;
+            --light-gray: #666666;
+            --text-gray: #999999;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --border-color: #333333;
+        }
+
+        body {
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--primary-black);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 60px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .logo a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--text-primary);
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--secondary-black);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.5rem 0;
+            margin-top: 0.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            min-width: 200px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-item:hover .dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-link {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-link:hover {
+            color: var(--text-primary);
+            background: var(--dark-gray);
+        }
+
+        .nav-cta {
+            background: var(--text-primary);
+            color: var(--primary-black);
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            letter-spacing: 0.02em;
+            font-size: 0.9rem;
+        }
+
+        .nav-cta:hover {
+            background: var(--text-secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 6rem 1.5rem 4rem;
+            background: linear-gradient(180deg, var(--primary-black) 0%, var(--secondary-black) 100%);
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            font-weight: 300;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            letter-spacing: -0.02em;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-text .highlight {
+            font-weight: 600;
+        }
+
+        .hero-text p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            line-height: 1.8;
+            font-weight: 300;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--text-primary);
+            color: var(--primary-black);
+            padding: 0.875rem 1.75rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-block;
+            letter-spacing: 0.02em;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary:hover {
+            background: var(--text-secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            padding: 0.875rem 1.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-block;
+            letter-spacing: 0.02em;
+            font-size: 0.95rem;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Sections */
+        .section {
+            padding: 4rem 1.5rem;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .section-header p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Cloud vs Local Comparison */
+        .comparison-hero {
+            padding: 4rem 1.5rem;
+            background: var(--secondary-black);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .comparison-side {
+            text-align: center;
+            padding: 2.5rem 1.5rem;
+            border-radius: 16px;
+            position: relative;
+        }
+
+        .cloud-side {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            border: 1px solid #444;
+        }
+
+        .local-side {
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            color: var(--primary-black);
+            border: 2px solid var(--text-primary);
+        }
+
+        .comparison-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 1.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cloud-icon {
+            background: var(--medium-gray);
+        }
+
+        .local-icon {
+            background: var(--primary-black);
+        }
+
+        .comparison-icon svg {
+            width: 35px;
+            height: 35px;
+        }
+
+        .comparison-title {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .comparison-list {
+            list-style: none;
+            text-align: left;
+            margin-top: 1.5rem;
+        }
+
+        .comparison-item {
+            padding: 0.65rem 0;
+            display: flex;
+            align-items: start;
+            gap: 0.75rem;
+            font-size: 0.9rem;
+        }
+
+        .item-icon {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+
+        /* Problems Section */
+        .problems-section {
+            background: var(--primary-black);
+        }
+
+        .problems-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .problem-card {
+            background: var(--secondary-black);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .problem-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transition: left 0.5s;
+        }
+
+        .problem-card:hover::before {
+            left: 100%;
+        }
+
+        .problem-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--text-primary);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.05);
+        }
+
+        .problem-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--medium-gray);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+
+        .problem-icon svg {
+            width: 30px;
+            height: 30px;
+            fill: var(--text-primary);
+        }
+
+        .problem-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .problem-card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 0.9rem;
+        }
+
+        /* Benefits Section */
+        .benefits-section {
+            background: var(--secondary-black);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .benefit-card {
+            background: var(--dark-gray);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .benefit-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transition: left 0.5s;
+        }
+
+        .benefit-card:hover::before {
+            left: 100%;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--text-primary);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.05);
+        }
+
+        .benefit-header {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            margin-bottom: 1.75rem;
+        }
+
+        .benefit-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--text-primary);
+            color: var(--primary-black);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .benefit-icon svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .benefit-title {
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+
+        .benefit-description {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1.75rem;
+            font-size: 0.95rem;
+        }
+
+        .benefit-stats {
+            display: flex;
+            gap: 1.75rem;
+            justify-content: center;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+        }
+
+        /* Use Cases Section */
+        .use-cases {
+            background: var(--primary-black);
+        }
+
+        .use-cases-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .use-case-card {
+            background: var(--secondary-black);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .use-case-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--text-primary);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.05);
+        }
+
+        .use-case-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--text-primary);
+            color: var(--primary-black);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.25rem;
+        }
+
+        .use-case-icon svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .use-case-card h3 {
+            font-size: 1.125rem;
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+        }
+
+        .use-case-card p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            line-height: 1.7;
+        }
+
+        /* Security Deep Dive */
+        .security-section {
+            background: var(--secondary-black);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .security-visual {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            margin-top: 3rem;
+        }
+
+        .security-content h3 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .security-list {
+            list-style: none;
+        }
+
+        .security-item {
+            padding: 1.25rem 0;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: start;
+            gap: 1rem;
+        }
+
+        .security-item:last-child {
+            border-bottom: none;
+        }
+
+        .security-check {
+            width: 24px;
+            height: 24px;
+            background: var(--text-primary);
+            color: var(--primary-black);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 0.25rem;
+        }
+
+        .security-text h4 {
+            font-size: 1.125rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .security-text p {
+            color: var(--text-secondary);
+            font-weight: 300;
+            font-size: 0.9rem;
+        }
+
+        .security-diagram {
+            background: var(--dark-gray);
+            border-radius: 16px;
+            padding: 2.5rem;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .diagram-title {
+            font-size: 1.25rem;
+            margin-bottom: 1.75rem;
+            font-weight: 500;
+        }
+
+        .diagram-layers {
+            display: flex;
+            flex-direction: column;
+            gap: 0.875rem;
+        }
+
+        .layer {
+            background: var(--medium-gray);
+            padding: 0.875rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .layer-title {
+            font-weight: 500;
+            margin-bottom: 0.4rem;
+            font-size: 0.9rem;
+        }
+
+        .layer-desc {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--secondary-black) 0%, #1a1a1a 100%);
+            border-radius: 24px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+
+        .cta-section p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--secondary-black);
+            border-top: 1px solid var(--border-color);
+            padding: 3rem 1.5rem 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-bottom: 2rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-column h4 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .footer-link {
+            display: block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.4rem 0;
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .footer-link:hover {
+            color: var(--text-primary);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border-color);
+            padding-top: 1.5rem;
+            text-align: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-copyright {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            /* Mobile Menu */
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 60px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 60px);
+                background: var(--secondary-black);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.5rem;
+                transition: left 0.3s ease;
+                border-top: 1px solid var(--border-color);
+                overflow-y: auto;
+                align-items: stretch;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .dropdown {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                background: var(--dark-gray);
+                margin-top: 0.5rem;
+                border-radius: 8px;
+            }
+
+            .nav-cta {
+                width: 100%;
+                text-align: center;
+                padding: 0.875rem;
+            }
+
+            /* Hero */
+            .hero {
+                padding: 5rem 1rem 3rem;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-text p {
+                font-size: 1rem;
+            }
+
+            /* Sections */
+            .section {
+                padding: 3rem 1rem;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+            }
+
+            .section-header p {
+                font-size: 1rem;
+            }
+
+            /* Comparison */
+            .comparison-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .comparison-side {
+                padding: 2rem 1.25rem;
+            }
+
+            .comparison-title {
+                font-size: 1.5rem;
+            }
+
+            /* Problems */
+            .problems-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            /* Benefits */
+            .benefits-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .benefit-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .benefit-title {
+                font-size: 1.25rem;
+            }
+
+            .benefit-stats {
+                gap: 1.25rem;
+            }
+
+            .stat-number {
+                font-size: 1.5rem;
+            }
+
+            /* Use Cases */
+            .use-cases-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            /* Security */
+            .security-visual {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .security-content h3 {
+                font-size: 1.75rem;
+            }
+
+            /* CTA */
+            .cta-section {
+                padding: 2.5rem 1.5rem;
+                margin: 2rem 0;
+            }
+
+            .cta-section h2 {
+                font-size: 2rem;
+            }
+
+            .cta-section p {
+                font-size: 1rem;
+            }
+
+            /* Footer */
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                width: 100%;
+                text-align: center;
+            }
+
+            .comparison-icon {
+                width: 60px;
+                height: 60px;
+            }
+
+            .comparison-icon svg {
+                width: 30px;
+                height: 30px;
+            }
+
+            .problem-icon {
+                width: 60px;
+                height: 60px;
+            }
+
+            .benefit-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo"><a href="/">CORPREX</a></div>
+            <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item">
+                    <a href="/" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/why-local-ai" class="nav-link active">Why Local AI?</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/news" class="nav-link">News</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/about" class="nav-link">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/contact" class="nav-link">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#demo" class="nav-cta">Request Demo</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Why <span class="highlight">Local AI</span> is the Only AI That Matters</h1>
+                <p>
+                    In an era where your most sensitive data powers your biggest competitive advantages, sending it to third-party clouds isn't just risky—it's business suicide. Here's why smart leaders are bringing AI home.
+                </p>
+                <div class="hero-cta">
+                    <a href="#demo" class="btn-primary">See the Difference</a>
+                    <a href="#problems" class="btn-secondary">Learn Why</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cloud vs Local Comparison -->
+    <section class="comparison-hero">
+        <div class="container">
+            <div class="section-header">
+                <h2>Two Paths. One Clear Winner.</h2>
+                <p>The fundamental choice every business faces in the AI era</p>
+            </div>
+            <div class="comparison-grid">
+                <div class="comparison-side cloud-side">
+                    <div class="comparison-icon cloud-icon">
+                        <svg viewBox="0 0 24 24" fill="white">
+                            <path d="M18 10H20A4 4 0 0 1 20 18H6A6 6 0 0 1 6 6C6 4 8 2 10 2A8 8 0 0 1 18 10Z"/>
+                            <path d="M12 14L16 10L12 6L8 10L12 14Z" fill="#ff4444" stroke="white" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h3 class="comparison-title">Cloud AI</h3>
+                    <p style="color: var(--text-gray); margin-bottom: 1.5rem; font-size: 0.9rem;">The path of convenience... and compromise</p>
+                    <ul class="comparison-list">
+                        <li class="comparison-item">
+                            <div class="item-icon">
+                                <svg viewBox="0 0 24 24" fill="var(--medium-gray)">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <line x1="15" y1="9" x2="9" y2="15" stroke="white" stroke-width="2"/>
+                                    <line x1="9" y1="9" x2="15" y2="15" stroke="white" stroke-width="2"/>
+                                </svg>
+                            </div>
+                            <span style="color: var(--text-secondary);">Your data trains competitors' models</span>
+                        </li>
+                        <li class="comparison-item">
+                            <div class="item-icon">
+                                <svg viewBox="0 0 24 24" fill="var(--medium-gray)">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <line x1="15" y1="9" x2="9" y2="15" stroke="white" stroke-width="2"/>
+                                    <line x1="9" y1="9" x2="15" y2="15" stroke="white" stroke-width="2"/>
+                                </svg>
+                            </div>
+                            <span style="color: var(--text-secondary);">$5,000-$50,000+ monthly costs</span>
+                        </li>
+                        <li class="comparison-item">
+                            <div class="item-icon">
+                                <svg viewBox="0 0 24 24" fill="var(--medium-gray)">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <line x1="15" y1="9" x2="9" y2="15" stroke="white" stroke-width="2"/>
+                                    <line x1="9" y1="9" x2="15" y2="15" stroke="white" stroke-width="2"/>
+                                </svg>
+                            </div>
+                            <span style="color: var(--text-secondary);">Rate limits throttle your growth</span>
+                        </li>
+                        <li class="comparison-item">
+                            <div class="item-icon">
+                                <svg viewBox="0 0 24 24" fill="var(--medium-gray)">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <line x1="15" y1="9" x2="9" y2="15" stroke="white" stroke-width="2"/>
+                                    <line x1="9" y1="9" x2="15" y2="15" stroke="white" stroke-width="2"/>
+                                </svg>
+                            </div>
+                            <span style="color: var(--text-secondary);">Internet outages = business stops</span>
+                        </li>
+                        <li class="comparison-item">
+                            <div class="item-icon">
+                                <svg viewBox="0 0 24 24" fill="var(--medium-gray)">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <line x1="15" y1="9" x2="9" y2="15" stroke="white" stroke-width="2"/>
+                                    <line x1="9" y1="9" x2="15" y2="15" stroke="white" stroke-width="2"/>
+                                </svg>
+                            </div>
+                            <span style="color: var(--text-secondary);">Zero control over your AI destiny</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="comparison-side local-side">
+                    <div class="comparison-icon local-icon">
+                        <svg viewBox="0 0 24 24" fill="white">
+                            <path d="M12 1L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 1Z"/>
+                            <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" fill="none"/>
+                        </svg>
+                    </div>
+                    <h3 class="comparison-title">Local AI</h3>
+                    <p style="margin-bottom: 1.5rem; font-size: 0.9rem;">The path of sovereignty and success</p>
+                    <ul class="comparison-list">
+                        <li class="comparison-item">
+                            <div class="item-icon">
+                                <svg viewBox="0 0 24 24" fill="var(--text-primary)">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M9 12L11 14L15 10" stroke="var(--primary-black)" stroke-width="2" fill="none"/>
+                                </svg>
+                            </div>
+                            <span>100% data ownership and privacy</span>
+                        </li>
+                        <li class="comparison-item">
+                            <div class="item-icon">
+                                <svg viewBox="0 0 24 24" fill="var(--text-primary)">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M9 12L11 14L15 10" stroke="var(--primary-black)" stroke-width="2" fill="none"/>
+                                </svg>
+                            </div>
+                            <span>One-time investment, zero monthly fees</span>
+                        </li>
+                        <li class="comparison-item">
+                            <div class="item-icon">
+                                <svg viewBox="0 0 24 24" fill="var(--text-primary)">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M9 12L11 14L15 10" stroke="var(--primary-black)" stroke-width="2" fill="none"/>
+                                </svg>
+                            </div>
+                            <span>Unlimited usage, unlimited scale</span>
+                        </li>
+                        <li class="comparison-item">
+                            <div class="item-icon">
+                                <svg viewBox="0 0 24 24" fill="var(--text-primary)">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M9 12L11 14L15 10" stroke="var(--primary-black)" stroke-width="2" fill="none"/>
+                                </svg>
+                            </div>
+                            <span>Works offline, works always</span>
+                        </li>
+                        <li class="comparison-item">
+                            <div class="item-icon">
+                                <svg viewBox="0 0 24 24" fill="var(--text-primary)">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M9 12L11 14L15 10" stroke="var(--primary-black)" stroke-width="2" fill="none"/>
+                                </svg>
+                            </div>
+                            <span>Complete control over your AI future</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problems with Cloud AI -->
+    <section class="section problems-section" id="problems">
+        <div class="container">
+            <div class="section-header">
+                <h2>The Hidden Costs of Cloud AI</h2>
+                <p>What every executive discovers too late about cloud dependency</p>
+            </div>
+            <div class="problems-grid">
+                <div class="problem-card">
+                    <div class="problem-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12S6.48 22 12 22 22 17.52 22 12 17.52 2 12 2ZM13 17H11V11H13V17ZM13 9H11V7H13V9Z"/>
+                        </svg>
+                    </div>
+                    <h3>Data Ownership Crisis</h3>
+                    <p>Every query you send trains your competitors' AI. Your proprietary insights become their competitive advantage. Major cloud providers explicitly reserve rights to use your data for model improvement.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M11.8 10.9C10.4 10.9 9.2 12.1 9.2 13.5S10.4 16.1 11.8 16.1 14.4 14.9 14.4 13.5 13.2 10.9 11.8 10.9ZM20 12C20 11.4 19.6 11.1 19.1 11.1H17.2C17.1 10.4 16.9 9.7 16.6 9.1L17.9 7.8C18.2 7.5 18.2 7 17.9 6.7L16.3 5.1C16 4.8 15.5 4.8 15.2 5.1L13.9 6.4C13.3 6.1 12.6 5.9 11.9 5.8V3.9C11.9 3.4 11.5 3 11 3H9C8.5 3 8.1 3.4 8.1 3.9V5.8C7.4 5.9 6.7 6.1 6.1 6.4L4.8 5.1C4.5 4.8 4 4.8 3.7 5.1L2.1 6.7C1.8 7 1.8 7.5 2.1 7.8L3.4 9.1C3.1 9.7 2.9 10.4 2.8 11.1H0.9C0.4 11.1 0 11.5 0 12V14C0 14.5 0.4 14.9 0.9 14.9H2.8C2.9 15.6 3.1 16.3 3.4 16.9L2.1 18.2C1.8 18.5 1.8 19 2.1 19.3L3.7 20.9C4 21.2 4.5 21.2 4.8 20.9L6.1 19.6C6.7 19.9 7.4 20.1 8.1 20.2V22.1C8.1 22.6 8.5 23 9 23H11C11.5 23 11.9 22.6 11.9 22.1V20.2C12.6 20.1 13.3 19.9 13.9 19.6L15.2 20.9C15.5 21.2 16 21.2 16.3 20.9L17.9 19.3C18.2 19 18.2 18.5 17.9 18.2L16.6 16.9C16.9 16.3 17.1 15.6 17.2 14.9H19.1C19.6 14.9 20 14.5 20 14V12Z"/>
+                        </svg>
+                    </div>
+                    <h3>Runaway Costs</h3>
+                    <p>API costs scale exponentially with success. Companies report $100K+ monthly bills that appeared overnight. Token limits force rationing of your own AI capabilities during peak business periods.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M13 3C9.23 3 6.19 5.95 6 9.66L4.17 12.1C3.58 13 4.24 14.19 5.34 14.19H7.54C8.67 16.07 10.6 17.3 12.83 17.3C15.06 17.3 16.99 16.07 18.12 14.19H20.32C21.42 14.19 22.08 13 21.49 12.1L19.66 9.66C19.47 5.95 16.43 3 13 3ZM13 7C14.1 7 15 7.9 15 9S14.1 11 13 11 11 10.1 11 9 11.9 7 13 7Z"/>
+                        </svg>
+                    </div>
+                    <h3>Security Vulnerabilities</h3>
+                    <p>Your sensitive data travels through multiple networks, servers, and jurisdictions. Data breaches at cloud providers expose millions of customers simultaneously. You have zero control over security incidents.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2L1 21H23L12 2ZM12 18H12V16H12V18ZM12 14H12V10H12V14Z"/>
+                        </svg>
+                    </div>
+                    <h3>Performance Bottlenecks</h3>
+                    <p>Network latency adds 200-500ms to every request. Rate limits throttle performance during high-demand periods. Regional outages can completely halt operations for hours or days.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M18.6 6.62C17.16 6.62 15.8 7.18 14.83 8.15L7.15 15.83C6.18 16.8 4.82 17.36 3.38 17.36C1.54 17.36 0.02 15.84 0.02 14C0.02 12.16 1.54 10.64 3.38 10.64C4.82 10.64 6.18 11.2 7.15 12.17L8.83 10.49C7.36 9.02 5.43 8.16 3.38 8.16C0.26 8.16 -2.46 10.88 -2.46 14C-2.46 17.12 0.26 19.84 3.38 19.84C5.43 19.84 7.36 18.98 8.83 17.51L16.51 9.83C17.48 8.86 18.84 8.3 20.28 8.3C22.12 8.3 23.64 9.82 23.64 11.66C23.64 13.5 22.12 15.02 20.28 15.02C18.84 15.02 17.48 14.46 16.51 13.49L14.83 15.17C16.3 16.64 18.23 17.5 20.28 17.5C23.4 17.5 26.12 14.78 26.12 11.66C26.12 8.54 23.4 5.82 20.28 5.82C19.07 5.82 17.9 6.14 16.87 6.7"/>
+                        </svg>
+                    </div>
+                    <h3>Vendor Lock-In</h3>
+                    <p>Switching costs become prohibitive as dependence deepens. Proprietary APIs and formats trap you in ecosystems. Pricing power shifts entirely to providers who know you can't leave.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 1L21.5 6.5V17.5L12 23L2.5 17.5V6.5L12 1ZM12 7C9.24 7 7 9.24 7 12S9.24 17 12 17 17 14.76 17 12 14.76 7 12 7ZM12 15C10.34 15 9 13.66 9 12S10.34 9 12 9 15 10.34 15 12 13.66 15 12 15Z"/>
+                        </svg>
+                    </div>
+                    <h3>Compliance Nightmares</h3>
+                    <p>GDPR, HIPAA, SOX, and other regulations become impossible to satisfy when data crosses borders. Audit trails disappear into cloud provider black boxes. Regulatory fines can exceed AI savings by 100x.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits of Local AI -->
+    <section class="section benefits-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>The Local AI Advantage</h2>
+                <p>Why smart companies are bringing AI home</p>
+            </div>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-header">
+                        <div class="benefit-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 1L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 1Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                                <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" fill="none"/>
+                            </svg>
+                        </div>
+                        <div class="benefit-title">Complete Data Sovereignty</div>
+                    </div>
+                    <p class="benefit-description">
+                        Your data never leaves your infrastructure. Process the most sensitive information with zero external exposure. Meet the strictest compliance requirements while maintaining full operational control.
+                    </p>
+                    <div class="benefit-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">100%</div>
+                            <div class="stat-label">Data Retention</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">Zero</div>
+                            <div class="stat-label">Breach Risk</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">Full</div>
+                            <div class="stat-label">Compliance</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-header">
+                        <div class="benefit-icon">
+                            <svg viewBox="0 0 24 24">
+                                <line x1="12" y1="1" x2="12" y2="23" stroke="currentColor" stroke-width="2"/>
+                                <path d="M17 5H9.5A3.5 3.5 0 0 0 6 8.5V8.5A3.5 3.5 0 0 0 9.5 12H14.5A3.5 3.5 0 0 1 18 15.5V15.5A3.5 3.5 0 0 1 14.5 19H6" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <div class="benefit-title">Predictable Economics</div>
+                    </div>
+                    <p class="benefit-description">
+                        Transform unpredictable monthly AI bills into a one-time capital investment. Scale usage without scaling costs. Most organizations achieve full ROI within 2-8 weeks of deployment.
+                    </p>
+                    <div class="benefit-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">$0</div>
+                            <div class="stat-label">Monthly Fees</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">6 Weeks</div>
+                            <div class="stat-label">Avg. ROI</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">∞</div>
+                            <div class="stat-label">Usage Limits</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-header">
+                        <div class="benefit-icon">
+                            <svg viewBox="0 0 24 24">
+                                <polygon points="13,2 3,14 12,14 11,22 21,10 12,10" stroke="currentColor" stroke-width="2" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="benefit-title">Superior Performance</div>
+                    </div>
+                    <p class="benefit-description">
+                        Eliminate network latency with local processing. Achieve sub-second response times for real-time applications. Scale performance by adding hardware, not paying for more API calls.
+                    </p>
+                    <div class="benefit-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">&lt;100ms</div>
+                            <div class="stat-label">Response Time</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">10x</div>
+                            <div class="stat-label">Faster Processing</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">100%</div>
+                            <div class="stat-label">Uptime</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-header">
+                        <div class="benefit-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M9.5 2A2.5 2.5 0 0 0 7 4.5V7A2.5 2.5 0 0 0 9.5 9.5H12V7A2.5 2.5 0 0 0 9.5 2Z" fill="currentColor"/>
+                                <path d="M14.5 2A2.5 2.5 0 0 1 17 4.5V7A2.5 2.5 0 0 1 14.5 9.5H12V7A2.5 2.5 0 0 1 14.5 2Z" fill="currentColor"/>
+                                <path d="M12 9.5V12A2.5 2.5 0 0 1 9.5 14.5A2.5 2.5 0 0 0 7 17V19.5A2.5 2.5 0 0 0 9.5 22A2.5 2.5 0 0 0 12 19.5V17A2.5 2.5 0 0 1 14.5 14.5A2.5 2.5 0 0 0 17 12V9.5H14.5A2.5 2.5 0 0 0 12 12V9.5Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="benefit-title">Complete Customization</div>
+                    </div>
+                    <p class="benefit-description">
+                        Fine-tune models on your specific data and use cases. Deploy custom architectures optimized for your workflows. Maintain competitive advantages that can't be replicated by cloud users.
+                    </p>
+                    <div class="benefit-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">100%</div>
+                            <div class="stat-label">Custom Models</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">Full</div>
+                            <div class="stat-label">Control</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">Unique</div>
+                            <div class="stat-label">Advantages</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases -->
+    <section class="section use-cases">
+        <div class="container">
+            <div class="section-header">
+                <h2>When Local AI is Essential</h2>
+                <p>Critical scenarios where cloud AI simply isn't an option</p>
+            </div>
+            <div class="use-cases-grid">
+                <div class="use-case-card">
+                    <div class="use-case-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 3L20 12H16V20H8V12H4L12 3Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                        </svg>
+                    </div>
+                    <h3>Legal Document Review</h3>
+                    <p>Attorney-client privilege requires absolute confidentiality. Cloud AI violates this fundamental principle by design. Local AI maintains privilege while accelerating case preparation.</p>
+                </div>
+                <div class="use-case-card">
+                    <div class="use-case-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M22 12H18L15 21L9 3L6 12H2" stroke="currentColor" stroke-width="2" fill="none"/>
+                        </svg>
+                    </div>
+                    <h3>Medical Diagnosis</h3>
+                    <p>HIPAA compliance demands patient data never leave healthcare networks. Local AI enables advanced diagnostics while maintaining regulatory compliance and patient trust.</p>
+                </div>
+                <div class="use-case-card">
+                    <div class="use-case-icon">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="12" y1="1" x2="12" y2="23" stroke="currentColor" stroke-width="2"/>
+                            <path d="M17 5H9.5A3.5 3.5 0 0 0 6 8.5V8.5A3.5 3.5 0 0 0 9.5 12H14.5A3.5 3.5 0 0 1 18 15.5V15.5A3.5 3.5 0 0 1 14.5 19H6" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h3>Financial Trading</h3>
+                    <p>Milliseconds matter in high-frequency trading. Network latency to cloud providers can cost millions. Local AI delivers the speed advantage that defines market winners.</p>
+                </div>
+                <div class="use-case-card">
+                    <div class="use-case-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M3 9L12 2L21 9V20A2 2 0 0 1 19 22H5A2 2 0 0 1 3 20V9Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                        </svg>
+                    </div>
+                    <h3>Government Intelligence</h3>
+                    <p>National security data cannot risk foreign cloud infrastructure. Local AI enables intelligence analysis while maintaining operational security and classified data protection.</p>
+                </div>
+                <div class="use-case-card">
+                    <div class="use-case-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M2 20H22V18H20V11H18V18H14V8H12V18H8V13H6V18H2V20Z" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <h3>Manufacturing IP</h3>
+                    <p>Production processes and quality control algorithms represent core competitive advantages. Cloud AI risks intellectual property theft by competitors and foreign actors.</p>
+                </div>
+                <div class="use-case-card">
+                    <div class="use-case-icon">
+                        <svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <path d="M12 1V3M12 21V23M4.22 4.22L5.64 5.64M18.36 18.36L19.78 19.78M1 12H3M21 12H23M4.22 19.78L5.64 18.36M18.36 5.64L19.78 4.22" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h3>R&D Innovation</h3>
+                    <p>Research breakthroughs drive company valuations. Cloud AI means competitors gain access to your innovation pipeline. Local AI protects tomorrow's competitive advantages today.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Security Deep Dive -->
+    <section class="section security-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Security Architecture</h2>
+                <p>Military-grade protection for your most valuable asset: your data</p>
+            </div>
+            <div class="security-visual">
+                <div class="security-content">
+                    <h3>Defense in Depth</h3>
+                    <ul class="security-list">
+                        <li class="security-item">
+                            <div class="security-check">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 12L11 14L15 10"/>
+                                </svg>
+                            </div>
+                            <div class="security-text">
+                                <h4>Air-Gap Capability</h4>
+                                <p>Completely isolate AI processing from external networks when maximum security is required</p>
+                            </div>
+                        </li>
+                        <li class="security-item">
+                            <div class="security-check">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 12L11 14L15 10"/>
+                                </svg>
+                            </div>
+                            <div class="security-text">
+                                <h4>End-to-End Encryption</h4>
+                                <p>AES-256 encryption for data at rest and in transit, with hardware security modules</p>
+                            </div>
+                        </li>
+                        <li class="security-item">
+                            <div class="security-check">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 12L11 14L15 10"/>
+                                </svg>
+                            </div>
+                            <div class="security-text">
+                                <h4>Zero Trust Architecture</h4>
+                                <p>Every request authenticated and authorized, with continuous security monitoring</p>
+                            </div>
+                        </li>
+                        <li class="security-item">
+                            <div class="security-check">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 12L11 14L15 10"/>
+                                </svg>
+                            </div>
+                            <div class="security-text">
+                                <h4>Compliance Ready</h4>
+                                <p>Pre-configured for HIPAA, SOX, FedRAMP, and other regulatory requirements</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="security-diagram">
+                    <h4 class="diagram-title">Multi-Layer Security Stack</h4>
+                    <div class="diagram-layers">
+                        <div class="layer">
+                            <div class="layer-title">Physical Security</div>
+                            <div class="layer-desc">Hardware encryption, secure boot, tamper detection</div>
+                        </div>
+                        <div class="layer">
+                        <div class="layer-title">Network Security</div>
+                           <div class="layer-desc">Firewall, VPN, network segmentation, intrusion detection</div>
+                       </div>
+                       <div class="layer">
+                           <div class="layer-title">Application Security</div>
+                           <div class="layer-desc">Role-based access, API security, audit logging</div>
+                       </div>
+                       <div class="layer">
+                           <div class="layer-title">Data Security</div>
+                           <div class="layer-desc">Encryption at rest, secure key management, data masking</div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </section>
+
+   <!-- CTA Section -->
+   <section class="section">
+       <div class="container">
+           <div class="cta-section">
+               <h2>Ready to Take Control of Your AI?</h2>
+               <p>Join the companies that have already made the switch to secure, private AI infrastructure</p>
+               <div class="hero-cta" style="justify-content: center;">
+                   <a href="/contact" class="btn-primary">Schedule a Consultation</a>
+                   <a href="index.html#omega" class="btn-secondary">Explore Omega</a>
+               </div>
+           </div>
+       </div>
+   </section>
+
+   <!-- Footer -->
+   <footer>
+       <div class="footer-grid">
+           <div class="footer-column">
+               <h4>Solutions</h4>
+               <a href="/why-local-ai" class="footer-link">Why Local AI?</a>
+           </div>
+           <div class="footer-column">
+               <h4>Company</h4>
+               <a href="/about" class="footer-link">About Us</a>
+               <a href="/news" class="footer-link">News</a>
+               <a href="/contact" class="footer-link">Contact</a>
+           </div>
+       </div>
+       <div class="footer-bottom">
+           <div class="footer-copyright">© 2024 Corprex. All rights reserved.</div>
+       </div>
+   </footer>
+
+   <script>
+       // Mobile menu toggle
+       function toggleMenu() {
+           const navMenu = document.getElementById('navMenu');
+           navMenu.classList.toggle('active');
+       }
+
+       // Close menu when clicking outside
+       document.addEventListener('click', function(event) {
+           const navMenu = document.getElementById('navMenu');
+           const menuBtn = document.querySelector('.mobile-menu-btn');
+           
+           if (!navMenu.contains(event.target) && !menuBtn.contains(event.target)) {
+               navMenu.classList.remove('active');
+           }
+       });
+
+       // Smooth scrolling for anchor links
+       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+           anchor.addEventListener('click', function (e) {
+               e.preventDefault();
+               const target = document.querySelector(this.getAttribute('href'));
+               if (target) {
+                   target.scrollIntoView({
+                       behavior: 'smooth',
+                       block: 'start'
+                   });
+                   // Close mobile menu if open
+                   document.getElementById('navMenu').classList.remove('active');
+               }
+           });
+       });
+
+       // Add scroll effect to navigation
+       window.addEventListener('scroll', function() {
+           const nav = document.querySelector('nav');
+           if (window.scrollY > 50) {
+               nav.style.background = 'rgba(0, 0, 0, 0.98)';
+               nav.style.boxShadow = '0 2px 20px rgba(0,0,0,0.5)';
+           } else {
+               nav.style.background = 'rgba(0, 0, 0, 0.95)';
+               nav.style.boxShadow = 'none';
+           }
+       });
+
+       // Intersection Observer for fade-in animations
+       const observerOptions = {
+           threshold: 0.1,
+           rootMargin: '0px 0px -100px 0px'
+       };
+
+       const observer = new IntersectionObserver(function(entries) {
+           entries.forEach(entry => {
+               if (entry.isIntersecting) {
+                   entry.target.style.opacity = '1';
+                   entry.target.style.transform = 'translateY(0)';
+               }
+           });
+       }, observerOptions);
+
+       // Observe all sections
+       document.querySelectorAll('.section').forEach(section => {
+           section.style.opacity = '0';
+           section.style.transform = 'translateY(20px)';
+           section.style.transition = 'all 0.6s ease';
+           observer.observe(section);
+       });
+
+       // Observe cards for staggered animations
+       document.querySelectorAll('.problem-card, .benefit-card, .use-case-card').forEach((card, index) => {
+           card.style.opacity = '0';
+           card.style.transform = 'translateY(20px)';
+           card.style.transition = `all 0.6s ease ${index * 0.1}s`;
+           observer.observe(card);
+       });
+   </script>
+</body>
+</html>

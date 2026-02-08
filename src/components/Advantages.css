@@ -1,0 +1,70 @@
+/* ============================================
+   ENTERPRISE / ADVANTAGES SECTION
+   ============================================ */
+
+.ent-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem 3rem;
+}
+
+.ent-item {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--border-color);
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.ent-visible .ent-item {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition: opacity 0.75s var(--ease-out-expo), transform 0.75s var(--ease-out-expo);
+}
+
+.ent-item:nth-last-child(-n+2) {
+  border-bottom: none;
+}
+
+.ent-check {
+  width: 36px;
+  height: 36px;
+  background: var(--bg-dark);
+  color: var(--text-light);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.ent-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  letter-spacing: -0.01em;
+}
+
+.ent-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .ent-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .ent-item:last-child {
+    border-bottom: none;
+  }
+}

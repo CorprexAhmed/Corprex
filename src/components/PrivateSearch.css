@@ -1,0 +1,337 @@
+/* ============================================
+   PRIVATE SEARCH SECTION
+   ============================================ */
+
+.private-search-section {
+  background: var(--bg-primary);
+}
+
+/* Layout: diagram left, steps right */
+.ps-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+  margin-bottom: 4rem;
+}
+
+/* ============================================
+   VISUAL DIAGRAM (left side)
+   ============================================ */
+
+.ps-visual {
+  position: sticky;
+  top: 6rem;
+}
+
+.ps-diagram {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+}
+
+/* Nodes */
+.ps-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+}
+
+.ps-node span {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: 0.02em;
+}
+
+.ps-node-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-color);
+  transition: all var(--transition-base);
+}
+
+.ps-node-user .ps-node-icon {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.ps-node-omega .ps-node-icon {
+  background: var(--bg-dark);
+  color: var(--text-light);
+  border-color: var(--bg-dark);
+}
+
+.ps-node-internet .ps-node-icon {
+  background: var(--bg-primary);
+  color: var(--text-tertiary);
+}
+
+/* Omega sub-layers */
+.ps-omega-layers {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.35rem;
+}
+
+.ps-layer {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-tertiary);
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 100px;
+  padding: 0.25rem 0.65rem;
+}
+
+.ps-layer svg {
+  flex-shrink: 0;
+}
+
+/* Connectors */
+.ps-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem 0;
+}
+
+.ps-connector-line {
+  width: 2px;
+  height: 32px;
+  background: var(--border-color);
+  border-radius: 1px;
+}
+
+.ps-connector-safe {
+  background: #16a34a;
+}
+
+.ps-connector-label {
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.ps-label-safe {
+  color: #16a34a;
+  font-weight: 600;
+}
+
+/* Trust callout */
+.ps-trust {
+  margin-top: 1.5rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+}
+
+.ps-trust-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.ps-trust-logo {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+.ps-trust-row strong {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.2rem;
+}
+
+.ps-trust-row span {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* ============================================
+   STEPS (right side)
+   ============================================ */
+
+.ps-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.ps-step {
+  display: flex;
+  gap: 1.25rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.ps-step:first-child {
+  padding-top: 0;
+}
+
+.ps-step:last-child {
+  border-bottom: none;
+}
+
+.ps-step-num {
+  width: 40px;
+  height: 40px;
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+  border: 1px solid var(--border-color);
+}
+
+.ps-step-body {
+  flex: 1;
+}
+
+.ps-step-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.4rem;
+  letter-spacing: -0.01em;
+}
+
+.ps-step-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  font-weight: 400;
+}
+
+/* ============================================
+   BOTTOM HIGHLIGHTS
+   ============================================ */
+
+.ps-highlights {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.ps-highlight {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 2rem;
+  transition: all var(--transition-base);
+}
+
+.ps-highlight:hover {
+  transform: translate3d(0, -3px, 0);
+  box-shadow: var(--shadow-lg);
+  border-color: transparent;
+}
+
+.ps-highlight-icon {
+  width: 48px;
+  height: 48px;
+  background: var(--bg-primary);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  margin-bottom: 1.25rem;
+}
+
+.ps-highlight h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+}
+
+.ps-highlight p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  font-weight: 400;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 1024px) {
+  .ps-layout {
+    gap: 3rem;
+  }
+
+  .ps-visual {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .ps-layout {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .ps-diagram {
+    padding: 2rem 1.5rem;
+  }
+
+  .ps-highlights {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .ps-highlight {
+    padding: 1.5rem;
+  }
+
+  .ps-omega-layers {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .ps-step {
+    gap: 1rem;
+  }
+
+  .ps-step-num {
+    width: 34px;
+    height: 34px;
+    font-size: 0.7rem;
+  }
+}

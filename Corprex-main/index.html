@@ -1,0 +1,1604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corprex - The Infrastructure Company for the Private AI Era</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            overflow-x: hidden;
+        }
+
+        :root {
+            --primary-black: #000000;
+            --secondary-black: #0a0a0a;
+            --dark-gray: #1a1a1a;
+            --medium-gray: #2a2a2a;
+            --light-gray: #666666;
+            --text-gray: #999999;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --border-color: #333333;
+        }
+
+        body {
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--primary-black);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            width: 100%;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 60px;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+        }
+
+        /* Client Login Button */
+        .client-login-btn {
+            position: absolute;
+            left: calc(1.5rem + 160px);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.3rem 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            white-space: nowrap;
+            z-index: 10;
+        }
+
+        .client-login-btn:hover {
+            color: var(--text-primary);
+            border-color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        /* Hide mobile-only items on desktop */
+        .mobile-only-item {
+            display: none;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--text-primary);
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--secondary-black);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.5rem 0;
+            margin-top: 0.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            min-width: 200px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-item:hover .dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-link {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-link:hover {
+            color: var(--text-primary);
+            background: var(--dark-gray);
+        }
+
+        .nav-cta {
+            background: var(--text-primary);
+            color: var(--primary-black);
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            letter-spacing: 0.02em;
+            font-size: 0.9rem;
+        }
+
+        .nav-cta:hover {
+            background: var(--text-secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+        }
+
+        /* News Alert Popup */
+        .news-popup {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            max-width: 400px;
+            background: var(--secondary-black);
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            z-index: 999;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            animation: slideIn 0.5s ease-out;
+            transition: all 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(calc(100% + 2rem));
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .news-popup.hidden {
+            transform: translateX(calc(100% + 2rem));
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .news-popup-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .news-popup-badge {
+            background: var(--text-primary);
+            color: var(--primary-black);
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .news-popup-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1.25rem;
+            line-height: 1;
+            padding: 0.25rem;
+            transition: color 0.3s ease;
+        }
+
+        .news-popup-close:hover {
+            color: var(--text-primary);
+        }
+
+        .news-popup-content {
+            margin-bottom: 1rem;
+        }
+
+        .news-popup-message {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .news-popup-message strong {
+            color: var(--text-primary);
+            font-weight: 500;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .news-popup-link {
+            background: var(--text-primary);
+            color: var(--primary-black);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            display: inline-block;
+            transition: all 0.3s ease;
+            width: 100%;
+            text-align: center;
+        }
+
+        .news-popup-link:hover {
+            background: var(--text-secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Mobile News Popup */
+        @media (max-width: 768px) {
+            .news-popup {
+                bottom: 1rem;
+                left: 1rem;
+                right: 1rem;
+                max-width: none;
+                padding: 1.25rem;
+            }
+        }
+
+        /* Hero section normal positioning */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 6rem 1.5rem 4rem;
+            background: linear-gradient(180deg, var(--primary-black) 0%, var(--secondary-black) 100%);
+            margin-top: 0;
+        }
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--text-primary);
+        }
+
+        .nav-cta {
+            background: var(--text-primary);
+            color: var(--primary-black);
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            letter-spacing: 0.02em;
+            font-size: 0.9rem;
+        }
+
+        .nav-cta:hover {
+            background: var(--text-secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 6rem 1.5rem 4rem;
+            background: linear-gradient(180deg, var(--primary-black) 0%, var(--secondary-black) 100%);
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            font-weight: 400;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-text h2 {
+            font-size: 3.5rem;
+            font-weight: 400;
+            color: var(--text-primary);
+            margin-top: 2rem;
+        }
+
+        .hero-text p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-top: 2rem;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--text-primary);
+            color: var(--primary-black);
+            padding: 0.875rem 1.75rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-block;
+            letter-spacing: 0.02em;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary:hover {
+            background: var(--text-secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            padding: 0.875rem 1.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-block;
+            letter-spacing: 0.02em;
+            font-size: 0.95rem;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* 3D Omega Box */
+        .omega-visual {
+            position: relative;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1000px;
+        }
+
+        .omega-box {
+            width: 300px;
+            height: 300px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotateY(0deg) rotateX(10deg); }
+            100% { transform: rotateY(360deg) rotateX(10deg); }
+        }
+
+        .omega-face {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            border: 2px solid #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            backface-visibility: hidden;
+        }
+
+        .omega-face::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .omega-face.front {
+            transform: translateZ(150px);
+        }
+
+        .omega-face.back {
+            transform: translateZ(-150px) rotateY(180deg);
+        }
+
+        .omega-face.right {
+            transform: rotateY(90deg) translateZ(150px);
+        }
+
+        .omega-face.left {
+            transform: rotateY(-90deg) translateZ(150px);
+        }
+
+        .omega-face.top {
+            transform: rotateX(90deg) translateZ(150px);
+        }
+
+        .omega-face.bottom {
+            transform: rotateX(-90deg) translateZ(150px);
+        }
+
+        .omega-logo {
+            width: 150px;
+            height: auto;
+            margin-bottom: 1rem;
+            filter: invert(1);
+        }
+
+        .omega-logo-large {
+            font-size: 3.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            margin-bottom: 0.5rem;
+        }
+
+        .omega-text {
+            font-size: 1.1rem;
+            letter-spacing: 0.3em;
+            color: var(--text-primary);
+        }
+
+        .omega-subtext {
+            font-size: 0.85rem;
+            letter-spacing: 0.2em;
+            color: var(--text-gray);
+            margin-top: 0.5rem;
+        }
+
+        /* Sections */
+        .section {
+            padding: 4rem 1.5rem;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .section-header p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* What is Corprex */
+        .intro-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .intro-card {
+            background: var(--secondary-black);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .intro-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .intro-card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-weight: 300;
+            font-size: 0.95rem;
+        }
+
+        .intro-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--text-primary);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.05);
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: var(--secondary-black);
+            padding: 3rem 1.5rem;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        /* Omega Advantage */
+        .advantage-section {
+            background: var(--primary-black);
+        }
+
+        .advantage-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .advantage-content h3 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .advantage-list {
+            list-style: none;
+        }
+
+        .advantage-item {
+            padding: 1.25rem 0;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: start;
+            gap: 1rem;
+        }
+
+        .advantage-icon {
+            color: var(--text-primary);
+            font-size: 1.25rem;
+            margin-top: 0.25rem;
+        }
+
+        .advantage-text h4 {
+            font-size: 1.125rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .advantage-text p {
+            color: var(--text-secondary);
+            font-weight: 300;
+            font-size: 0.95rem;
+        }
+
+        /* Specs Preview */
+        .specs-preview {
+            background: var(--dark-gray);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .spec-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.95rem;
+        }
+
+        .spec-row:last-child {
+            border-bottom: none;
+        }
+
+        .spec-label {
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .spec-value {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        /* Features Grid */
+        .features-section {
+            background: var(--secondary-black);
+            padding: 4rem 1.5rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            display: flex;
+            gap: 1.5rem;
+            align-items: start;
+        }
+
+        .feature-content h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-content p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        /* Comparison Section */
+        .comparison-section {
+            padding: 4rem 1.5rem;
+        }
+
+        .comparison-table {
+            background: var(--secondary-black);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-top: 2.5rem;
+            overflow-x: auto;
+        }
+
+        .comparison-header {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            background: var(--dark-gray);
+            padding: 1.25rem 1.5rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+
+        .comparison-row:last-child {
+            border-bottom: none;
+        }
+
+        .check {
+            color: #4CAF50;
+        }
+
+        .cross {
+            color: #ff4444;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            background: var(--secondary-black);
+            padding: 4rem 1.5rem;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--dark-gray);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .faq-item summary {
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 1rem;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-item summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .faq-item summary::after {
+            content: '+';
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item[open] summary::after {
+            transform: rotate(45deg);
+        }
+
+        .faq-item p {
+            margin-top: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--secondary-black);
+            border-top: 1px solid var(--border-color);
+            padding: 3rem 1.5rem 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-bottom: 2rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-column h4 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .footer-link {
+            display: block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.4rem 0;
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .footer-link:hover {
+            color: var(--text-primary);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border-color);
+            padding-top: 1.5rem;
+            text-align: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-copyright {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Hide client login button when it would overlap with nav menu */
+        @media (max-width: 1200px) {
+            .client-login-btn {
+                display: none;
+            }
+            
+            /* Show mobile-only item in nav menu on medium screens */
+            .mobile-only-item {
+                display: list-item;
+            }
+        }
+
+        /* Tablet and Medium Screens */
+        @media (max-width: 1024px) and (min-width: 769px) {
+            .client-login-btn {
+                display: none;
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            /* Show mobile-only items in hamburger menu */
+            .mobile-only-item {
+                display: block;
+            }
+
+            /* Mobile Menu */
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 60px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 60px);
+                background: var(--secondary-black);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.5rem;
+                transition: left 0.3s ease;
+                border-top: 1px solid var(--border-color);
+                overflow-y: auto;
+                align-items: stretch;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .dropdown {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                background: var(--dark-gray);
+                margin-top: 0.5rem;
+                border-radius: 8px;
+            }
+
+            .nav-cta {
+                width: 100%;
+                text-align: center;
+                padding: 0.875rem;
+            }
+
+            /* Hero */
+            .hero {
+                padding: 6rem 1rem 3rem;
+                min-height: 100vh;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 3rem;
+            }
+
+            .hero-text h1,
+            .hero-text h2 {
+                font-size: 2.5rem;
+            }
+
+            .hero-text p {
+                font-size: 1rem;
+            }
+
+            .hero-cta {
+                justify-content: center;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                padding: 0.75rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            /* Omega Visual */
+            .omega-visual {
+                height: 350px;
+            }
+
+            .omega-box {
+                width: 200px;
+                height: 200px;
+            }
+
+            .omega-face {
+                width: 200px;
+                height: 200px;
+            }
+
+            .omega-face.front {
+                transform: translateZ(100px);
+            }
+
+            .omega-face.back {
+                transform: translateZ(-100px) rotateY(180deg);
+            }
+
+            .omega-face.right {
+                transform: rotateY(90deg) translateZ(100px);
+            }
+
+            .omega-face.left {
+                transform: rotateY(-90deg) translateZ(100px);
+            }
+
+            .omega-face.top {
+                transform: rotateX(90deg) translateZ(100px);
+            }
+
+            .omega-face.bottom {
+                transform: rotateX(-90deg) translateZ(100px);
+            }
+
+            .omega-logo {
+                width: 100px;
+            }
+
+            .omega-logo-large {
+                font-size: 2.5rem;
+            }
+
+            .omega-text {
+                font-size: 0.9rem;
+            }
+
+            .omega-subtext {
+                font-size: 0.75rem;
+            }
+
+            /* Sections */
+            .section {
+                padding: 3rem 1rem;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+            }
+
+            .section-header p {
+                font-size: 1rem;
+            }
+
+            /* Grids */
+            .intro-grid,
+            .stats-grid,
+            .features-grid,
+            .advantage-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            /* Comparison Table */
+            .comparison-table {
+                font-size: 0.85rem;
+            }
+
+            .comparison-header,
+            .comparison-row {
+                grid-template-columns: 2fr 1fr 1fr;
+                padding: 1rem;
+            }
+
+            /* Footer */
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-text h1,
+            .hero-text h2 {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-header,
+            .comparison-row {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: left;
+            }
+
+            /* Ensure nothing is cut off on very small screens */
+            .nav-container {
+                padding: 0.75rem 1rem;
+            }
+
+            .logo {
+                font-size: 1.25rem;
+            }
+
+            .mobile-menu-btn {
+                font-size: 1.25rem;
+                padding: 0.25rem;
+            }
+
+            .news-alert {
+                top: 50px;
+                padding: 0.5rem;
+            }
+
+            .news-alert-badge {
+                font-size: 0.7rem;
+                padding: 0.2rem 0.5rem;
+            }
+
+            .news-alert-message {
+                font-size: 0.8rem;
+            }
+
+            .hero {
+                padding-top: 8rem;
+            }
+
+            /* Ensure sections have proper spacing */
+            .section {
+                padding: 2.5rem 0.75rem;
+            }
+
+            /* Prevent horizontal scroll */
+            .omega-box {
+                width: 180px;
+                height: 180px;
+            }
+
+            .omega-face {
+                width: 180px;
+                height: 180px;
+            }
+
+            .omega-face.front {
+                transform: translateZ(90px);
+            }
+
+            .omega-face.back {
+                transform: translateZ(-90px) rotateY(180deg);
+            }
+
+            .omega-face.right {
+                transform: rotateY(90deg) translateZ(90px);
+            }
+
+            .omega-face.left {
+                transform: rotateY(-90deg) translateZ(90px);
+            }
+
+            .omega-face.top {
+                transform: rotateX(90deg) translateZ(90px);
+            }
+
+            .omega-face.bottom {
+                transform: rotateX(-90deg) translateZ(90px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">CORPREX</div>
+            <a href="https://ai.corprex.com" class="client-login-btn">Client Login</a>
+            <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item">
+                    <a href="/" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/why-local-ai" class="nav-link">Why Local AI?</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/news" class="nav-link">News</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/about" class="nav-link">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/contact" class="nav-link">Contact</a>
+                </li>
+                <li class="nav-item mobile-only-item">
+                    <a href="/client-login" class="nav-link">Client Login</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/contact" class="nav-cta">Request Demo</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- News Alert Popup -->
+    <div class="news-popup" id="newsPopup">
+        <div class="news-popup-header">
+            <span class="news-popup-badge">BREAKING</span>
+            <button class="news-popup-close" onclick="closeNewsPopup()">✕</button>
+        </div>
+        <div class="news-popup-content">
+            <p class="news-popup-message">
+                <strong>Major enterprises facing data breaches and soaring AI costs.</strong>
+                See why Fortune 500 companies are switching to private AI infrastructure.
+            </p>
+        </div>
+        <a href="/news" class="news-popup-link">Read Latest News →</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Don't think outside the box.</h1>
+                <h2>Think with it.</h2>
+                <p>
+                    The Omega is your complete AI infrastructure in one powerful device. No cloud dependencies. No data leaks. Just pure, private computational excellence at your command.
+                </p>
+                <div class="hero-cta">
+                    <a href="/contact" class="btn-primary">Request Demo</a>
+                    <a href="#omega" class="btn-secondary">Explore the Omega</a>
+                </div>
+            </div>
+            <div class="omega-visual">
+                <div class="omega-box">
+                    <div class="omega-face front">
+                        <img src="corprex-logo.png" alt="Corprex Logo" class="omega-logo">
+                        <div class="omega-subtext">OMEGA</div>
+                    </div>
+                    <div class="omega-face back">
+                        <div class="omega-logo-large">Ω</div>
+                    </div>
+                    <div class="omega-face right"></div>
+                    <div class="omega-face left"></div>
+                    <div class="omega-face top"></div>
+                    <div class="omega-face bottom"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>100%</h3>
+                    <p>Data Privacy</p>
+                </div>
+                <div class="stat-item">
+                    <h3><1s</h3>
+                    <p>Response Time</p>
+                </div>
+                <div class="stat-item">
+                    <h3>∞</h3>
+                    <p>Usage Limits</p>
+                </div>
+                <div class="stat-item">
+                    <h3>0</h3>
+                    <p>Cloud Dependencies</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What is Corprex -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>The Future of AI is Private</h2>
+                <p>Why leading companies are choosing Corprex</p>
+            </div>
+            <div class="intro-grid">
+                <div class="intro-card">
+                    <h3>One-Time Investment</h3>
+                    <p>Eliminate monthly AI subscriptions forever. Most clients see complete ROI within 2-8 weeks. One investment, unlimited usage, no surprises.</p>
+                </div>
+                <div class="intro-card">
+                    <h3>No Usage Limits</h3>
+                    <p>Sub-second latency for mission-critical applications. No internet delays, no API rate limits, no downtime. Your AI is always available when you need it.</p>
+                </div>
+                <div class="intro-card">
+                    <h3>Complete Privacy</h3>
+                    <p>Your data never leaves your premises. Process sensitive information with military-grade security and zero cloud exposure. Perfect for legal, medical, and financial data.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Omega Advantage -->
+    <section class="section advantage-section" id="omega">
+        <div class="container">
+            <div class="section-header">
+                <h2>The Omega Advantage</h2>
+                <p>See why industry leaders choose Corprex</p>
+            </div>
+            <div class="advantage-grid">
+                <div class="advantage-content">
+                    <h3>A complete AI infrastructure, not just hardware.</h3>
+                    <ul class="advantage-list">
+                        <li class="advantage-item">
+                            <span class="advantage-icon">✓</span>
+                            <div class="advantage-text">
+                                <h4>Managed AI Operations</h4>
+                                <p>We run your AI infrastructure so you don't have to. Complete operational management, performance tuning, and strategic consulting included.</p>
+                            </div>
+                        </li>
+                        <li class="advantage-item">
+                            <span class="advantage-icon">✓</span>
+                            <div class="advantage-text">
+                                <h4>Future-Proof Design</h4>
+                                <p>Modular architecture allows GPU upgrades as new models emerge. Your investment grows with AI advancement.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="specs-preview">
+                    <h4 style="font-size: 1.25rem; margin-bottom: 1.5rem;">Starting Configuration</h4>
+                    <div class="spec-row">
+                        <span class="spec-label">GPU Options</span>
+                        <span class="spec-value">RTX 4060 Ti → H100</span>
+                    </div>
+                    <div class="spec-row">
+                        <span class="spec-label">RAM</span>
+                        <span class="spec-value">32GB → 1TB DDR5</span>
+                    </div>
+                    <div class="spec-row">
+                        <span class="spec-label">Storage</span>
+                        <span class="spec-value">1TB → 32TB NVMe</span>
+                    </div>
+                    <div class="spec-row">
+                        <span class="spec-label">Models</span>
+                        <span class="spec-value">All Open Source + Custom</span>
+                    </div>
+                    <div class="spec-row">
+                        <span class="spec-label">Users</span>
+                        <span class="spec-value">2 → 200+ Concurrent</span>
+                    </div>
+                    <div class="spec-row">
+                        <span class="spec-label">Starting From</span>
+                        <span class="spec-value">Contact for Pricing</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section class="section comparison-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Omega vs. Cloud AI</h2>
+                <p>See the difference ownership makes</p>
+            </div>
+            <div class="comparison-table">
+                <div class="comparison-header">
+                    <div>Feature</div>
+                    <div>Corprex Omega</div>
+                    <div>Cloud AI</div>
+                </div>
+                <div class="comparison-row">
+                    <div>Data Privacy</div>
+                    <div class="check">✓ 100% Private</div>
+                    <div class="cross">✗ Data Leaves Premises</div>
+                </div>
+                <div class="comparison-row">
+                    <div>Monthly Cost</div>
+                    <div class="check">✓ $0 After Purchase</div>
+                    <div class="cross">✗ $500-$10,000+/mo</div>
+                </div>
+                <div class="comparison-row">
+                    <div>Usage Limits</div>
+                    <div class="check">✓ Unlimited</div>
+                    <div class="cross">✗ Token Limits</div>
+                </div>
+                <div class="comparison-row">
+                    <div>Response Time</div>
+                    <div class="check">✓ <1 Second</div>
+                    <div class="cross">✗ Variable Latency</div>
+                </div>
+                <div class="comparison-row">
+                    <div>Customization</div>
+                    <div class="check">✓ Full Control</div>
+                    <div class="cross">✗ Limited Options</div>
+                </div>
+                <div class="comparison-row">
+                    <div>Compliance</div>
+                    <div class="check">✓ HIPAA/SOX/FedRAMP</div>
+                    <div class="cross">✗ Shared Infrastructure</div>
+                </div>
+                <div class="comparison-row">
+                    <div>Availability</div>
+                    <div class="check">✓ 100% Uptime</div>
+                    <div class="cross">✗ Internet Dependent</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section faq-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+                <p>Everything you need to know about Omega</p>
+            </div>
+            <div class="faq-container">
+                <details class="faq-item">
+                    <summary>What AI models can Omega run?</summary>
+                    <p>Omega supports all major open-source models including Llama 3, Mistral, Mixtral, CodeLlama, Gemma, and more. You can also fine-tune models on your own data or deploy custom models. We regularly update available models as new ones are released.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Can Omega work without internet connection?</summary>
+                    <p>Yes, Omega operates completely offline once configured. This air-gap capability is perfect for high-security environments like defense, healthcare, and financial institutions. Updates can be applied manually when needed.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Can Omega integrate with our existing systems?</summary>
+                    <p>Yes, Omega provides REST APIs, Python SDKs, and native integrations with popular business tools. It works seamlessly with your existing tech stack including CRMs, ERPs, and data warehouses. Our automation suite supports 1000+ app integrations.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Can I try Omega before purchasing?</summary>
+                    <p>We offer proof-of-concept demos virtually for qualified enterprises. This includes a full demonstration with your actual data and use cases. Contact us to schedule your custom demo.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h4>Solutions</h4>
+                <a href="/why-local-ai" class="footer-link">Why Local AI?</a>
+            </div>
+            <div class="footer-column">
+                <h4>Company</h4>
+                <a href="/about" class="footer-link">About Us</a>
+                <a href="/news" class="footer-link">News</a>
+                <a href="/contact" class="footer-link">Contact</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-copyright">© 2024 Corprex. All rights reserved.</div>
+        </div>
+    </footer>
+
+    <script>
+        // Close news popup
+        function closeNewsPopup() {
+            document.getElementById('newsPopup').classList.add('hidden');
+            // Save to localStorage that user closed it
+            localStorage.setItem('newsPopupClosed', 'true');
+        }
+
+        // Check if user already closed the popup
+        window.addEventListener('load', function() {
+            if (localStorage.getItem('newsPopupClosed') === 'true') {
+                document.getElementById('newsPopup').classList.add('hidden');
+            }
+        });
+
+        // Show popup again after 24 hours
+        setInterval(function() {
+            const lastClosed = localStorage.getItem('newsPopupClosedTime');
+            if (lastClosed) {
+                const now = new Date().getTime();
+                const timeDiff = now - parseInt(lastClosed);
+                if (timeDiff > 24 * 60 * 60 * 1000) { // 24 hours
+                    localStorage.removeItem('newsPopupClosed');
+                    localStorage.removeItem('newsPopupClosedTime');
+                    document.getElementById('newsPopup').classList.remove('hidden');
+                }
+            }
+        }, 60000); // Check every minute
+
+        // Save timestamp when closing
+        function closeNewsPopup() {
+            document.getElementById('newsPopup').classList.add('hidden');
+            localStorage.setItem('newsPopupClosed', 'true');
+            localStorage.setItem('newsPopupClosedTime', new Date().getTime().toString());
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const navMenu = document.getElementById('navMenu');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            
+            if (!navMenu.contains(event.target) && !menuBtn.contains(event.target)) {
+                navMenu.classList.remove('active');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close mobile menu if open
+                    document.getElementById('navMenu').classList.remove('active');
+                }
+            });
+        });
+
+        // Add scroll effect to navigation
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(0, 0, 0, 0.98)';
+                nav.style.boxShadow = '0 2px 20px rgba(0,0,0,0.5)';
+            } else {
+                nav.style.background = 'rgba(0, 0, 0, 0.95)';
+                nav.style.boxShadow = 'none';
+            }
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('.section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'all 0.6s ease';
+            observer.observe(section);
+        });
+
+        // Mobile menu toggle
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

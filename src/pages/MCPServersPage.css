@@ -1,0 +1,651 @@
+/* ============================================
+   MCP SERVERS PAGE
+   ============================================ */
+
+/* Hero actions */
+.mcp-hero-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+/* ============================================
+   EXPLAIN CARDS
+   ============================================ */
+
+.mcp-explain-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.mcp-explain-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 2rem;
+  transition: all var(--transition-base);
+}
+
+.mcp-explain-card:hover {
+  transform: translate3d(0, -3px, 0);
+  box-shadow: var(--shadow-md);
+}
+
+.mcp-explain-icon {
+  width: 52px;
+  height: 52px;
+  background: var(--bg-primary);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-color);
+  margin-bottom: 1.25rem;
+  color: var(--text-primary);
+}
+
+.mcp-explain-card h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.01em;
+}
+
+.mcp-explain-card p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* ============================================
+   ARCHITECTURE DIAGRAM
+   ============================================ */
+
+.mcp-arch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.mcp-arch-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mcp-arch-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.mcp-arch-node-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  transition: all var(--transition-base);
+}
+
+.mcp-arch-node-model .mcp-arch-node-icon {
+  background: var(--bg-dark);
+  color: var(--text-light);
+  border-color: var(--bg-dark);
+}
+
+.mcp-arch-node-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: 0.02em;
+}
+
+.mcp-arch-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.5rem 0;
+}
+
+.mcp-arch-line {
+  width: 2px;
+  height: 24px;
+  background: var(--border-color);
+  border-radius: 1px;
+}
+
+.mcp-arch-connector-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Server layer */
+.mcp-arch-servers {
+  width: 100%;
+  margin-top: 0.25rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 1.5rem 2rem 2rem;
+}
+
+.mcp-arch-servers-label {
+  text-align: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 1.25rem;
+}
+
+.mcp-arch-server-nodes {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.mcp-arch-server {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  min-width: 90px;
+  transition: all var(--transition-base);
+  position: relative;
+}
+
+.mcp-arch-server:hover {
+  transform: translate3d(0, -2px, 0);
+  box-shadow: var(--shadow-md);
+}
+
+.mcp-arch-server span {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.mcp-arch-server-disabled {
+  opacity: 0.45;
+  border-style: dashed;
+}
+
+.mcp-arch-server-disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.mcp-arch-disabled-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  font-size: 0.55rem !important;
+  font-weight: 700 !important;
+  background: var(--bg-tertiary);
+  color: var(--text-tertiary) !important;
+  padding: 0.1rem 0.4rem;
+  border-radius: 100px;
+  border: 1px solid var(--border-color);
+}
+
+/* ============================================
+   SERVER TYPES - INTERACTIVE TABS
+   ============================================ */
+
+.mcp-types-layout {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+.mcp-types-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mcp-type-tab {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  transition: all var(--transition-base);
+  color: var(--text-secondary);
+}
+
+.mcp-type-tab:hover {
+  border-color: var(--text-tertiary);
+}
+
+.mcp-type-tab.active {
+  background: var(--bg-dark);
+  color: var(--text-light);
+  border-color: var(--bg-dark);
+}
+
+.mcp-type-tab-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  transition: all var(--transition-base);
+}
+
+.mcp-type-tab.active .mcp-type-tab-icon {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: var(--text-light);
+}
+
+.mcp-type-tab span {
+  flex: 1;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.mcp-type-tab-arrow {
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+.mcp-type-tab.active .mcp-type-tab-arrow {
+  opacity: 1;
+}
+
+/* Detail panel */
+.mcp-type-detail {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 2.5rem;
+}
+
+.mcp-type-detail-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.mcp-type-detail-desc {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 1.75rem;
+}
+
+.mcp-type-capabilities {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.mcp-type-capabilities li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.mcp-cap-check {
+  width: 22px;
+  height: 22px;
+  background: var(--bg-dark);
+  color: var(--text-light);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 0.05rem;
+}
+
+.mcp-type-cta {
+  margin-top: 0.5rem;
+}
+
+/* ============================================
+   DEPLOY STEPS
+   ============================================ */
+
+.mcp-deploy-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+.mcp-deploy-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 2rem;
+  transition: all var(--transition-base);
+  position: relative;
+}
+
+.mcp-deploy-card:hover {
+  transform: translate3d(0, -3px, 0);
+  box-shadow: var(--shadow-md);
+}
+
+.mcp-deploy-num {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--border-color);
+  margin-bottom: 1rem;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.mcp-deploy-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.01em;
+}
+
+.mcp-deploy-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+/* ============================================
+   BENEFITS GRID
+   ============================================ */
+
+.mcp-benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.mcp-benefit-card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 2rem;
+  transition: all var(--transition-base);
+}
+
+.mcp-benefit-card:hover {
+  transform: translate3d(0, -3px, 0);
+  box-shadow: var(--shadow-md);
+}
+
+.mcp-benefit-icon {
+  width: 48px;
+  height: 48px;
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  margin-bottom: 1.25rem;
+}
+
+.mcp-benefit-card h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+}
+
+.mcp-benefit-card p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+/* ============================================
+   DASHBOARD MOCKUP
+   ============================================ */
+
+.mcp-dashboard {
+  max-width: 720px;
+  margin: 0 auto;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.mcp-dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-primary);
+}
+
+.mcp-dashboard-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.mcp-dashboard-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  font-weight: 500;
+}
+
+.mcp-status-dot {
+  width: 8px;
+  height: 8px;
+  background: #16a34a;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.mcp-dashboard-rows {
+  padding: 0.5rem 0;
+}
+
+.mcp-dash-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.875rem 1.5rem;
+  transition: background var(--transition-fast);
+}
+
+.mcp-dash-row:hover {
+  background: var(--bg-primary);
+}
+
+.mcp-dash-row-off {
+  opacity: 0.5;
+}
+
+.mcp-dash-row-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.mcp-dash-row-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.mcp-dash-row-type {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  padding: 0.15rem 0.55rem;
+  border-radius: 100px;
+}
+
+/* Toggle switch */
+.mcp-toggle {
+  width: 40px;
+  height: 22px;
+  background: var(--bg-tertiary);
+  border-radius: 100px;
+  position: relative;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  border: 1px solid var(--border-color);
+  flex-shrink: 0;
+}
+
+.mcp-toggle-on {
+  background: var(--bg-dark);
+  border-color: var(--bg-dark);
+}
+
+.mcp-toggle-knob {
+  width: 16px;
+  height: 16px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: transform var(--transition-fast);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.mcp-toggle-on .mcp-toggle-knob {
+  transform: translateX(18px);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 1024px) {
+  .mcp-types-layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .mcp-types-tabs {
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 0.75rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .mcp-type-tab {
+    min-width: 200px;
+    white-space: nowrap;
+  }
+
+  .mcp-deploy-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .mcp-explain-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mcp-deploy-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mcp-benefits-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mcp-type-detail {
+    padding: 1.75rem;
+  }
+
+  .mcp-arch-server-nodes {
+    gap: 0.75rem;
+  }
+
+  .mcp-arch-server {
+    padding: 0.75rem 1rem;
+    min-width: 75px;
+  }
+
+  .mcp-arch-servers {
+    padding: 1.25rem 1rem 1.5rem;
+  }
+
+  .mcp-types-tabs {
+    flex-direction: column;
+  }
+
+  .mcp-type-tab {
+    min-width: unset;
+    white-space: normal;
+  }
+
+  .mcp-dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .mcp-dash-row-info {
+    flex-direction: column;
+    gap: 0.25rem;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .mcp-arch-server-nodes {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .mcp-hero-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+}

@@ -1,0 +1,311 @@
+/* ============================================
+   ABOUT PAGE
+   ============================================ */
+
+/* ── Mission Section ── */
+
+.about-mission-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.about-mission-heading {
+  font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  position: sticky;
+  top: 6rem;
+}
+
+.about-mission-text {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+
+.about-mission-text:last-child {
+  margin-bottom: 0;
+}
+
+/* ── What We Deliver ── */
+
+.about-deliver-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.about-deliver-card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 2rem;
+  transition: all var(--transition-base);
+}
+
+.about-deliver-card:hover {
+  transform: translate3d(0, -3px, 0);
+  box-shadow: var(--shadow-md);
+  border-color: transparent;
+}
+
+.about-deliver-card h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+.about-deliver-card p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* ── Process Timeline ── */
+
+.about-process-timeline {
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.about-process-step {
+  display: flex;
+  gap: 1.5rem;
+  padding: 1.75rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.about-process-step:last-child {
+  border-bottom: none;
+}
+
+.about-process-num {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--border-color);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  min-width: 40px;
+  padding-top: 0.2rem;
+  flex-shrink: 0;
+}
+
+.about-process-body h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+.about-process-body p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* ── Stats ── */
+
+.about-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  text-align: center;
+}
+
+.about-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 2rem 1rem;
+}
+
+.about-stat-value {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.about-stat-label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* ── Industries ── */
+
+.about-industries-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.about-industry-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 2rem;
+  transition: all var(--transition-base);
+}
+
+.about-industry-card:hover {
+  transform: translate3d(0, -3px, 0);
+  box-shadow: var(--shadow-md);
+  border-color: transparent;
+}
+
+.about-industry-card h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+.about-industry-card p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+/* ── Contact / Location ── */
+
+.about-contact-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.about-contact-heading {
+  font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  margin-bottom: 1.25rem;
+  color: var(--text-primary);
+}
+
+.about-contact-text {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+
+.about-contact-text:last-child {
+  margin-bottom: 0;
+}
+
+.about-contact-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 2rem;
+}
+
+.about-contact-item h4 {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-tertiary);
+  margin-bottom: 0.35rem;
+}
+
+.about-contact-item a,
+.about-contact-item p {
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  font-weight: 500;
+  text-decoration: none;
+  transition: color var(--transition-base);
+  line-height: 1.5;
+}
+
+.about-contact-item a:hover {
+  color: var(--text-secondary);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 1024px) {
+  .about-deliver-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .about-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .about-mission-layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .about-mission-heading {
+    position: static;
+  }
+
+  .about-deliver-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-industries-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-contact-layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .about-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .about-stat {
+    padding: 1.25rem 0.75rem;
+  }
+
+  .about-process-step {
+    gap: 1rem;
+    padding: 1.25rem 0;
+  }
+
+  .about-deliver-card,
+  .about-industry-card {
+    padding: 1.5rem;
+  }
+
+  .about-contact-details {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}

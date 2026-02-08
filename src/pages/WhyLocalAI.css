@@ -1,0 +1,464 @@
+/* ============================================
+   WHY LOCAL AI — PAGE STYLES
+   ============================================ */
+
+
+/* ── Reveal helper — GPU-accelerated ── */
+.wla-reveal {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+  transition: opacity 0.75s var(--ease-out-expo), transform 0.75s var(--ease-out-expo);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.wla-reveal.wla-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* ============================================
+   HERO
+   ============================================ */
+
+.wla-hero {
+  padding: 9rem 1.5rem 5rem;
+  text-align: center;
+  background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+}
+
+.wla-hero-inner {
+  max-width: 780px;
+  margin: 0 auto;
+  opacity: 0;
+  transform: translate3d(0, 24px, 0);
+  transition: opacity 1.05s var(--ease-out-expo), transform 1.05s var(--ease-out-expo);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.wla-hero-inner.wla-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.wla-hero-title {
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.12;
+  margin-bottom: 1.5rem;
+}
+
+.wla-hero-accent {
+  display: block;
+  color: var(--text-tertiary);
+}
+
+.wla-hero-subtitle {
+  font-size: 1.15rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  max-width: 620px;
+  margin: 0 auto 2.25rem;
+}
+
+.wla-hero-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ============================================
+   PROBLEM — Risk cards
+   ============================================ */
+
+.wla-risk-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.75rem;
+}
+
+.wla-risk-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 2.25rem;
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transition: opacity 0.75s var(--ease-out-expo),
+              transform 0.75s var(--ease-out-expo),
+              box-shadow 0.45s ease;
+}
+
+.wla-risk-grid.wla-visible .wla-risk-card {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.wla-risk-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.wla-risk-icon {
+  width: 52px;
+  height: 52px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+  color: #dc2626;
+}
+
+.wla-risk-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 0.65rem;
+  letter-spacing: -0.01em;
+}
+
+.wla-risk-desc {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+/* ============================================
+   COMPARISON TABLE
+   ============================================ */
+
+.wla-compare-table {
+  max-width: 860px;
+  margin: 0 auto;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--bg-primary);
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+  transition: opacity 0.9s var(--ease-out-expo), transform 0.9s var(--ease-out-expo);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.wla-compare-table.wla-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.wla-compare-header {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  background: var(--bg-dark);
+  color: var(--text-light);
+}
+
+.wla-compare-header .wla-compare-cell {
+  padding: 1rem 1.25rem;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.wla-compare-row {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  border-bottom: 1px solid var(--border-color);
+  opacity: 0;
+  transform: translate3d(0, 6px, 0);
+  transition: opacity 0.6s var(--ease-out-expo), transform 0.6s var(--ease-out-expo);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.wla-compare-table.wla-visible .wla-compare-row {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.wla-compare-row:last-child {
+  border-bottom: none;
+}
+
+.wla-compare-cell {
+  padding: 1rem 1.25rem;
+  font-size: 0.92rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.wla-compare-feature {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.wla-compare-local {
+  color: #16a34a;
+  font-weight: 500;
+}
+
+.wla-compare-cloud {
+  color: var(--text-tertiary);
+}
+
+.wla-compare-row:hover {
+  background: var(--bg-secondary);
+}
+
+/* ============================================
+   BENEFITS
+   ============================================ */
+
+.wla-benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+}
+
+.wla-benefit-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 2.25rem;
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transition: opacity 0.75s var(--ease-out-expo),
+              transform 0.75s var(--ease-out-expo),
+              box-shadow 0.45s ease;
+}
+
+.wla-benefits-grid.wla-visible .wla-benefit-card {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.wla-benefit-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translate3d(0, -3px, 0);
+}
+
+.wla-benefit-icon {
+  width: 56px;
+  height: 56px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+}
+
+.wla-benefit-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.65rem;
+  letter-spacing: -0.01em;
+}
+
+.wla-benefit-desc {
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+/* ============================================
+   INDUSTRIES
+   ============================================ */
+
+.wla-industries-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.wla-industry-card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 1.75rem;
+  text-align: center;
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transition: opacity 0.75s var(--ease-out-expo),
+              transform 0.75s var(--ease-out-expo),
+              box-shadow 0.45s ease;
+}
+
+.wla-industries-grid.wla-visible .wla-industry-card {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.wla-industry-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translate3d(0, -3px, 0);
+}
+
+.wla-industry-icon {
+  width: 48px;
+  height: 48px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  color: var(--text-primary);
+}
+
+.wla-industry-name {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.wla-industry-detail {
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+/* ============================================
+   CTA
+   ============================================ */
+
+.wla-cta-section {
+  background: var(--bg-dark);
+  color: var(--text-light);
+  padding: 5rem 1.5rem;
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+  transition: opacity 0.9s var(--ease-out-expo), transform 0.9s var(--ease-out-expo);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.wla-cta-section.wla-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.wla-cta-inner {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.wla-cta-title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+}
+
+.wla-cta-subtitle {
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+.wla-cta-actions {
+  display: flex;
+  justify-content: center;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 1024px) {
+  .wla-benefits-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .wla-industries-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .wla-hero {
+    padding: 7rem 1rem 3.5rem;
+  }
+
+  .wla-risk-grid,
+  .wla-benefits-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .wla-industries-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .wla-compare-header,
+  .wla-compare-row {
+    grid-template-columns: 1.2fr 1fr 1fr;
+  }
+
+  .wla-compare-cell {
+    padding: 0.75rem 0.75rem;
+    font-size: 0.82rem;
+  }
+
+  .wla-compare-header .wla-compare-cell {
+    font-size: 0.75rem;
+    padding: 0.75rem 0.75rem;
+  }
+
+  .wla-cta-section {
+    padding: 3.5rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .wla-industries-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .wla-compare-header,
+  .wla-compare-row {
+    grid-template-columns: 1fr;
+  }
+
+  .wla-compare-header .wla-compare-local,
+  .wla-compare-header .wla-compare-cloud {
+    display: none;
+  }
+
+  .wla-compare-row {
+    padding: 0.75rem;
+    gap: 0.25rem;
+  }
+
+  .wla-compare-cell {
+    padding: 0.35rem 0;
+  }
+
+  .wla-compare-feature {
+    font-weight: 600;
+  }
+}

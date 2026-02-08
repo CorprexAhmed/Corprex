@@ -1,0 +1,141 @@
+/* ============================================
+   INTEGRATION SCROLLER
+   ============================================ */
+
+.scroller-section {
+  padding: 2.5rem 0 2rem;
+  background: var(--bg-secondary);
+  overflow: hidden;
+  position: relative;
+}
+
+.scroller-title {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: -0.01em;
+  margin-bottom: 1.5rem;
+}
+
+/* Fade edges */
+.scroller-section::before,
+.scroller-section::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 120px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.scroller-section::before {
+  left: 0;
+  background: linear-gradient(to right, var(--bg-secondary) 0%, transparent 100%);
+}
+
+.scroller-section::after {
+  right: 0;
+  background: linear-gradient(to left, var(--bg-secondary) 0%, transparent 100%);
+}
+
+.scroller-track {
+  display: flex;
+  flex-direction: column;
+}
+
+.scroller-row {
+  display: flex;
+  width: max-content;
+  animation: scrollLeft 180s linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.scroller-slide {
+  display: flex;
+  gap: 2rem;
+  padding-right: 2rem;
+}
+
+.scroller-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  width: 72px;
+  transition: transform 0.45s var(--ease-out-quart);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.scroller-item:hover {
+  transform: translate3d(0, -2px, 0);
+}
+
+.scroller-item img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+.scroller-item-name {
+  font-size: 0.65rem;
+  color: var(--text-tertiary);
+  text-align: center;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 72px;
+  font-weight: 500;
+}
+
+@keyframes scrollLeft {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+  .scroller-section {
+    padding: 1.75rem 0 1.25rem;
+  }
+
+  .scroller-title {
+    font-size: 0.95rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .scroller-item {
+    width: 60px;
+  }
+
+  .scroller-item img {
+    width: 28px;
+    height: 28px;
+  }
+
+  .scroller-item-name {
+    font-size: 0.58rem;
+    max-width: 60px;
+  }
+
+  .scroller-slide {
+    gap: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  .scroller-section::before,
+  .scroller-section::after {
+    width: 60px;
+  }
+}
