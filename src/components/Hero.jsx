@@ -15,17 +15,19 @@ export default function Hero() {
       <div className="hero-inner">
         <div className={`hero-content ${loaded ? 'hero-animate' : ''}`}>
           <h1 className="hero-title">
-            Don't think outside the box.
-            <span className="hero-title-accent">Think with it.</span>
+            Secure Enterprise AI
+            <span className="hero-title-accent">Fully On-Prem.</span>
           </h1>
           <p className="hero-description">
-            The Omega is your complete AI infrastructure in a single device.
-            Starting at 384 GB of VRAM. No cloud. No data leaving your
-            building. Ever.
+            Run powerful AI across your internal systems without sending data to the cloud.
+            Corprex delivers on-prem, permission-aware intelligence that integrates directly with your existing infrastructure.
+          </p>
+          <p className="hero-description hero-description-bold">
+            No cloud exposure. No data leakage. No compromise.
           </p>
           <div className="hero-actions">
             <Link to="/contact" className="btn btn-primary">
-              Request Demo
+              Request Enterprise Demo
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
